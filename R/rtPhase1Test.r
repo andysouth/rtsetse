@@ -21,6 +21,8 @@
 #' @param verbose whether to output progress messages to console 
 #' 
 #' @return a list of lots, initially dataframes of adult age structure over time dfRecordF & M
+#' @examples
+#' rtPhase1Test()
 #' @export
 
 rtPhase1Test <- function( iDays = 30,

@@ -55,4 +55,7 @@ over time dfRecordF & M
 test of phase 1 model components. It uses default parameter
 values that are mostly similar to hat-trick.
 }
+\examples{
+rtPhase1Test()
+}
 
