@@ -1,0 +1,33 @@
+\name{rtDensityDependence}
+\alias{rtDensityDependence}
+\title{modifies mortality according to density dependence}
+\usage{
+rtDensityDependence(fPopn, pMort, propDD, iCC)
+}
+\arguments{
+  \item{fPopn}{population number, can be adults or pupae}
+
+  \item{pMort}{a mortality probability}
+
+  \item{propDD}{proportion of mortality that is density
+  dependent}
+
+  \item{iCC}{Carrying Capacity as an integer}
+}
+\value{
+pMort modified mortality rate
+}
+\description{
+\code{rtDensityDependence} takes passed mortality rate and
+modifies it according to the relationship between density
+and carrying capacity. Implemented in the same way as
+hat-trick. Allows the proportion of mortality that is
+density dependent to be specified. pMort at Carrying
+Capacity is left unmodified. pMort at density 0 =
+pMort*(1-proportion of mortality density dependent). In
+between is a linear relationship that continues to give
+higher values above carrying capacity. ! I wonder if
+density dependence could be implemented in a more standard
+way closer to the logistic model.
+}
+

@@ -1,0 +1,26 @@
+\name{rtPupalAgeing}
+\alias{rtPupalAgeing}
+\title{tsetse pupal ageing
+DEPRECATED probably already replaced with rtAgeing
+\code{rtPupalAgeing} simply advances the age of all pupa by 1 day
+Pupal Emergence is likely to be dealt with in rtPupalEmergence}
+\usage{
+rtPupalAgeing(vPupaF, vPupaM)
+}
+\arguments{
+  \item{vPupaF}{a vector of the age distribution of Female
+  pupae}
+
+  \item{vPupaM}{a vector of the age distribution of Male
+  pupae}
+}
+\value{
+a list containing updated vPupaF & vPupaM
+}
+\description{
+tsetse pupal ageing DEPRECATED probably already replaced
+with rtAgeing \code{rtPupalAgeing} simply advances the age
+of all pupa by 1 day Pupal Emergence is likely to be dealt
+with in rtPupalEmergence
+}
+
