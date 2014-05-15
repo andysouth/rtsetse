@@ -24,6 +24,6 @@ of males & females ?Should this advance time, maybe not.
 ?there could be an option to do F only if only F are passed
 !It should check that the length of the age structure and
 pMort vectors are the same It uses the length of the age
-structure vectors passed to it 1) \cr 2) \cr
+structure vectors passed to it 1) \cr
 }
 

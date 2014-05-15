@@ -20,7 +20,5 @@ pupa male and female
 \details{
 from the age structure of adult females and 'birth'
 probabilities per female
-
-1) \cr
 }
 

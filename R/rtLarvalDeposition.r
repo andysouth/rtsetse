@@ -5,8 +5,7 @@
 #' from the age structure of adult females
 #' and 'birth' probabilities per female
 #' 
-#' 
-#' 1) \cr
+
 
 
 #' @param vFem a vector of the age distribution of Females 

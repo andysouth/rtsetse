@@ -6,7 +6,6 @@
 #' !It should check that the length of the age structure and pMort vectors are the same
 #' It uses the length of the age structure vectors passed to it
 #' 1) \cr
-#' 2) \cr
 
 #' @param vFem a vector of the age distribution of Females 
 #' @param vMal a vector of the age distribution of Males 

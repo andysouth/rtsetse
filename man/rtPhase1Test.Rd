@@ -1,7 +1,6 @@
 \name{rtPhase1Test}
 \alias{rtPhase1Test}
-\title{rtPhase1Test.r
-a script to test phase1 components}
+\title{an a-spatial tsetse population simulation, a test of phase1}
 \usage{
 rtPhase1Test(iDays = 30, iMaxAge = 120, iCarryCap = 200,
   iStartAdults = 200, iStartAges = 1, pMortF = 0.05, pMortM = 0.05,
@@ -48,9 +47,12 @@ rtPhase1Test(iDays = 30, iMaxAge = 120, iCarryCap = 200,
   console}
 }
 \value{
-a list of lots
+a list of lots, initially dataframes of adult age structure
+over time dfRecordF & M
 }
 \description{
-rtPhase1Test.r a script to test phase1 components
+\code{rtPhase1Test} runs an a-spatial popn simulation as a
+test of phase 1 model components. It uses default parameter
+values that are mostly similar to hat-trick.
 }
 

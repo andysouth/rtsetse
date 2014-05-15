@@ -1,6 +1,7 @@
-#' rtPhase1Test.r
-#' a script to test phase1 components
-
+#' an a-spatial tsetse population simulation, a test of phase1
+#'
+#' \code{rtPhase1Test} runs an a-spatial popn simulation as a test of phase 1
+#' model components. It uses default parameter values that are mostly similar to hat-trick.
 
 #' @param iDays days to run simulation
 #' @param iMaxAge max age of fly allowed in model (will warn if flies age past this)
@@ -19,7 +20,7 @@
 #' @param plot whether to plot graphs
 #' @param verbose whether to output progress messages to console 
 #' 
-#' @return a list of lots
+#' @return a list of lots, initially dataframes of adult age structure over time dfRecordF & M
 #' @export
 
 rtPhase1Test <- function( iDays = 30,
@@ -167,7 +168,7 @@ rtPhase1Test <- function( iDays = 30,
   }
 
   #returning the adult population record
-  #! may want to cahnge the structure of these outputs
+  #! may want to change the structure of these outputs
   #maybe to a class
   invisible( list( dfRecordF=dfRecordF, dfRecordM = dfRecordM ))
   
