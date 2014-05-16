@@ -1,10 +1,10 @@
 #' tsetse pupal mortality
 #'
-#' \code{rtPupalMortality} applies pupal mortality once in the pupal period
-#' hat-trick applied same rate for males and females
-#' !I may need to pass pupal carrying capacity and vegetation type to this
-#' initially this was called for each sex.
-#' but because density dependence needs to know about both sexes it may make more sense to do together
+#' \code{rtPupalMortality} applies pupal mortality once in the pupal period.
+#' \cr Same rate for males and females (as in Hat-Trick).
+#' \cr Initially this was called for each sex,
+#' but because density dependence needs to know about both sexes I changed so that both are done in same function call.
+#' \cr !Later I may need to pass vegetation type to this or another function that modifies vital rates before passing.
 
 #' @param vPupaF a vector of female pupae by age 
 #' @param vPupaM a vector of male pupae by age 

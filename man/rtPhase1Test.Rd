@@ -33,7 +33,7 @@ rtPhase1Test(iDays = 30, iMaxAge = 120, iCarryCap = 200,
 
   \item{iPupDurF}{days it takes pupa(F) to develop}
 
-  \item{iPupDurM}{days it takes pupa(F) to develop}
+  \item{iPupDurM}{days it takes pupa(M) to develop}
 
   \item{iFirstLarva}{Age that female produces first larva}
 

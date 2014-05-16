@@ -1,4 +1,5 @@
 #' tsetse pupal ageing
+#' 
 #' DEPRECATED probably already replaced with rtAgeing
 #' \code{rtPupalAgeing} simply advances the age of all pupa by 1 day
 #' Pupal Emergence is likely to be dealt with in rtPupalEmergence

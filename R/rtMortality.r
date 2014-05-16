@@ -1,11 +1,9 @@
 #' tsetse mortality
 #'
 #' \code{rtMortality} returns a list of the age distributions of males & females
-#' ?Should this advance time, maybe not.
-#' ?there could be an option to do F only if only F are passed
-#' !It should check that the length of the age structure and pMort vectors are the same
-#' It uses the length of the age structure vectors passed to it
-#' 1) \cr
+#' \cr !It should check that the length of the age structure and pMort vectors are the same
+#' \cr It uses the length of the age structure vectors passed to it.
+#' \cr There could be an option to do F only if only F are passed.
 
 #' @param vFem a vector of the age distribution of Females 
 #' @param vMal a vector of the age distribution of Males 

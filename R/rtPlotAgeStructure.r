@@ -1,9 +1,10 @@
 #' plots age structure over multiple days
-#' \code{rtPlotAgeStructure} visualises change in age structure over time using a raster type plot
-#' requires the raster package
+#' 
+#' \code{rtPlotAgeStructure} visualises change in age structure over time using a raster type plot.
+#' \cr Requires the raster package.
 
 #' @param df a dataframe with days in columns and ages in rows
-#' @param title, a title for the plot  
+#' @param title a title for the plot  
 #' 
 #' @return nothing
 #' @export

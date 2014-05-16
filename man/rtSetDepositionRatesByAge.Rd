@@ -1,6 +1,6 @@
 \name{rtSetDepositionRatesByAge}
 \alias{rtSetDepositionRatesByAge}
-\title{setting Age Specific Larval Deposition rates for Tsetse}
+\title{setting age specific larval deposition rates for Tsetse}
 \usage{
 rtSetDepositionRatesByAge(vPopF, vPopM, iFirstLarva = 16, iInterLarva = 10,
   pMortLarva = 0.05, propMortDD = 0, iCarryCap = NA)
@@ -17,11 +17,11 @@ rtSetDepositionRatesByAge(vPopF, vPopM, iFirstLarva = 16, iInterLarva = 10,
 
   \item{pMortLarva}{larval mortality rate}
 
-  \item{propDD}{proportion of mortality that is density
+  \item{propMortDD}{proportion of mortality that is density
   dependent, set to 0 as default}
 
   \item{iCarryCap}{Carrying Capacity as an integer, not
-  needed if propDD=0}
+  needed if propMortDD=0}
 }
 \value{
 a vector of larval deposition probabilities
@@ -32,6 +32,6 @@ a vector of larval deposition probabilities
 \details{
 Gets length of vector from vPopF uses age of first larva,
 interlava period & larval mortality rate to create a vector
-of deposition rates
+of deposition rates.
 }
 

@@ -1,9 +1,9 @@
 #' ageing of adults or pupae
+#' 
 #' \code{rtAgeing} simply advances the age of all classes in the passed vector
 
-
 #' @param v a vector of age distribution 
-#' @param label a string decsribing what is being passed, added to any warning messages 
+#' @param label a string describing what is being passed, added to any warning messages 
 #' 
 #' @return an updated vector
 #' @export

@@ -1,9 +1,10 @@
 #' plots popn over multiple days
+#' 
 #' \code{rtPlotPop} plots change in pop frompassed single dataframe
 #' you would have to pass 2 dataframes (for M&F to get total popn)
 
 #' @param df a dataframe with days in columns and ages in rows
-#' @param title, a title for the plot  
+#' @param title a title for the plot  
 #' 
 #' @return nothing
 #' @export

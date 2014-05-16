@@ -13,7 +13,7 @@
 #' @param pMortPupa pupal mortality per period
 #' @param propMortPupaDD proportion of pupal mortality that is density dependent
 #' @param iPupDurF days it takes pupa(F) to develop
-#' @param iPupDurM days it takes pupa(F) to develop
+#' @param iPupDurM days it takes pupa(M) to develop
 #' @param iFirstLarva Age that female produces first larva
 #' @param iInterLarva Inter-larval period
 #' @param pMortLarva larval mortality per period

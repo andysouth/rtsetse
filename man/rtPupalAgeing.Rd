@@ -1,9 +1,6 @@
 \name{rtPupalAgeing}
 \alias{rtPupalAgeing}
-\title{tsetse pupal ageing
-DEPRECATED probably already replaced with rtAgeing
-\code{rtPupalAgeing} simply advances the age of all pupa by 1 day
-Pupal Emergence is likely to be dealt with in rtPupalEmergence}
+\title{tsetse pupal ageing}
 \usage{
 rtPupalAgeing(vPupaF, vPupaM)
 }
@@ -18,9 +15,9 @@ rtPupalAgeing(vPupaF, vPupaM)
 a list containing updated vPupaF & vPupaM
 }
 \description{
-tsetse pupal ageing DEPRECATED probably already replaced
-with rtAgeing \code{rtPupalAgeing} simply advances the age
-of all pupa by 1 day Pupal Emergence is likely to be dealt
-with in rtPupalEmergence
+DEPRECATED probably already replaced with rtAgeing
+\code{rtPupalAgeing} simply advances the age of all pupa by
+1 day Pupal Emergence is likely to be dealt with in
+rtPupalEmergence
 }
 

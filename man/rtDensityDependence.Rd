@@ -22,11 +22,11 @@ pMort modified mortality rate
 modifies it according to the relationship between density
 and carrying capacity. Implemented in the same way as
 hat-trick. Allows the proportion of mortality that is
-density dependent to be specified. pMort at Carrying
-Capacity is left unmodified. pMort at density 0 =
-pMort*(1-proportion of mortality density dependent). In
+density dependent to be specified. \cr pMort at Carrying
+Capacity is left unmodified. \cr pMort at density 0 =
+pMort*(1-proportion of mortality density dependent). \cr In
 between is a linear relationship that continues to give
-higher values above carrying capacity. ! I wonder if
+higher values above carrying capacity. \cr ! I wonder if
 density dependence could be implemented in a more standard
 way closer to the logistic model.
 }

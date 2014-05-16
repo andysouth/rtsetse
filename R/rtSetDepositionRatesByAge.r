@@ -1,18 +1,18 @@
-#' setting Age Specific Larval Deposition rates for Tsetse
+#' setting age specific larval deposition rates for Tsetse
 #'
 #' \code{rtSetDepositionRatesByAge} 
 #' 
 #' Gets length of vector from vPopF
 #' uses age of first larva, interlava period & larval mortality rate 
-#' to create a vector of deposition rates
+#' to create a vector of deposition rates.
 
 #' @param vPopF a vector of the age distribution of Females 
 #' @param vPopM a vector of the age distribution of Males, needed to assess density dependence 
 #' @param iFirstLarva age that first larva deposited 
 #' @param iInterLarva gap between deposition of larvae 
 #' @param pMortLarva larval mortality rate 
-#' @param propDD proportion of mortality that is density dependent, set to 0 as default 
-#' @param iCarryCap Carrying Capacity as an integer, not needed if propDD=0
+#' @param propMortDD proportion of mortality that is density dependent, set to 0 as default 
+#' @param iCarryCap Carrying Capacity as an integer, not needed if propMortDD=0
 #' 
 #' @return a vector of larval deposition probabilities
 #' @export
@@ -41,7 +41,7 @@ rtSetDepositionRatesByAge <- function( vPopF,
   vpDeposit <- ifelse( vAges==iFirstLarva | ((vAges-iFirstLarva)>0 & (vAges-iFirstLarva)%%iInterLarva==0),1,0)
   
   #density dependence
-  #setting propDD to 0 can stop an density dependence being implemented
+  #setting propMortDD to 0 can stop an density dependence being implemented
   if ( propMortDD > 0 )
     pMortLarva <- rtDensityDependence( fPopn = (sum(vPopF)+sum(vPopM)),
                                   pMort = pMortLarva,
