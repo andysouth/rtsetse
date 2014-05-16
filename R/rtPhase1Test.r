@@ -39,6 +39,7 @@ rtPhase1Test <- function( iDays = 30,
                           iFirstLarva = 16,
                           iInterLarva = 10,
                           pMortLarva = 0.05,
+                          propMortLarvaDD = 0.25,
                           plot =  FALSE,
                           verbose = TRUE )
 {
@@ -125,7 +126,13 @@ rtPhase1Test <- function( iDays = 30,
     #vpDeposit <- ifelse(seq(vPopF)>5,0.5,0)
     
     #set deposition rates by age
-    vpDeposit <- rtSetDepositionRatesByAge( vPopF, iFirstLarva, iInterLarva, pMortLarva )  
+    vpDeposit <- rtSetDepositionRatesByAge( vPopF = vPopF,
+                                            vPopM = vPopM,
+                                            iFirstLarva = iFirstLarva,
+                                            iInterLarva = iInterLarva,
+                                            pMortLarva = pMortLarva,
+                                            propMortDD = propMortLarvaDD,
+                                            iCarryCap = iCarryCap)  
     #use the deposition rates set above
     lLarvae <- rtLarvalDeposition( vPopF, vpDeposit )    
     #! an ugly way of doing I can improve
@@ -143,8 +150,8 @@ rtPhase1Test <- function( iDays = 30,
     #?the abundance of the other, I might want to change the way I do this
     #vPupaF <- rtPupalMortality(vPupaF, pMortPupa)
     #vPupaM <- rtPupalMortality(vPupaM, pMortPupa)  
-    #iCCPupa set from iCarryCap here because hat-trick default runs show similar numbers of ads & pupae at stability
-    lPupae <- rtPupalMortality(vPupaF=vPupaF, vPupaM=vPupaM, pMort=pMortPupa, propDD=propMortPupaDD, iCCPupa=iCarryCap )
+    #iCarryCapPupa set from iCarryCap here because hat-trick default runs show similar numbers of ads & pupae at stability
+    lPupae <- rtPupalMortality(vPupaF=vPupaF, vPupaM=vPupaM, pMort=pMortPupa, propDD=propMortPupaDD, iCarryCapPupa=iCarryCap )
     vPupaF <- lPupae$vPupaF
     vPupaM <- lPupae$vPupaM
       

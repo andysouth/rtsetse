@@ -2,7 +2,7 @@
 \alias{rtDensityDependence}
 \title{modifies mortality according to density dependence}
 \usage{
-rtDensityDependence(fPopn, pMort, propDD, iCC)
+rtDensityDependence(fPopn, pMort, propDD, iCarryCap)
 }
 \arguments{
   \item{fPopn}{population number, can be adults or pupae}
@@ -12,7 +12,7 @@ rtDensityDependence(fPopn, pMort, propDD, iCC)
   \item{propDD}{proportion of mortality that is density
   dependent}
 
-  \item{iCC}{Carrying Capacity as an integer}
+  \item{iCarryCap}{Carrying Capacity as an integer}
 }
 \value{
 pMort modified mortality rate

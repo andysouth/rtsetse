@@ -3,7 +3,7 @@
 \title{tsetse pupal mortality}
 \usage{
 rtPupalMortality(vPupaF, vPupaM, pMort = 0.25, propDD = 0.25,
-  iCCPupa = NA)
+  iCarryCapPupa = NA)
 }
 \arguments{
   \item{vPupaF}{a vector of female pupae by age}
@@ -15,7 +15,7 @@ rtPupalMortality(vPupaF, vPupaM, pMort = 0.25, propDD = 0.25,
   \item{propDD}{proportion of mortality that is density
   dependent}
 
-  \item{iCCPupa}{Carrying Capacity as an integer}
+  \item{iCarryCapPupa}{Carrying Capacity as an integer}
 }
 \value{
 a list of vectors of pupae by age (vPupaF & vPupaM)

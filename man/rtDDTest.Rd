@@ -2,12 +2,13 @@
 \alias{rtDDTest}
 \title{tests density dependence and outputs a plot}
 \usage{
-rtDDTest(vDensities = c(0:20), iCC = 10, propDD = 0.25, pMort = 0.2)
+rtDDTest(vDensities = c(0:20), iCarryCap = 10, propDD = 0.25,
+  pMort = 0.2)
 }
 \arguments{
   \item{vDensities}{a vector of densities to test}
 
-  \item{iCC}{Carrying Capacity as an integer}
+  \item{iCarryCap}{Carrying Capacity as an integer}
 
   \item{propDD}{proportion of mortality that is density
   dependent}

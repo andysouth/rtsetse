@@ -10,7 +10,7 @@
 #' @param vPupaM a vector of male pupae by age 
 #' @param pMort a mortality probability 
 #' @param propDD proportion of mortality that is density dependent 
-#' @param iCCPupa Carrying Capacity as an integer
+#' @param iCarryCapPupa Carrying Capacity as an integer
 #' 
 #' @return a list of vectors of pupae by age (vPupaF & vPupaM)
 #' @export
@@ -19,7 +19,7 @@ rtPupalMortality <- function( vPupaF,
                               vPupaM,
                               pMort = 0.25,
                               propDD = 0.25,
-                              iCCPupa = NA ) #?not sure whether to provide a default for iCCPupa
+                              iCarryCapPupa = NA ) #?not sure whether to provide a default for iCarryCapPupa
 
 {  
   
@@ -29,7 +29,7 @@ rtPupalMortality <- function( vPupaF,
     pMort <- rtDensityDependence( fPopn= (sum(vPupaF)+sum(vPupaM)),
                                   pMort = pMort,
                                   propDD = propDD,
-                                  iCC = iCCPupa )
+                                  iCarryCap = iCarryCapPupa )
     
   #pupal mortality is applied once during the pupal period
   #done on day 1

@@ -12,7 +12,7 @@
 #' @param fPopn population number, can be adults or pupae
 #' @param pMort a mortality probability 
 #' @param propDD proportion of mortality that is density dependent 
-#' @param iCC Carrying Capacity as an integer
+#' @param iCarryCap Carrying Capacity as an integer
 #' 
 #' @return pMort modified mortality rate
 #' @export
@@ -20,15 +20,15 @@
 rtDensityDependence <- function( fPopn,
                                  pMort,
                                  propDD,
-                                 iCC )
+                                 iCarryCap )
   
 {  
 
   #mortality at density 0 = pMort*(1-propDD)
   #mortality at density SCC = pMort  
-  #therefore pMort = pMort*(1-propDD) + pMort*propDD*(density/iCC)
+  #therefore pMort = pMort*(1-propDD) + pMort*propDD*(density/iCarryCap)
   
-  pMort <- pMort*(1-propDD) + pMort*propDD*(fPopn/iCC)
+  pMort <- pMort*(1-propDD) + pMort*propDD*(fPopn/iCarryCap)
   
   return(pMort)
 }
@@ -43,7 +43,7 @@ rtDensityDependence <- function( fPopn,
 #' This function is not used in the running of the simulation.
 #'
 #' @param vDensities a vector of densities to test
-#' @param iCC Carrying Capacity as an integer
+#' @param iCarryCap Carrying Capacity as an integer
 #' @param propDD proportion of mortality that is density dependent 
 #' @param pMort a mortality probability 
 #' 
@@ -51,15 +51,15 @@ rtDensityDependence <- function( fPopn,
 #' @export
 
 rtDDTest <- function( vDensities = c(0:20),
-                   iCC = 10,
+                   iCarryCap = 10,
                    propDD = 0.25,
                    pMort = 0.2 )
   
 { 
 
-  results <- data.frame(mortality=unlist(lapply( vDensities, function(x)  rtDDM(density=x,iCC=iCC,propDD=propDD,pMort=pMort))))
+  results <- data.frame(mortality=unlist(lapply( vDensities, function(x)  rtDDM(density=x,iCarryCap=iCarryCap,propDD=propDD,pMort=pMort))))
   results$density <- vDensities
-  results$relDensity <- vDensities / iCC
+  results$relDensity <- vDensities / iCarryCap
 
   plot(y=results$mortality,x=results$relDensity,type='l')
   abline(h=pMort,v=1,col='blue')
