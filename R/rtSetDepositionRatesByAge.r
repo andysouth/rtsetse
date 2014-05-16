@@ -41,7 +41,7 @@ rtSetDepositionRatesByAge <- function( vPopF,
   vpDeposit <- ifelse( vAges==iFirstLarva | ((vAges-iFirstLarva)>0 & (vAges-iFirstLarva)%%iInterLarva==0),1,0)
   
   #density dependence
-  #setting propMortDD to 0 can stop an density dependence being implemented
+  #setting propMortDD to 0 can stop density dependence being implemented
   if ( propMortDD > 0 )
     pMortLarva <- rtDensityDependence( fPopn = (sum(vPopF)+sum(vPopM)),
                                   pMort = pMortLarva,

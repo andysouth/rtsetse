@@ -4,9 +4,10 @@
 \usage{
 rtPhase1Test(iDays = 30, iMaxAge = 120, iCarryCap = 200,
   iStartAdults = 200, iStartAges = 1, pMortF = 0.05, pMortM = 0.05,
-  pMortPupa = 0.25, propMortPupaDD = 0.25, iPupDurF = 26, iPupDurM = 28,
-  iFirstLarva = 16, iInterLarva = 10, pMortLarva = 0.05,
-  propMortLarvaDD = 0.25, plot = FALSE, verbose = TRUE)
+  propMortAdultDD = 0.25, pMortPupa = 0.25, propMortPupaDD = 0.25,
+  iPupDurF = 26, iPupDurM = 28, iFirstLarva = 16, iInterLarva = 10,
+  pMortLarva = 0.05, propMortLarvaDD = 0.25, plot = FALSE,
+  verbose = TRUE)
 }
 \arguments{
   \item{iDays}{days to run simulation}

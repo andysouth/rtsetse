@@ -2,7 +2,7 @@
 \alias{rtMortality}
 \title{tsetse mortality}
 \usage{
-rtMortality(vFem, vMal, vpMortF, vpMortM)
+rtMortality(vFem, vMal, vpMortF, vpMortM, propDD = 0.25, iCarryCap = NA)
 }
 \arguments{
   \item{vFem}{a vector of the age distribution of Females}
@@ -20,10 +20,11 @@ a list containing vFem & vMal
 }
 \description{
 \code{rtMortality} returns a list of the age distributions
-of males & females \cr !It should check that the length of
-the age structure and pMort vectors are the same \cr It
-uses the length of the age structure vectors passed to it.
-\cr There could be an option to do F only if only F are
-passed.
+of males & females. \cr It accepts age and sex specific
+mortality probabilities. \cr !It should check that the
+length of the age structure and pMort vectors are the same
+\cr It uses the length of the age structure vectors passed
+to it. \cr There could be an option to do F only if only F
+are passed.
 }
 

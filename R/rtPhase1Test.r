@@ -32,6 +32,7 @@ rtPhase1Test <- function( iDays = 30,
                           iStartAges = 1,
                           pMortF = 0.05,
                           pMortM = 0.05,
+                          propMortAdultDD = 0.25,
                           pMortPupa = 0.25,
                           propMortPupaDD = 0.25,
                           iPupDurF = 26,
@@ -47,6 +48,7 @@ rtPhase1Test <- function( iDays = 30,
   #numMperF <- 1
   
   #vectors for death rates for males & females
+  #as a first test have mortality rates constant by age
   vpMortF <- rep(pMortF,iMaxAge) 
   vpMortM <- rep(pMortM,iMaxAge) 
   
@@ -54,8 +56,7 @@ rtPhase1Test <- function( iDays = 30,
   vPupaF <- rep(0,iPupDurF)
   vPupaM <- rep(0,iPupDurM)
   
-  #vectors for adults
-  #start pop blank
+  #vectors for adults - start pop blank
   vPopStartF <- rep(0,iMaxAge)
   vPopStartM <- rep(0,iMaxAge)
   
@@ -87,7 +88,9 @@ rtPhase1Test <- function( iDays = 30,
     ## mortality ##
     #!beware of potential bug of passing vectors in wrong order 
     #(remember ladies first) or do it a different way
-    lPop <- rtMortality( vPopF, vPopM, vpMortF, vpMortM )
+    lPop <- rtMortality( vPopF, vPopM, vpMortF, vpMortM, 
+                         propDD = propMortAdultDD,
+                         iCarryCap = iCarryCap) 
     vPopF <- lPop$vFem
     vPopM <- lPop$vMal  
   
