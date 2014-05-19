@@ -54,8 +54,9 @@ rtPhase1Test(iDays = 30, iMaxAge = 120, iCarryCap = 200,
   console}
 }
 \value{
-a list of lots, initially dataframes of adult age structure
-over time dfRecordF & M
+a list of lots: \cr dataframes of adult age structure over
+time dfRecordF & M \cr dataframes of adult age structure
+over time dfRecordPupa F & M
 }
 \description{
 \code{rtPhase1Test} runs an a-spatial popn simulation as a

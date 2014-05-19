@@ -22,7 +22,9 @@
 #' @param plot whether to plot graphs
 #' @param verbose whether to output progress messages to console 
 #' 
-#' @return a list of lots, initially dataframes of adult age structure over time dfRecordF & M
+#' @return a list of lots: 
+#' \cr dataframes of adult age structure over time dfRecordF & M
+#' \cr dataframes of adult age structure over time dfRecordPupa F & M
 #' @examples
 #' rtPhase1Test()
 #' @export
@@ -67,7 +69,6 @@ rtPhase1Test <- function( iDays = 30,
   vPopStartF[1:iStartAges] <- iStartAdults/(2*iStartAges)
   vPopStartM[1:iStartAges] <- iStartAdults/(2*iStartAges)
   
-  
   vPopF <- vPopStartF
   vPopM <- vPopStartM
   
@@ -75,6 +76,10 @@ rtPhase1Test <- function( iDays = 30,
   #could have a datframe with one column per day & rows are ages
   dfRecordF <- data.frame(day0=rev(vPopF))
   dfRecordM <- data.frame(day0=rev(vPopM))
+  #? i'm not sure it's necessary to record pupal age stucture, 
+  #but easier to do same way as adults
+  dfRecordPupaF <- data.frame(day0=rev(vPupaF))
+  dfRecordPupaM <- data.frame(day0=rev(vPupaM))  
   
   for( day in 1:iDays ) {
     
@@ -169,6 +174,8 @@ rtPhase1Test <- function( iDays = 30,
     ## record age structure
     dfRecordF[,paste0("day",day)] <- rev(vPopF)
     dfRecordM[,paste0("day",day)] <- rev(vPopM)  
+    dfRecordPupaF[,paste0("day",day)] <- rev(vPupaF)
+    dfRecordPupaM[,paste0("day",day)] <- rev(vPupaM)      
   } #end of days loop
   
   
@@ -184,7 +191,10 @@ rtPhase1Test <- function( iDays = 30,
   #returning the adult population record
   #! may want to change the structure of these outputs
   #maybe to a class
-  invisible( list( dfRecordF=dfRecordF, dfRecordM = dfRecordM ))
+  invisible( list( dfRecordF = dfRecordF
+                 , dfRecordM = dfRecordM
+                 , dfRecordPupaF = dfRecordPupaF
+                 , dfRecordPupaM = dfRecordPupaM))
   
   
   #popn pyramids
