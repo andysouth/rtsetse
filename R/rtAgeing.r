@@ -12,10 +12,13 @@ rtAgeing <- function( v, label )
 {
   
   #set all numbers in [age] to those from [age-1]
+  
   #!if there are any in the max age class they will be lost here
   #!add a warning to that effect
-  if ( v[length(v)] != 0 )
-    message("in rtAgeing members of final age class will be lost :",v[length(v)]," ",label)
+  #!disabled for now because it slows down shiny apps
+  #!bring it back at some stage
+  #if ( v[length(v)] != 0 )
+  #  message("in rtAgeing members of final age class will be lost :",v[length(v)]," ",label)
     #warning()
   
   #go down through ages to avoid double counting
