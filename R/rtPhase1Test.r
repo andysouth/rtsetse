@@ -26,7 +26,7 @@
 #' \cr dataframes of adult age structure over time dfRecordF & M
 #' \cr dataframes of adult age structure over time dfRecordPupa F & M
 #' @examples
-#' rtPhase1Test()
+#' tst <- rtPhase1Test()
 #' @export
 
 rtPhase1Test <- function( iDays = 30,

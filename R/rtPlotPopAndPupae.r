@@ -10,6 +10,10 @@
 #' @param title a title for the plot  
 #' 
 #' @return nothing
+#' @examples
+tst <- rtPhase1Test()
+rtPlotPopAndPupae(tst$dfRecordF, tst$dfRecordM, tst$dfRecordPupaF, tst$dfRecordPupaM)
+
 #' @export
 
 rtPlotPopAndPupae <- function( dfF,
