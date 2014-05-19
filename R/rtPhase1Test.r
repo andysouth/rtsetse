@@ -10,6 +10,7 @@
 #' @param iStartAges spread start adults across the first n ages classes
 #' @param pMortF adult female mortality per day 
 #' @param pMortM adult male mortality per day 
+#' @param propMortAdultDD proportion of adult mortality that is density dependent
 #' @param pMortPupa pupal mortality per period
 #' @param propMortPupaDD proportion of pupal mortality that is density dependent
 #' @param iPupDurF days it takes pupa(F) to develop
@@ -17,6 +18,7 @@
 #' @param iFirstLarva Age that female produces first larva
 #' @param iInterLarva Inter-larval period
 #' @param pMortLarva larval mortality per period
+#' @param propMortLarvaDD proportion of larval mortality that is density dependent
 #' @param plot whether to plot graphs
 #' @param verbose whether to output progress messages to console 
 #' 

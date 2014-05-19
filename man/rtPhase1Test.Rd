@@ -27,6 +27,9 @@ rtPhase1Test(iDays = 30, iMaxAge = 120, iCarryCap = 200,
 
   \item{pMortM}{adult male mortality per day}
 
+  \item{propMortAdultDD}{proportion of adult mortality that
+  is density dependent}
+
   \item{pMortPupa}{pupal mortality per period}
 
   \item{propMortPupaDD}{proportion of pupal mortality that
@@ -41,6 +44,9 @@ rtPhase1Test(iDays = 30, iMaxAge = 120, iCarryCap = 200,
   \item{iInterLarva}{Inter-larval period}
 
   \item{pMortLarva}{larval mortality per period}
+
+  \item{propMortLarvaDD}{proportion of larval mortality
+  that is density dependent}
 
   \item{plot}{whether to plot graphs}
 
