@@ -26,4 +26,8 @@ nothing
 \code{rtPlotPopAndPupae} plots change in pop from passed
 dataframes for males and females and pupae
 }
+\examples{
+tst <- rtPhase1Test()
+rtPlotPopAndPupae(tst$dfRecordF, tst$dfRecordM, tst$dfRecordPupaF, tst$dfRecordPupaM)
+}
 
