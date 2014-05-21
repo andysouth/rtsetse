@@ -1,0 +1,35 @@
+\name{rtSetMortRatesByAge}
+\alias{rtSetMortRatesByAge}
+\title{setting age specific mortality rates for Tsetse}
+\usage{
+rtSetMortRatesByAge(vPop, pMortAge1 = 0.14, iMortMinAgeStart = 10,
+  iMortMinAgeStop = 50, fMortMinProp = 0.2, fMortOldProp = 0.3)
+}
+\arguments{
+  \item{vPop}{a vector of age distribution (only used to
+  get length)}
+
+  \item{pMortAge1}{mortality rate at day 1 (the maximum)}
+
+  \item{iMortMinAgeStart}{Age at which min death rates
+  start.}
+
+  \item{iMortMinAgeStop}{Age at which min death rates
+  stop.}
+
+  \item{fMortMinProp}{What proportion of the maximum death
+  rate on day 0 is the minimum death rate.}
+
+  \item{fMortOldProp}{What proportion of the maximum death
+  rate on day 0 is the death rate after iDeathMinAgeStop.}
+}
+\value{
+a vector of larval deposition probabilities
+}
+\description{
+\code{rtSetMortRatesByAge} creates a vector of mortality
+rates by Age. Gets length of vector from vPop. Needs to be
+called separately for males & females. \cr As a first shot
+I have set defaults in between those for M&F.
+}
+
