@@ -4,10 +4,11 @@
 \usage{
 rtPhase1Test(iDays = 30, iMaxAge = 120, iCarryCap = 200,
   iStartAdults = 200, iStartAges = 1, pMortF = 0.05, pMortM = 0.05,
-  propMortAdultDD = 0.25, pMortPupa = 0.25, propMortPupaDD = 0.25,
-  iPupDurF = 26, iPupDurM = 28, iFirstLarva = 16, iInterLarva = 10,
-  pMortLarva = 0.05, propMortLarvaDD = 0.25, plot = FALSE,
-  verbose = TRUE)
+  iMortMinAgeStart = 10, iMortMinAgeStop = 50, fMortMinProp = 0.2,
+  fMortOldProp = 0.3, propMortAdultDD = 0.25, pMortPupa = 0.25,
+  propMortPupaDD = 0.25, iPupDurF = 26, iPupDurM = 28, iFirstLarva = 16,
+  iInterLarva = 10, pMortLarva = 0.05, propMortLarvaDD = 0.25,
+  plot = FALSE, verbose = TRUE)
 }
 \arguments{
   \item{iDays}{days to run simulation}
@@ -26,6 +27,18 @@ rtPhase1Test(iDays = 30, iMaxAge = 120, iCarryCap = 200,
   \item{pMortF}{adult female mortality per day}
 
   \item{pMortM}{adult male mortality per day}
+
+  \item{iMortMinAgeStart}{Age at which min death rates
+  start.}
+
+  \item{iMortMinAgeStop}{Age at which min death rates
+  stop.}
+
+  \item{fMortMinProp}{What proportion of the maximum death
+  rate on day 0 is the minimum death rate.}
+
+  \item{fMortOldProp}{What proportion of the maximum death
+  rate on day 0 is the death rate after iDeathMinAgeStop.}
 
   \item{propMortAdultDD}{proportion of adult mortality that
   is density dependent}

@@ -24,7 +24,7 @@ rtSetMortRatesByAge(vPop, pMortAge1 = 0.14, iMortMinAgeStart = 10,
   rate on day 0 is the death rate after iDeathMinAgeStop.}
 }
 \value{
-a vector of larval deposition probabilities
+a vector of mortality probabilities
 }
 \description{
 \code{rtSetMortRatesByAge} creates a vector of mortality

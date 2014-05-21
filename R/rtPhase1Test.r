@@ -10,6 +10,10 @@
 #' @param iStartAges spread start adults across the first n ages classes
 #' @param pMortF adult female mortality per day 
 #' @param pMortM adult male mortality per day 
+#' @param iMortMinAgeStart  Age at which min death rates start. 
+#' @param iMortMinAgeStop   Age at which min death rates stop.
+#' @param fMortMinProp  What proportion of the maximum death rate on day 0 is the minimum death rate.
+#' @param fMortOldProp  What proportion of the maximum death rate on day 0 is the death rate after iDeathMinAgeStop.
 #' @param propMortAdultDD proportion of adult mortality that is density dependent
 #' @param pMortPupa pupal mortality per period
 #' @param propMortPupaDD proportion of pupal mortality that is density dependent
@@ -36,6 +40,10 @@ rtPhase1Test <- function( iDays = 30,
                           iStartAges = 1,
                           pMortF = 0.05,
                           pMortM = 0.05,
+                          iMortMinAgeStart = 10,
+                          iMortMinAgeStop = 50,
+                          fMortMinProp = 0.2,
+                          fMortOldProp = 0.3,
                           propMortAdultDD = 0.25,
                           pMortPupa = 0.25,
                           propMortPupaDD = 0.25,
@@ -48,13 +56,7 @@ rtPhase1Test <- function( iDays = 30,
                           plot =  FALSE,
                           verbose = TRUE )
 {
-
-  #numMperF <- 1
-  
-  #vectors for death rates for males & females
-  #as a first test have mortality rates constant by age
-  vpMortF <- rep(pMortF,iMaxAge) 
-  vpMortM <- rep(pMortM,iMaxAge) 
+ 
   
   #vectors for pupae - empty to start
   vPupaF <- rep(0,iPupDurF)
@@ -71,6 +73,25 @@ rtPhase1Test <- function( iDays = 30,
   
   vPopF <- vPopStartF
   vPopM <- vPopStartM
+
+  #vectors for death rates for males & females
+  #as a first test have mortality rates constant by age
+  vpMortF <- rep(pMortF,iMaxAge) 
+  vpMortM <- rep(pMortM,iMaxAge) 
+  #age dependeny mortality
+  #!BEWARE the first arg is mortality on day1 rather than average mortality
+  vpMortF <- rtSetMortRatesByAge( vPop=vPopF, 
+                                  pMortAge1 = pMortF,
+                                  iMortMinAgeStart = iMortMinAgeStart,
+                                  iMortMinAgeStop = iMortMinAgeStop,
+                                  fMortMinProp = fMortMinProp,
+                                  fMortOldProp = fMortOldProp )  
+  vpMortM <- rtSetMortRatesByAge( vPop=vPopM, 
+                                  pMortAge1 = pMortM,
+                                  iMortMinAgeStart = iMortMinAgeStart,
+                                  iMortMinAgeStop = iMortMinAgeStop,
+                                  fMortMinProp = fMortMinProp,
+                                  fMortOldProp = fMortOldProp )   
   
   #?how might I store age structure data
   #could have a datframe with one column per day & rows are ages
