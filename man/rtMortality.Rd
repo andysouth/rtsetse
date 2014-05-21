@@ -14,6 +14,11 @@ rtMortality(vFem, vMal, vpMortF, vpMortM, propDD = 0.25, iCarryCap = NA)
 
   \item{vpMortM}{a vector of age-specific mortality
   probabilities of Males}
+
+  \item{propDD}{proportion of mortality that is density
+  dependent}
+
+  \item{iCarryCapPupa}{Carrying Capacity as an integer}
 }
 \value{
 a list containing vFem & vMal

@@ -10,6 +10,8 @@
 #' @param vMal a vector of the age distribution of Males 
 #' @param vpMortF a vector of age-specific mortality probabilities of Females 
 #' @param vpMortM a vector of age-specific mortality probabilities of Males 
+#' @param propDD proportion of mortality that is density dependent 
+#' @param iCarryCapPupa Carrying Capacity as an integer
 #' 
 #' @return a list containing vFem & vMal
 #' @export
