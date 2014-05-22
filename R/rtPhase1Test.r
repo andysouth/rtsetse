@@ -80,18 +80,18 @@ rtPhase1Test <- function( iDays = 30,
   vpMortM <- rep(pMortM,iMaxAge) 
   #age dependeny mortality
   #!BEWARE the first arg is mortality on day1 rather than average mortality
-  vpMortF <- rtSetMortRatesByAge( vPop=vPopF, 
-                                  pMortAge1 = pMortF,
-                                  iMortMinAgeStart = iMortMinAgeStart,
-                                  iMortMinAgeStop = iMortMinAgeStop,
-                                  fMortMinProp = fMortMinProp,
-                                  fMortOldProp = fMortOldProp )  
-  vpMortM <- rtSetMortRatesByAge( vPop=vPopM, 
-                                  pMortAge1 = pMortM,
-                                  iMortMinAgeStart = iMortMinAgeStart,
-                                  iMortMinAgeStop = iMortMinAgeStop,
-                                  fMortMinProp = fMortMinProp,
-                                  fMortOldProp = fMortOldProp )   
+#   vpMortF <- rtSetMortRatesByAge( vPop=vPopF, 
+#                                   pMortAge1 = pMortF,
+#                                   iMortMinAgeStart = iMortMinAgeStart,
+#                                   iMortMinAgeStop = iMortMinAgeStop,
+#                                   fMortMinProp = fMortMinProp,
+#                                   fMortOldProp = fMortOldProp )  
+#   vpMortM <- rtSetMortRatesByAge( vPop=vPopM, 
+#                                   pMortAge1 = pMortM,
+#                                   iMortMinAgeStart = iMortMinAgeStart,
+#                                   iMortMinAgeStop = iMortMinAgeStop,
+#                                   fMortMinProp = fMortMinProp,
+#                                   fMortOldProp = fMortOldProp )   
   
   #?how might I store age structure data
   #could have a datframe with one column per day & rows are ages
