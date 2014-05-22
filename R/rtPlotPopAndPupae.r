@@ -31,11 +31,15 @@ rtPlotPopAndPupae <- function( dfF,
   #transpose to make plotting easier
   vTotAdult <- t(dfTotF + dfTotM)
   vTotPupa <- t(dfTotPupaF + dfTotPupaM)  
+  vTotF <- t(dfTotF)  
+  vTotM <- t(dfTotM)  
   
-  plot(vTotAdult, type='l', xlab='day', ylab='numbers', col="red", main=title)
-  lines(vTotPupa,col='blue')
+  plot(vTotAdult, type='l', xlab='day', ylab='numbers', col="black", main=title, ylim=c(0,max(vTotAdult)))
+  lines(vTotPupa, col='green')
+  lines(vTotF, col='red',lty='dashed')
+  lines(vTotM, col='blue',lty='dotted' )
   
-  legend("top", legend=c("adults","pupae"), col=c("red","blue"), lty=1, horiz=TRUE)
+  legend("top", legend=c("adults","F","M","pupae"), col=c("black","red","blue","green"), lty=c(1,2,3,1), horiz=TRUE, bty='n')
   
 }
 #to test
