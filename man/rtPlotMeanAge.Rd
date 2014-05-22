@@ -2,11 +2,14 @@
 \alias{rtPlotMeanAge}
 \title{plots mean age of a popn over time}
 \usage{
-rtPlotMeanAge(df, title = NULL)
+rtPlotMeanAge(dfF, dfM = NA, title = NULL)
 }
 \arguments{
-  \item{df}{a dataframe of number of individuals with days
-  in columns and ages in rows}
+  \item{dfF}{a dataframe of number of females with days in
+  columns and ages in rows}
+
+  \item{dfM}{a dataframe of number of males with days in
+  columns and ages in rows}
 
   \item{title}{a title for the plot}
 }
@@ -14,8 +17,9 @@ rtPlotMeanAge(df, title = NULL)
 nothing
 }
 \description{
-\code{rtPlotMeanAge} plots change in mean age from a single
-passed dataframe
+\code{rtPlotMeanAge} plots change in mean age passed
+dataframes for males and females. Will also work on just a
+single dataframe.
 }
 \examples{
 tst <- rtPhase1Test(iDays=100)
