@@ -18,7 +18,7 @@ rtMortality(vFem, vMal, vpMortF, vpMortM, propDD = 0.25, iCarryCap = NA)
   \item{propDD}{proportion of mortality that is density
   dependent}
 
-  \item{iCarryCapPupa}{Carrying Capacity as an integer}
+  \item{iCarryCap}{Carrying Capacity as an integer}
 }
 \value{
 a list containing vFem & vMal
