@@ -103,4 +103,30 @@ dim(tst) <- dim(lGrid)
 tstRast <- raster(tst)
 plot(tstRast)
 
+#now can I use a matrix of ‘habitat’ values to initiate populations ?
+#although I am unlikely to want to run the gridded simulations using rtPhase1Test()
+#i can try to use it to test this
+#ideally I might use a matrix of input params to start simulations off in each grid cell
+#however be careful that I'm not doing this in a way that's more difficult than it needs to be
 
+#just as a thought, can I run rtPhaseTest for multiple cells using laply ?
+#tst <- laply(lGrid, rtPhase1Test, iDays=5 )
+#NO because this tries to use lGrid as the 2nd param for rtPhase1Test
+#I want laply to ignore lGrid as a passing param
+#but just run the function that many times & store the results in the list
+#probably need a different version of *ply to do that
+
+#I might just need to create a matrix of input params 
+mStartAdults <- matrix(c(1:9),nrow=3)
+###################################################################cool
+#note plyr:llply to output results as a list
+lGrid2 <- llply(mStartAdults, function(x) rtPhase1Test(iDays=5, iStartAdults=x) )
+#!cool this works but again the dimensions are lost, can be put back
+dim(lGrid2) <- dim(mStartAdults)
+
+tst <- laply(lGrid2, rtGetF, day=0, age=0 )
+dim(tst) <- dim(lGrid2)
+tstRast <- raster(tst)
+plot(tstRast)
+
+#note I could easily set iCarryCap using the cool llply line above
