@@ -130,3 +130,45 @@ tstRast <- raster(tst)
 plot(tstRast)
 
 #note I could easily set iCarryCap using the cool llply line above
+
+###############################################
+#now how to get flies to move from cell to cell
+
+#worry about edges later
+#just remind myself how Hat-trick does it, tricky see p16 in the manual
+#simple version
+#evacuation in 1 direction = mean daily displacement / cell width*4
+#uses a lookup to choose evacuation rate that gives realistic 30 day displacement 
+#daily displacement can also be modified by age, sex & vegetation
+#(although little data for any of these)
+
+#need to be slightly careful of double counting & overwriting
+#will want a separate grid
+
+#for each cell (& each age)
+#simplest movement algo
+#pop = pop - leavers + arrivers
+#leavers = pop * probLeave
+#arrivers = popNeighbour*probLeave/4
+#will need some modifiability due to cell size & movement params
+
+#thinking pseudocode to act on each cell
+#a cell will be specified by [x,y]
+#it's neighbours will be specified by 
+x <- 2
+y <- 2
+neighbx <- x + c(0, 0, -1, 1)
+neighby <- y + c(-1, 1, 0, 0)
+#can I get the dimensions of this cell in a dimensioned list or matrix ?
+
+m <- matrix(c(1:9),nrow=3)
+
+#these give the row & column ids respectively
+row(m)
+col(m)
+#but don't work when they are applied to a single element in an apply type func
+#llply(m, function(x) paste(row(x),",",col(x),"\n") )
+
+#getting there .....
+
+
