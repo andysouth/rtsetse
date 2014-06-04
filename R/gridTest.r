@@ -170,5 +170,72 @@ col(m)
 #llply(m, function(x) paste(row(x),",",col(x),"\n") )
 
 #getting there .....
+row(m)+1 #gives the row of the cells above each cell
+
+#clockwise neighbours starting at 12
+vNeighb4x <- c(0, 1, 0, -1)
+vNeighb4y <- c(1, 0, -1, 0)
+
+#row(m) + vNeighb4x
+#longer object length is not a multiple of shorter object length
+
+paste0(row(m),",",col(m))
+#gives coords of all cells but loses dimensions, may not matter
+#[1] "1,1" "2,1" "3,1" "1,2" "2,2" "3,2" "1,3" "2,3" "3,3"
+
+#Vectorize may help
+#llply(m, Vectorize(function(x) paste(row(x),",",col(x),"\n") ))
+#failed
+#llply(row(m), col(m), Vectorize(function(x,y) paste(x,",",xy,"\n") ))
+#failed
+
+f <- function(row_index, col_index) {paste0(row_index,",",col_index)}
+f(row(m), col(m))
+#works BUT I just want to be able to pass m to the function ?
+#or should I learn how to pass multiple args to functions in *apply
+
+#ah! the SO questioner had probalem that their function was using value rather than index
+#actually I want to use value
+#mply functions don't seem to do what I want, they take multiple arguments from columns of a dataframe
+
+#trying different way
+#http://www.r-bloggers.com/fast-conways-game-of-life-in-r/
+#making offset copies of a matrix
+#allW = cbind( rep(0,side) , X[,-side] )
+#allNW = rbind(rep(0,side),cbind(rep(0,side-1)
+#allN = rbind(rep(0,side),X[-side,])
+#allNE = rbind(rep(0,side),cbind(X[-side,-1],rep(0,side-1)))
+#allE = cbind(X[,-1],rep(0,side))
+#allSE = rbind(cbind(X[-1,-1],rep(0,side-1)),rep(0,side))
+#allS = rbind(X[-1,],rep(0,side))
+#allSW = rbind(cbind(rep(0,side-1),X[-1,-side]),rep(0,side))
+
+#creating a bigger matrix to test the below
+m <- matrix(0, nrow=10, ncol=10)
+m[5,5] <- 100
+
+##########LOOKING GOOD
+#this puts zeros in, but I could modify it to copy the boundary cell
+#simply by replacing these bits rep(0,nrow(m))
+mW = cbind( rep(0,nrow(m)), m[,-nrow(m)] )
+mN = rbind( rep(0,ncol(m)), m[-ncol(m),] )
+mE = cbind( m[,-1], rep(0,nrow(m)) )
+mS = rbind( m[-1,], rep(0,ncol(m)) )
+
+#check seems right
+#mN
+#mE
+#mS
+#mW
+
+#prelim movement test
+pMove <- 0.25
+mArrivers <- pMove*(mN + mE + mS + mW)/4
+mStayers <- (1-pMove)*m
+mNew <- mArrivers + mStayers
+mNew
+m <- mNew #ready to repeat
+
+
 
 
