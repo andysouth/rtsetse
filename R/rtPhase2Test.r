@@ -29,12 +29,9 @@ for( day in 1:iDays ) {
 
   ##################
   ## adult ageing ##
-  #vPopF <- rtAgeing(vPopF, label="adult F")
-  #I now want to apply for all matrix cells
-  #aOut <- aaply(aF, .margins=3, rtMove1 )
-  
   #.drop=FALSE makes it work for 1x1 grid
   aF <- aaply(aF, .margins=c(1,2), .drop=FALSE, rtAgeing )
+  
   
   ##############
   ## movement ##
@@ -44,7 +41,7 @@ for( day in 1:iDays ) {
   
   #cat("day",day,"\n")
   
-  aF
+  #aF
   
 } #end of iDays loop
 
