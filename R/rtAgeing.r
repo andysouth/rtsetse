@@ -22,14 +22,17 @@ rtAgeing <- function( v, label )
     #warning()
   
   #go down through ages to avoid double counting
-  for( age in length(v):2 )  {
-    v[age] <- v[age-1]    
-  }
-
-  #set age 1 to 0 to avoid potential bugs
-  v[1] <- 0
+#   for( age in length(v):2 )  {
+#     v[age] <- v[age-1]    
+#   }
+#   #set age 1 to 0 to avoid potential bugs
+#   v[1] <- 0
+  
+  #how to do this in a vectorised way
+  #can just use c() & stick a zero on the start
+  v2 <- c(0,v[-length(v)])
   
   #returning updated vector
-  invisible( v )
+  invisible( v2 )
   
 } 
