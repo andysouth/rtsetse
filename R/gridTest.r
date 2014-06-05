@@ -236,6 +236,149 @@ mNew <- mArrivers + mStayers
 mNew
 m <- mNew #ready to repeat
 
+#thinking about movement & age structure
+#currently I have a vector of ages in each matrix cell
+#I might need to extract a matrix for each age
+#do the movement & then put it back into each vector
+#that sounds time costly
+#ideally I would pass the matrix of vectors and it would sort it ...
+#seems unlikely
 
+rtMove1 <- function(m, pMove=0.4)
+{
+  #this puts zeros in, but I could modify it to copy the boundary cell
+  #simply by replacing these bits rep(0,nrow(m))
+  mW = cbind( rep(0,nrow(m)), m[,-nrow(m)] )
+  mN = rbind( rep(0,ncol(m)), m[-ncol(m),] )
+  mE = cbind( m[,-1], rep(0,nrow(m)) )
+  mS = rbind( m[-1,], rep(0,ncol(m)) )
+  
+  #check seems right
+  #mN
+  #mE
+  #mS
+  #mW
+  
+  mArrivers <- pMove*(mN + mE + mS + mW)/4
+  mStayers <- (1-pMove)*m
+  
+  mNew <- mArrivers + mStayers
+  return( mNew )
+  #m <- mNew #ready to repeat
+}
+
+#getting a single age into a matrix
+mGridFAge1 <- laply(lGrid, rtGetF, day=1, age=1 )
+dim(mGridFAge1) <- dim(lGrid)
+#testing movement on that object
+rtMove1(mGridFAge1)
+#works OK
+#how would I put that back into each age class in the vectors
+#might need an rtSetF
+
+#day is only here temporarily
+#likely that I'll only want to do this for current day
+#day stuff will be dealt with in recording
+#lPop the list of popn stuff held for each cell
+#fPop the value to use to set pop for that age
+rtSetF <- function( lPop,
+                    fPop,
+                    day = 0,
+                    age = 0 )
+{
+  
+  sDayName <- paste0("day",day)
+  
+  #!beware that age currently reversed
+  index <- nrow(lPop$dfRecordF) - age
+  lPop$dfRecordF[[sDayName]][index] <- fPop
+  
+  return(list(lPop))
+}
+
+#eek this is getting tricky
+#this might only return a list containing not all I want
+#but it might work ...
+lGrid2 <- laply(lGrid, rtSetF, fPop=1.14, day=1, age=1 )
+dim(lGrid2) <- dim(lGrid)
+#this shows that the above works
+lGrid2[[1]][["dfRecordF"]][["day1"]][119]
+#But I would want to pass a matrix of pop values, not just 1
+#lGrid2 <- laply(lGrid, rtSetF, fPop=mGridFAge1, day=1, age=1 )
+##number of items to replace is not a multiple of replacement length
+
+#I want to keep this simpler
+#currently for testing I'm using the popn record objects
+
+#BUT the current day can be recorded differently
+#this is also relevant to how I'm going to run the model
+#for multiple grid cells
+
+#?? might I be able to use an array, with dimensions for age,x & y
+#well 4 arrays, F,M,pupF,pupM
+
+nRow <- 10
+nCol <- 10
+nAge <- 7
+#dimnames a list with one component for each dimension, NULL or a character vector of the length given by dim. 
+#The list can be named, and the list names will be used as names for the dimensions.
+dimnames <- list(NULL,NULL,NULL)
+names(dimnames) <- c("x","y","age")
+aF <- array(0, dim=c(nCol,nRow,nAge), dimnames=dimnames)
+#adding 100 females of age 3 at 5,5
+aF[5,5,3] <- 100
+#to get a matrix for one age class
+#cool
+aF[,,3]
+class(aF[,,3])
+#[1] "matrix"
+#cool so it could be displayed by raster
+#also I can easily fill a constant age structure
+aF[5,5,] <- 100
+aF[5,5,]
+#so can I move all age classes with a single line ?
+#beware that I don't disallow dispersal rate changing with age & habitat
+
+#moving a single age class
+rtMove1(aF[,,1])
+#can I move all age classes
+alply(aF, .margins=c(1,2), function(x) rtMove1(aF[,,x]) )
+#Error: incorrect number of dimensions
+#ooooo this seems to do it
+alply(aF, .margins=c(3), function(x) rtMove1(x) )
+lOut <- alply(aF, .margins=c(3), function(x) rtMove1(x) )
+#this does same with even less code
+lOut <- alply(aF, .margins=3, rtMove1 )
+#outputs a list with one matrix for each age
+str(lOut)
+#List of 7
+#$ 1: num [1:10, 1:10] 0 0 0 0 0 0 0 0 0 0 ...
+#$ 2: num [1:10, 1:10] 0 0 0 0 0 0 0 0 0 0 ...
+#$ 3: num [1:10, 1:10] 0 0 0 0 0 0 0 0 0 0 ...
+#$ 4: num [1:10, 1:10] 0 0 0 0 0 0 0 0 0 0 ...
+#$ 5: num [1:10, 1:10] 0 0 0 0 0 0 0 0 0 0 ...
+#$ 6: num [1:10, 1:10] 0 0 0 0 0 0 0 0 0 0 ...
+#$ 7: num [1:10, 1:10] 0 0 0 0 0 0 0 0 0 0 ...
+#- attr(*, "split_type")= chr "array"
+#- attr(*, "split_labels")='data.frame':  7 obs. of  1 variable:
+#  ..$ age: Factor w/ 7 levels "1","2","3","4",..: 1 2 3 4 5 6 7
+
+#creating stackoverflow question
+nRow <- 10
+nCol <- 10
+nAge <- 7
+#creating the array
+dimnames <- list(NULL,NULL,NULL)
+names(dimnames) <- c("x","y","age")
+aF <- array(0, dim=c(nCol,nRow,nAge), dimnames=dimnames)
+
+#aaply the identity function to the 3rd dimension
+aTst <- aaply(aF, .margins=3, identity )
+dim(aF)
+#[1] 10 10  7
+dim(aTst)
+#[1]  7 10 10
+#I'm aware it can be changed back using aperm but if I can avoid that it would be good.
+aTst2 <- aperm(aTst, c(2, 3, 1))
 
 
