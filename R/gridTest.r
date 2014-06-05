@@ -264,7 +264,6 @@ rtMove1 <- function(m, pMove=0.4)
   
   mNew <- mArrivers + mStayers
   return( mNew )
-  #m <- mNew #ready to repeat
 }
 
 #getting a single age into a matrix
@@ -363,12 +362,19 @@ str(lOut)
 #- attr(*, "split_labels")='data.frame':  7 obs. of  1 variable:
 #  ..$ age: Factor w/ 7 levels "1","2","3","4",..: 1 2 3 4 5 6 7
 
+#####################################
+#This produces an array output
+aOut <- aaply(aF, .margins=3, rtMove1 )
+#and can be used for ageing too
+aOut <- aaply(aF, .margins=3, rtAgeing )
+
 #creating stackoverflow question
 nRow <- 10
 nCol <- 10
 nAge <- 7
 #creating the array
-dimnames <- list(NULL,NULL,NULL)
+#dimnames <- list(NULL,NULL,NULL)
+dimnames <- list(seq(nCol),seq(nRow),seq(nAge))
 names(dimnames) <- c("x","y","age")
 aF <- array(0, dim=c(nCol,nRow,nAge), dimnames=dimnames)
 
@@ -381,4 +387,101 @@ dim(aTst)
 #I'm aware it can be changed back using aperm but if I can avoid that it would be good.
 aTst2 <- aperm(aTst, c(2, 3, 1))
 
+#initiate 100 individuals of age 3 at 5,5
+aF[5,5,3] <- 100
+#age all individuals by moving up to the next age class
+aTst3 <- aaply(aF, .margins=3, function(v) c(0,v[-length(v)]) )
+#Why does this collapse the spatial dimension to 100 ?
+dim(aTst3)
+#[1]   7 100
+#when calling rtAgeing didn't ?
+aOut <- aaply(aF, .margins=3, rtAgeing )
+dim(aOut)
+#[1]   7 10 10
+olden <- function(v) { c(0,v[-length(v)])
+                       v }
 
+olden2 <- function(v) { 
+   for( age in length(v):2 )  {
+     v[age] <- v[age-1]    
+   }
+   #set age 1 to 0 to avoid potential bugs
+   v[1] <- 0
+   
+   v
+}
+
+aOut <- aaply(aF, .margins=3, olden )
+dim(aOut)
+#[1]   7 100
+
+tst <- olden(v)
+tst2 <- olden2(v)
+
+identical(tst,tst2)
+#[1] TRUE
+
+
+#initiate 100 individuals of age 3 at 5,5
+aF[5,5,3] <- 100
+#age all individuals by moving up to the next age class
+olden <- function(v) { v2 <- c(0,v[-length(v)])
+                       names(v2) <- names(v)
+                       v2 }
+
+aTst <- aaply(aF, .margins=3, olden )
+aTst2 <- aaply(aF, .margins=3, olden2 )
+
+dim(aTst)
+dim(aTst2)
+
+aTst[4,]
+
+#I don't get it
+#the outputs of the functions olden & olden2 are identical
+#but when they are called from aaply they produce a different result
+
+#maybe neither is doing what I want ?
+#neither seems to be ageing when looking at the matrix output
+
+##################### NEW
+
+nRow <- 3
+nCol <- 3
+nAge <- 4
+
+dimnames <- list(NULL,NULL,NULL)
+#dimnames <- list(seq(nCol),seq(nRow),seq(nAge))
+names(dimnames) <- c("x","y","age")
+aF <- array(0, dim=c(nCol,nRow,nAge), dimnames=dimnames)
+
+#initiate 100 individuals of age 1
+aF[2,2,1] <- 100
+
+aTst <- aaply(aF, .margins=3, olden )
+aTst2 <- aaply(aF, .margins=3, olden2 )
+
+dim(aTst)
+dim(aTst2)
+
+aTst
+aTst2
+
+#individuals aren't getting older, they are moving
+#aha! this does what I want set .margins=c(1,2)
+aTst2 <- aaply(aF, .margins=c(1,2), olden2 )
+aTst <- aaply(aF, .margins=c(1,2), olden )
+
+## and it solves my earlier problem !!
+#now it does return the array with the dimensions in the same order as they are passed
+
+#Ah no it only returns in the same order when the dimensions passed are the first
+#for movement it doesn't
+
+#To add to stackoverflow post
+#initiate 100 individuals of age 3 at 5,5
+aF[5,5,3] <- 100
+
+aTst <- aaply(aF, .margins=3, rtMove1 )
+
+aTst[3,,]
