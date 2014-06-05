@@ -27,5 +27,9 @@ rtMove1 <- function(m, pMove=0.4) {
   mStayers <- (1-pMove)*m
   
   mNew <- mArrivers + mStayers
+  
+  #this avoids duplicate levels problems outside the function
+  dimnames(mNew) <- dimnames(m)
+  
   return( mNew )
 }
