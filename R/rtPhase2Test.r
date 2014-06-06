@@ -25,6 +25,14 @@ aF[5,5,3] <- 100
 #to get a matrix for one age class
 #aF[,,3]
 
+# the most sensible way to save popn record
+# would seem to be to use abind to just add another dimension
+library(abind)
+aRecordF <- abind(aF,along=0) #along=0 binds on new dimension before first
+#! look at keeping names(dimnames(aRecordF))
+#! even with this they get lost later
+names(dimnames(aRecordF)) <- c('day','x','y','age')
+
 for( day in 1:iDays ) {
 
   ##################
@@ -43,7 +51,21 @@ for( day in 1:iDays ) {
   
   #aF
   
+  #dim(abind(x,y,along=0))     # binds on new dimension before first
+  #dim(abind(x,y,rev.along=0)) # binds on new dimension after last
+  aRecordF <- abind(aRecordF, aF, along=1, use.first.dimnames=TRUE) #along=1 binds on first dimension
+  
+  
 } #end of iDays loop
 
+
+#showing how records can be accessed
+aRecordF[1,,,3] #grid for day1, age3
+aRecordF[2,,,4] #grid for day2, age4
+aRecordF[3,,,5] #grid for day3, age5
+aRecordF[3,,,5]
+
+aRecordF[3,,,] #separate grids for all ages on one day
+aRecordF[3,5,5,] #age structure in one cell on one day
 
 
