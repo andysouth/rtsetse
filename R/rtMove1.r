@@ -18,10 +18,44 @@ rtMove1 <- function(m, pMove=0.4) {
   #this puts zeros in, but I could modify it to copy the boundary cell
   #simply by replacing these bits rep(0,nrow(m))
   #that would create reflecting boundaries.
-  mW = cbind( rep(0,nrow(m)), m[,-nrow(m)] )
-  mN = rbind( rep(0,ncol(m)), m[-ncol(m),] )
-  mE = cbind( m[,-1], rep(0,nrow(m)) )
-  mS = rbind( m[-1,], rep(0,ncol(m)) )
+  
+  #!beware that this doesn't cope with nrow=1 or ncol=1 
+  #in such a case you can probably use c() rather than cbind
+  #but it's tricky to work out, R treats vectors and matrices differently
+  #m=matrix(1,nrow=1,ncol=3) #to test
+  #it's not something we need to do at this stage
+#   if( nrow(m) < 2 | ncol(m) < 2 )
+#      stop("movement does not work if less than 2 grid rows or columns")
+#   
+#   mW = cbind( rep(0,nrow(m)), m[,-ncol(m)] )
+#   mN = rbind( rep(0,ncol(m)), m[-nrow(m),] )
+#   mE = cbind( m[,-1], rep(0,nrow(m)) )
+#   mS = rbind( m[-1,], rep(0,ncol(m)) )
+ 
+  #trying to get it to cope with nrow=1 or ncol=1  
+  mW <- rep(0,nrow(m))
+  mE <- rep(0,nrow(m)) 
+  #!!BEWARE this is genius but tricky
+  #1st case copes with if nrow==1
+  #need to treat as vector not matrix
+  if ( nrow(m) <2 & ncol(m) > 1 ){
+    mW = c( mW, m[,-ncol(m)] )
+    mE = c( m[,-1], mE )   
+  } else if ( ncol(m) > 1 ){
+    mW = cbind( mW, m[,-ncol(m)] )
+    mE = cbind( m[,-1], mE )
+  } 
+  
+  mN <- rep(0,ncol(m))
+  mS <- rep(0,ncol(m))
+  #1st case copes with if ncol==1
+  if ( ncol(m) <2 & nrow(m) > 1 ){  
+    mN = c( mN, m[-nrow(m),] )
+    mS = c( m[-1,], mS )    
+  } else if ( nrow(m) > 1 ){
+    mN = rbind( mN, m[-nrow(m),] )
+    mS = rbind( m[-1,], mS )
+  }   
   
   mArrivers <- pMove*(mN + mE + mS + mW)/4
   mStayers <- (1-pMove)*m
@@ -33,3 +67,7 @@ rtMove1 <- function(m, pMove=0.4) {
   
   return( mNew )
 }
+
+#a test on 1D matrix
+m=matrix(c(0,1,0),nrow=1,ncol=3)
+rtMove1(m)
