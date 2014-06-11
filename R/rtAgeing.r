@@ -30,9 +30,10 @@ rtAgeing <- function( v, label )
   
   #how to do this in a vectorised way
   #can just use c() & stick a zero on the start
-  v2 <- c(0,v[-length(v)])
+  #v2 <- c(0,v[-length(v)])
+  v <- c(0,v[-length(v)])
   
   #returning updated vector
-  invisible( v2 )
+  invisible( v )
   
 } 
