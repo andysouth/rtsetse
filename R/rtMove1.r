@@ -31,7 +31,15 @@ rtMove1 <- function(m, pMove=0.4) {
 #   mN = rbind( rep(0,ncol(m)), m[-nrow(m),] )
 #   mE = cbind( m[,-1], rep(0,nrow(m)) )
 #   mS = rbind( m[-1,], rep(0,ncol(m)) )
- 
+
+  #to cope with nrow=1 or ncol=1 
+  #in which case the passed object is likely to be a vector not an array
+  #!but not sure I'll be able to tell which dimension?
+  #if ( nrow(m) < 2 & ncol(m) < 2 )
+  
+  #to speed up can just return if there are no popns in matrix
+  if ( sum(m)==0 ) return(m)
+  
   #trying to get it to cope with nrow=1 or ncol=1  
   mW <- rep(0,nrow(m))
   mE <- rep(0,nrow(m)) 
@@ -69,5 +77,6 @@ rtMove1 <- function(m, pMove=0.4) {
 }
 
 #a test on 1D matrix
-m=matrix(c(0,1,0),nrow=1,ncol=3)
-rtMove1(m)
+#!create a unit-test based on this
+#m=matrix(c(0,1,0),nrow=1,ncol=3)
+#rtMove1(m)
