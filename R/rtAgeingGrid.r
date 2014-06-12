@@ -24,7 +24,7 @@ rtAgeingGrid <- function( a, label )
   #############################
   #intermediate test without Cpp
   #this is still slow, removing .drop=FALSE didn't decrease speed
-  #37 secs
+  #37 secs (4 days 100x100)
 #   a <- aaply(a, .margins=c(1,2),.drop=FALSE, function(v) c(0,v[-length(v)]) )
   
   #try speed of a loop, this was faster than the above, 9 secs rather than 37

@@ -53,6 +53,19 @@ rtPhase2Test <- function( nRow = 10,
   
   for( day in 1:iDays ) {
     
+    ###############
+    ## mortality ##
+    #this is how it's done in rtPhase1Test
+    #!beware of potential bug of passing vectors in wrong order 
+    #(remember ladies first) or do it a different way
+    #lPop <- rtMortality( vPopF, vPopM, vpMortF, vpMortM, 
+    #                     propDD = propMortAdultDD,
+    #                     iCarryCap = iCarryCap) 
+    #vPopF <- lPop$vFem
+    #vPopM <- lPop$vMal  
+
+
+    
     ##################
     ## adult ageing ##
     #.drop=FALSE makes it work for 1x1 grid
