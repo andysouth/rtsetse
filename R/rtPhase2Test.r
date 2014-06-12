@@ -14,7 +14,7 @@
 rtPhase2Test <- function( nRow = 10,
                           nCol = 10,
                           pMove = 0.4,
-                          iDays = 8,
+                          iDays = 4,
                           iMaxAge = 120,
                           iCarryCap = 200,
                           iStartAdults = 200,
@@ -32,7 +32,7 @@ rtPhase2Test <- function( nRow = 10,
   names(dimnames) <- c("x","y","age")
   aF <- array(0, dim=c(nCol,nRow,iMaxAge), dimnames=dimnames)
   
-  #adding half of starting adults as females at 5,5
+  #adding half of starting adults as females at a central cell
   #aF[5,5,3] <- iStartAdults/2
   #2 params allow number and spread of flies across age classes to be set
   aF[(nCol+1)/2, (nRow+1)/2, 1:iStartAges] <- iStartAdults/(2*iStartAges)
@@ -56,14 +56,21 @@ rtPhase2Test <- function( nRow = 10,
     ##################
     ## adult ageing ##
     #.drop=FALSE makes it work for 1x1 grid
-    aF <- aaply(aF, .margins=c(1,2), .drop=FALSE, rtAgeing )
+    #aF <- aaply(aF, .margins=c(1,2), .drop=FALSE, rtAgeing )
+    
+    #an intermediate test (before trying cpp) 
+    #passing the whole grid to rtAgeing
+    aF <- rtAgeingGrid(aF)
+    
     #the third dimension (age) loses it's label
     #just trying putting it back to see if that solves
     #"duplicated levels in factors are deprecated"
-    names(dimnames(aF)) <- c('x','y','age')
-    #trying to empty the dimnames themselves
     #!this corrected the warnings
     dimnames(aF) <- list(NULL,NULL,NULL)
+    
+    names(dimnames(aF)) <- c('x','y','age')
+
+
     
     
     ##############
@@ -72,7 +79,13 @@ rtPhase2Test <- function( nRow = 10,
     if( nRow > 1 | nCol > 1) {
       #aF <- aaply(aF, .margins=3, rtMove1 )
       #to pass the pMove arg to rtMove1
-      aF <- aaply(aF, .margins=3, .drop=FALSE, function(m) rtMove1(m, pMove=pMove) )    
+      aF <- aaply(aF, .margins=3, .drop=FALSE, function(m) rtMove1(m, pMove=pMove) )     
+      
+      #try apply which is faster
+      #but caused an error with aperm because the xy dimensions are lost
+      #aF <- apply(aF, MARGIN=3, function(m) rtMove1(m, pMove=pMove) )   
+      
+      
       #putting array components back in correct order
       aF <- aperm(aF, c(2, 3, 1))     
     }

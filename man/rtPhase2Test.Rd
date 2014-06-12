@@ -2,7 +2,7 @@
 \alias{rtPhase2Test}
 \title{a simple spatial tsetse population simulation, a test of phase2}
 \usage{
-rtPhase2Test(nRow = 10, nCol = 10, pMove = 0.4, iDays = 8,
+rtPhase2Test(nRow = 10, nCol = 10, pMove = 0.4, iDays = 4,
   iMaxAge = 120, iCarryCap = 200, iStartAdults = 200, iStartAges = 1,
   pMortF = 0.05)
 }

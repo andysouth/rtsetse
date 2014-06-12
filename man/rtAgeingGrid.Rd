@@ -1,0 +1,21 @@
+\name{rtAgeingGrid}
+\alias{rtAgeingGrid}
+\title{ageing of adults or pupae in all cells on a passed grid}
+\usage{
+rtAgeingGrid(a, label)
+}
+\arguments{
+  \item{a}{an array of the age distributions in each grid
+  cell [x,y,age]}
+
+  \item{label}{a string describing what is being passed,
+  added to any warning messages}
+}
+\value{
+an updated array
+}
+\description{
+\code{rtAgeingGrid} advances the age of all classes in the
+vectors in each cell of the passed grid
+}
+
