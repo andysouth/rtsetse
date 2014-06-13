@@ -42,6 +42,34 @@ rtPhase2Test <- function( nRow = 10,
   #to test the aspatial model
   #aF[1,1,3] <- 100
   
+  #starting to exlplore whether I can have an array with M&F
+  #to pass to mortality function
+  # 'x','y','age','sex'
+  #dimnames <- list(NULL,NULL,NULL,NULL)
+  #dimnames <- list(1:nCol,1:nRow,c("F","M"),1:iMaxAge)
+  dimnames <- list( paste0('x',1:nCol), paste0('y',1:nRow), c("F","M"), paste0('age',1:iMaxAge))
+  names(dimnames) <- c("x","y","sex","age")
+  aGrid <- array(0, dim=c(nCol,nRow,2,iMaxAge), dimnames=dimnames)  
+  #this might fill in both M&F
+  #adding half of starting adults as each gender to starting cell
+  #2 params allow number and spread of flies across age classes to be set
+  aGrid[(nCol+1)/2, (nRow+1)/2, , 1:iStartAges] <- iStartAdults/(2*iStartAges)
+  
+  #trying to see how I can access dimensions by name 
+  aGrid['x1','y1','M',] #an age structure for one cell
+  sum(aGrid['x1','y1','M',]) #total M in one cell
+  sum(aGrid['x1','y1',,]) #total pop in one cell
+  aGrid[,,'M','age2'] #a grid of one age  
+  apply(aGrid,MARGIN=c(3,4),sum) #a summed age structures for M&F
+  apply(aGrid,MARGIN=4,sum) #summed age structures for both sexes  
+  apply(aGrid,MARGIN=c(1,2),sum) #grid for all ages & sexes
+  #using names
+  apply(aGrid,MARGIN=c('x','y'),sum) #grid for all ages & sexes
+  apply(aGrid,MARGIN=c('age'),sum) #summed age structure for whole pop
+  apply(aGrid,MARGIN=c('sex'),sum) #summed sex ratio for whole pop  
+  #using apply on subset
+  
+  
   
   # the most sensible way to save popn record
   # would seem to be to use abind to just add another dimension
