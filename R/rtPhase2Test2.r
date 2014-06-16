@@ -49,6 +49,12 @@ rtPhase2Test2 <- function( nRow = 10,
   #2 params allow number and spread of flies across age classes to be set
   aGrid[(nCol+1)/2, (nRow+1)/2, , 1:iStartAges] <- iStartAdults/(2*iStartAges)
   
+  #create a matrix for carrying capacity on the grid
+  #first test make it constant
+  #I could name the dimensions, x & y here
+  mCarryCap <- matrix(iCarryCap, nrow=nRow, ncol=nCol)
+  
+  
   #trying to see how I can access dimensions by name 
 #   aGrid['x1','y1','M',] #an age structure for one cell
 #   sum(aGrid['x1','y1','M',]) #total M in one cell
@@ -86,8 +92,7 @@ rtPhase2Test2 <- function( nRow = 10,
     #vPopF <- lPop$vFem
     #vPopM <- lPop$vMal  
     
-    #! haven't added DD yet
-    aGrid <- rtMortalityGrid( aGrid, vpMortF, vpMortM, loop=loop )
+    aGrid <- rtMortalityGrid( aGrid, vpMortF, vpMortM, mCarryCap=mCarryCap, loop=loop )
     
     
     ##################

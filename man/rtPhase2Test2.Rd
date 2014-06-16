@@ -4,7 +4,7 @@
 \usage{
 rtPhase2Test2(nRow = 10, nCol = 10, pMove = 0.4, iDays = 4,
   iMaxAge = 7, iCarryCap = 200, iStartAdults = 200, iStartAges = 1,
-  pMortF = 0.05, pMortM = 0.05)
+  pMortF = 0.05, pMortM = 0.05, loop = TRUE)
 }
 \value{
 a multi-dimensional array [day,x,y,sex,ages]

@@ -75,9 +75,9 @@ rtMortalityGrid <- function( aGrid,
     for(x in seq_along(dimnames(aGrid)$x)){
       for(y in seq_along(dimnames(aGrid)$y)){
         
-        #just get carry cap from the matrix
-        #iCarryCap <- mCarryCap[x,y]   
-        iCarryCap <- 200
+        #get carry cap from the matrix
+        iCarryCap <- mCarryCap[x,y]   
+        #iCarryCap <- 200
 
 # this is done in rtMortality() so not needed here        
 #         if ( propDD > 0 )

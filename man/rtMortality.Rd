@@ -2,7 +2,8 @@
 \alias{rtMortality}
 \title{tsetse mortality}
 \usage{
-rtMortality(vFem, vMal, vpMortF, vpMortM, propDD = 0.25, iCarryCap = NA)
+rtMortality(vFem, vMal, vpMortF, vpMortM, propDD = 0.25,
+  returnArray = FALSE, iCarryCap = NA)
 }
 \arguments{
   \item{vFem}{a vector of the age distribution of Females}
@@ -17,6 +18,9 @@ rtMortality(vFem, vMal, vpMortF, vpMortM, propDD = 0.25, iCarryCap = NA)
 
   \item{propDD}{proportion of mortality that is density
   dependent}
+
+  \item{returnArray}{= FALSE, to allow testing new way of
+  returning result as an array}
 
   \item{iCarryCap}{Carrying Capacity as an integer}
 }
