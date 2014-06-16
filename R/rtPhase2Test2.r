@@ -20,7 +20,8 @@ rtPhase2Test2 <- function( nRow = 10,
                           iStartAdults = 200,
                           iStartAges = 1,
                           pMortF = 0.05,
-                          pMortM = 0.05 )
+                          pMortM = 0.05,
+                          loop = TRUE)
 {
   
   ##some argument checking
@@ -40,9 +41,9 @@ rtPhase2Test2 <- function( nRow = 10,
   # 'x','y','sex','age'
   #dimnames <- list(NULL,NULL,NULL,NULL)
   #dimnames <- list(1:nCol,1:nRow,c("F","M"),1:iMaxAge)
-  dimnames <- list( paste0('x',1:nCol), paste0('y',1:nRow), c("F","M"), paste0('age',1:iMaxAge))
-  names(dimnames) <- c("x","y","sex","age")
-  aGrid <- array(0, dim=c(nCol,nRow,2,iMaxAge), dimnames=dimnames)  
+  dimnames1 <- list( paste0('x',1:nCol), paste0('y',1:nRow), c("F","M"), paste0('age',1:iMaxAge))
+  names(dimnames1) <- c("x","y","sex","age")
+  aGrid <- array(0, dim=c(nCol,nRow,2,iMaxAge), dimnames=dimnames1)  
   #this might fill in both M&F
   #adding half of starting adults as each gender to starting cell
   #2 params allow number and spread of flies across age classes to be set
@@ -86,7 +87,7 @@ rtPhase2Test2 <- function( nRow = 10,
     #vPopM <- lPop$vMal  
     
     #! haven't added DD yet
-    aGrid <- rtMortalityGrid( aGrid, vpMortF, vpMortM )
+    aGrid <- rtMortalityGrid( aGrid, vpMortF, vpMortM, loop=loop )
     
     
     ##################

@@ -11,6 +11,7 @@
 #' @param vpMortF a vector of age-specific mortality probabilities of Females 
 #' @param vpMortM a vector of age-specific mortality probabilities of Males 
 #' @param propDD proportion of mortality that is density dependent 
+#' @param returnArray = FALSE, to allow testing new way of returning result as an array
 #' @param iCarryCap Carrying Capacity as an integer
 #' 
 #' @return a list containing vFem & vMal
@@ -21,6 +22,7 @@ rtMortality <- function( vFem,
                          vpMortF,
                          vpMortM,
                          propDD = 0.25,
+                         returnArray = FALSE,
                          iCarryCap = NA ) #?not sure whether to provide a default for iCarryCap
 {
 
@@ -33,12 +35,15 @@ rtMortality <- function( vFem,
   #surprisingly it seems to work on vectors as well as single values
   if ( propDD > 0 )
   {
-    vpMortF <- rtDensityDependence( fPopn= (sum(vFem)+sum(vMal)),
+    #total pop in the cell
+    fPopn <- (sum(vFem)+sum(vMal)) #sum(aGrid[x,y,,])
+    
+    vpMortF <- rtDensityDependence( fPopn = fPopn,
                                     pMort = vpMortF,
                                     propDD = propDD,
                                     iCarryCap = iCarryCap )
 
-    vpMortM <- rtDensityDependence( fPopn= (sum(vFem)+sum(vMal)),
+    vpMortM <- rtDensityDependence( fPopn = fPopn,
                                     pMort = vpMortM,
                                     propDD = propDD,
                                     iCarryCap = iCarryCap )
@@ -62,7 +67,25 @@ rtMortality <- function( vFem,
     vMal[age] <- vMal[age] * (1-vpMortM[age])   
   }
   
-  #returning a list of the new age structures
-  invisible( list(vFem=vFem, vMal=vMal) )
+  #returning age structures as an array(new way) or a list(old way)
+  if (returnArray){
+    
+    #e.g. of using abind
+    #abind(c(1:3),c(7:9),along=2)
+    
+    #aFandM <- abind(vFem,vMal,along=2)
+    aFandM <- rbind('F'= vFem,'M'= vMal)
+    #! have to rename the dimensions
+    #there must be a more efficient way of doing
+    #dimnames1 <- list( c("F","M"), paste0('age',1:length(vFem)))
+    #names(dimnames1) <- c("sex","age")
+    
+    names(dimnames(aFandM)) <- c("sex","age") 
+    
+    invisible( aFandM  )
+  } else {
+    #returning as a list
+    invisible( list(vFem=vFem, vMal=vMal) ) 
+  }
   
 } #end of rtMortality()
