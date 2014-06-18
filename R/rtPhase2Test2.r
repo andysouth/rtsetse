@@ -11,8 +11,9 @@
 #' tst <- rtPhase2Test2()
 #' @export
 #' 
-rtPhase2Test2 <- function( nRow = 10,
+rtPhase2Test2 <- function( 
                           nCol = 10,
+                          nRow = 10,
                           pMove = 0.4,
                           iDays = 4,
                           iMaxAge = 7, #120,
@@ -52,7 +53,7 @@ rtPhase2Test2 <- function( nRow = 10,
   #create a matrix for carrying capacity on the grid
   #first test make it constant
   #I could name the dimensions, x & y here
-  mCarryCap <- matrix(iCarryCap, nrow=nRow, ncol=nCol)
+  mCarryCap <- matrix(iCarryCap, ncol=nCol, nrow=nRow)
   
   
   #trying to see how I can access dimensions by name 

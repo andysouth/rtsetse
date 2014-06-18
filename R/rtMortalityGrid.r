@@ -75,8 +75,14 @@ rtMortalityGrid <- function( aGrid,
     for(x in seq_along(dimnames(aGrid)$x)){
       for(y in seq_along(dimnames(aGrid)$y)){
         
+        #cat(paste("x,y:",x,",",y,"dim(mCarryCap)=",dim(mCarryCap),"\n"))
+        
+        #!!!annoying issue about confusing dimensions
+        #!!!i changed int around just to get it to work
+        
         #get carry cap from the matrix
-        iCarryCap <- mCarryCap[x,y]   
+        #iCarryCap <- mCarryCap[x,y]  
+        iCarryCap <- mCarryCap[y,x]  
         #iCarryCap <- 200
 
 # this is done in rtMortality() so not needed here        
