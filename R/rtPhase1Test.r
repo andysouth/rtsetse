@@ -8,6 +8,7 @@
 #' @param iCarryCap carrying capacity of adults 
 #' @param iStartAdults number of adults to start simulation with
 #' @param iStartAges spread start adults across the first n ages classes
+#' @param iStartPupae number of pupae to start simulation with (they get spread across sex&age)
 #' @param pMortF adult female mortality per day 
 #' @param pMortM adult male mortality per day 
 #' @param iMortMinAgeStart  Age at which min death rates start. 
@@ -38,6 +39,7 @@ rtPhase1Test <- function( iDays = 30,
                           iCarryCap = 200,
                           iStartAdults = 200,
                           iStartAges = 1,
+                          iStartPupae = 200,
                           pMortF = 0.05,
                           pMortM = 0.05,
                           iMortMinAgeStart = 10,
@@ -58,9 +60,11 @@ rtPhase1Test <- function( iDays = 30,
 {
  
   
-  #vectors for pupae - empty to start
-  vPupaF <- rep(0,iPupDurF)
-  vPupaM <- rep(0,iPupDurM)
+  #vectors for pupae
+  #because males stay in the ground longer this means there will be more males
+  fPupaPerSexAge <- iStartPupae/(iPupDurF+iPupDurM)
+  vPupaF <- rep(fPupaPerSexAge, iPupDurF)
+  vPupaM <- rep(fPupaPerSexAge, iPupDurM)
   
   #vectors for adults - start pop blank
   vPopStartF <- rep(0,iMaxAge)
@@ -182,7 +186,26 @@ rtPhase1Test <- function( iDays = 30,
     #vPupaF <- rtPupalMortality(vPupaF, pMortPupa)
     #vPupaM <- rtPupalMortality(vPupaM, pMortPupa)  
     #iCarryCapPupa set from iCarryCap here because hat-trick default runs show similar numbers of ads & pupae at stability
-    lPupae <- rtPupalMortality(vPupaF=vPupaF, vPupaM=vPupaM, pMort=pMortPupa, propDD=propMortPupaDD, iCarryCapPupa=iCarryCap )
+    ## 19/6/14 temp replaced
+    #lPupae <- rtPupalMortality(vPupaF=vPupaF, vPupaM=vPupaM, pMort=pMortPupa, propDD=propMortPupaDD, iCarryCapPupa=iCarryCap )
+    
+    ## 19/6/14 trying alternative mechanism for density dependence
+    ## use popn growth since previous day to set level of DD
+    ## doesn't really make mechanisitic sense to me, but is a start
+    #fPopNow <- sum(vPopF+vPopM)
+    #fPopPre <- sum(dfRecordF[,paste0("day",day-1)] + dfRecordM[,paste0("day",day-1)])    
+    ## 24/6/14 I couldn't get above to stabilise the pop
+    ## because I'm using ad pop might be a time lag
+    ## makes more intuitive sense to use the pupal pop
+    fPopNow <- sum(vPupaF) + sum(vPupaM)
+    fPopPre <- sum(dfRecordPupaF[,paste0("day",day-1)]) + sum(dfRecordPupaM[,paste0("day",day-1)])     
+    
+    cat("day",day)
+    lPupae <- rtPupalMortalityDD2(vPupaF=vPupaF, vPupaM=vPupaM, pMort=pMortPupa, iCarryCapPupa=iCarryCap, fPopNow=fPopNow, fPopPre=fPopPre )
+    
+    
+    
+    
     vPupaF <- lPupae$vPupaF
     vPupaM <- lPupae$vPupaM
       
