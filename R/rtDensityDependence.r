@@ -57,7 +57,7 @@ rtDDTest <- function( vDensities = c(0:20),
   
 { 
 
-  results <- data.frame(mortality=unlist(lapply( vDensities, function(x)  rtDDM(density=x,iCarryCap=iCarryCap,propDD=propDD,pMort=pMort))))
+  results <- data.frame(mortality=unlist(lapply( vDensities, function(x)  rtDensityDependence(fPopn=x,iCarryCap=iCarryCap,propDD=propDD,pMort=pMort))))
   results$density <- vDensities
   results$relDensity <- vDensities / iCarryCap
 
