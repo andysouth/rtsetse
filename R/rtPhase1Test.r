@@ -187,7 +187,7 @@ rtPhase1Test <- function( iDays = 30,
     #vPupaM <- rtPupalMortality(vPupaM, pMortPupa)  
     #iCarryCapPupa set from iCarryCap here because hat-trick default runs show similar numbers of ads & pupae at stability
     ## 19/6/14 temp replaced
-    #lPupae <- rtPupalMortality(vPupaF=vPupaF, vPupaM=vPupaM, pMort=pMortPupa, propDD=propMortPupaDD, iCarryCapPupa=iCarryCap )
+    lPupae <- rtPupalMortality(vPupaF=vPupaF, vPupaM=vPupaM, pMort=pMortPupa, propDD=propMortPupaDD, iCarryCapPupa=iCarryCap )
     
     ## 19/6/14 trying alternative mechanism for density dependence
     ## use popn growth since previous day to set level of DD
@@ -197,11 +197,11 @@ rtPhase1Test <- function( iDays = 30,
     ## 24/6/14 I couldn't get above to stabilise the pop
     ## because I'm using ad pop might be a time lag
     ## makes more intuitive sense to use the pupal pop
-    fPopNow <- sum(vPupaF) + sum(vPupaM)
-    fPopPre <- sum(dfRecordPupaF[,paste0("day",day-1)]) + sum(dfRecordPupaM[,paste0("day",day-1)])     
     
-    cat("day",day)
-    lPupae <- rtPupalMortalityDD2(vPupaF=vPupaF, vPupaM=vPupaM, pMort=pMortPupa, iCarryCapPupa=iCarryCap, fPopNow=fPopNow, fPopPre=fPopPre )
+#     fPopNow <- sum(vPupaF) + sum(vPupaM)
+#     fPopPre <- sum(dfRecordPupaF[,paste0("day",day-1)]) + sum(dfRecordPupaM[,paste0("day",day-1)])      
+#     cat("day",day)
+#     lPupae <- rtPupalMortalityDD2(vPupaF=vPupaF, vPupaM=vPupaM, pMort=pMortPupa, iCarryCapPupa=iCarryCap, fPopNow=fPopNow, fPopPre=fPopPre )
     
     
     
