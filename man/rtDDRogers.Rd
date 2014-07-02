@@ -1,0 +1,29 @@
+\name{rtDDRogers}
+\alias{rtDDRogers}
+\title{add density dependence to a mortality following Rogers(1990)}
+\usage{
+rtDDRogers(fPopn = 200, pMort = 0.25, iPupaDensThresh = 200,
+  fSlopeDD = 1)
+}
+\arguments{
+  \item{fPopn}{current popn size}
+
+  \item{pMort}{a density independent mortality probability}
+
+  \item{iPupaDensThresh}{the threshold above which density
+  dependence acts}
+
+  \item{fSlopeDD}{the slope of density dependence, how
+  mortality increases with density}
+}
+\value{
+a mortality rate with density dependence added
+}
+\description{
+\code{rtDDRogers} applies pupal mortality following method
+of Rogers(1990). \cr Requires 3 parameters, the density
+independent mortality, threshold that density dependence
+starts and it's slope (k). \cr Developed in discussion with
+John Hargrove
+}
+
