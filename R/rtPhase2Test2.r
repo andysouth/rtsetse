@@ -47,7 +47,7 @@ rtPhase2Test2 <- function(
   aGrid <- array(0, dim=c(nCol,nRow,2,iMaxAge), dimnames=dimnames1)  
   #this might fill in both M&F
   #adding half of starting adults as each gender to starting cell
-  #2 params allow number and spread of flies across age classes to be set
+  #2 params allow number and distribution of flies across age classes to be set
   aGrid[(nCol+1)/2, (nRow+1)/2, , 1:iStartAges] <- iStartAdults/(2*iStartAges)
   
   #create a matrix for carrying capacity on the grid
