@@ -26,52 +26,20 @@ rtMortalityGrid <- function( aGrid,
  
   #aGrid[x,y,sex,age]
   #mort differs by sex & age
-  #therefore may need to go along the dimension
 
-  #first see if I can do for one sex
-  #this does output the length of the age vector
-  #tst <- apply(aGrid,MARGIN=c('x','y','sex'), function(a) cat(paste(length(a),"\n")))
+  #there is a loop solution and an unfinished solution avoiding loops
 
-  if (!loop){
+  #tests from 16/6/14 showed the loop solution is a tiny bit slower. 
+  #But I think it may be worth it, it’s much simpler and I haven’t even 
+  #quite worked out how to implement the non-loop solution yet.
+  
+  if (loop){
 
-  #create a low level mort function (similar to what I started with!)
-  rtMort <- function(vAges,vpMortByAge){
-      #trying as a loop just to get started
-      for( age in seq_along(vAges) )  {
-        vAges[age] <- vAges[age] * (1-vpMortByAge[age])   
-      } 
-      #return
-      vAges
-  }
-
-
-  #this calls the mortality function for both sexes
-  #tst <- apply( aGrid,MARGIN=c('x','y','sex'), rtMort, vpMortByAge=vpMortF )
-
-  #to apply mort to sexes separately (for each cell in the grid)
-  #F
-  aF <- aGrid[,,'F',]
-  aF <- apply( aF, MARGIN=c('x','y'), rtMort, vpMortByAge=vpMortF )
-  #do I need to aperm ? yes
-  aF <- aperm(aF, c(2,3,1))
-  #put aF back into grid
-  aGrid[,,'F',] <- aF
-  #M
-  aM <- aGrid[,,'M',]
-  aM <- apply( aM, MARGIN=c('x','y'), rtMort, vpMortByAge=vpMortM )
-  #do I need to aperm ? yes
-  aM <- aperm(aM, c(2,3,1))
-  #put aF back into grid
-  aGrid[,,'M',] <- aM
-
-  } else {
-    
     #LOOP solution
-    
     #to implement DD on a grid 
-    #it may be best/simples to use a loop
-    #then I can call the existing rtMortality() function
-    #EXCEPT I'll need to modify how it returns from a list to an array
+
+    #calls existing rtMortality() function (modified to return an array)
+    
     for(x in seq_along(dimnames(aGrid)$x)){
       for(y in seq_along(dimnames(aGrid)$y)){
         
@@ -83,23 +51,6 @@ rtMortalityGrid <- function( aGrid,
         #get carry cap from the matrix
         #iCarryCap <- mCarryCap[x,y]  
         iCarryCap <- mCarryCap[y,x]  
-        #iCarryCap <- 200
-
-# this is done in rtMortality() so not needed here        
-#         if ( propDD > 0 )
-#           {
-#             #total pop in the cell
-#             fPopn <- sum(aGrid[x,y,,])
-#             vpMortF <- rtDensityDependence( fPopn = fPopn,
-#                                             pMort = vpMortF,
-#                                             propDD = propDD,
-#                                             iCarryCap = iCarryCap )
-#         
-#             vpMortM <- rtDensityDependence( fPopn = fPopn,
-#                                             pMort = vpMortM,
-#                                             propDD = propDD,
-#                                             iCarryCap = iCarryCap )
-#           }
         
         
         aGrid[x,y,,] <- rtMortality(vFem = aGrid[x,y,'F',],
@@ -109,10 +60,43 @@ rtMortalityGrid <- function( aGrid,
                                     returnArray = TRUE,
                                     propDD = propDD, 
                                     iCarryCap = iCarryCap )
-        }#y
+      }#y
     }#x
-  }#end of loop solution
 
+
+  } else {
+    
+    
+    #create a low level mort function (similar to what I started with!)
+    rtMort <- function(vAges,vpMortByAge){
+      #trying as a loop just to get started
+      for( age in seq_along(vAges) )  {
+        vAges[age] <- vAges[age] * (1-vpMortByAge[age])   
+      } 
+      #return
+      vAges
+    }    
+    
+    #this calls the mortality function for both sexes
+    #tst <- apply( aGrid,MARGIN=c('x','y','sex'), rtMort, vpMortByAge=vpMortF )
+    
+    #to apply mort to sexes separately (for each cell in the grid)
+    #F
+    aF <- aGrid[,,'F',]
+    aF <- apply( aF, MARGIN=c('x','y'), rtMort, vpMortByAge=vpMortF )
+    #do I need to aperm ? yes
+    aF <- aperm(aF, c(2,3,1))
+    #put aF back into grid
+    aGrid[,,'F',] <- aF
+    #M
+    aM <- aGrid[,,'M',]
+    aM <- apply( aM, MARGIN=c('x','y'), rtMort, vpMortByAge=vpMortM )
+    #do I need to aperm ? yes
+    aM <- aperm(aM, c(2,3,1))
+    #put aF back into grid
+    aGrid[,,'M',] <- aM
+    
+  }#end of unfinished non loop solution
 
 
 
