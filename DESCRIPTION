@@ -13,6 +13,4 @@ Depends:
 Imports:
     sp,
     raster,
-    plyr
-Suggests:
-    
+    plyr   
