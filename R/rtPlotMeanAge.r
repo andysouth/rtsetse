@@ -50,7 +50,8 @@ rtPlotMeanAge <- function( dfF, dfM=NA, title=NULL )
   }
 
   #plot line for the first object  
-  plot(vMeanAgeF, type='l', xlab='day', ylab='mean age', col="red", lty="dashed", main=title)
+  plot(vMeanAgeF, type='l', xlab='day', ylab='mean age', col="red", lty="dashed", main=title, ylim=ylim )
+
   #if a 2nd object has been passed add line & legend
   if ( length(dfM) > 1) #!is.na(dfM) )
   {
