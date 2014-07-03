@@ -74,7 +74,7 @@ rtPhase2Test2 <- function(
   
   # the most sensible way to save popn record
   # would seem to be to use abind to just add another dimension
-  library(abind)
+  #library(abind)
   aRecord <- abind(aGrid,along=0) #along=0 binds on new dimension before first
   #! look at keeping names(dimnames(aRecordF))
   #! even with this they get lost later
@@ -153,9 +153,11 @@ rtPhase2Test2 <- function(
   #ensuring that dimnames for the days dimension of aRecord is set
   #note that starts at day0
   dimnames(aRecord)[[1]] <- paste0('day',0:iDays)
-  
+  #resetting dimnames
+  names(dimnames(aRecord)) <- c('day','x','y','sex','age')
+
   #returning the popn record
-  #! will need to modify later to return M & pupae too
+  #! will need to modify later to return pupae too
   invisible(aRecord)
 }
 
