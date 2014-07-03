@@ -13,8 +13,8 @@ Depends:
 Imports:
     sp,
     raster,
-    dplyr,
     plyr,
+    dplyr,
     abind,
     reshape2,
     ggplot2
