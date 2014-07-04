@@ -42,9 +42,11 @@ rtPlotPopGrid <- function( mat, title=NULL )
   
   myplot <- ggplot()
   
-  myplot + 
+  myplot <- myplot + 
     geom_line(data=dfDay, aes(x=dayNum, y=total)) +
     geom_line(data=dfDaySex, aes(x=dayNum, y=total, colour=sex)) +
     labs(title=title)
+
+  print(myplot)
   
 }
