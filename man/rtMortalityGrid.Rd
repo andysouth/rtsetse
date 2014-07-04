@@ -20,6 +20,9 @@ rtMortalityGrid(aGrid, vpMortF, vpMortM, propDD = 0.25, mCarryCap = NA,
 
   \item{mCarryCap}{a matrix of Carrying Capacities for each
   cell as an integer}
+
+  \item{loop}{TEMPORARY var to test a loop vs apply
+  solution, only loop=TRUE works fully}
 }
 \value{
 an array with the age distributions of males & females
