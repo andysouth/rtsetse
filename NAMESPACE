@@ -27,3 +27,8 @@ export(rtSetMortRatesByAge)
 import(plyr)
 import(raster)
 import(sp)
+import(dplyr)
+import(abind)
+import(reshape2)
+import(ggplot2)
+
