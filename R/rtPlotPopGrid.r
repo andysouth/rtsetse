@@ -38,7 +38,8 @@ rtPlotPopGrid <- function( mat, title=NULL )
 #   dfDayAge <- melted %>%
 #     group_by(dayNum, age) %>%
 #     summarise(total = sum(value) 
-              
+
+  theme_set( theme_bw() )            
   
   myplot <- ggplot()
   
