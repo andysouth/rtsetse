@@ -17,7 +17,6 @@
 #' @param iStartAges spread start adults across the first n ages classes
 #' @param pMortF adult female mortality per day 
 #' @param pMortM adult male mortality per day 
-#' @param propMortLarvaDD DEPRECATED proportion of larval mortality that is density dependent
 #' @param loop TEMPORARY test of loop versus apply approach, only TRUE works 
 
 
@@ -140,13 +139,13 @@ rtPhase2Test2 <- function(
       #get F&M separately from aGrid, pass to rtMove1 and put them back in again
       #!could create a loop for 'F' and 'M' here, or do a different way
       aF <- aGrid[,,'F',]
-      aF <- aaply(aF, .margins=3, .drop=FALSE, function(m) rtMove1(m, pMove=pMove) ) 
+      aF <- plyr::aaply(aF, .margins=3, .drop=FALSE, function(m) rtMove1(m, pMove=pMove) ) 
       #!remember always aperm after aaply to put array components back in correct order
       aF <- aperm(aF, c(2,3,1))
       aGrid[,,'F',] <- aF
       
       aM <- aGrid[,,'M',]
-      aM <- aaply(aM, .margins=3, .drop=FALSE, function(m) rtMove1(m, pMove=pMove) ) 
+      aM <- plyr::aaply(aM, .margins=3, .drop=FALSE, function(m) rtMove1(m, pMove=pMove) ) 
       #!remember always aperm after aaply to put array components back in correct order
       aM <- aperm(aM, c(2,3,1))
       aGrid[,,'M',] <- aM      

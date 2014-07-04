@@ -132,7 +132,7 @@ rtPhase2Test <- function( nRow = 10,
     if( nRow > 1 | nCol > 1) {
       #aF <- aaply(aF, .margins=3, rtMove1 )
       #to pass the pMove arg to rtMove1
-      aF <- aaply(aF, .margins=3, .drop=FALSE, function(m) rtMove1(m, pMove=pMove) )     
+      aF <- plyr::aaply(aF, .margins=3, .drop=FALSE, function(m) rtMove1(m, pMove=pMove) )     
       
       #try apply which is faster
       #but caused an error with aperm because the xy dimensions are lost
