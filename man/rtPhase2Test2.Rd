@@ -4,7 +4,8 @@
 \usage{
 rtPhase2Test2(nCol = 10, nRow = 10, pMove = 0.4, iDays = 4,
   iMaxAge = 7, iCarryCap = 200, iStartAdults = 200, iStartAges = 1,
-  pMortF = 0.05, pMortM = 0.05, loop = TRUE)
+  iStartPupae = 200, pMortF = 0.05, pMortM = 0.05, loop = TRUE,
+  iPupDurF = 26, iPupDurM = 28)
 }
 \arguments{
   \item{nCol}{number grid columns}
@@ -26,12 +27,19 @@ rtPhase2Test2(nCol = 10, nRow = 10, pMove = 0.4, iDays = 4,
   \item{iStartAges}{spread start adults across the first n
   ages classes}
 
+  \item{iStartPupae}{number of pupae to start simulation
+  with (they get spread across sex&age)}
+
   \item{pMortF}{adult female mortality per day}
 
   \item{pMortM}{adult male mortality per day}
 
   \item{loop}{TEMPORARY test of loop versus apply approach,
   only TRUE works}
+
+  \item{iPupDurF}{days it takes pupa(F) to develop}
+
+  \item{iPupDurM}{days it takes pupa(M) to develop}
 }
 \value{
 a multi-dimensional array [day,x,y,sex,ages]

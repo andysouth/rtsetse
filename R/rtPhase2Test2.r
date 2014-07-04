@@ -136,15 +136,15 @@ rtPhase2Test2 <- function(
     #!decide whether to call for M&F independently 
     #!or do both in the function
     
-#     #passing the whole grid to rtAgeing
-#     aF <- rtAgeingGrid(aF)
-#     
-#     #the third dimension (age) loses it's label
-#     #just trying putting it back to see if that solves
-#     #"duplicated levels in factors are deprecated"
-#     #!this corrected the warnings
-#     dimnames(aF) <- list(NULL,NULL,NULL)   
-#     names(dimnames(aF)) <- c('x','y','age')
+    #passing the whole grid to rtAgeing
+    aGrid <- rtAgeingGrid(aGrid)
+    
+    #the third dimension (age) loses it's label
+    #just trying putting it back to see if that solves
+    #"duplicated levels in factors are deprecated"
+    #!this corrected the warnings
+    #dimnames(aF) <- list(NULL,NULL,NULL)   
+    names(dimnames(aGrid)) <- c('x','y','sex','age')
     
     
     

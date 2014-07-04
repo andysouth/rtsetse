@@ -6,7 +6,7 @@ rtAgeingGrid(a, label)
 }
 \arguments{
   \item{a}{an array of the age distributions in each grid
-  cell [x,y,age]}
+  cell [x,y,sex,age]}
 
   \item{label}{a string describing what is being passed,
   added to any warning messages}

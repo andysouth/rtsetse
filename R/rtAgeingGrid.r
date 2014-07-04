@@ -2,7 +2,7 @@
 #' 
 #' \code{rtAgeingGrid} advances the age of all classes in the vectors in each cell of the passed grid
 
-#' @param a an array of the age distributions in each grid cell [x,y,age] 
+#' @param a an array of the age distributions in each grid cell [x,y,sex,age] 
 #' @param label a string describing what is being passed, added to any warning messages 
 #' 
 #' @return an updated array
@@ -37,12 +37,21 @@ rtAgeingGrid <- function( a, label )
   
   #now try using apply
   #9 secs
-  a <- apply(a, MARGIN=c(1,2), function(v) c(0,v[-length(v)]) )
-  a <- aperm(a, c(2,3,1))
-  
-  
-  #returning updated array
-  invisible( a ) 
+#   a <- apply(a, MARGIN=c(1,2), function(v) c(0,v[-length(v)]) )
+#   a <- aperm(a, c(2,3,1))
+
+
+#previous versions were just for an array of F
+#this works on both M&F
+  for(x in seq(dim(a)[1])) {
+    for(y in seq(dim(a)[2])) {
+      #for(mf in seq(dim(a)[3])) {
+        a[x,y,'F',] <- c(0, a[x,y,'F',-length(a[x,y,'F',])])
+        a[x,y,'M',] <- c(0, a[x,y,'M',-length(a[x,y,'M',])])
+        #}
+    }
+  }
+
   
 #   ############
 #   #trying Rcpp
@@ -67,5 +76,5 @@ rtAgeingGrid <- function( a, label )
 #   rowSumsC(x)
   
   #returning updated array
-  #invisible( a )   
+  invisible( a )   
 } 
