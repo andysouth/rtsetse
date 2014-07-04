@@ -11,6 +11,7 @@
 #' @param vpMortM a vector of age-specific mortality probabilities of Males 
 #' @param propDD proportion of mortality that is density dependent 
 #' @param mCarryCap a matrix of Carrying Capacities for each cell as an integer
+#' @param loop TEMPORARY var to test a loop vs apply solution, only loop=TRUE works fully
 #' 
 #' @return an array with the age distributions of males & females [x,y,sex,age]
 #' @export
@@ -20,7 +21,7 @@ rtMortalityGrid <- function( aGrid,
                          vpMortM,
                          propDD = 0.25,
                          mCarryCap = NA,
-                         loop = TRUE ) #?not sure whether to provide a default for iCarryCap
+                         loop = TRUE ) 
 {
  
  
