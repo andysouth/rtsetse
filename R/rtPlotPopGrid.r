@@ -19,7 +19,7 @@ rtPlotPopGrid <- function( mat, title=NULL )
 
   #melt from an array to a dataframe using reshape2
   #! note this might be best done before the mat is passed to this function
-  melted <- melt(mat)
+  melted <- reshape2::melt(mat)
   
   #To get day as a number (note -1 to account for day0)
   melted$dayNum <- as.numeric(melted$day)-1

@@ -7,6 +7,9 @@
 #' @param title a title for the plot  
 #' 
 #' @return nothing
+#' @examples
+#' tst <- rtPhase1Test2()
+#' rtPlotAgeStructure(tst$dfRecordF) 
 #' @export
 
 rtPlotAgeStructure <- function( df, title=NULL )
@@ -16,7 +19,7 @@ rtPlotAgeStructure <- function( df, title=NULL )
   #convert the dataframe to a matrix object
   mat <- as.matrix(df)
   #convert the matrix to a raster object
-  rast <- raster(mat)
+  rast <- raster::raster(mat)
   
   #plot(rast)
   #plot(rast,xlab='days',ylab='ages',axes=FALSE)
@@ -27,7 +30,8 @@ rtPlotAgeStructure <- function( df, title=NULL )
   
   #AHA! changing the extents did it
   #this just assumes ages & days are equal to the number of cells
-  extent(rast) <- extent(c(0, ncol(rast), 0, nrow(rast)))
+  raster::extent(rast) <- extent(c(0, ncol(rast), 0, nrow(rast)))
+  findMethods("plot", "package:raster")
   plot(rast,xlab='days',ylab='ages',main=title)
   
   #I would still really like to be able to set the axes outside of the plot region itself

@@ -18,4 +18,8 @@ nothing
 structure over time using a raster type plot. \cr Requires
 the raster package.
 }
+\examples{
+tst <- rtPhase1Test2()
+rtPlotAgeStructure(tst$dfRecordF)
+}
 

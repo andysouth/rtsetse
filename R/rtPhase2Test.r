@@ -86,7 +86,7 @@ rtPhase2Test <- function( nRow = 10,
   # the most sensible way to save popn record
   # would seem to be to use abind to just add another dimension
   #library(abind)
-  aRecordF <- abind(aF,along=0) #along=0 binds on new dimension before first
+  aRecordF <- abind::abind(aF,along=0) #along=0 binds on new dimension before first
   #! look at keeping names(dimnames(aRecordF))
   #! even with this they get lost later
   names(dimnames(aRecordF)) <- c('day','x','y','age')
