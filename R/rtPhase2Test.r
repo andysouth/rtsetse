@@ -1,10 +1,22 @@
-#' a simple spatial tsetse population simulation, a test of phase2
+#' DEPRECATED? first test of grid phase2 only has ageing and movement
 #'
-#' \code{rtPhase2Test} runs a simple spatial popn simulation as a test of phase 2
-#' model components. Concentrates on movement parameters and mortality so that 
+#' \code{rtPhase2Test} just does ageing & movement as a test of phase 2
+#' model components. The way it works has been superceded by rtPhase2Test2(). 
+#' Concentrates on movement parameters and mortality so that 
 #' it can be used to test popn spread under different popn growth rates.
 #' Uses things developed in gridTest.r. Starts with just F.
 #' ! check if it works when nRow & nCol == 1 (the aspatial model)
+
+#' @param nCol number grid columns
+#' @param nRow number grid rows
+#' @param pMove probability of moving between cells
+#' @param iDays days to run simulation
+#' @param iMaxAge max age of fly allowed in model (will warn if flies age past this)
+#' @param iCarryCap carrying capacity of adults 
+#' @param iStartAdults number of adults to start simulation with
+#' @param iStartAges spread start adults across the first n ages classes
+#' @param pMortF adult female mortality per day 
+
 
 #' @return a multi-dimensional array [day,x,y,ages] just for F to start
 #' @examples

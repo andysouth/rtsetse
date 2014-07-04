@@ -6,6 +6,21 @@
 #' Uses things developed in gridTest.r. 
 #' ! check if it works when nRow & nCol == 1 (the aspatial model)
 
+
+#' @param nCol number grid columns
+#' @param nRow number grid rows
+#' @param pMove probability of moving between cells
+#' @param iDays days to run simulation
+#' @param iMaxAge max age of fly allowed in model (will warn if flies age past this)
+#' @param iCarryCap carrying capacity of adults 
+#' @param iStartAdults number of adults to start simulation with
+#' @param iStartAges spread start adults across the first n ages classes
+#' @param pMortF adult female mortality per day 
+#' @param pMortM adult male mortality per day 
+#' @param propMortLarvaDD DEPRECATED proportion of larval mortality that is density dependent
+#' @param loop TEMPORARY test of loop versus apply approach, only TRUE works 
+
+
 #' @return a multi-dimensional array [day,x,y,sex,ages]
 #' @examples
 #' tst <- rtPhase2Test2()
