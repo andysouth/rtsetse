@@ -27,7 +27,7 @@ rtPupalMortalityRogers <- function( vPupaF,
   #if ( fTotPupa > iPupaDensThresh )
   #  pMort <- pMort + fSlopeDD
   
-  pMort <- rtDDRogers( fPop=fTotPupa, pMort=pMort, iPupaDensThresh=iPupaDensThresh, fSlopeDD=fSlopeDD )
+  pMort <- rtDDRogers( fPopn=fTotPupa, pMort=pMort, iPupaDensThresh=iPupaDensThresh, fSlopeDD=fSlopeDD )
   
   #pupal mortality is applied once during the pupal period
   #done on day 1
@@ -55,7 +55,7 @@ rtPupalMortalityRogers <- function( vPupaF,
 rtDDRogers <- function( fPopn = 200,
                         pMort = 0.25,
                         iPupaDensThresh = 200,
-                        fSlopeDD = 1.0 )
+                        fSlopeDD = 0.1 )
 {  
   
   #density dependence only if pupal density is greater than the threshold
@@ -81,9 +81,9 @@ rtDDRogers <- function( fPopn = 200,
 #' This function is not used in the running of the simulation.
 #'
 #' @param vDensities a vector of densities to test
-#' @param iCarryCap Carrying Capacity as an integer
-#' @param propDD proportion of mortality that is density dependent 
-#' @param pMort a mortality probability 
+#' @param pMort density independent mortality probability 
+#' @param iPupaDensThreshold Threshold pupal density at which density dependence starts
+#' @param fSlopeDD slope of density dependence
 #' 
 #' @return a dataframe containing densities, relative densities and resulting mortality rates
 #' @export
@@ -91,7 +91,7 @@ rtDDRogers <- function( fPopn = 200,
 rtDDRogersTest <- function( vDensities = c(150:300),
                             pMort = 0.25,
                             iPupaDensThresh = 200,
-                            fSlopeDD = 1.0 ) 
+                            fSlopeDD = 0.1 ) 
   
 { 
   
