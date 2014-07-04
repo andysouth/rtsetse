@@ -30,9 +30,6 @@ rtPhase2Test2(nCol = 10, nRow = 10, pMove = 0.4, iDays = 4,
 
   \item{pMortM}{adult male mortality per day}
 
-  \item{propMortLarvaDD}{DEPRECATED proportion of larval
-  mortality that is density dependent}
-
   \item{loop}{TEMPORARY test of loop versus apply approach,
   only TRUE works}
 }

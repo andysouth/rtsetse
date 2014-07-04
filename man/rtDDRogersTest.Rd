@@ -10,8 +10,8 @@ rtDDRogersTest(vDensities = c(150:300), pMort = 0.25,
 
   \item{pMort}{density independent mortality probability}
 
-  \item{iPupaDensThreshold}{Threshold pupal density at
-  which density dependence starts}
+  \item{iPupaDensThresh}{Threshold pupal density at which
+  density dependence starts}
 
   \item{fSlopeDD}{slope of density dependence}
 }
