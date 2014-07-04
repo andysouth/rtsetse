@@ -1,0 +1,25 @@
+\name{rtPlotMeanAgeGrid}
+\alias{rtPlotMeanAgeGrid}
+\title{plots mean age of M&F over multiple days and grid cells}
+\usage{
+rtPlotMeanAgeGrid(aGrid, title = "Mean Age across whole grid")
+}
+\arguments{
+  \item{aGrid}{array of day,x,y,sex,age}
+
+  \item{title}{a title for the plot}
+}
+\value{
+?ggplot2 object
+}
+\description{
+\code{rtPlotMeanAgeGrid} plots change in mean age of M&F
+over whole grid from a passed matrix of day,x,y,sex,age.
+Uses a different approach from rtPlotPopAndPupae using
+reshape2, dplyr & ggplot2. EXPERIMENTAL
+}
+\examples{
+tst <- rtPhase2Test2()
+rtPlotMeanAgeGrid(tst)
+}
+
