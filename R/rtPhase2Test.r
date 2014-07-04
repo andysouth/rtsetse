@@ -150,7 +150,7 @@ rtPhase2Test <- function( nRow = 10,
     
     #dim(abind(x,y,along=0))     # binds on new dimension before first
     #dim(abind(x,y,rev.along=0)) # binds on new dimension after last
-    aRecordF <- abind(aRecordF, aF, along=1, use.first.dimnames=TRUE) #along=1 binds on first dimension
+    aRecordF <- abind::abind(aRecordF, aF, along=1, use.first.dimnames=TRUE) #along=1 binds on first dimension
     
     
   } #end of iDays loop
