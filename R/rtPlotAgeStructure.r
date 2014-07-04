@@ -11,7 +11,7 @@
 
 rtPlotAgeStructure <- function( df, title=NULL )
 {
-  library(raster)
+  #library(raster)
   
   #convert the dataframe to a matrix object
   mat <- as.matrix(df)
