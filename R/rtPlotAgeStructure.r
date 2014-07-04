@@ -30,8 +30,8 @@ rtPlotAgeStructure <- function( df, title=NULL )
   
   #AHA! changing the extents did it
   #this just assumes ages & days are equal to the number of cells
-  raster::extent(rast) <- extent(c(0, ncol(rast), 0, nrow(rast)))
-  findMethods("plot", "package:raster")
+  raster::extent(rast) <- raster::extent(c(0, ncol(rast), 0, nrow(rast)))
+  #findMethods("plot", "package:raster")
   plot(rast,xlab='days',ylab='ages',main=title)
   
   #I would still really like to be able to set the axes outside of the plot region itself
