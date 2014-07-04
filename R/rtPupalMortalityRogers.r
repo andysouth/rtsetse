@@ -82,7 +82,7 @@ rtDDRogers <- function( fPopn = 200,
 #'
 #' @param vDensities a vector of densities to test
 #' @param pMort density independent mortality probability 
-#' @param iPupaDensThreshold Threshold pupal density at which density dependence starts
+#' @param iPupaDensThresh Threshold pupal density at which density dependence starts
 #' @param fSlopeDD slope of density dependence
 #' 
 #' @return a dataframe containing densities, relative densities and resulting mortality rates
