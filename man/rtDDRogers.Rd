@@ -3,7 +3,7 @@
 \title{add density dependence to a mortality following Rogers(1990)}
 \usage{
 rtDDRogers(fPopn = 200, pMort = 0.25, iPupaDensThresh = 200,
-  fSlopeDD = 1)
+  fSlopeDD = 0.1)
 }
 \arguments{
   \item{fPopn}{current popn size}

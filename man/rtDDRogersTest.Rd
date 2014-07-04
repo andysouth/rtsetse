@@ -3,17 +3,17 @@
 \title{tests Rogers pupal mortality and outputs a plot}
 \usage{
 rtDDRogersTest(vDensities = c(150:300), pMort = 0.25,
-  iPupaDensThresh = 200, fSlopeDD = 1)
+  iPupaDensThresh = 200, fSlopeDD = 0.1)
 }
 \arguments{
   \item{vDensities}{a vector of densities to test}
 
-  \item{iCarryCap}{Carrying Capacity as an integer}
+  \item{pMort}{density independent mortality probability}
 
-  \item{propDD}{proportion of mortality that is density
-  dependent}
+  \item{iPupaDensThreshold}{Threshold pupal density at
+  which density dependence starts}
 
-  \item{pMort}{a mortality probability}
+  \item{fSlopeDD}{slope of density dependence}
 }
 \value{
 a dataframe containing densities, relative densities and
