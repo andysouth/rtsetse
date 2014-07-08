@@ -14,6 +14,8 @@
 
 #' @param aGrid an array with the age distributions of males & females [x,y,sex,age] 
 #' @param aGridPup an array with the age distributions of pupal males & females [x,y,sex,age] 
+#' @param iPupDurF days it takes pupa(F) to develop
+#' @param iPupDurM days it takes pupa(M) to develop
 #' 
 #' @return a list containing aGrid, aGridPup
 #' @export
