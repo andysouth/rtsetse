@@ -1,0 +1,32 @@
+\name{rtSetDepositionRatesByAgeDI}
+\alias{rtSetDepositionRatesByAgeDI}
+\title{setting age specific density-INdependent larval deposition rates for Tsetse}
+\usage{
+rtSetDepositionRatesByAgeDI(iMaxAge = 120, iFirstLarva = 16,
+  iInterLarva = 10, pMortLarva = 0.05)
+}
+\arguments{
+  \item{iMaxAge}{the maximum age of flies, females}
+
+  \item{iFirstLarva}{age that first larva deposited}
+
+  \item{iInterLarva}{gap between deposition of larvae}
+
+  \item{pMortLarva}{larval mortality rate}
+}
+\value{
+a vector of larval deposition probabilities
+}
+\description{
+\code{rtSetDepositionRatesByAgeDI} sets age dependent
+larval deposition rates that are the same for all females
+in the popn. and do not differ by density or location.
+Compatible with the grid model.
+}
+\details{
+see \code{\link{rtSetDepositionRatesByAge}} for a
+deprecated density-dependent version. The previous version
+used the length of the vector of females to get the maximum
+age, this version needs the iMaxAge argument.
+}
+
