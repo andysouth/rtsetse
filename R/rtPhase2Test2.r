@@ -35,7 +35,7 @@ rtPhase2Test2 <- function(
                           nRow = 10,
                           pMove = 0.4,
                           iDays = 4,
-                          iMaxAge = 7, #120,
+                          iMaxAge = 120, #7,
                           iCarryCap = 200,
                           iStartAdults = 200,
                           iStartAges = 1,
@@ -162,20 +162,24 @@ rtPhase2Test2 <- function(
 
   
     ###############
-    ## fecundity ##
-    
+    ## fecundity ##    
     #set deposition rates by age
     vpDeposit <- rtSetDepositionRatesByAgeDI( iMaxAge=iMaxAge,
                                               iFirstLarva = iFirstLarva,
                                               iInterLarva = iInterLarva,
-                                              pMortLarva = pMortLarva )  
-    #use the deposition rates set above
-    #lLarvae <- rtLarvalDeposition( vPopF, vpDeposit )    
-    #! an ugly way of doing I can improve
-    #iLarvaeF <- lLarvae$iLarvaeF
-    #iLarvaeM <- lLarvae$iLarvaeM  
+                                              pMortLarva = pMortLarva ) 
     
+    #note that pupal ageing occurs immediately before this
+    #leaving a gap at age 1
+    #so I could pass aGridPup to the deposition function
+    #and get it to fill the age1 pupae there
+    #also for now I'll pass aGrid and get the func to work out the numF in each grid cell
     
+    #uses the deposition rates set above
+    aGridPup <- rtLarvalDepositionGrid( aGrid=aGrid, aGridPup=aGridPup, vpDeposit )    
+
+    #the new age 1 pupae can be checked by (shows a grid each for M&F)
+    #aGridPup[,,,'age1']
     
     ##############
     ## movement ##
@@ -235,6 +239,7 @@ rtPhase2Test2 <- function(
 #apply(tst,MARGIN=c('age'),sum) #summed age structure across grid over all days
 #apply(tst,MARGIN=c('day','age'),sum) #summed age structure across grid for each day
 #apply(tst,MARGIN=c('day','age','sex'),sum) #as above separated by MF
-
+#apply(tst,MARGIN=c('x','y','day'),sum) #grid for each day all ages & sexes
+#apply(tst['day14',,,,],MARGIN=c('x','y'),sum) #grid for a selected day all ages & sexes
 
 

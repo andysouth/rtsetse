@@ -3,7 +3,7 @@
 \title{a simple spatial tsetse population simulation, a 2nd test of phase2}
 \usage{
 rtPhase2Test2(nCol = 10, nRow = 10, pMove = 0.4, iDays = 4,
-  iMaxAge = 7, iCarryCap = 200, iStartAdults = 200, iStartAges = 1,
+  iMaxAge = 120, iCarryCap = 200, iStartAdults = 200, iStartAges = 1,
   iStartPupae = 200, pMortF = 0.05, pMortM = 0.05, loop = TRUE,
   iPupDurF = 26, iPupDurM = 28, iFirstLarva = 16, iInterLarva = 10,
   pMortLarva = 0.05)
