@@ -132,11 +132,7 @@ rtPhase2Test2 <- function(
     
     
     ##################
-    ## adult ageing ##
-    #!decide whether to call for M&F independently 
-    #!or do both in the function
-    
-    #passing the whole grid to rtAgeing
+    ## adult ageing ##    
     aGrid <- rtAgeingGrid(aGrid)
     
     #the third dimension (age) loses it's label
@@ -216,6 +212,7 @@ rtPhase2Test2 <- function(
 #tst['day1','x1','y1','F',] #an age structure for one cell on one day
 #apply(tst,MARGIN=c('age'),sum) #summed age structure across grid over all days
 #apply(tst,MARGIN=c('day','age'),sum) #summed age structure across grid for each day
+#apply(tst,MARGIN=c('day','age','sex'),sum) #as above separated by MF
 
 
 
