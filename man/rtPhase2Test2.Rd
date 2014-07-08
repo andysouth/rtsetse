@@ -5,7 +5,8 @@
 rtPhase2Test2(nCol = 10, nRow = 10, pMove = 0.4, iDays = 4,
   iMaxAge = 7, iCarryCap = 200, iStartAdults = 200, iStartAges = 1,
   iStartPupae = 200, pMortF = 0.05, pMortM = 0.05, loop = TRUE,
-  iPupDurF = 26, iPupDurM = 28)
+  iPupDurF = 26, iPupDurM = 28, iFirstLarva = 16, iInterLarva = 10,
+  pMortLarva = 0.05)
 }
 \arguments{
   \item{nCol}{number grid columns}
@@ -40,6 +41,12 @@ rtPhase2Test2(nCol = 10, nRow = 10, pMove = 0.4, iDays = 4,
   \item{iPupDurF}{days it takes pupa(F) to develop}
 
   \item{iPupDurM}{days it takes pupa(M) to develop}
+
+  \item{iFirstLarva}{Age that female produces first larva}
+
+  \item{iInterLarva}{Inter-larval period}
+
+  \item{pMortLarva}{larval mortality per period}
 }
 \value{
 a multi-dimensional array [day,x,y,sex,ages]

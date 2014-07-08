@@ -21,6 +21,9 @@
 #' @param loop TEMPORARY test of loop versus apply approach, only TRUE works 
 #' @param iPupDurF days it takes pupa(F) to develop
 #' @param iPupDurM days it takes pupa(M) to develop
+#' @param iFirstLarva Age that female produces first larva
+#' @param iInterLarva Inter-larval period
+#' @param pMortLarva larval mortality per period
 
 #' @return a multi-dimensional array [day,x,y,sex,ages]
 #' @examples
@@ -41,7 +44,10 @@ rtPhase2Test2 <- function(
                           pMortM = 0.05,
                           loop = TRUE,
                           iPupDurF = 26,
-                          iPupDurM = 28 )
+                          iPupDurM = 28,
+                          iFirstLarva = 16,
+                          iInterLarva = 10,
+                          pMortLarva = 0.05)
 {
   
   ##some argument checking
@@ -154,6 +160,22 @@ rtPhase2Test2 <- function(
     ## pupal ageing ##
     aGridPup <- rtAgeingGrid(aGridPup, label="pupae")
 
+  
+    ###############
+    ## fecundity ##
+    
+    #set deposition rates by age
+    vpDeposit <- rtSetDepositionRatesByAgeDI( iMaxAge=iMaxAge,
+                                              iFirstLarva = iFirstLarva,
+                                              iInterLarva = iInterLarva,
+                                              pMortLarva = pMortLarva )  
+    #use the deposition rates set above
+    #lLarvae <- rtLarvalDeposition( vPopF, vpDeposit )    
+    #! an ugly way of doing I can improve
+    #iLarvaeF <- lLarvae$iLarvaeF
+    #iLarvaeM <- lLarvae$iLarvaeM  
+    
+    
     
     ##############
     ## movement ##
