@@ -1,6 +1,8 @@
-#' setting age specific larval deposition rates for Tsetse
+#' DEPRECATED setting age specific density-dependent larval deposition rates for Tsetse
 #'
-#' \code{rtSetDepositionRatesByAge} 
+#' \code{rtSetDepositionRatesByAge} is DEPRECATED because for the grid level models we are
+#' assuming laravl deposition is density independent. This also keeps the code simpler.
+#' see \code{\link{rtSetDepositionRatesByAgeDI}} for the recomended density-indpendent version.
 #' 
 #' Gets length of vector from vPopF
 #' uses age of first larva, interlava period & larval mortality rate 
@@ -25,6 +27,10 @@ rtSetDepositionRatesByAge <- function( vPopF,
                                        propMortDD = 0,
                                        iCarryCap = NA )
 {
+  
+  #indicating this function is deprecated
+  #may not want to put in for now because it is still called from aspatial rtPhase1Test2()
+  #.Deprecated("rtSetDepositionRatesByAgeDI")
   
   #test1 all F set to 1
   #vpDeposit <- rep(1,length(vPopF))

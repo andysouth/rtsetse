@@ -1,6 +1,6 @@
 \name{rtSetDepositionRatesByAge}
 \alias{rtSetDepositionRatesByAge}
-\title{setting age specific larval deposition rates for Tsetse}
+\title{DEPRECATED setting age specific density-dependent larval deposition rates for Tsetse}
 \usage{
 rtSetDepositionRatesByAge(vPopF, vPopM, iFirstLarva = 16, iInterLarva = 10,
   pMortLarva = 0.05, propMortDD = 0, iCarryCap = NA)
@@ -27,7 +27,11 @@ rtSetDepositionRatesByAge(vPopF, vPopM, iFirstLarva = 16, iInterLarva = 10,
 a vector of larval deposition probabilities
 }
 \description{
-\code{rtSetDepositionRatesByAge}
+\code{rtSetDepositionRatesByAge} is DEPRECATED because for
+the grid level models we are assuming laravl deposition is
+density independent. This also keeps the code simpler. see
+\code{\link{rtSetDepositionRatesByAgeDI}} for the
+recomended density-indpendent version.
 }
 \details{
 Gets length of vector from vPopF uses age of first larva,
