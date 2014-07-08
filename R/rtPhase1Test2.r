@@ -160,10 +160,6 @@ rtPhase1Test2 <- function( iDays = 30,
     
     ###############
     ## fecundity ##
-    #test1 all F set to 1
-    #vpDeposit <- rep(1,length(vPopF))
-    #test3 F>age5 set to 0.5
-    #vpDeposit <- ifelse(seq(vPopF)>5,0.5,0)
     
     #set deposition rates by age
     vpDeposit <- rtSetDepositionRatesByAge( vPopF = vPopF,
