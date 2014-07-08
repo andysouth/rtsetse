@@ -19,8 +19,6 @@
 
 
 #' @return a multi-dimensional array [day,x,y,ages] just for F to start
-#' @examples
-#' tst <- rtPhase2Test()
 #' @export
 #' 
 rtPhase2Test <- function( nRow = 10,
