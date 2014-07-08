@@ -41,7 +41,4 @@ popn spread under different popn growth rates. Uses things
 developed in gridTest.r. Starts with just F. ! check if it
 works when nRow & nCol == 1 (the aspatial model)
 }
-\examples{
-tst <- rtPhase2Test()
-}
 

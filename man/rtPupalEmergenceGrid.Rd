@@ -10,6 +10,10 @@ rtPupalEmergenceGrid(aGrid, aGridPup, iPupDurF = 26, iPupDurM = 28)
 
   \item{aGridPup}{an array with the age distributions of
   pupal males & females [x,y,sex,age]}
+
+  \item{iPupDurF}{days it takes pupa(F) to develop}
+
+  \item{iPupDurM}{days it takes pupa(M) to develop}
 }
 \value{
 a list containing aGrid, aGridPup
