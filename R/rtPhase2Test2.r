@@ -147,6 +147,17 @@ rtPhase2Test2 <- function(
     names(dimnames(aGrid)) <- c('x','y','sex','age')
     
     
+    #####################
+    ## pupal emergence ##
+    #this is a memory inefficient way of doing, creates copies of arrays
+    #i do it this way to keep as much of the code in the function as possible
+    l <- rtPupalEmergenceGrid( aGrid, aGridPup, iPupDurF=iPupDurF, iPupDurM=iPupDurM )
+    aGrid <- l$aGrid 
+    aGridPup <- l$aGridPup 
+    
+    ## pupal ageing ##
+    aGridPup <- rtAgeingGrid(aGridPup, label="pupae")
+
     
     ##############
     ## movement ##
@@ -196,9 +207,15 @@ rtPhase2Test2 <- function(
   invisible(aRecord)
 }
 
+#accessing results
 #tst <- rtPhase2Test2()
+
 #tst['day0',,,'F','age1']
 #tst['day1',,,'F','age1']
+
+#tst['day1','x1','y1','F',] #an age structure for one cell on one day
+#apply(tst,MARGIN=c('age'),sum) #summed age structure across grid over all days
+#apply(tst,MARGIN=c('day','age'),sum) #summed age structure across grid for each day
 
 
 
