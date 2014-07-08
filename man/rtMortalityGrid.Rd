@@ -2,7 +2,7 @@
 \alias{rtMortalityGrid}
 \title{tsetse mortality on a grid **in development**}
 \usage{
-rtMortalityGrid(aGrid, vpMortF, vpMortM, propDD = 0.25, mCarryCap = NA,
+rtMortalityGrid(aGrid, vpMortF, vpMortM, propDD = 0, mCarryCap = NA,
   loop = TRUE)
 }
 \arguments{

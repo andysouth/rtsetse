@@ -19,7 +19,7 @@
 rtMortalityGrid <- function( aGrid,
                          vpMortF,
                          vpMortM,
-                         propDD = 0.25,
+                         propDD = 0, #0.25,
                          mCarryCap = NA,
                          loop = TRUE ) 
 {
