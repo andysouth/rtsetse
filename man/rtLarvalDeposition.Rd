@@ -11,7 +11,8 @@ rtLarvalDeposition(vFem, vpDeposit)
   probabilities of Females}
 }
 \value{
-a list containing vPupF & vPupM
+a list containing integer numbers of larvae: iLarvaeF,
+iLarvaeM
 }
 \description{
 \code{rtLarvalDeposition} returns the number of resulting
@@ -19,6 +20,11 @@ pupa male and female
 }
 \details{
 from the age structure of adult females and 'birth'
-probabilities per female
+probabilities per female. BEWARE that this round the number
+of larvae down to an integer. WHich I probably don't need
+to do.
+
+See \link{\code{rtLarvalDepositionGrid}} for the grid
+version.
 }
 

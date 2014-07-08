@@ -3,15 +3,16 @@
 #' \code{rtLarvalDeposition} returns the number of resulting pupa male and female
 #' 
 #' from the age structure of adult females
-#' and 'birth' probabilities per female
+#' and 'birth' probabilities per female.  
+#' BEWARE that this round the number of larvae down to an integer. WHich I probably don't need to do.
 #' 
-
+#' See \link{\code{rtLarvalDepositionGrid}} for the grid version.
 
 
 #' @param vFem a vector of the age distribution of Females 
 #' @param vpDeposit a vector of age-specific deposition probabilities of Females 
 #' 
-#' @return a list containing vPupF & vPupM
+#' @return a list containing integer numbers of larvae: iLarvaeF, iLarvaeM
 #' @export
 
 rtLarvalDeposition <- function( vFem                                
@@ -28,7 +29,6 @@ rtLarvalDeposition <- function( vFem
   fLarvae <- sum(vLarvae)
   
   #assign gender and round down to integer here
-  #? should probably round earlier
   iLarvaeF <- floor(fLarvae/2)
   iLarvaeM <- floor(fLarvae/2)  
   
