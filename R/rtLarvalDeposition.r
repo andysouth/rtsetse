@@ -6,7 +6,7 @@
 #' and 'birth' probabilities per female.  
 #' BEWARE that this round the number of larvae down to an integer. WHich I probably don't need to do.
 #' 
-#' See \link{\code{rtLarvalDepositionGrid}} for the grid version.
+#' See \code{\link{rtLarvalDepositionGrid}} for the grid version.
 
 
 #' @param vFem a vector of the age distribution of Females 
