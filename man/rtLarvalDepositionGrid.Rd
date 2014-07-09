@@ -2,7 +2,7 @@
 \alias{rtLarvalDepositionGrid}
 \title{tsetse larval deposition on a grid}
 \usage{
-rtLarvalDepositionGrid(aGrid, aGridPup, vpDeposit)
+rtLarvalDepositionGrid(aGrid, aGridPup, vpDeposit, verbose = FALSE)
 }
 \arguments{
   \item{aGrid}{array with the age distributions of males &
@@ -13,6 +13,9 @@ rtLarvalDepositionGrid(aGrid, aGridPup, vpDeposit)
 
   \item{vpDeposit}{a vector of age-specific deposition
   probabilities of Females}
+
+  \item{verbose}{whether to output progress messages to
+  console}
 }
 \value{
 a list containing integer numbers of larvae: iLarvaeF,

@@ -9,13 +9,15 @@
 #' @param aGrid array with the age distributions of males & females [x,y,sex,age] 
 #' @param aGridPup array with the age distributions of pupal males & females [x,y,sex,age]  
 #' @param vpDeposit a vector of age-specific deposition probabilities of Females 
+#' @param verbose whether to output progress messages to console 
 #' 
 #' @return a list containing integer numbers of larvae: iLarvaeF, iLarvaeM
 #' @export
 
 rtLarvalDepositionGrid <- function( aGrid,
                                     aGridPup,
-                                    vpDeposit )
+                                    vpDeposit,
+                                    verbose=FALSE)
 {
   
   #multiply females in each age class by proportion depositing a larva
@@ -44,8 +46,8 @@ rtLarvalDepositionGrid <- function( aGrid,
   #and it might be returned as a matrix [x,y]
   mLarvae <- apply(aFs2, MARGIN=c('x','y'), sum) 
   
-  #testing total larvae
-  print(mLarvae)  
+  #testing total larvae on the grid
+  if (verbose) print(mLarvae)  
   
   #assume that half larvae are male and half are female
   #keeping this very simple & transparent for now
