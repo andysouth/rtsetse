@@ -129,8 +129,8 @@ rtPhase2Test2 <- function(
   
   for( day in 1:iDays ) {
     
-    ###############
-    ## mortality ##
+    #####################
+    ## adult mortality ##
     
     #! probably want to remove the carryCap bit of this
     #! if density dependence is going to be implemented purely through pupal mort
@@ -181,8 +181,8 @@ rtPhase2Test2 <- function(
     #the new age 1 pupae can be checked by (shows a grid each for M&F)
     #aGridPup[,,,'age1']
     
-    ##############
-    ## movement ##
+    ####################
+    ## movement adult ##
     #only if >1 row or col
     #! will need to work out how to do it for M&F
 
