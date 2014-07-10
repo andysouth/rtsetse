@@ -202,13 +202,14 @@ rtPhase2Test2 <- function(
       
       #get F&M separately from aGrid, pass to rtMove1 and put them back in again
       #!could create a loop for 'F' and 'M' here, or do a different way
-      aF <- aGrid[,,'F',]
+      #, drop=FALSE stops dimensions being lost if nRow or nCol is 1
+      aF <- aGrid[,,'F',, drop=FALSE]
       aF <- plyr::aaply(aF, .margins=3, .drop=FALSE, function(m) rtMove1(m, pMove=pMove) ) 
       #!remember always aperm after aaply to put array components back in correct order
       aF <- aperm(aF, c(2,3,1))
       aGrid[,,'F',] <- aF
       
-      aM <- aGrid[,,'M',]
+      aM <- aGrid[,,'M',, drop=FALSE]
       aM <- plyr::aaply(aM, .margins=3, .drop=FALSE, function(m) rtMove1(m, pMove=pMove) ) 
       #!remember always aperm after aaply to put array components back in correct order
       aM <- aperm(aM, c(2,3,1))
