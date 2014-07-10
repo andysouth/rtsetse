@@ -24,10 +24,13 @@
 #' @param iFirstLarva Age that female produces first larva
 #' @param iInterLarva Inter-larval period
 #' @param pMortLarva larval mortality per period
+#' @param report filename for a report for this run, if not specified no report is produced
 
 #' @return a multi-dimensional array [day,x,y,sex,ages]
 #' @examples
+#' \dontrun{
 #' tst <- rtPhase2Test2()
+#' }
 #' @export
 #' 
 rtPhase2Test2 <- function( 
@@ -47,13 +50,20 @@ rtPhase2Test2 <- function(
                           iPupDurM = 28,
                           iFirstLarva = 16,
                           iInterLarva = 10,
-                          pMortLarva = 0.05)
+                          pMortLarva = 0.05,
+                          report = "reportPhase2" ) #later set this to NULL
 {
   
   ##some argument checking
   #if( nRow < 2 | nCol < 2 )
   #  stop("movement does not work if less than 2 grid rows or columns")
 
+  #testing getting the arguments
+  #callObject <- match.call() only returns specified args
+  #callObject <- call() Error 'name' is missing  
+  #named_args <- as.list(parent.frame()) #does something weird, just gives the output object
+  lNamedArgs <- mget(names(formals()),sys.frame(sys.nframe()))
+  
   #vectors for death rates for males & females
   #as a first test have mortality rates constant by age
   vpMortF <- rep(pMortF,iMaxAge) 
@@ -223,6 +233,10 @@ rtPhase2Test2 <- function(
   dimnames(aRecord)[[1]] <- paste0('day',0:iDays)
   #resetting dimnames
   names(dimnames(aRecord)) <- c('day','x','y','sex','age')
+
+  #produce a report on the model run, with text & graphs
+  if (length(report)>0) rtReportPhase2( aRecord=aRecord, lNamedArgs=lNamedArgs, filename=report )
+
 
   #returning the popn record
   #! will need to modify later to return pupae too

@@ -1,0 +1,25 @@
+---
+title: "Report on rtsetse phase2 testing"
+output: html_document
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+---
+
+This is a report on the outputs produced from one run of a phase 2 test of the rtsetse model. 
+
+Paramater values used in this run :
+```{r, echo=FALSE}
+#the arguments and their values passed to rtPhase2Test2
+print(unlist(lNamedArgs))
+```
+
+**Figure 1** Adult population over time summed for the whole grid.
+
+```{r, echo=FALSE}
+rtPlotPopGrid(aRecord)
+```
+
+**Figure 2** Total adults in each grid cell on last day of the simulation.
+
+```{r, echo=FALSE}
+rtPlotPopGrid(aRecord)
+```

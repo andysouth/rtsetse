@@ -17,4 +17,5 @@ Imports:
     dplyr,
     abind,
     reshape2,
-    ggplot2
+    ggplot2,
+    rmarkdown
