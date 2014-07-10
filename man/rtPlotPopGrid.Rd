@@ -2,10 +2,10 @@
 \alias{rtPlotPopGrid}
 \title{plots popn of M&F over multiple days and grid cells}
 \usage{
-rtPlotPopGrid(mat, title = NULL)
+rtPlotPopGrid(aGrid, title = NULL)
 }
 \arguments{
-  \item{mat}{matrix of day,x,y,sex,age}
+  \item{aGrid}{array of day,x,y,sex,age}
 
   \item{title}{a title for the plot}
 }
