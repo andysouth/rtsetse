@@ -104,9 +104,6 @@ rtPhase2Test2 <- function(
   
   
   
-
-  
-  
   #create a matrix for carrying capacity on the grid
   #first test make it constant
   #I could name the dimensions, x & y here
@@ -194,7 +191,6 @@ rtPhase2Test2 <- function(
     ####################
     ## movement adult ##
     #only if >1 row or col
-    #! will need to work out how to do it for M&F
 
     if( nRow > 1 | nCol > 1) {
            
@@ -226,8 +222,7 @@ rtPhase2Test2 <- function(
       aGrid <- aperm(aGrid, c(3,4,1,2))
       
     }
-    
-    
+        
     cat("day",day,"\n")
     
     #aF
