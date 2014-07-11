@@ -134,7 +134,9 @@ rtPhase2Test2 <- function(
   #! even with this they get lost later
   names(dimnames(aRecord)) <- c('day','x','y','sex','age')
   
-  for( day in 1:iDays ) {
+  #for( day in 1:iDays ) {
+  #changing to starting at day1, so first changes happen on day2
+  for( day in 2:iDays ) {
     
     #####################
     ## adult mortality ##
@@ -235,8 +237,8 @@ rtPhase2Test2 <- function(
   } #end of iDays loop
   
   #ensuring that dimnames for the days dimension of aRecord is set
-  #note that starts at day0
-  dimnames(aRecord)[[1]] <- paste0('day',0:iDays)
+  #dimnames(aRecord)[[1]] <- paste0('day',0:iDays) #previously I started at day0
+  dimnames(aRecord)[[1]] <- paste0('day',1:iDays) #previously I started at day0
   #resetting dimnames
   names(dimnames(aRecord)) <- c('day','x','y','sex','age')
 

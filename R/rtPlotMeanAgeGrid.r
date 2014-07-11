@@ -21,8 +21,9 @@ rtPlotMeanAgeGrid <- function( aGrid, title="Mean Age across whole grid" )
   #! note this might be best done before the mat is passed to this function
   melted <- reshape2::melt(aGrid)
   
-  #To get day as a number (note -1 to account for day0)
-  melted$dayNum <- as.numeric(melted$day)-1
+  #To get day as a number 
+  #melted$dayNum <- as.numeric(melted$day)-1 #(-1 was when I started at day0)
+  melted$dayNum <- as.numeric(melted$day)
   melted$ageNum <- as.numeric(melted$age)  
 
   #dplyr

@@ -22,7 +22,8 @@ rtPlotPopGrid <- function( aGrid, title=NULL )
   melted <- reshape2::melt(aGrid)
   
   #To get day as a number (note -1 to account for day0)
-  melted$dayNum <- as.numeric(melted$day)-1
+  #melted$dayNum <- as.numeric(melted$day)-1#(-1 was when I started at day0)
+  melted$dayNum <- as.numeric(melted$day)
   
   #dplyr
   #sum by day (M&F)
