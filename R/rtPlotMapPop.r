@@ -39,7 +39,7 @@ rtPlotMapPop <- function( aRecord,
   #else days is just left as it is
   
   #what to do if days=='all' and sim longer than 16 days
-  if( days & numDays>16 ) {
+  if( days==TRUE & numDays>16 ) {
     if (ifManyDays=='last') days <- (numDays-15):numDays
     else if (ifManyDays=='first') days <- 1:16
     else if (ifManyDays=='firstlast') days <- c(1:8, (numDays-7):numDays)
