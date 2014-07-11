@@ -51,7 +51,7 @@ rtPhase2Test2 <- function(
                           iFirstLarva = 16,
                           iInterLarva = 10,
                           pMortLarva = 0.05,
-                          report = "reportPhase2" ) #later set this to NULL
+                          report = "reportPhase2.html" ) #later set this to NULL
 {
   
   ##some argument checking

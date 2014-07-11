@@ -15,7 +15,7 @@
 #' 
 rtReportPhase2 <- function( aRecord,
                             lNamedArgs,
-                            filename = "phase2Report.pdf" ) 
+                            filename = "reportPhase2.html" ) 
 {
   
 #   #this whole option had poor formatting

@@ -2,7 +2,7 @@
 \alias{rtReportPhase2}
 \title{produces a report on outputs of one run of phase2 using selected parameter values}
 \usage{
-rtReportPhase2(aRecord, lNamedArgs, filename = "phase2Report.pdf")
+rtReportPhase2(aRecord, lNamedArgs, filename = "reportPhase2.html")
 }
 \arguments{
   \item{aRecord}{output from phase2 a multi-dimensional
