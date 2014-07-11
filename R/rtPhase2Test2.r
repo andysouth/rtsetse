@@ -197,29 +197,33 @@ rtPhase2Test2 <- function(
     #! will need to work out how to do it for M&F
 
     if( nRow > 1 | nCol > 1) {
+           
+      #get F&M separately from aGrid, pass to rtMove1 and put them back in again      
+#       aF <- aGrid[,,'F',]
+#       #aF <- aGrid[,,'F',, drop=FALSE]
+#       aF <- plyr::aaply(aF, .margins=3, .drop=FALSE, function(m) rtMove1(m, pMove=pMove) ) 
+#       #!remember always aperm after aaply to put array components back in correct order
+#       aF <- aperm(aF, c(2,3,1))
+#       aGrid[,,'F',] <- aF
+#       
+#       aM <- aGrid[,,'M',]      
+#       #aM <- aGrid[,,'M',, drop=FALSE]
+#       aM <- plyr::aaply(aM, .margins=3, .drop=FALSE, function(m) rtMove1(m, pMove=pMove) ) 
+#       #!remember always aperm after aaply to put array components back in correct order
+#       aM <- aperm(aM, c(2,3,1))
+#       aGrid[,,'M',] <- aM      
       
-      #aF <- aaply(aF, .margins=3, .drop=FALSE, function(m) rtMove1(m, pMove=pMove) )     
+      #can nearly use apply to move both M&F in one command
+      #aGrid2 <- apply(aGrid,MARGIN=c('age','sex'),function(m) rtMove1(m, pMove=pMove))
+      #but the x&y dimensions get combined and the dimnames get lost
+
+      #Can move M&F in one line with aaply
+      #checked and it does seem to work, but it fails with nRow,nCol=1
+      aGrid <- plyr::aaply(aGrid,.margins=c(3,4), .drop=FALSE,function(m) rtMove1(m, pMove=pMove)) 
+      #having margins .margins=c(1,2) didn't make movement work correctly
       
-      #get F&M separately from aGrid, pass to rtMove1 and put them back in again
-      #!could create a loop for 'F' and 'M' here, or do a different way
-      #, drop=FALSE stops dimensions being lost if nRow or nCol is 1
-      #!!BUT ALSO stops the sex dimension being dropped too
-      #!!I might be able to just have one command for M&F
-      #!!for now temp removing drop=FALSE to try to get it working again!
-      
-      aF <- aGrid[,,'F',]
-      #aF <- aGrid[,,'F',, drop=FALSE]
-      aF <- plyr::aaply(aF, .margins=3, .drop=FALSE, function(m) rtMove1(m, pMove=pMove) ) 
-      #!remember always aperm after aaply to put array components back in correct order
-      aF <- aperm(aF, c(2,3,1))
-      aGrid[,,'F',] <- aF
-      
-      aM <- aGrid[,,'M',]      
-      #aM <- aGrid[,,'M',, drop=FALSE]
-      aM <- plyr::aaply(aM, .margins=3, .drop=FALSE, function(m) rtMove1(m, pMove=pMove) ) 
-      #!remember always aperm after aaply to put array components back in correct order
-      aM <- aperm(aM, c(2,3,1))
-      aGrid[,,'M',] <- aM      
+      #put array dimensions back in correct order
+      aGrid <- aperm(aGrid, c(3,4,1,2))
       
     }
     
