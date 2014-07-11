@@ -2,7 +2,8 @@
 \alias{rtPlotMapPop}
 \title{plots map(s) of populations}
 \usage{
-rtPlotMapPop(aRecord, days = "all", sex = "MF", title = NULL)
+rtPlotMapPop(aRecord, days = "all", ifManyDays = "last", sex = "MF",
+  title = NULL)
 }
 \arguments{
   \item{aRecord}{array of day,x,y,sex,age}
@@ -10,6 +11,12 @@ rtPlotMapPop(aRecord, days = "all", sex = "MF", title = NULL)
   \item{days}{which days to plot, options 'all', 'final', a
   number >0 & <days in the simulation, or a series e.g.
   c(1,2) or c(4:7)}
+
+  \item{ifManyDays}{days to plot if days='all' and num days
+  > 16, Options ‘first’ first 16 days, ‘last’ 16
+  days, ‘firstlast’ first8 & last8, ‘spread’ try to
+  spread out days, e.g. if 32 it would plot 2,4,6, etc. can
+  lead to uneven intervals.}
 
   \item{sex}{which sex to plot, 'both' or 'MF' for both,
   'M' males, 'F' females}

@@ -7,6 +7,7 @@
 
 #' @param aRecord array of day,x,y,sex,age
 #' @param days which days to plot, options 'all', 'final', a number >0 & <days in the simulation, or a series e.g. c(1,2) or c(4:7)
+#' @param ifManyDays days to plot if days='all' and num days > 16, Options ‘first’ first 16 days, ‘last’ 16 days, ‘firstlast’ first8 & last8, ‘spread’ try to spread out days, e.g. if 32 it would plot 2,4,6, etc. can lead to uneven intervals.
 #' @param sex which sex to plot, 'both' or 'MF' for both, 'M' males, 'F' females
 #' @param title a title for the plot  
 #' 
@@ -18,6 +19,7 @@
 
 rtPlotMapPop <- function( aRecord, 
                           days = 'all',
+                          ifManyDays = 'last',
                           sex = 'MF',
                           title = NULL )
 {
@@ -27,18 +29,24 @@ rtPlotMapPop <- function( aRecord,
   #subsetting of days
   #be careful that day0 is element1
   #Maybe I should drop the day0 thing before it bites me ?? I could set day1 to be the starting conditions. 
+  numDays <- dim(aRecord)[1]
   if (days=='all') days <- TRUE
-  else if (days=='final') days <- dim(aRecord)[1]
+  else if (days=='final') days <- numDays
   #else check whether it is numeric and within the bounds of array[1]
-  else if ( !is.numeric(days) | days<1 | days>dim(aRecord)[1] ){
-    stop("days should be numeric and >0 and <=",dim(aRecord)[1]," or 'all' or 'final', yours is ",days)  
+  else if ( !is.numeric(days) | days<1 | days>numDays ){
+    stop("days should be numeric and >0 and <=",numDays," or 'all' or 'final', yours is ",days)  
   }
   #else days is just left as it is
   
-  #with new output of [day,x,y,sex,age]
-  #this does it just for F I could easily do for F+M and allow the option
-  #aDays <- apply(aGrid[,,,'F', ,drop=FALSE],MARGIN=c(1,2,3),sum)
-  #M+F
+  #what to do if days=='all' and sim longer than 16 days
+  if( days & numDays>16 ) {
+    if (ifManyDays=='last') days <- (numDays-15):numDays
+    else if (ifManyDays=='first') days <- 1:16
+    else if (ifManyDays=='firstlast') days <- c(1:8, (numDays-7):numDays)
+    else if (ifManyDays=='spread') days <- seq(from=1, to=numDays, by=numDays/16)
+    else stop("ifManyDays should be 'last','first' or 'spread' yours is ",ifManyDays)
+  }
+  
   
   sexTitle <- sex
   if (sex=='both' | sex=='MF'){
