@@ -136,7 +136,9 @@ rtPhase2Test2 <- function(
   
   #for( day in 1:iDays ) {
   #changing to starting at day1, so first changes happen on day2
-  for( day in 2:iDays ) {
+  #for( day in 2:iDays ) {
+  #this ensures the loop isn't entered unless iDays is >1
+  for( day in seq(from=2,length.out=iDays-1) ) {
     
     #####################
     ## adult mortality ##
