@@ -13,10 +13,10 @@ rtPlotMapPop(aRecord, days = "all", ifManyDays = "last", sex = "MF",
   c(1,2) or c(4:7)}
 
   \item{ifManyDays}{days to plot if days='all' and num days
-  > 16, Options ‘first’ first 16 days, ‘last’ 16
-  days, ‘firstlast’ first8 and last8, ‘spread’ try
-  to spread out days, e.g. if 32 it would plot 2,4,6, etc.
-  can lead to uneven intervals.}
+  > 16, Options: 'first' first 16 days, 'last' 16 days,
+  'firstlast' first8 and last8, 'spread' try to spread out
+  days, e.g. if 32 it would plot 2,4,6, etc. can lead to
+  uneven intervals.}
 
   \item{sex}{which sex to plot, 'both' or 'MF' for both,
   'M' males, 'F' females}
