@@ -1,8 +1,8 @@
 Package: rtsetse
 Type: Package
 Title: simulating tsetse fly populations
-Version: 0.0.2
-Date: 2014-07-03
+Version: 0.0.3
+Date: 2014-07-14
 Author: Andy South
 Maintainer: Andy South <southandy@gmail.com>
 Description: Tsetse fly population simulation to inform management. Successor
