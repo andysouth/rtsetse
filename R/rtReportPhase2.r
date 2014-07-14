@@ -10,7 +10,7 @@
 #' @return ?nothing maybe
 #' @examples
 #' #tst <- rtPhase2Test2()
-#' #rtReportPhase2(tst, filename="myoutput.pdf")
+#' #rtReportPhase2(tst, lNamedArgs, filename="myoutput.pdf")
 #' @export
 #' 
 rtReportPhase2 <- function( aRecord,

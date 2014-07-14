@@ -24,6 +24,6 @@ the arguments that are passed to rtPhase2Test2
 }
 \examples{
 #tst <- rtPhase2Test2()
-#rtReportPhase2(tst, filename="myoutput.pdf")
+#rtReportPhase2(tst, lNamedArgs, filename="myoutput.pdf")
 }
 
