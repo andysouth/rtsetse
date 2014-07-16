@@ -1,4 +1,4 @@
-#' movement to cells NESW
+#' movement to cells NESW, island model
 #' 
 #' \code{rtMove1} moves proportion of popn in each cell to the 4 neighbouring cells.
 #' Movers are divided equally between the 4 cardinal neighbours.
@@ -6,6 +6,7 @@
 #' and nothing arrives in from outside of the grid.
 #' This function works on a single age class, it can be made to work on multiple age classes
 #' by passing an array[x,y,age] to aaply(.margins=3)
+#' Tries to cope with nrow or ncol==1 but I think fails.
 
 #' @param m a matrix of cells containing a single number representing one age
 #' @param pMove proportion of popn that moves out of the cell.
