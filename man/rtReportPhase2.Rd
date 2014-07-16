@@ -1,6 +1,6 @@
 \name{rtReportPhase2}
 \alias{rtReportPhase2}
-\title{produces a report on outputs of one run of phase2 using selected parameter values}
+\title{produces a report for one run NOTE! this is not used by shiny apps they have their own similar code.}
 \usage{
 rtReportPhase2(aRecord, lNamedArgs, filename = "reportPhase2.html")
 }
@@ -19,8 +19,7 @@ rtReportPhase2(aRecord, lNamedArgs, filename = "reportPhase2.html")
 }
 \description{
 \code{rtReportPhase2} creates a pdf of text and graphical
-output for this run. *later this may need to include all
-the arguments that are passed to rtPhase2Test2
+output for this run.
 }
 \examples{
 #tst <- rtPhase2Test2()

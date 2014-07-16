@@ -1,7 +1,6 @@
-#' produces a report on outputs of one run of phase2 using selected parameter values
+#' produces a report for one run NOTE! this is not used by shiny apps they have their own similar code.
 #'
 #' \code{rtReportPhase2} creates a pdf of text and graphical output for this run.  
-#' *later this may need to include all the arguments that are passed to rtPhase2Test2
 
 #' @param aRecord output from phase2 a multi-dimensional array for adults [day,x,y,sex,ages] *later it may need to include pupae*
 #' @param lNamedArgs a list of the arguments and their values passed to rtPhase2Test2
