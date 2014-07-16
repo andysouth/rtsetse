@@ -198,28 +198,28 @@ rtPhase2Test2 <- function(
 
     if( nRow > 1 | nCol > 1) {
            
-      #get F&M separately from aGrid, pass to rtMove1 and put them back in again      
+      #get F&M separately from aGrid, pass to rtMoveIsland and put them back in again      
 #       aF <- aGrid[,,'F',]
 #       #aF <- aGrid[,,'F',, drop=FALSE]
-#       aF <- plyr::aaply(aF, .margins=3, .drop=FALSE, function(m) rtMove1(m, pMove=pMove) ) 
+#       aF <- plyr::aaply(aF, .margins=3, .drop=FALSE, function(m) rtMoveIsland(m, pMove=pMove) ) 
 #       #!remember always aperm after aaply to put array components back in correct order
 #       aF <- aperm(aF, c(2,3,1))
 #       aGrid[,,'F',] <- aF
 #       
 #       aM <- aGrid[,,'M',]      
 #       #aM <- aGrid[,,'M',, drop=FALSE]
-#       aM <- plyr::aaply(aM, .margins=3, .drop=FALSE, function(m) rtMove1(m, pMove=pMove) ) 
+#       aM <- plyr::aaply(aM, .margins=3, .drop=FALSE, function(m) rtMoveIsland(m, pMove=pMove) ) 
 #       #!remember always aperm after aaply to put array components back in correct order
 #       aM <- aperm(aM, c(2,3,1))
 #       aGrid[,,'M',] <- aM      
       
       #can nearly use apply to move both M&F in one command
-      #aGrid2 <- apply(aGrid,MARGIN=c('age','sex'),function(m) rtMove1(m, pMove=pMove))
+      #aGrid2 <- apply(aGrid,MARGIN=c('age','sex'),function(m) rtMoveIsland(m, pMove=pMove))
       #but the x&y dimensions get combined and the dimnames get lost
 
       #Can move M&F in one line with aaply
       #checked and it does seem to work, but it fails with nRow,nCol=1
-      #aGrid <- plyr::aaply(aGrid,.margins=c(3,4), .drop=FALSE,function(m) rtMove1(m, pMove=pMove)) 
+      #aGrid <- plyr::aaply(aGrid,.margins=c(3,4), .drop=FALSE,function(m) rtMoveIsland(m, pMove=pMove)) 
       #having margins .margins=c(1,2) didn't make movement work correctly
       
       #changing to reflecting boundaries

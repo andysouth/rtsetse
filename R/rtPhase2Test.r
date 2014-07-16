@@ -128,13 +128,13 @@ rtPhase2Test <- function( nRow = 10,
     ## movement ##
     #only if >1 row or col
     if( nRow > 1 | nCol > 1) {
-      #aF <- aaply(aF, .margins=3, rtMove1 )
-      #to pass the pMove arg to rtMove1
-      aF <- plyr::aaply(aF, .margins=3, .drop=FALSE, function(m) rtMove1(m, pMove=pMove) )     
+      #aF <- aaply(aF, .margins=3, rtMoveIsland )
+      #to pass the pMove arg to rtMoveIsland
+      aF <- plyr::aaply(aF, .margins=3, .drop=FALSE, function(m) rtMoveIsland(m, pMove=pMove) )     
       
       #try apply which is faster
       #but caused an error with aperm because the xy dimensions are lost
-      #aF <- apply(aF, MARGIN=3, function(m) rtMove1(m, pMove=pMove) )   
+      #aF <- apply(aF, MARGIN=3, function(m) rtMoveIsland(m, pMove=pMove) )   
       
       
       #putting array components back in correct order

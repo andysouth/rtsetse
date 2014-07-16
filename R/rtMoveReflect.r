@@ -20,7 +20,7 @@ rtMoveReflect <- function(m, pMove=0.4) {
   #that would create reflecting boundaries.
   
   #!beware that this doesn't cope with nrow=1 or ncol=1 
-  #see rtMove1() which tries (and i think fails) to sort 
+  #see rtMoveIsland() which tries (and i think fails) to sort 
   #tricky to work out, R treats vectors and matrices differently
 
   if( nrow(m) < 2 | ncol(m) < 2 )

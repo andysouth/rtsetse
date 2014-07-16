@@ -1,6 +1,6 @@
 #' movement to cells NESW, island model
 #' 
-#' \code{rtMove1} moves proportion of popn in each cell to the 4 neighbouring cells.
+#' \code{rtMoveIsland} moves proportion of popn in each cell to the 4 neighbouring cells.
 #' Movers are divided equally between the 4 cardinal neighbours.
 #' In this initial version popn moving outside of the grid is lost
 #' and nothing arrives in from outside of the grid.
@@ -14,7 +14,7 @@
 #' @return an updated matrix following movement
 #' @export
 
-rtMove1 <- function(m, pMove=0.4) {
+rtMoveIsland <- function(m, pMove=0.4) {
   
   #this puts zeros in, but I could modify it to copy the boundary cell
   #simply by replacing these bits rep(0,nrow(m))
@@ -80,4 +80,4 @@ rtMove1 <- function(m, pMove=0.4) {
 #a test on 1D matrix
 #!create a unit-test based on this
 #m=matrix(c(0,1,0),nrow=1,ncol=3)
-#rtMove1(m)
+#rtMoveIsland(m)
