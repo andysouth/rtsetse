@@ -19,11 +19,15 @@
 #' @param pMortF adult female mortality per day 
 #' @param pMortM adult male mortality per day 
 #' @param loop TEMPORARY test of loop versus apply approach, only TRUE works 
+#' @param pMortPupa pupal mortality per period
+#' @param iPupaDensThresh the threshold pupal density above which density dependence acts
+#' @param fSlopeDD the slope of density dependence, how mortality increases with density
 #' @param iPupDurF days it takes pupa(F) to develop
 #' @param iPupDurM days it takes pupa(M) to develop
 #' @param iFirstLarva Age that female produces first larva
 #' @param iInterLarva Inter-larval period
 #' @param pMortLarva larval mortality per period
+#' 
 #' @param report filename for a report for this run, if not specified no report is produced
 
 #' @return a multi-dimensional array [day,x,y,sex,ages]
@@ -46,6 +50,9 @@ rtPhase2Test2 <- function(
                           pMortF = 0.05,
                           pMortM = 0.05,
                           loop = TRUE,
+                          pMortPupa = 0.25,
+                          iPupaDensThresh = 200,
+                          fSlopeDD = 1.0,                          
                           iPupDurF = 26,
                           iPupDurM = 28,
                           iFirstLarva = 16,
@@ -189,6 +196,14 @@ rtPhase2Test2 <- function(
     #the new age 1 pupae can be checked by (shows a grid each for M&F)
     #aGridPup[,,,'age1']
     
+    #####################
+    ## pupal mortality ##
+    # is applied at day1 for the whole period
+    # !note that iPupaDensThresh is currently constant across the grid
+    aGridPup <- rtPupalMortalityRogersGrid( aGridPup,
+                                            pMortPupa=pMortPupa, 
+                                            iPupaDensThresh=iPupaDensThresh, 
+                                            fSlopeDD=fSlopeDD)
     
     
     ####################

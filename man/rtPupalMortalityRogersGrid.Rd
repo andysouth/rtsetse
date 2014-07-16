@@ -1,0 +1,30 @@
+\name{rtPupalMortalityRogersGrid}
+\alias{rtPupalMortalityRogersGrid}
+\title{tsetse pupal mortality on a GRID following Rogers(1990)}
+\usage{
+rtPupalMortalityRogersGrid(aGridPup, pMortPupa = 0.25,
+  iPupaDensThresh = 200, fSlopeDD = 1)
+}
+\arguments{
+  \item{aGridPup}{array with the age distributions of pupal
+  males & females [x,y,sex,age]}
+
+  \item{pMortPupa}{a density independent mortality
+  probability}
+
+  \item{iPupaDensThresh}{the threshold above which density
+  dependence acts}
+
+  \item{fSlopeDD}{the slope of density dependence, how
+  mortality increases with density}
+}
+\value{
+updated aGridPup
+}
+\description{
+\code{rtPupalMortalityRogersGrid} applies
+\code{\link{rtPupalMortalityRogers}} to a grid. It does
+that by simply calling that function for each cell in the
+grid.
+}
+
