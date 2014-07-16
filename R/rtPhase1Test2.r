@@ -205,11 +205,15 @@ rtPhase1Test2 <- function( iDays = 30,
     #     lPupae <- rtPupalMortalityDD2(vPupaF=vPupaF, vPupaM=vPupaM, pMort=pMortPupa, iCarryCapPupa=iCarryCap, fPopNow=fPopNow, fPopPre=fPopPre )
     
     #30/6/14 new simpler mechanism based on Rogers(1990)
-    lPupae <- rtPupalMortalityRogers(vPupaF=vPupaF, vPupaM=vPupaM, pMort=pMortPupa, iPupaDensThresh=iPupaDensThresh, fSlopeDD=fSlopeDD )    
-    
-    
+    lPupae <- rtPupalMortalityRogers(vPupaF=vPupaF, 
+                                     vPupaM=vPupaM, 
+                                     pMort=pMortPupa, 
+                                     iPupaDensThresh=iPupaDensThresh, 
+                                     fSlopeDD=fSlopeDD )    
+        
     vPupaF <- lPupae$vPupaF
     vPupaM <- lPupae$vPupaM
+    
     
     if ( verbose )
     {
