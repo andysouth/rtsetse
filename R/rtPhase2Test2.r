@@ -180,38 +180,22 @@ rtPhase2Test2 <- function(
                                               iInterLarva = iInterLarva,
                                               pMortLarva = pMortLarva ) 
     
-    #note that pupal ageing occurs immediately before this
-    #leaving a gap at age 1
-    #so I could pass aGridPup to the deposition function
-    #and get it to fill the age1 pupae there
-    #also for now I'll pass aGrid and get the func to work out the numF in each grid cell
-    
+    #pupal ageing occurs immediately before this leaving a gap at age 1
+    #this passes aGridPup to the deposition function to fill the age1 pupae there
+    #also for now I'll pass aGrid and get the func to work out the numF in each grid cell   
     #uses the deposition rates set above
     aGridPup <- rtLarvalDepositionGrid( aGrid=aGrid, aGridPup=aGridPup, vpDeposit )    
 
     #the new age 1 pupae can be checked by (shows a grid each for M&F)
     #aGridPup[,,,'age1']
     
+    
+    
     ####################
     ## movement adult ##
     #only if >1 row or col
 
-    if( nRow > 1 | nCol > 1) {
-           
-      #get F&M separately from aGrid, pass to rtMoveIsland and put them back in again      
-#       aF <- aGrid[,,'F',]
-#       #aF <- aGrid[,,'F',, drop=FALSE]
-#       aF <- plyr::aaply(aF, .margins=3, .drop=FALSE, function(m) rtMoveIsland(m, pMove=pMove) ) 
-#       #!remember always aperm after aaply to put array components back in correct order
-#       aF <- aperm(aF, c(2,3,1))
-#       aGrid[,,'F',] <- aF
-#       
-#       aM <- aGrid[,,'M',]      
-#       #aM <- aGrid[,,'M',, drop=FALSE]
-#       aM <- plyr::aaply(aM, .margins=3, .drop=FALSE, function(m) rtMoveIsland(m, pMove=pMove) ) 
-#       #!remember always aperm after aaply to put array components back in correct order
-#       aM <- aperm(aM, c(2,3,1))
-#       aGrid[,,'M',] <- aM      
+    if( nRow > 1 | nCol > 1) {  
       
       #can nearly use apply to move both M&F in one command
       #aGrid2 <- apply(aGrid,MARGIN=c('age','sex'),function(m) rtMoveIsland(m, pMove=pMove))
