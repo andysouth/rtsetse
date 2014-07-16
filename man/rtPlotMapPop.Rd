@@ -2,7 +2,7 @@
 \alias{rtPlotMapPop}
 \title{plots map(s) of populations}
 \usage{
-rtPlotMapPop(aRecord, days = "all", ifManyDays = "last", sex = "MF",
+rtPlotMapPop(aRecord, days = "all", ifManyDays = "spread", sex = "MF",
   title = NULL)
 }
 \arguments{

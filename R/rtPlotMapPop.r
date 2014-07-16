@@ -22,7 +22,7 @@
 
 rtPlotMapPop <- function( aRecord, 
                           days = 'all',
-                          ifManyDays = 'last',
+                          ifManyDays = 'spread',
                           sex = 'MF',
                           title = NULL )
 {
@@ -58,11 +58,25 @@ rtPlotMapPop <- function( aRecord,
   } else if (sex != 'M' & sex != 'F') 
     stop("sex should be 'M','F','MF' or 'both', yours is ",sex)
   
+  #this gives an array of [days,x,y]
   aDays <- apply(aRecord[days,,,sex, ,drop=FALSE],MARGIN=c(1,2,3),sum)  
   
   #I might not need this with the new ,drop=FALSE above
   #if ( input$nRow == 1 || input$nCol == 1 )
   #  dim(aDays) <- dim(aGrid)[-length(dim(aGrid))]
+  
+  #set the color scale constant for all plots between 0 & max cell val
+  #find the maximum cell value on any day
+  fMaxCellVal <- max( aDays )
+  #breaks <- seq(0, fMaxCellVal, length.out=10)
+  breaks <- pretty(c(0,fMaxCellVal), n=6) #n is how many intervals
+  #can I add on a low cat of 0-1 flies
+  #it does make the legend look a bit weird coz it overplots 0&1
+  #but does make results clearer to me in test phase at least
+  breaks <- c(0,1,breaks[-1])
+  nb <- length(breaks)-1 
+  colourP <- rev(terrain.colors(nb)) 
+  #colourP <- topo.colors(nb) 
   
   #rearranging dimensions for raster brick
   #needs to be x,y,z
@@ -71,6 +85,6 @@ rtPlotMapPop <- function( aRecord,
   #the day titles for each subplot (otherwise they get lost when subsetted)
   titles <- paste(dimnames(aDays)$day, sexTitle) 
   
-  plot(brick1, main=titles)  
+  plot(brick1, main=titles, breaks=breaks, col=colourP)  
   
 }
