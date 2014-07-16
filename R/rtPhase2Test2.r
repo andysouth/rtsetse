@@ -219,8 +219,12 @@ rtPhase2Test2 <- function(
 
       #Can move M&F in one line with aaply
       #checked and it does seem to work, but it fails with nRow,nCol=1
-      aGrid <- plyr::aaply(aGrid,.margins=c(3,4), .drop=FALSE,function(m) rtMove1(m, pMove=pMove)) 
+      #aGrid <- plyr::aaply(aGrid,.margins=c(3,4), .drop=FALSE,function(m) rtMove1(m, pMove=pMove)) 
       #having margins .margins=c(1,2) didn't make movement work correctly
+      
+      #changing to reflecting boundaries
+      aGrid <- plyr::aaply(aGrid,.margins=c(3,4), .drop=FALSE,function(m) rtMoveReflect(m, pMove=pMove)) 
+      
       
       #put array dimensions back in correct order
       aGrid <- aperm(aGrid, c(3,4,1,2))

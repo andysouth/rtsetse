@@ -1,0 +1,26 @@
+\name{rtMoveReflect}
+\alias{rtMoveReflect}
+\title{movement to cells NESW, reflecting boundaries}
+\usage{
+rtMoveReflect(m, pMove = 0.4)
+}
+\arguments{
+  \item{m}{a matrix of cells containing a single number
+  representing one age}
+
+  \item{pMove}{proportion of popn that moves out of the
+  cell.}
+}
+\value{
+an updated matrix following movement
+}
+\description{
+\code{rtMoveReflect} moves proportion of popn in each cell
+to the 4 neighbouring cells. Movers are divided equally
+between the 4 cardinal neighbours. Boundaries are
+reflecting. This function works on a single age class, it
+can be made to work on multiple age classes by passing an
+array[x,y,age] to aaply(.margins=3) Doesn't try to cope
+with nrow or ncol==1.
+}
+
