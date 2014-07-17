@@ -269,4 +269,16 @@ rtPhase2Test2 <- function(
 #apply(tst,MARGIN=c('x','y','day'),sum) #grid for each day all ages & sexes
 #apply(tst['day14',,,,],MARGIN=c('x','y'),sum) #grid for a selected day all ages & sexes
 
+# #testing plotting age structure by day summed across whole grid
+# aS <- apply(tst,MARGIN=c('day','age'),sum) #summed age structure across grid for each day
+# #> class(aS) [1] "matrix"
+# #nearly works i think, except that dimensions for ages & days need to be swapped
+# rtPlotAgeStructure(aS)
+# aS2 <- aperm(aS,c(2,1))
+# aS2[1,]
+# rtPlotAgeStructure(aS2)
+# #need to reverse ages, but difficulty is that if I use rev() it reverses the numbers but not the names !
+# #reversing an individual dimension does work
+# #rev(aS2[,2])
+# aS3 <- apply(aS,MARGIN=c('day'),rev)
 
