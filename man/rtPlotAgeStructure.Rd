@@ -6,7 +6,7 @@ rtPlotAgeStructure(df, title = NULL)
 }
 \arguments{
   \item{df}{a dataframe with days in columns and ages in
-  rows}
+  rows OR an array of [day,x,y,sex,age]}
 
   \item{title}{a title for the plot}
 }
