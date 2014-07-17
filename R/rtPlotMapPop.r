@@ -74,6 +74,9 @@ rtPlotMapPop <- function( aRecord,
   #it does make the legend look a bit weird coz it overplots 0&1
   #but does make results clearer to me in test phase at least
   breaks <- c(0,1,breaks[-1])
+  #to avoid error of 'breaks' are not unique
+  breaks <- unique(breaks)  
+  
   nb <- length(breaks)-1 
   colourP <- rev(terrain.colors(nb)) 
   #colourP <- topo.colors(nb) 
