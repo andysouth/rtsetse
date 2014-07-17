@@ -47,7 +47,7 @@ rtPhase2Test2 <- function(
                           iCarryCap = 200,
                           iStartAdults = 200,
                           iStartAges = 1,
-                          iStartPupae = 200,
+                          iStartPupae = "sameAsAdults",
                           pMortF = 0.05,
                           pMortM = 0.05,
                           loop = TRUE,

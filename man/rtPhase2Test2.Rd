@@ -4,10 +4,10 @@
 \usage{
 rtPhase2Test2(nCol = 10, nRow = 10, pMove = 0.4, iDays = 4,
   iMaxAge = 120, iCarryCap = 200, iStartAdults = 200, iStartAges = 1,
-  iStartPupae = 200, pMortF = 0.05, pMortM = 0.05, loop = TRUE,
-  pMortPupa = 0.25, iPupaDensThresh = 200, fSlopeDD = 1, iPupDurF = 26,
-  iPupDurM = 28, iFirstLarva = 16, iInterLarva = 10, pMortLarva = 0.05,
-  report = NULL)
+  iStartPupae = "sameAsAdults", pMortF = 0.05, pMortM = 0.05,
+  loop = TRUE, pMortPupa = 0.25, iPupaDensThresh = 200, fSlopeDD = 1,
+  iPupDurF = 26, iPupDurM = 28, iFirstLarva = 16, iInterLarva = 10,
+  pMortLarva = 0.05, report = NULL)
 }
 \arguments{
   \item{nCol}{number grid columns}
