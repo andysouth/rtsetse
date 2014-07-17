@@ -30,7 +30,8 @@ rtPhase2Test2(nCol = 10, nRow = 10, pMove = 0.4, iDays = 4,
   ages classes}
 
   \item{iStartPupae}{number of pupae to start simulation
-  with (they get spread across sex&age)}
+  with (they get spread across sex&age) option
+  "sameAsAdults" to set tot pupae same as tot adults.}
 
   \item{pMortF}{adult female mortality per day}
 

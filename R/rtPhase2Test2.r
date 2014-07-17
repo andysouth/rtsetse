@@ -16,6 +16,7 @@
 #' @param iStartAdults number of adults to start simulation with
 #' @param iStartAges spread start adults across the first n ages classes
 #' @param iStartPupae number of pupae to start simulation with (they get spread across sex&age)
+#'     option "sameAsAdults" to set tot pupae same as tot adults.
 #' @param pMortF adult female mortality per day 
 #' @param pMortM adult male mortality per day 
 #' @param loop TEMPORARY test of loop versus apply approach, only TRUE works 
@@ -96,6 +97,11 @@ rtPhase2Test2 <- function(
   dimnamesPup <- list( paste0('x',1:nCol), paste0('y',1:nRow), c("F","M"), paste0('age',1:iMaxPupAge))
   names(dimnamesPup) <- c("x","y","sex","age")
   aGridPup <- array(0, dim=c(nCol,nRow,2,iMaxPupAge), dimnames=dimnamesPup)  
+  
+  #option to set tot pupae same as tot adults
+  if (iStartPupae=="sameAsAdults")
+    iStartPupae <- iStartAdults
+  
   #pupae are done slightly differently from adults
   #it puts indivs into all age classes
   #because males stay in the ground longer this means there will be more males
