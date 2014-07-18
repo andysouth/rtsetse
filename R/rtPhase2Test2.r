@@ -123,16 +123,12 @@ rtPhase2Test2 <- function(
   mCarryCap <- matrix(iCarryCap, ncol=nCol, nrow=nRow)
   
   
-  #trying to see how I can access dimensions by name 
+# access array dimensions by name 
 #   aGrid['x1','y1','M',] #an age structure for one cell
 #   sum(aGrid['x1','y1','M',]) #total M in one cell
 #   sum(aGrid['x1','y1',,]) #total pop in one cell
 #   aGrid[,,'M','age2'] #a grid of one age  
 #   aGrid[,,'F',] #grid of age structures just for F
-#   apply(aGrid,MARGIN=c(3,4),sum) #a summed age structures for M&F
-#   apply(aGrid,MARGIN=4,sum) #summed age structures for both sexes  
-#   apply(aGrid,MARGIN=c(1,2),sum) #grid for all ages & sexes
-#   #using names
 #   apply(aGrid,MARGIN=c('x','y'),sum) #grid for all ages & sexes
 #   apply(aGrid,MARGIN=c('age'),sum) #summed age structure for whole pop
 #   apply(aGrid,MARGIN=c('sex'),sum) #summed sex ratio for whole pop  
