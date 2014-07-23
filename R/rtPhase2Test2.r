@@ -124,14 +124,14 @@ rtPhase2Test2 <- function(
   
   
 # access array dimensions by name 
-  aGrid['x1','y1','M',] #an age structure for one cell
-  sum(aGrid['x1','y1','M',]) #total M in one cell
-  sum(aGrid['x1','y1',,]) #total pop in one cell
-  aGrid[,,'M','age2'] #a grid of one age  
-  aGrid[,,'F',] #grid of age structures just for F
-  apply(aGrid,MARGIN=c('x','y'),sum) #grid for all ages & sexes
-  apply(aGrid,MARGIN=c('age'),sum) #summed age structure for whole pop
-  apply(aGrid,MARGIN=c('sex'),sum) #summed sex ratio for whole pop  
+#   aGrid['x1','y1','M',] #an age structure for one cell
+#   sum(aGrid['x1','y1','M',]) #total M in one cell
+#   sum(aGrid['x1','y1',,]) #total pop in one cell
+#   aGrid[,,'M','age2'] #a grid of one age  
+#   aGrid[,,'F',] #grid of age structures just for F
+#   apply(aGrid,MARGIN=c('x','y'),sum) #grid for all ages & sexes
+#   apply(aGrid,MARGIN=c('age'),sum) #summed age structure for whole pop
+#   apply(aGrid,MARGIN=c('sex'),sum) #summed sex ratio for whole pop  
 #   #using apply on subset
   
   
@@ -263,7 +263,7 @@ rtPhase2Test2 <- function(
 
 #tst['day0',,,'F','age1']
 #tst['day1',,,'F','age1']
-
+#aGrid <- tst['day1',,,,] #an array for one day
 #tst['day1','x1','y1','F',] #an age structure for one cell on one day
 #apply(tst,MARGIN=c('age'),sum) #summed age structure across grid over all days
 #apply(tst,MARGIN=c('day','age'),sum) #summed age structure across grid for each day
