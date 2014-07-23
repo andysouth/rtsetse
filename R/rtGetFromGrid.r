@@ -1,5 +1,6 @@
 #' to access population data from the grid of [x,y,sex,age]
 #'
+#' NOT USED YET. I might not even need it. rtGetFromRecord() likely to be more useful.
 #' \code{rtGetFromGrid} allows access to population data from a grid of sexes and ages. 
 #' You can specify which [x,y,sex,age] you want to get data for.  
 #' Each variable defaults to 'all' so \code{rtGetFromGrid(aGrid)} would return the whole grid.   
@@ -60,7 +61,7 @@ rtGetFromGrid <- function( aGrid,
   if (! 'sum' %in% allArgs )
   {
     #this allows for e.g. age=c(1:10)
-    toReturn <- aGrid[x,y,sex,age]
+    toReturn <- aGrid[x,y,sex,age, drop=FALSE]
     
   } else if (! 'all' %in% allArgs )
   # if at least one 'sum' but no 'all'  

@@ -21,6 +21,7 @@ rtGetFromGrid(aGrid, x = "all", y = "all", sex = "all", age = "all")
 an array, matrix or vector named with remaining dimensions of [x,y,sex,age]
 }
 \description{
+NOT USED YET. I might not even need it. rtGetFromRecord() likely to be more useful.
 \code{rtGetFromGrid} allows access to population data from a grid of sexes and ages.
 You can specify which [x,y,sex,age] you want to get data for.
 Each variable defaults to 'all' so \code{rtGetFromGrid(aGrid)} would return the whole grid.
