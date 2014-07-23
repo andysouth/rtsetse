@@ -59,7 +59,11 @@ rtPlotMapPop <- function( aRecord,
     stop("sex should be 'M','F','MF' or 'both', yours is ",sex)
   
   #this gives an array of [days,x,y]
-  aDays <- apply(aRecord[days,,,sex, ,drop=FALSE],MARGIN=c(1,2,3),sum)  
+  aDays <- apply(aRecord[days,,,sex, ,drop=FALSE],MARGIN=c(1,2,3),sum) 
+  #?? May be able to replace the above with a call to
+  #??eeek not yet
+  #aDays <- rtGetFromRecord(aRecord,day=days,sex=sex,age='sum')
+  
   
   #I might not need this with the new ,drop=FALSE above
   #if ( input$nRow == 1 || input$nCol == 1 )
