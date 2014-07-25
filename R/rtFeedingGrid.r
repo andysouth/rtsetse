@@ -101,10 +101,12 @@ rtFeedingGrid <- function( aGrid,
   }#x
     
   
-  
-  
   #returning a list of aGridStarved & aGridManFeeders
+  #invisible( list(aGridManFeeders=aGridManFeeders, aGridStarved=aGridStarved) )
+
   #! as initial test just return manFeeders
   invisible( aGridManFeeders )
+
+
   
 } #end of rtMortality()
