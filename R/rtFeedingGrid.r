@@ -7,20 +7,29 @@
 #' @param aGrid an array with the age distributions of males & females [x,y,sex,age] 
 #' @param pDetect TEMPORARY starting arg, single probability of detection
 #' @param pFeed TEMPORARY starting arg, single probability of feeding once detected 
+#' @param testing whether to output testing messages to the console 
 #' 
 #' @return a list of 2 arrays aGridManFeeders and aGridStarved each with the dimensions [x,y,sex,age]
 #' @examples
 #' \dontrun{
-#' tst <- rtPhase2Test2()
+#' tst <- rtPhase2Test2(nRow=3,nCol=3,iMaxAge=7)
 #' aGrid <- rtGetFromRecord(day=2)
 #' fed <- rtFeedingGrid(aGrid)
 #' rtGetFromGrid(fed, sex='sum', age='sum')
+#' 
+#' #I would expect that this should give similar result to aGrid
+#' #when the probabilities are set to 1
+#' fed <- rtFeedingGrid(aGrid, pDetect=1, pFeed=1)
+#' #not necessarily
+#' #AHA! That's OK it's because only those flies of an age that 
+#' #they are on the last day of a feeding cycle will feed.
 #' }
 #' @export
 
 rtFeedingGrid <- function( aGrid,
-                             pDetect=0.1,
-                             pFeed=0.1 ) 
+                           pDetect=0.1,
+                           pFeed=0.1,
+                           testing = TRUE ) 
 {
    
   #aGrid[x,y,sex,age]
@@ -37,7 +46,7 @@ rtFeedingGrid <- function( aGrid,
       for(sex in seq_along(dimnames(aGrid)$sex)){
         for(age in seq_along(dimnames(aGrid)$age)){
           
-          cat(paste("x,y:",x,",",y,"sex:",sex,"age:",age,"\n"))
+          #cat(paste("x,y:",x,",",y,"sex:",sex,"age:",age,"\n"))
           
           #is this age the last day of a hunger cycle
           #hunger cycles end on day 1 & every 3 days after that
@@ -63,6 +72,7 @@ rtFeedingGrid <- function( aGrid,
               
               #feeding
               manFeeders <- manDetectors * pFeed
+              #for the initial test I'm keeping oxeFeeders at zero
               oxeFeeders <- 0 # oxeDetectors * probabilityB
               nonFeeders <- hunters - (manFeeders + oxeFeeders) 
               
@@ -77,6 +87,13 @@ rtFeedingGrid <- function( aGrid,
             #set starved to the remaining hunters at the end of hunt periods
             aGridStarved[x,y,sex,age] <- hunters
             
+            #outputs for testing
+            if (testing) { 
+              testFeeders <- signif(aGridManFeeders[x,y,sex,age],digits=2)
+              testPropFeeders <- signif((aGridManFeeders[x,y,sex,age]/aGrid[x,y,sex,age]),digits=2)
+              cat(paste("feeding x,y:",x,",",y,"sex:",sex,"age:",age,"manFeeders:",testFeeders,"proportion:",testPropFeeders,"\n"))
+            } #end of testing
+
           } #end of if this is a hunger cycle        
         }#age        
       }#sex
