@@ -4,7 +4,7 @@
 \title{to access population data from a record array [day,x,y,sex,age]}
 \usage{
 rtGetFromRecord(aRecord, day = "all", x = "all", y = "all", sex = "all",
-  age = "all")
+  age = "all", drop = TRUE)
 }
 \arguments{
 \item{aRecord}{an array with the age distributions of males & females [x,y,sex,age]}
@@ -18,7 +18,9 @@ rtGetFromRecord(aRecord, day = "all", x = "all", y = "all", sex = "all",
 \item{sex}{'all' returns both sexes separately,'M','F', 'sum' sums sexes}
 
 \item{age}{'all' returns age distribution, 'sum' sums all ages, or an integer age
-    or an age range too, e.g. c(2:3)}
+or an age range too, e.g. c(2:3)}
+
+\item{drop}{whether to drop dimensions that just have a single value, TRUE as default}
 }
 \value{
 an array, matrix or vector named with remaining dimensions of [x,y,sex,age]
@@ -33,6 +35,7 @@ would produce a single value of the total population on the grid.
 }
 \examples{
 aRecord <- rtPhase2Test2()
+aGrid <- rtGetFromRecord(aRecord,day=2) #gives raw array for one day
 rtGetFromRecord(aRecord,day=2,x='sum',y='sum',sex='sum') #age structure for whole pop
 rtGetFromRecord(aRecord,day=2,x='sum',y='sum',age='sum') #sex ratio for whole pop
 #slight anomally this gives 4 grids

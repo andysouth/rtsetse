@@ -14,10 +14,12 @@
 #' @param sex 'all' returns both sexes separately,'M','F', 'sum' sums sexes
 #' @param age 'all' returns age distribution, 'sum' sums all ages, or an integer age
 #'     or an age range too, e.g. c(2:3)
-#' 
+#' @param drop whether to drop dimensions that just have a single value, TRUE as default 
+
 #' @return an array, matrix or vector named with remaining dimensions of [x,y,sex,age]
 #' @examples
 #' aRecord <- rtPhase2Test2()
+#' aGrid <- rtGetFromRecord(aRecord,day=2) #gives raw array for one day
 #' rtGetFromRecord(aRecord,day=2,x='sum',y='sum',sex='sum') #age structure for whole pop
 #' rtGetFromRecord(aRecord,day=2,x='sum',y='sum',age='sum') #sex ratio for whole pop
 #' #slight anomally this gives 4 grids
@@ -32,7 +34,8 @@ rtGetFromRecord <- function( aRecord,
                            x='all',
                            y='all',
                            sex='all',
-                           age='all'
+                           age='all',
+                           drop=TRUE
                            ) 
 {
   #?? I may want the default to be sum rather than all
@@ -62,7 +65,11 @@ rtGetFromRecord <- function( aRecord,
   if (! 'sum' %in% allArgs )
   {
     #this allows for e.g. age=c(1:10)
-    toReturn <- aRecord[day,x,y,sex,age, drop=FALSE]
+    #toReturn <- aRecord[day,x,y,sex,age, drop=FALSE]
+    #i think I do want to drop dimensions that go to 1
+    #e.g. if selecting a single day
+    #I could allow user to pass the drop param & set it to default TRUE
+    toReturn <- aRecord[day,x,y,sex,age, drop=drop]
     
   } else if (! 'all' %in% allArgs )
   # if at least one 'sum' but no 'all'  
