@@ -1,5 +1,5 @@
-#' tsetse feeding on a grid **in development**
-#'
+#' tsetse feeding on a grid 
+#' 
 #' \code{rtFeedingGrid} will work through the gridded tsetse population by grid cell, sex and age
 #' \cr and work out numbers feeding on himans and numbers starving.
 #' \cr !! it will need to accept grids with the distribution of humans and non-humans
@@ -13,7 +13,7 @@
 #' @examples
 #' \dontrun{
 #' tst <- rtPhase2Test2(nRow=3,nCol=3,iMaxAge=7)
-#' aGrid <- rtGetFromRecord(day=2)
+#' aGrid <- rtGetFromRecord(tst, day=2)
 #' fed <- rtFeedingGrid(aGrid)
 #' rtGetFromGrid(fed, sex='sum', age='sum')
 #' 
@@ -64,23 +64,17 @@ rtFeedingGrid <- function( aGrid,
             
             for( iHuntPeriod in 1:iNumHuntPeriods ) {
               
-              #detection
-#               nonDetectors = hunters * probabilityX
-#               manDetectors = hunters * probabilityY
-#               oxeDetectors = hunters * probabilityZ
-              manDetectors <- hunters * pDetect
-              
-              #feeding
-              manFeeders <- manDetectors * pFeed
-              #for the initial test I'm keeping oxeFeeders at zero
-              oxeFeeders <- 0 # oxeDetectors * probabilityB
-              nonFeeders <- hunters - (manFeeders + oxeFeeders) 
+              #call function for one hunt period
+              lF <- rtFeedingOneHuntPeriod(fHunters=hunters, 
+                                           pDetect = pDetect,
+                                           pFeed = pFeed,
+                                           testing = testing )
               
               #to go into the next period
-              hunters <- nonFeeders
+              hunters <- lF$fHunters
               
               #accumulate manFeeders for the day
-              aGridManFeeders[x,y,sex,age] <- aGridManFeeders[x,y,sex,age] + manFeeders
+              aGridManFeeders[x,y,sex,age] <- aGridManFeeders[x,y,sex,age] + lF$fManFeeders
               
             } #end of hunt periods
             
@@ -109,4 +103,4 @@ rtFeedingGrid <- function( aGrid,
 
 
   
-} #end of rtMortality()
+} 
