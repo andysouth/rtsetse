@@ -100,8 +100,7 @@ rtMortalityGrid <- function( aGrid,
   }#end of unfinished non loop solution
 
 
-
   #returning a modified array
   invisible( aGrid )
   
-} #end of rtMortality()
+} 
