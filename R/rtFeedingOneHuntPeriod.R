@@ -5,52 +5,53 @@
 #' In rtPhase3 the initial proposal is for 15 hunt periods on day 1 & 30 hunt periods on later hunger cycles. 
 
 #' @param fHunters the number of hunting flies in this cell,age,sex and hunt period
-#' @param pDetect TEMPORARY starting arg, single probability of detection
-#' @param pFeed TEMPORARY starting arg, single probability of feeding once detected 
+#' @param pDetectMan probability of detecting one human per km2
+#' @param pDetectOxe probability of detecting one other host (ox equivalent) per km2
+#' @param pFeedMan probability of feeding on a human once detected 
+#' @param pFeedOxe probability of feeding on other host (ox equivalent) once detected 
+#' @param fDensityMan density of humans per km2 in tsetse habitat 
+#' @param fDensityOxe density of other hosts (ox equivalents) per km2 in tsetse habitat 
 #' @param testing whether to output testing messages to the console 
 #' 
 #' @return a list of fManFeeders and ?fHunters 
 #' @examples
 #' #if both probs set to 1, returns all feeders
-#' rtFeedingOneHuntPeriod(100,1,1)
+#' rtFeedingOneHuntPeriod(100,pDetectMan=1,pDetectOxe=0,pFeedMan=1,pFeedOxe=1)
 #' #if both probs set to 0, returns all hunters 
-#' rtFeedingOneHuntPeriod(100,0,0)
+#' rtFeedingOneHuntPeriod(100,pDetectMan=0,pDetectOxe=0,pFeedMan=1,pFeedOxe=1)
 #' @export
 
-rtFeedingOneHuntPeriod <- function( fHunters=100,
-                           pDetect=0.1,
-                           pFeed=0.1,
+rtFeedingOneHuntPeriod <- function( fHunters=1000,
+                           pDetectMan=0.001,
+                           pDetectOxe=0.005,
+                           pFeedMan=0.1,
+                           pFeedOxe=0.8,
+                           fDensityMan=1,
+                           fDensityOxe=10,
                            testing = TRUE ) 
 {
   
-
               
   #detection
-  #               nonDetectors = hunters * probabilityX
-  #               manDetectors = hunters * probabilityY
-  #               oxeDetectors = hunters * probabilityZ
-  fManDetectors <- fHunters * pDetect
+  fManDetectors <- fHunters * pDetectMan
+  fOxeDetectors <- fHunters * pDetectOxe
+
+  #need to add something about
+  #detecting man before ox or vice-verca
   
   #feeding
-  fManFeeders <- fManDetectors * pFeed
-  #for the initial test I'm keeping oxeFeeders at zero
-  fOxeFeeders <- 0 # oxeDetectors * probabilityB
+  fManFeeders <- fManDetectors * pFeedMan
+  fOxeFeeders <- fOxeDetectors * pFeedOxe
+  
   #reducing the hunters by those that fed
   fHunters <- fHunters - (fManFeeders + fOxeFeeders) 
   
-
-  
-  #accumulate manFeeders for the day
-  #aGridManFeeders[x,y,sex,age] <- aGridManFeeders[x,y,sex,age] + manFeeders
-              
   
   
   #returning a list of aGridStarved & aGridManFeeders
   #invisible( list(fManFeeders=fManFeeders, fHunters=fHunters) )
   return( list(fManFeeders=fManFeeders, fHunters=fHunters) )
   
-  #! as initial test just return manFeeders
-  #invisible( fManFeeders )
   
   
   

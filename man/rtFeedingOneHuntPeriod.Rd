@@ -3,15 +3,24 @@
 \alias{rtFeedingOneHuntPeriod}
 \title{tsetse feeding for one cell,age,sex and hunt period}
 \usage{
-rtFeedingOneHuntPeriod(fHunters = 100, pDetect = 0.1, pFeed = 0.1,
-  testing = TRUE)
+rtFeedingOneHuntPeriod(fHunters = 1000, pDetectMan = 0.001,
+  pDetectOxe = 0.005, pFeedMan = 0.1, pFeedOxe = 0.8, fDensityMan = 1,
+  fDensityOxe = 10, testing = TRUE)
 }
 \arguments{
 \item{fHunters}{the number of hunting flies in this cell,age,sex and hunt period}
 
-\item{pDetect}{TEMPORARY starting arg, single probability of detection}
+\item{pDetectMan}{probability of detecting one human per km2}
 
-\item{pFeed}{TEMPORARY starting arg, single probability of feeding once detected}
+\item{pDetectOxe}{probability of detecting one other host (ox equivalent) per km2}
+
+\item{pFeedMan}{probability of feeding on a human once detected}
+
+\item{pFeedOxe}{probability of feeding on other host (ox equivalent) once detected}
+
+\item{fDensityMan}{density of humans per km2 in tsetse habitat}
+
+\item{fDensityOxe}{density of other hosts (ox equivalents) per km2 in tsetse habitat}
 
 \item{testing}{whether to output testing messages to the console}
 }
@@ -25,8 +34,8 @@ In rtPhase3 the initial proposal is for 15 hunt periods on day 1 & 30 hunt perio
 }
 \examples{
 #if both probs set to 1, returns all feeders
-rtFeedingOneHuntPeriod(100,1,1)
+rtFeedingOneHuntPeriod(100,pDetectMan=1,pDetectOxe=0,pFeedMan=1,pFeedOxe=1)
 #if both probs set to 0, returns all hunters
-rtFeedingOneHuntPeriod(100,0,0)
+rtFeedingOneHuntPeriod(100,pDetectMan=0,pDetectOxe=0,pFeedMan=1,pFeedOxe=1)
 }
 

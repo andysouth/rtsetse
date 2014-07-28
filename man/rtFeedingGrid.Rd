@@ -3,14 +3,24 @@
 \alias{rtFeedingGrid}
 \title{tsetse feeding on a grid}
 \usage{
-rtFeedingGrid(aGrid, pDetect = 0.1, pFeed = 0.1, testing = TRUE)
+rtFeedingGrid(aGrid, pDetectMan = 0.001, pDetectOxe = 0.005,
+  pFeedMan = 0.1, pFeedOxe = 0.8, fDensityMan = 1, fDensityOxe = 10,
+  testing = TRUE)
 }
 \arguments{
 \item{aGrid}{an array with the age distributions of males & females [x,y,sex,age]}
 
-\item{pDetect}{TEMPORARY starting arg, single probability of detection}
+\item{pDetectMan}{probability of detecting one human per km2}
 
-\item{pFeed}{TEMPORARY starting arg, single probability of feeding once detected}
+\item{pDetectOxe}{probability of detecting one other host (ox equivalent) per km2}
+
+\item{pFeedMan}{probability of feeding on a human once detected}
+
+\item{pFeedOxe}{probability of feeding on other host (ox equivalent) once detected}
+
+\item{fDensityMan}{density of humans per km2 in tsetse habitat}
+
+\item{fDensityOxe}{density of other hosts (ox equivalents) per km2 in tsetse habitat}
 
 \item{testing}{whether to output testing messages to the console}
 }

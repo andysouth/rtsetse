@@ -5,8 +5,12 @@
 #' \cr !! it will need to accept grids with the distribution of humans and non-humans
 
 #' @param aGrid an array with the age distributions of males & females [x,y,sex,age] 
-#' @param pDetect TEMPORARY starting arg, single probability of detection
-#' @param pFeed TEMPORARY starting arg, single probability of feeding once detected 
+#' @param pDetectMan probability of detecting one human per km2
+#' @param pDetectOxe probability of detecting one other host (ox equivalent) per km2
+#' @param pFeedMan probability of feeding on a human once detected 
+#' @param pFeedOxe probability of feeding on other host (ox equivalent) once detected 
+#' @param fDensityMan density of humans per km2 in tsetse habitat 
+#' @param fDensityOxe density of other hosts (ox equivalents) per km2 in tsetse habitat 
 #' @param testing whether to output testing messages to the console 
 #' 
 #' @return a list of 2 arrays aGridManFeeders and aGridStarved each with the dimensions [x,y,sex,age]
@@ -27,8 +31,12 @@
 #' @export
 
 rtFeedingGrid <- function( aGrid,
-                           pDetect=0.1,
-                           pFeed=0.1,
+                           pDetectMan=0.001,
+                           pDetectOxe=0.005,
+                           pFeedMan=0.1,
+                           pFeedOxe=0.8,
+                           fDensityMan=1,
+                           fDensityOxe=10,
                            testing = TRUE ) 
 {
    
@@ -56,7 +64,7 @@ rtFeedingGrid <- function( aGrid,
             iNumHuntPeriods <- ifelse( age==1, yes=15, no=30 )
             
             #get the number of hunters in this cell of this sex and age
-            hunters <- rtGetFromGrid( aGrid, x=x, y=y, sex=sex, age=age )
+            fHunters <- rtGetFromGrid( aGrid, x=x, y=y, sex=sex, age=age )
             
             #!!for first implementation
             #!!assume 1 person per cell
@@ -65,13 +73,17 @@ rtFeedingGrid <- function( aGrid,
             for( iHuntPeriod in 1:iNumHuntPeriods ) {
               
               #call function for one hunt period
-              lF <- rtFeedingOneHuntPeriod(fHunters=hunters, 
-                                           pDetect = pDetect,
-                                           pFeed = pFeed,
+              lF <- rtFeedingOneHuntPeriod(fHunters=fHunters, 
+                                           pDetectMan = pDetectMan,
+                                           pDetectOxe = pDetectOxe,
+                                           pFeedMan = pFeedMan,
+                                           pFeedOxe = pFeedOxe,
+                                           fDensityMan = fDensityMan,
+                                           fDensityOxe = fDensityOxe,                                           
                                            testing = testing )
               
               #to go into the next period
-              hunters <- lF$fHunters
+              fHunters <- lF$fHunters
               
               #accumulate manFeeders for the day
               aGridManFeeders[x,y,sex,age] <- aGridManFeeders[x,y,sex,age] + lF$fManFeeders
@@ -79,7 +91,7 @@ rtFeedingGrid <- function( aGrid,
             } #end of hunt periods
             
             #set starved to the remaining hunters at the end of hunt periods
-            aGridStarved[x,y,sex,age] <- hunters
+            aGridStarved[x,y,sex,age] <- fHunters
             
             #outputs for testing
             if (testing) { 
