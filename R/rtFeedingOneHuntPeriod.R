@@ -19,6 +19,8 @@
 #' rtFeedingOneHuntPeriod(100,pDetectMan=1,pDetectOxe=0,pFeedMan=1,pFeedOxe=1)
 #' #if both probs set to 0, returns all hunters 
 #' rtFeedingOneHuntPeriod(100,pDetectMan=0,pDetectOxe=0,pFeedMan=1,pFeedOxe=1)
+#' #can use this one to compare with the table outputs from Excel
+#' rtFeedingOneHuntPeriod(1000,pDetectMan=0.001,pDetectOxe=0.005,pFeedMan=0.1,pFeedOxe=0.8,fDensityMan=1,fDensityOxe=10)
 #' @export
 
 rtFeedingOneHuntPeriod <- function( fHunters=1000,
@@ -33,19 +35,45 @@ rtFeedingOneHuntPeriod <- function( fHunters=1000,
   
               
   #detection
-  fManDetectors <- fHunters * pDetectMan
-  fOxeDetectors <- fHunters * pDetectOxe
+  #tricky to work out prob of first detected host being of type
+  #(Hat-trick NittyGritty Table1 HIJK)
+  pNotDetectMan <- (1-pDetectMan)^fDensityMan
+  pNotDetectOxe <- (1-pDetectOxe)^fDensityOxe
+  pNotDetectAny <- pNotDetectMan * pNotDetectOxe
+  pDetectAny <- 1-pNotDetectAny
 
-  #need to add something about
-  #detecting man before ox or vice-verca
+  #probability of first detected host being of type
+  #??I'm not sure about Glyn's logic here
+  #??I wonder of it should be power rather than multiplication
+  #??or if it matters
+  fDetTimesDenseMan <- pDetectMan*fDensityMan
+  fDetTimesDenseOxe <- pDetectOxe*fDensityOxe
+  #(Hat-trick NittyGritty Table1 L&M)
+  #add in protection for zeroes to avoid returning NaN
+  #probability of first detected host being human
+  if (fDetTimesDenseMan==0) pFirstDetectMan <- 0
+  else pFirstDetectMan <- fDetTimesDenseMan / (fDetTimesDenseMan+fDetTimesDenseOxe)
   
-  #feeding
-  fManFeeders <- fManDetectors * pFeedMan
+  #Glyn did it this way, I did diferently in case no Oxe
+  #pFirstDetectOxe <- 1-pFirstDetectMan
+  #probability of first detected host being other than human
+  if (fDetTimesDenseOxe==0) pFirstDetectOxe <- 0
+  else pFirstDetectOxe <- fDetTimesDenseOxe / (fDetTimesDenseMan+fDetTimesDenseOxe)
+  
+  
+  
+  fManDetectors <- fHunters*pDetectAny*pFirstDetectMan
+  fOxeDetectors <- fHunters*pDetectAny*pFirstDetectOxe
+  
+  #feeding 
+  #(Hat-trick NittyGritty Table2 C)
+  fManFeeders <- fManDetectors * pFeedMan 
   fOxeFeeders <- fOxeDetectors * pFeedOxe
+  
+  #this is done slightly differently to Glyn, but should give same
   
   #reducing the hunters by those that fed
   fHunters <- fHunters - (fManFeeders + fOxeFeeders) 
-  
   
   
   #returning a list of aGridStarved & aGridManFeeders

@@ -37,5 +37,7 @@ In rtPhase3 the initial proposal is for 15 hunt periods on day 1 & 30 hunt perio
 rtFeedingOneHuntPeriod(100,pDetectMan=1,pDetectOxe=0,pFeedMan=1,pFeedOxe=1)
 #if both probs set to 0, returns all hunters
 rtFeedingOneHuntPeriod(100,pDetectMan=0,pDetectOxe=0,pFeedMan=1,pFeedOxe=1)
+#can use this one to compare with the table outputs from Excel
+rtFeedingOneHuntPeriod(1000,pDetectMan=0.001,pDetectOxe=0.005,pFeedMan=0.1,pFeedOxe=0.8,fDensityMan=1,fDensityOxe=10)
 }
 
