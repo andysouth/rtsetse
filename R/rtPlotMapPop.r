@@ -53,16 +53,17 @@ rtPlotMapPop <- function( aRecord,
   
   sexTitle <- sex
   if (sex=='both' | sex=='MF'){
-    sex=TRUE
+    sex='sum' #TRUE worked when apply was used below
     sexTitle='M&F'
   } else if (sex != 'M' & sex != 'F') 
     stop("sex should be 'M','F','MF' or 'both', yours is ",sex)
   
-  #this gives an array of [days,x,y]
-  aDays <- apply(aRecord[days,,,sex, ,drop=FALSE],MARGIN=c(1,2,3),sum) 
-  #?? May be able to replace the above with a call to
-  #??eeek not yet
-  #aDays <- rtGetFromRecord(aRecord,day=days,sex=sex,age='sum')
+  #to give an array of [days,x,y]
+  #this works when sex=TRUE from above
+  #aDays <- apply(aRecord[days,,,sex, ,drop=FALSE],MARGIN=c(1,2,3),sum) 
+  #this works when sex='sum' from above
+  aDays <- rtGetFromRecord(aRecord, day=days, sex=sex, age='sum', drop=FALSE)
+  #the drop=FALSE is to cope with nRow or nCol == 1
   
   
   #I might not need this with the new ,drop=FALSE above
