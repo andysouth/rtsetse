@@ -38,16 +38,19 @@ rtPhase3Test <- function( iNumHuntPeriods=15,
   #if( nRow < 2 | nCol < 2 )
   #  stop("movement does not work if less than 2 grid rows or columns")
   
-  #how to collect the results over multiple hunt periods
+  #to collect the results over multiple hunt periods
   #to enable easy plotting
-  #$huntPeriod
-  #$hunters
-  #$manFeeders
-  dF <- data.frame(huntPeriod=c(1:iNumHuntPeriods),
-                   hunters=NA,
-                   manFeeders=NA,
-                   manFeedersCum=NA)
+  #starts at 0
+  dF <- data.frame(huntPeriod=c(0:iNumHuntPeriods),
+                   hunters=0,
+                   manFeeders=0,
+                   manFeedersCum=0)
   
+  #setting hunters in period 0 to the start value
+  #!beware that huntPeriod0 goes in element 1 of the dataframe
+  dF$hunters[1] <- fHunters
+  
+  #starting cumulative manFeeder counter
   fManFeedersCum <- 0
   
   for( iHuntPeriod in 1:iNumHuntPeriods ) {
@@ -65,16 +68,14 @@ rtPhase3Test <- function( iNumHuntPeriods=15,
     #incrementing cumulative flies feeding on humans
     fManFeedersCum <- fManFeedersCum + lF$fManFeeders
     
-    #dF$huntPeriod[iHuntPeriod] <- iHuntPeriod
-    dF$hunters[iHuntPeriod] <- lF$fHunters    
-    dF$manFeeders[iHuntPeriod] <- lF$fManFeeders
-    dF$manFeedersCum[iHuntPeriod] <- fManFeedersCum
+    #iHuntPeriod+1 because starting numbers go in element1 of the dataframe
+    #dF$huntPeriod[iHuntPeriod+1] <- iHuntPeriod
+    dF$hunters[iHuntPeriod+1] <- lF$fHunters    
+    dF$manFeeders[iHuntPeriod+1] <- lF$fManFeeders
+    dF$manFeedersCum[iHuntPeriod+1] <- fManFeedersCum
     
     #to go into the next period
     fHunters <- lF$fHunters
-    
-    #accumulate manFeeders for the day
-    #lF$fManFeeders
     
   } #end of hunt periods loop
   
