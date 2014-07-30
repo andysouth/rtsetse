@@ -22,3 +22,11 @@ All functions in the package are currently preceded by rt. There are functions c
 * **Phase 7 : UI1**:  combining previous phases with a user interface
 * **Phase 8 : Tryp**:  adding infection of flies and hosts
 * **Phase 9 : Movement2**:  movement dependent on vegetation
+
+User interfaces to some of these phases can be accessed on the web at the links below and are available from a separate repository at : https://github.com/AndySouth/shinytse
+
+Shiny app name  | What it does  | To access on web
+------------- | -------------| -------------
+shinytse2v2 | aspatial model with dd through pupal mortality | http://andysouth.shinyapps.io/shinytse2v2/
+shinytse4 | simple grid model with dd | http://andysouth.shinyapps.io/shinytse4/
+shinytse5 | feeding demo | http://andysouth.shinyapps.io/shinytse5/
