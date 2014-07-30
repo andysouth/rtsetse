@@ -32,8 +32,18 @@ rtFeedingOneHuntPeriod <- function( fHunters=1000,
                            fDensityOxe=10,
                            testing = TRUE ) 
 {
+
+  ##some argument checking
+  if( pDetectMan < 0 | pDetectMan > 1 )
+    stop("pDetectMan needs to be between 0 & 1 it is ",pDetectMan)
+  if( pDetectOxe < 0 | pDetectOxe > 1 )
+    stop("pDetectOxe needs to be between 0 & 1 it is ",pDetectOxe)  
+  if( pFeedMan < 0 | pFeedMan > 1 )
+    stop("pFeedMan needs to be between 0 & 1 it is ",pFeedMan)
+  if( pFeedOxe < 0 | pFeedOxe > 1 )
+    stop("pFeedOxe needs to be between 0 & 1 it is ",pFeedOxe)  
   
-              
+  
   #detection
   #tricky to work out prob of first detected host being of type
   #(Hat-trick NittyGritty Table1 HIJK)
