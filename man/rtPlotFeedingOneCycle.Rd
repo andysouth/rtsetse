@@ -3,12 +3,14 @@
 \alias{rtPlotFeedingOneCycle}
 \title{plots feeding results of one hunger cycle for testing}
 \usage{
-rtPlotFeedingOneCycle(dF, title = "Feeding Test")
+rtPlotFeedingOneCycle(dF, title = "Feeding Test", proportionPlot = FALSE)
 }
 \arguments{
 \item{dF}{a dataframe of huntPeriod followed by number of flies hunting or feeding}
 
 \item{title}{a title for the plot}
+
+\item{proportionPlot}{whether to plot just the proportion of flies feeding on humans, FALSE by default}
 }
 \value{
 ?ggplot2 object

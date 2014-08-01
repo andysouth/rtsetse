@@ -43,6 +43,7 @@ rtPhase3Test <- function( iNumHuntPeriods=15,
   #starts at 0
   dF <- data.frame(huntPeriod=c(0:iNumHuntPeriods),
                    hunters=0,
+                   oxeFeeders=0,
                    manFeeders=0,
                    manFeedersCum=0)
   
@@ -71,6 +72,7 @@ rtPhase3Test <- function( iNumHuntPeriods=15,
     #iHuntPeriod+1 because starting numbers go in element1 of the dataframe
     #dF$huntPeriod[iHuntPeriod+1] <- iHuntPeriod
     dF$hunters[iHuntPeriod+1] <- lF$fHunters    
+    dF$oxeFeeders[iHuntPeriod+1] <- lF$fOxeFeeders
     dF$manFeeders[iHuntPeriod+1] <- lF$fManFeeders
     dF$manFeedersCum[iHuntPeriod+1] <- fManFeedersCum
     

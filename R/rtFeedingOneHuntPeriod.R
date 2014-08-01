@@ -88,7 +88,7 @@ rtFeedingOneHuntPeriod <- function( fHunters=1000,
   
   #returning a list of aGridStarved & aGridManFeeders
   #invisible( list(fManFeeders=fManFeeders, fHunters=fHunters) )
-  return( list(fManFeeders=fManFeeders, fHunters=fHunters) )
+  return( list(fManFeeders=fManFeeders, fOxeFeeders=fOxeFeeders, fHunters=fHunters) )
   
   
   
