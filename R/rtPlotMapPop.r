@@ -88,7 +88,25 @@ rtPlotMapPop <- function( aRecord,
   
   #rearranging dimensions for raster brick
   #needs to be x,y,z
-  aDays <- aperm(aDays, c(2, 3, 1))
+  if (length(dim(aDays))==3)
+    aDays <- aperm(aDays, c(2, 3, 1))
+  #this adds a single z dimension if it has been lost
+  else if (length(dim(aDays))==2) {
+    #need to sort dimnames too, gets annoyingly fiddly
+    tmpnames <- list(x=dimnames(aDays)$x,y=dimnames(aDays)$y,day=days)
+    aDays2 <- array(aDays, dim=c(dim(aDays),1), dimnames=tmpnames)
+    aDays <- aDays2
+    
+#     dimnames(aDays2)[-3] <- dimnames(aDays)
+#     names(dimnames(aDays2))[-3] <- names(dimnames(aDays))
+#     #dimnames(aDays2)$x <- dimnames(aDays)$x
+#     #dimnames(aDays2)$y <- dimnames(aDays)$y
+#     dimnames(aDays2)[3] <- days
+#     names(dimnames(aDays2))[3] <- 'day'
+
+  } else
+    stop("aDays should have 2 or 3 dimensions, it has ",length(dim(aDays)))
+  
   brick1 <- brick(aDays) 
   #the day titles for each subplot (otherwise they get lost when subsetted)
   titles <- paste(dimnames(aDays)$day, sexTitle) 
