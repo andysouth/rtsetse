@@ -107,6 +107,7 @@ rtPlotMapPop <- function( aRecord,
   } else
     stop("aDays should have 2 or 3 dimensions, it has ",length(dim(aDays)))
   
+  # create raster brick (a collection of raster maps)
   brick1 <- brick(aDays) 
   #the day titles for each subplot (otherwise they get lost when subsetted)
   titles <- paste(dimnames(aDays)$day, sexTitle) 
