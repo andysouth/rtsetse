@@ -3,7 +3,7 @@
 \alias{rtSetAgeStructure}
 \title{setting an age structure, the abundance in each age class}
 \usage{
-rtSetAgeStructure(vpMort = seq(0.1, 1, 0.1), fPopAge1 = 100)
+rtSetAgeStructure(vpMort = rep(0.1, 10), fPopAge1 = 100)
 }
 \arguments{
 \item{vpMort}{a vector of age specific mortality rates, number of age classes is also got from this.}

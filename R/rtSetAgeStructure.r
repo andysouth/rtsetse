@@ -10,7 +10,7 @@
 #' @return a vector of abundance by age
 #' @export
 
-rtSetAgeStructure <- function( vpMort = seq(0.1,1,0.1), 
+rtSetAgeStructure <- function( vpMort = rep(0.1,10), #seq(0.1,1,0.1), 
                                fPopAge1 = 100 )
 {
   
