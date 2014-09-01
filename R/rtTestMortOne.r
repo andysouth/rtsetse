@@ -46,6 +46,7 @@ rtTestMortOne <- function( fMort,
   #iMaxAge <- 100
   
   #set mortality by age (& determines num ages)
+  #this is an early test, later mortality will be age dependent
   #vpMort <- rep(0.1,50)
   vpMort <- rep(fMort, iMaxAge)
   
