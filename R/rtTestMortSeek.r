@@ -22,10 +22,10 @@ rtTestMortSeek <- function(
   vMorts <- seq(fInterval, 0.4, fInterval) 
   
   #plot a graph of larvae output ac/to mortality
-  vLarvae <- mapply(rtTestMortOne, fMort=vMorts, fPopAge1=fPopAge1, iMaxAge=iMaxAge)
-  plot( vMorts, vLarvae, type='l', ylab='larvae' )
-  #add starting pop age1
-  abline(h=fPopAge1, col='red')
+#   vLarvae <- mapply(rtTestMortOne, fMort=vMorts, fPopAge1=fPopAge1, iMaxAge=iMaxAge)
+#   plot( vMorts, vLarvae, type='l', ylab='larvae' )
+#   #add starting pop age1
+#   abline(h=fPopAge1, col='red')
   
   #so I want to find the mortality level that 
   #causes num larvae to equal the popAge1
@@ -33,10 +33,9 @@ rtTestMortSeek <- function(
   
   #one way to work out is just to find the least magnitude value
   #of vLarvae-fPopAge1
-  bestMortIndex = which.min(abs(vLarvae-fPopAge1))
-  bestMort <- vMorts[bestMortIndex]
-  
-  cat("bestMort:",bestMort,"larvae:",vLarvae[bestMortIndex],"\n")
+#   bestMortIndex = which.min(abs(vLarvae-fPopAge1))
+#   bestMort <- vMorts[bestMortIndex]
+#   cat("bestMort:",bestMort,"larvae:",vLarvae[bestMortIndex],"\n")
   
   #This should be a quicker way of doing (but doesn't allow whole plot)
   #Because increasing mortality always decreases num pupae produced, 
@@ -53,10 +52,17 @@ rtTestMortSeek <- function(
     vLarvae2[trial] <- larvae
     trial <- trial+1
   }
-  cat("bestMort2:",vMorts[trial-1],"larvae:",larvae,"\n")
+  #set bestMort to the final trial (where larvae>=fPopAge)
+  bestMort <- vMorts[trial-1]
+  cat("bestMort2:",bestMort,"larvae:",larvae,"\n")
   #add to the plot
-  lines( vMorts, vLarvae2, col='blue', lty='dotted', lwd=2 )
+  #lines( vMorts, vLarvae2, col='blue', lty='dotted', lwd=2 )
   
+  #2nd version when not adding to all values
+  plot( vMorts, vLarvae2, type='l', ylab='larvae' )
+  #add starting pop age1
+  abline(h=fPopAge1, col='red')
+
   
   bestMort
 }
