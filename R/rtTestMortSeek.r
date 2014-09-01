@@ -6,15 +6,42 @@
 #' @param iMaxAge max age of fly allowed in model
 #' @param fPopAge1 starting popn at age1
 #' @param fInterval the interval between mortalities used to test
-#' 
-#' @return num larvae
+#' @param iMortMinAgeStart  Age at which min death rates start. 
+#' @param iMortMinAgeStop   Age at which min death rates stop.
+#' @param fMortMinProp  What proportion of the maximum death rate on day 0 is the minimum death rate.
+#' @param fMortOldProp  What proportion of the maximum death rate on day 0 is the death rate after iDeathMinAgeStop.
+#' @param propMortAdultDD proportion of adult mortality that is density dependent
+#' @param pMortPupa pupal mortality per period
+#' @param propMortPupaDD proportion of pupal mortality that is density dependent
+#' @param iPupDurF days it takes pupa(F) to develop
+#' @param iPupDurM days it takes pupa(M) to develop
+#' @param iFirstLarva Age that female produces first larva
+#' @param iInterLarva Inter-larval period
+#' @param pMortLarva larval mortality per period
+#' @param propMortLarvaDD proportion of larval mortality that is density dependent
+#' @param plot whether to plot graphs
+#'  
+#' @return float mortality probability
 #' @export
 
 
-rtTestMortSeek <- function( 
-                            iMaxAge = 100,
+rtTestMortSeek <- function( iMaxAge = 100,
                             fPopAge1 = 100,
-                            fInterval = 0.001 )
+                            fInterval = 0.001,
+#                             iMortMinAgeStart = 10,
+#                             iMortMinAgeStop = 50,
+#                             fMortMinProp = 0.2,
+#                             fMortOldProp = 0.3,
+#                             propMortAdultDD = 0.25,
+#                             pMortPupa = 0.25,
+#                             propMortPupaDD = 0.25,
+#                             iPupDurF = 26,
+#                             iPupDurM = 28,
+#                             iFirstLarva = 16,
+#                             iInterLarva = 10,
+                            pMortLarva = 0.05,
+#                             propMortLarvaDD = 0.25,
+                            plot =  TRUE )
 {
   #create a vector of mortalities to test
   #vMorts <- seq(fInterval, 1, fInterval) 
@@ -48,7 +75,7 @@ rtTestMortSeek <- function(
   trial <- 1
   while( larvae > fPopAge1 )
   {
-    larvae <- rtTestMortOne( fMort=vMorts[trial], fPopAge1=fPopAge1, iMaxAge=iMaxAge )
+    larvae <- rtTestMortOne( fMort=vMorts[trial], fPopAge1=fPopAge1, iMaxAge=iMaxAge, pMortLarva=pMortLarva )
     vLarvae2[trial] <- larvae
     trial <- trial+1
   }
@@ -59,9 +86,13 @@ rtTestMortSeek <- function(
   #lines( vMorts, vLarvae2, col='blue', lty='dotted', lwd=2 )
   
   #2nd version when not adding to all values
-  plot( vMorts, vLarvae2, type='l', ylab='larvae' )
-  #add starting pop age1
-  abline(h=fPopAge1, col='red')
+  if (plot)
+  {
+    plot( vMorts, vLarvae2, type='l', ylab='larvae' )
+    #add starting pop age1
+    abline(h=fPopAge1, col='red')    
+  }
+
 
   
   bestMort
