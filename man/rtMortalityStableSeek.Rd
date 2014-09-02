@@ -3,13 +3,17 @@
 \alias{rtMortalityStableSeek}
 \title{testing seeking mortality that gives popn stability}
 \usage{
-rtMortalityStableSeek(iMaxAge = 100, fPopAge1 = 100, fInterval = 0.001,
-  fMperF = 0.5, pMortLarva = 0.05, pMortPupa = 0.25, plot = TRUE)
+rtMortalityStableSeek(iMaxAge = 100, iTargetPopAge0 = 100,
+  fInterval = 0.001, fMperF = 0.5, pMortLarva = 0.05,
+  iMortMinAgeStart = 10, iMortMinAgeStop = 50, fMortMinProp = 0.2,
+  fMortOldProp = 0.3, propMortAdultDD = 0.25, pMortPupa = 0.25,
+  iPupDurF = 26, iPupDurM = 28, iFirstLarva = 16, iInterLarva = 10,
+  plot = TRUE, verbose = FALSE)
 }
 \arguments{
 \item{iMaxAge}{max age of fly allowed in model}
 
-\item{fPopAge1}{starting popn at age1}
+\item{iTargetPopAge0}{target pop of both sexes at age 0}
 
 \item{fInterval}{the interval between mortalities used to test}
 
@@ -17,7 +21,29 @@ rtMortalityStableSeek(iMaxAge = 100, fPopAge1 = 100, fInterval = 0.001,
 
 \item{pMortLarva}{larval mortality per period}
 
-\item{pMortPupa}{pupal mortality per period
+\item{iMortMinAgeStart}{Age at which min death rates start.}
+
+\item{iMortMinAgeStop}{Age at which min death rates stop.}
+
+\item{fMortMinProp}{What proportion of the maximum death rate on day 0 is the minimum death rate.}
+
+\item{fMortOldProp}{What proportion of the maximum death rate on day 0 is the death rate after iDeathMinAgeStop.}
+
+\item{propMortAdultDD}{proportion of adult mortality that is density dependent}
+
+\item{pMortPupa}{pupal mortality per period}
+
+\item{iPupDurF}{days it takes pupa(F) to develop}
+
+\item{iPupDurM}{days it takes pupa(M) to develop}
+
+\item{iFirstLarva}{Age that female produces first larva}
+
+\item{iInterLarva}{Inter-larval period}
+
+\item{plot}{whether to output plots}
+
+\item{verbose}{whether to output progress text
 
 #'}
 }
