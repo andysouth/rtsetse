@@ -9,10 +9,16 @@
 #' @param fMperF desired numbers of males per female, default=0.5
 #' @param pMortLarva larval mortality per period
 #' 
-#' @param iMortMinAgeStart  Age at which min death rates start. 
-#' @param iMortMinAgeStop   Age at which min death rates stop.
-#' @param fMortMinProp  What proportion of the maximum death rate on day 0 is the minimum death rate.
-#' @param fMortOldProp  What proportion of the maximum death rate on day 0 is the death rate after iDeathMinAgeStop.
+#' @param iMortMinAgeStartF  Age at which min death rates start. 
+#' @param iMortMinAgeStopF   Age at which min death rates stop.
+#' @param fMortMinPropF  What proportion of the maximum death rate on day 0 is the minimum death rate.
+#' @param fMortOldPropF  What proportion of the maximum death rate on day 0 is the death rate after iDeathMinAgeStop.
+#'
+#' @param iMortMinAgeStartM  Age at which min death rates start. 
+#' @param iMortMinAgeStopM   Age at which min death rates stop.
+#' @param fMortMinPropM  What proportion of the maximum death rate on day 0 is the minimum death rate.
+#' @param fMortOldPropM  What proportion of the maximum death rate on day 0 is the death rate after iDeathMinAgeStop.
+#' 
 #' @param propMortAdultDD proportion of adult mortality that is density dependent
 #' @param pMortPupa pupal mortality per period
 #' @param iPupDurF days it takes pupa(F) to develop
@@ -33,10 +39,16 @@ rtMortalityStableSeek <- function( iMaxAge = 100,
                                   fMperF = 0.5,
                                   pMortLarva = 0.05,
                                   
-                                 iMortMinAgeStart = 10,
-                                 iMortMinAgeStop = 50,
-                                 fMortMinProp = 0.2,
-                                 fMortOldProp = 0.3,
+                                 iMortMinAgeStartF = 10,
+                                 iMortMinAgeStopF = 50,
+                                 fMortMinPropF = 0.2,
+                                 fMortOldPropF = 0.3,
+                                 
+                                 iMortMinAgeStartM = 10,
+                                 iMortMinAgeStopM = 50,
+                                 fMortMinPropM = 0.2,
+                                 fMortOldPropM = 0.3,
+                                 
                                  propMortAdultDD = 0.25,
                                  
                                  pMortPupa = 0.25,
@@ -74,15 +86,22 @@ rtMortalityStableSeek <- function( iMaxAge = 100,
     #set age1 mort for this trial
     fMort <- vMorts[trial]
     #set mortality by age (& determines num ages)
-    #this is an early test, later mortality will be age dependent
-    #todo: age-dependent mortality
-    vpMort <- rep(fMort, iMaxAge)
+    #age independent
+    #vpMort <- rep(fMort, iMaxAge)
+    #age-dependent mortality
+    #!note it passes vector of 0s the func just uses vector to get maxAge
+    vpMort <- rtSetMortRatesByAge( vPop=rep(0, iMaxAge), 
+                                    pMortAge1 = fMort,
+                                    iMortMinAgeStart = iMortMinAgeStartF,
+                                    iMortMinAgeStop = iMortMinAgeStopF,
+                                    fMortMinProp = fMortMinPropF,
+                                    fMortOldProp = fMortOldPropF )  
+    
     
     #fill an age structure
-    #todo: decide whether to add pupal mort before or after here
     vPopF <- rtSetAgeStructure( vpMort=vpMort, fPopAge1=popAge1MorF )
     
-    #setting age dependent mortality rates
+    #setting age dependent deposition rates
     vpDeposit <- rtSetDepositionRatesByAgeDI( iMaxAge=iMaxAge, iFirstLarva=iFirstLarva, iInterLarva=iInterLarva, pMortLarva=pMortLarva )
     #calc M&F larvae using the deposition rates set above
     lLarvae <- rtLarvalDeposition( vPopF, vpDeposit )    
@@ -111,11 +130,9 @@ rtMortalityStableSeek <- function( iMaxAge = 100,
   ########
   #Males  
   
-  
   #create a vector filled with NAs to save results
   vMales <- rep(NA,length(vMorts))
-  
-  
+   
   #set males requested to total females * MFratio
   fMalesRequested <- bestTotF * fMperF
   
@@ -127,11 +144,18 @@ rtMortalityStableSeek <- function( iMaxAge = 100,
     #set age1 mort for this trial
     fMort <- vMorts[trial]
     #set mortality by age (& determines num ages)
-    #this is an early test, later mortality will be age dependent
-    #todo: set age dependent mortality
-    vpMort <- rep(fMort, iMaxAge)
+    #age independent
+    #vpMort <- rep(fMort, iMaxAge)
+    #age-dependent mortality
+    #!note it passes vector of 0s the func just uses vector to get maxAge
+    vpMort <- rtSetMortRatesByAge( vPop=rep(0, iMaxAge), 
+                                   pMortAge1 = fMort,
+                                   iMortMinAgeStart = iMortMinAgeStartM,
+                                   iMortMinAgeStop = iMortMinAgeStopM,
+                                   fMortMinProp = fMortMinPropM,
+                                   fMortOldProp = fMortOldPropM ) 
+
     #fill an age structure
-    #todo: decide whether to add pupal mort before or after here
     vPopM <- rtSetAgeStructure( vpMort=vpMort, fPopAge1=popAge1MorF )
     
     #sum num males in all age classes

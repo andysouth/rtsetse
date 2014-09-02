@@ -5,10 +5,11 @@
 \usage{
 rtMortalityStableSeek(iMaxAge = 100, iTargetPopAge0 = 100,
   fInterval = 0.001, fMperF = 0.5, pMortLarva = 0.05,
-  iMortMinAgeStart = 10, iMortMinAgeStop = 50, fMortMinProp = 0.2,
-  fMortOldProp = 0.3, propMortAdultDD = 0.25, pMortPupa = 0.25,
-  iPupDurF = 26, iPupDurM = 28, iFirstLarva = 16, iInterLarva = 10,
-  plot = TRUE, verbose = FALSE)
+  iMortMinAgeStartF = 10, iMortMinAgeStopF = 50, fMortMinPropF = 0.2,
+  fMortOldPropF = 0.3, iMortMinAgeStartM = 10, iMortMinAgeStopM = 50,
+  fMortMinPropM = 0.2, fMortOldPropM = 0.3, propMortAdultDD = 0.25,
+  pMortPupa = 0.25, iPupDurF = 26, iPupDurM = 28, iFirstLarva = 16,
+  iInterLarva = 10, plot = TRUE, verbose = FALSE)
 }
 \arguments{
 \item{iMaxAge}{max age of fly allowed in model}
@@ -21,13 +22,21 @@ rtMortalityStableSeek(iMaxAge = 100, iTargetPopAge0 = 100,
 
 \item{pMortLarva}{larval mortality per period}
 
-\item{iMortMinAgeStart}{Age at which min death rates start.}
+\item{iMortMinAgeStartF}{Age at which min death rates start.}
 
-\item{iMortMinAgeStop}{Age at which min death rates stop.}
+\item{iMortMinAgeStopF}{Age at which min death rates stop.}
 
-\item{fMortMinProp}{What proportion of the maximum death rate on day 0 is the minimum death rate.}
+\item{fMortMinPropF}{What proportion of the maximum death rate on day 0 is the minimum death rate.}
 
-\item{fMortOldProp}{What proportion of the maximum death rate on day 0 is the death rate after iDeathMinAgeStop.}
+\item{fMortOldPropF}{What proportion of the maximum death rate on day 0 is the death rate after iDeathMinAgeStop.}
+
+\item{iMortMinAgeStartM}{Age at which min death rates start.}
+
+\item{iMortMinAgeStopM}{Age at which min death rates stop.}
+
+\item{fMortMinPropM}{What proportion of the maximum death rate on day 0 is the minimum death rate.}
+
+\item{fMortOldPropM}{What proportion of the maximum death rate on day 0 is the death rate after iDeathMinAgeStop.}
 
 \item{propMortAdultDD}{proportion of adult mortality that is density dependent}
 
