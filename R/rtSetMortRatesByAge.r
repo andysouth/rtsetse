@@ -52,7 +52,7 @@ rtSetMortRatesByAge <- function( vPop,
   #to MortAge1 multiplied by the minimum mortality proportion
   vpMort[iMortMinAgeStart:iMortMinAgeStop] <- pMortAge1 * fMortMinProp
   #set mortalities in the old period
-  vpMort[1+iMortMinAgeStop:length(vAges)] <- pMortAge1 * fMortOldProp
+  vpMort[(1+iMortMinAgeStop):length(vAges)] <- pMortAge1 * fMortOldProp
   
   invisible(vpMort)
 }
