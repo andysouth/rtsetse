@@ -56,7 +56,11 @@ rtTestMortOne <- function( fMort,
   #!beware this uses a bunch of defaults
   #and just passes vPop twice for M&F for DD
   #DD set to NA as default so prob doesn't matter
-  vpDeposit <- rtSetDepositionRatesByAge( vPop, vPop, pMortLarva=pMortLarva )
+  #vpDeposit <- rtSetDepositionRatesByAge( vPop, vPop, pMortLarva=pMortLarva )
+  #I should use the DensityIndependent version
+  vpDeposit <- rtSetDepositionRatesByAgeDI( iMaxAge=iMaxAge, pMortLarva=pMortLarva )
+  
+  
   
   #use the deposition rates set above
   lLarvae <- rtLarvalDeposition( vPop, vpDeposit )    
