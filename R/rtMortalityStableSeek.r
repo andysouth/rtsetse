@@ -1,7 +1,17 @@
-#' testing seeking mortality that gives popn stability
+#' seeks day1 mortality rates for F&M that give popn stability
 #'
-#' \code{rtMortalityStableSeek} 
-#' early development
+#' \code{rtMortalityStableSeek} seeks a age1 mortality rate for F that leads to population stability
+#' and for M that leads to the user supplied ratio of males to females.  
+#' It does this by testing successive mortality rates, starting at very low values and increasing until 
+#' target values are met.
+#' In each case age1 mortality rates are converted into age dependent mortalities using other user inputs.
+#' The resulting mortalities are used to fill an age structure from age1.  
+#' For F, user supplied parameters are used to simulate larval production. 
+#' The target is to produce the same number of larvae as age1 pupae - thus leading to a stable population.
+#' Once a stable female age structure has been achieved, the function searches in the same way for 
+#' the age1 male mortality rate that generates a male age structure to satisfy the to the user supplied 
+#' ratio of males to females.
+
 
 #' @param iMaxAge max age of fly allowed in model
 #' @param iTargetPopAge0 target pop of both sexes at age 0
@@ -40,12 +50,12 @@ rtMortalityStableSeek <- function( iMaxAge = 100,
                                   pMortLarva = 0.05,
                                   
                                  iMortMinAgeStartF = 10,
-                                 iMortMinAgeStopF = 50,
+                                 iMortMinAgeStopF = 60,
                                  fMortMinPropF = 0.2,
                                  fMortOldPropF = 0.3,
                                  
                                  iMortMinAgeStartM = 10,
-                                 iMortMinAgeStopM = 50,
+                                 iMortMinAgeStopM = 40,
                                  fMortMinPropM = 0.2,
                                  fMortOldPropM = 0.3,
                                  
