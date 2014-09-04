@@ -129,12 +129,6 @@ rtMortalityStableSeek <- function( iMaxAge = 100,
   #calc tot F in best trial, used to calc num males below
   bestTotF <- sum(vPopF)
   
-  if (plot)
-  {
-    plot( vMorts, vLarvae, type='l', ylab='larvae' )
-    #add starting pop age1
-    abline(h=popAge1MorF, col='red')    
-  }
   
   
   ########
@@ -179,6 +173,15 @@ rtMortalityStableSeek <- function( iMaxAge = 100,
   #set bestMort to the final trial (where larvae>=fPopAge)
   bestMortM <- vMorts[trial-1]
   cat("bestMort for males:",bestMortM,"males:",numTrialMales,"\n")
+  
+  if (plot)
+  {
+    plot( vMorts, vLarvae, type='l', ylab='larvae', xlab='female mortality age1' )
+    #add starting pop age1
+    abline(h=popAge1MorF, col='red')  
+    mtext(paste("Sought mortalities F:",bestMortF,"  M:",bestMortM))
+  }
+  
   
   lBestMorts <- list(F=bestMortF, M=bestMortM)
   
