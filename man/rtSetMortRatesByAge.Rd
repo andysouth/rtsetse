@@ -29,4 +29,7 @@ Gets length of vector from vPop.
 Needs to be called separately for males & females.
 \cr As a first shot I have set defaults in between those for M&F.
 }
+\examples{
+vpMorts <- rtSetMortRatesByAge(c(1:100))
+}
 

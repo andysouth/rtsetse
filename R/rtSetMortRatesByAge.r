@@ -14,6 +14,8 @@
 #' @param fMortOldProp  What proportion of the maximum death rate on day 0 is the death rate after iDeathMinAgeStop.
 #' 
 #' @return a vector of mortality probabilities
+#' @examples
+#' vpMorts <- rtSetMortRatesByAge(c(1:100))
 #' @export
 
 rtSetMortRatesByAge <- function( vPop, 
