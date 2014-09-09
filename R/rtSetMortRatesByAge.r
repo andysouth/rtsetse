@@ -26,6 +26,7 @@ rtSetMortRatesByAge <- function( vPop,
                                        fMortOldProp = 0.3 )
 {
   
+  #todo: pass iMaxAge rather than vPop to this
   
   #create a vector of ages
   vAges <- seq(vPop)

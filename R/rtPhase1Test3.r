@@ -1,17 +1,20 @@
 #' an a-spatial tsetse population simulation, a third test of phase1
 #'
-#' \code{rtPhase1Test3} runs an a-spatial popn simulation as a test of phase 1
-#' model components. It uses default parameter values that are mostly similar to hat-trick.
+#' \code{rtPhase1Test3} runs an a-spatial popn simulation as a test of phase 1 model components.
+#' This differs from previous tests in being closer to Hat-trick.
+#' \cr ~ uses age-dependent mortalities.  
+#' \cr ~ tries to start popn. at stable age structure.
 #' \cr rtPhase1Test3 was developed from rtPhase1Test
 
 #' @param iDays days to run simulation
 #' @param iMaxAge max age of fly allowed in model (will warn if flies age past this)
-#' @param iCarryCap carrying capacity of adults 
+#' @param iCarryCapF carrying capacity of adult females 
+#' @param fMperF numbers of males per female, default 0.5 for half as many M as F
 #' @param iStartAdults number of adults to start simulation with
 #' @param iStartAges spread start adults across the first n ages classes
 #' @param iStartPupae number of pupae to start simulation with (they get spread across sex&age)
-#' @param pMortF adult female mortality per day 
-#' @param pMortM adult male mortality per day 
+#' @param pMortF adult female mortality on day1, rates on later days are determined by following parameters.
+#' @param pMortM adult male mortality on day1, rates on later days are determined by following parameters.
 #' @param iMortMinAgeStart  Age at which min death rates start. 
 #' @param iMortMinAgeStop   Age at which min death rates stop.
 #' @param fMortMinProp  What proportion of the maximum death rate on day 0 is the minimum death rate.
@@ -37,7 +40,8 @@
 
 rtPhase1Test3 <- function( iDays = 30,
                           iMaxAge = 120,
-                          iCarryCap = 200,
+                          iCarryCapF = 200,
+                          fMperF = 0.5,
                           iStartAdults = 200,
                           iStartAges = 1,
                           iStartPupae = 200,
@@ -60,53 +64,89 @@ rtPhase1Test3 <- function( iDays = 30,
                           verbose = TRUE )
 {
  
-  
-  #vectors for pupae
-  #because males stay in the ground longer this means there will be more males
-  fPupaPerSexAge <- iStartPupae/(iPupDurF+iPupDurM)
-  vPupaF <- rep(fPupaPerSexAge, iPupDurF)
-  vPupaM <- rep(fPupaPerSexAge, iPupDurM)
-  
-  #vectors for adults - start pop blank
-  vPopStartF <- rep(0,iMaxAge)
-  vPopStartM <- rep(0,iMaxAge)
-  
-  #add starting flies
-  #2 params allow number and spread of flies across age classes to be set
-  vPopStartF[1:iStartAges] <- iStartAdults/(2*iStartAges)
-  vPopStartM[1:iStartAges] <- iStartAdults/(2*iStartAges)
-  
-  vPopF <- vPopStartF
-  vPopM <- vPopStartM
-
-  #vectors for death rates for males & females
-  #as a first test have mortality rates constant by age
-#   vpMortF <- rep(pMortF,iMaxAge) 
-#   vpMortM <- rep(pMortM,iMaxAge) 
+  #8/9/14 I want to modify this to start close to stable age structure
+  #of both adults & pupae
+  #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  # setting mortality ################
+  #constant by age
+  #   vpMortF <- rep(pMortF,iMaxAge) 
+  #   vpMortM <- rep(pMortM,iMaxAge) 
   #age dependeny mortality
-  #!BEWARE the first arg is mortality on day1 rather than average mortality
-  vpMortF <- rtSetMortRatesByAge( vPop=vPopF, 
+  #beware the first arg is mortality on day1 rather than average mortality
+  #todo: change to pass iMaxAge rather than vPop
+  vpMortF <- rtSetMortRatesByAge( vPop=c(1:iMaxAge), 
                                   pMortAge1 = pMortF,
                                   iMortMinAgeStart = iMortMinAgeStart,
                                   iMortMinAgeStop = iMortMinAgeStop,
                                   fMortMinProp = fMortMinProp,
                                   fMortOldProp = fMortOldProp )  
-  vpMortM <- rtSetMortRatesByAge( vPop=vPopM, 
+  #todo: change to pass iMaxAge rather than vPop
+  vpMortM <- rtSetMortRatesByAge( vPop=c(1:iMaxAge), 
                                   pMortAge1 = pMortM,
                                   iMortMinAgeStart = iMortMinAgeStart,
                                   iMortMinAgeStop = iMortMinAgeStop,
                                   fMortMinProp = fMortMinProp,
                                   fMortOldProp = fMortOldProp )   
   
-  #?how might I store age structure data
-  #could have a datframe with one column per day & rows are ages
+  #setting a total carryCap from the female input
+  #used later e.g. in mortality
+  iCarryCap <- iCarryCapF * 1+fMperF
+  
+  #to set num pupae per age class following hat-trick StabCalc c345
+  #50*(1-pMortPupa)*pupDurF*andyCorrect4CarCap 
+  #todo: check whether this is how Hat-trick does carrycap
+  
+  #todo: refactor these nasty variable names
+  #1 create a reference popn that produces 100 larvae
+  fPopFAge0Ref <- 50*(1-pMortPupa)
+  vPopFRef <- rtSetAgeStructure(vpMortF, fPopAge0=fPopFAge0Ref)
+  fTotPopFRef <- sum(vPopFRef) 
+  fCorrect4CarryCap <- iCarryCapF / fTotPopFRef
+  
+  #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  # setting pupae ################
+  #!BEWARE I'm not sure this is right yet
+  fPupaPerSexAge <- fPopFAge0Ref*fCorrect4CarryCap
+    
+  #vectors for pupae
+  #because males stay in the ground longer this means there will be more males
+  #fPupaPerSexAge <- iStartPupae/(iPupDurF+iPupDurM)
+  
+  #fills vectors with same number of pupae at all ages
+  vPupaF <- rep(fPupaPerSexAge, iPupDurF)
+  vPupaM <- rep(fPupaPerSexAge, iPupDurM)
+  
+  #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  # setting adults ################  
+  #vectors for adults - start pop blank
+  vPopStartF <- rep(0,iMaxAge)
+  vPopStartM <- rep(0,iMaxAge)
+  
+  #add starting flies
+  #2 params allow number and spread of flies across age classes to be set
+#   vPopStartF[1:iStartAges] <- iStartAdults/(2*iStartAges)
+#   vPopStartM[1:iStartAges] <- iStartAdults/(2*iStartAges)
+  
+  #9/9/14 trying to start popn at stability
+  #initialising age structure with the calc num pupae from above
+  vPopStartF <- rtSetAgeStructure(vpMortF, fPopAge0=fPupaPerSexAge)
+  vPopStartM <- rtSetAgeStructure(vpMortM, fPopAge0=fPupaPerSexAge)
+  
+  vPopF <- vPopStartF
+  vPopM <- vPopStartM
+
+
+  
+  #storing age structure data
+  #a datframe with one column per day & rows are ages
   dfRecordF <- data.frame(day0=rev(vPopF))
   dfRecordM <- data.frame(day0=rev(vPopM))
-  #? i'm not sure it's necessary to record pupal age stucture, 
+  #i'm not sure it's necessary to record pupal age stucture, 
   #but easier to do same way as adults
   dfRecordPupaF <- data.frame(day0=rev(vPupaF))
   dfRecordPupaM <- data.frame(day0=rev(vPupaM))  
   
+  # start of day loop ################
   for( day in 1:iDays ) {
     
     #browser()

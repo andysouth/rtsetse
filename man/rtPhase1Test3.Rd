@@ -3,7 +3,7 @@
 \alias{rtPhase1Test3}
 \title{an a-spatial tsetse population simulation, a third test of phase1}
 \usage{
-rtPhase1Test3(iDays = 30, iMaxAge = 120, iCarryCap = 200,
+rtPhase1Test3(iDays = 30, iMaxAge = 120, iCarryCapF = 200, fMperF = 0.5,
   iStartAdults = 200, iStartAges = 1, iStartPupae = 200, pMortF = 0.05,
   pMortM = 0.05, iMortMinAgeStart = 10, iMortMinAgeStop = 50,
   fMortMinProp = 0.2, fMortOldProp = 0.3, propMortAdultDD = 0.25,
@@ -16,7 +16,9 @@ rtPhase1Test3(iDays = 30, iMaxAge = 120, iCarryCap = 200,
 
 \item{iMaxAge}{max age of fly allowed in model (will warn if flies age past this)}
 
-\item{iCarryCap}{carrying capacity of adults}
+\item{iCarryCapF}{carrying capacity of adult females}
+
+\item{fMperF}{numbers of males per female, default 0.5 for half as many M as F}
 
 \item{iStartAdults}{number of adults to start simulation with}
 
@@ -24,9 +26,9 @@ rtPhase1Test3(iDays = 30, iMaxAge = 120, iCarryCap = 200,
 
 \item{iStartPupae}{number of pupae to start simulation with (they get spread across sex&age)}
 
-\item{pMortF}{adult female mortality per day}
+\item{pMortF}{adult female mortality on day1, rates on later days are determined by following parameters.}
 
-\item{pMortM}{adult male mortality per day}
+\item{pMortM}{adult male mortality on day1, rates on later days are determined by following parameters.}
 
 \item{iMortMinAgeStart}{Age at which min death rates start.}
 
@@ -64,8 +66,10 @@ a list of lots:
 \cr dataframes of adult age structure over time dfRecordPupa F & M
 }
 \description{
-\code{rtPhase1Test3} runs an a-spatial popn simulation as a test of phase 1
-model components. It uses default parameter values that are mostly similar to hat-trick.
+\code{rtPhase1Test3} runs an a-spatial popn simulation as a test of phase 1 model components.
+This differs from previous tests in being closer to Hat-trick.
+\cr ~ uses age-dependent mortalities.
+\cr ~ tries to start popn. at stable age structure.
 \cr rtPhase1Test3 was developed from rtPhase1Test
 }
 \examples{
