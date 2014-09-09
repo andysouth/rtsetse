@@ -76,8 +76,8 @@ rtMortalityStableSeek <- function( iMaxAge = 100,
   #unlikely to ever go above mort 0.4 (or even get close to)
   vMorts <- seq(fInterval, 0.4, fInterval) 
   
-  #impose pupal mort to get adults of age1 (division by 2 for both sexes)
-  popAge1MorF <- iTargetPopAge0/2 * (1-pMortPupa) 
+  #impose pupal mort to get adults age0 (division by 2 for both sexes)
+  popAge0MorF <- iTargetPopAge0/2 * (1-pMortPupa) 
   #test with no pupal mort actually gave same results
   #popAge1MorF <- iTargetPopAge0/2  
   
@@ -88,10 +88,10 @@ rtMortalityStableSeek <- function( iMaxAge = 100,
   vLarvae <- rep(NA,length(vMorts))
   
   #set trialLarvae high to start the while loop
-  numTrialLarvae <- popAge1MorF+1
+  numTrialLarvae <- popAge0MorF+1
   trial <- 1
   #try increasing mortalities while trial is above threshold
-  while( numTrialLarvae > popAge1MorF )
+  while( numTrialLarvae > popAge0MorF )
   {
     #set age1 mort for this trial
     fMort <- vMorts[trial]
@@ -109,7 +109,7 @@ rtMortalityStableSeek <- function( iMaxAge = 100,
     
     
     #fill an age structure
-    vPopF <- rtSetAgeStructure( vpMort=vpMort, fPopAge1=popAge1MorF )
+    vPopF <- rtSetAgeStructure( vpMort=vpMort, fPopAge0=popAge0MorF )
     
     #setting age dependent deposition rates
     vpDeposit <- rtSetDepositionRatesByAgeDI( iMaxAge=iMaxAge, iFirstLarva=iFirstLarva, iInterLarva=iInterLarva, pMortLarva=pMortLarva )
@@ -160,7 +160,7 @@ rtMortalityStableSeek <- function( iMaxAge = 100,
                                    fMortOldProp = fMortOldPropM ) 
 
     #fill an age structure
-    vPopM <- rtSetAgeStructure( vpMort=vpMort, fPopAge1=popAge1MorF )
+    vPopM <- rtSetAgeStructure( vpMort=vpMort, fPopAge0=popAge0MorF )
     
     #sum num males in all age classes
     numTrialMales <- sum(vPopM)
@@ -178,7 +178,7 @@ rtMortalityStableSeek <- function( iMaxAge = 100,
   {
     plot( vMorts, vLarvae, type='l', ylab='larvae', xlab='female mortality age1' )
     #add starting pop age1
-    abline(h=popAge1MorF, col='red')  
+    abline(h=popAge0MorF, col='red')  
     mtext(paste("Sought mortalities F:",bestMortF,"  M:",bestMortM))
   }
   
