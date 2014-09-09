@@ -74,7 +74,11 @@ rtMortalityStableSeek <- function( iMaxAge = 100,
   #create a vector of mortalities to test both M&F
   #starts low & increases
   #unlikely to ever go above mort 0.4 (or even get close to)
-  vMorts <- seq(fInterval, 0.4, fInterval) 
+  #vMorts <- seq(fInterval, 0.4, fInterval) 
+  #instead maybe I should start at higher mortalities
+  #I want a popn that will persist, so better to have mortality that 
+  #is a little too low rather than little too high
+  vMorts <- seq(0.4, fInterval, -fInterval)   
   
   #impose pupal mort to get adults age0 (division by 2 for both sexes)
   popAge0MorF <- iTargetPopAge0/2 * (1-pMortPupa) 
@@ -87,11 +91,17 @@ rtMortalityStableSeek <- function( iMaxAge = 100,
   #create a vector filled with NAs for results
   vLarvae <- rep(NA,length(vMorts))
   
-  #set trialLarvae high to start the while loop
-  numTrialLarvae <- popAge0MorF+1
+#   #set trialLarvae high to start the while loop
+#   numTrialLarvae <- popAge0MorF+1
+#   trial <- 1
+#   #try increasing mortalities while trial is above threshold
+#   while( numTrialLarvae > popAge0MorF )
+
+  #**TRYING NEW VERSION that searches by decreasing mortality
+  numTrialLarvae <- popAge0MorF-1
   trial <- 1
   #try increasing mortalities while trial is above threshold
-  while( numTrialLarvae > popAge0MorF )
+  while( numTrialLarvae < popAge0MorF )
   {
     #set age1 mort for this trial
     fMort <- vMorts[trial]
@@ -126,6 +136,7 @@ rtMortalityStableSeek <- function( iMaxAge = 100,
   #set bestMort to the final trial (where larvae>=fPopAge)
   bestMortF <- vMorts[trial-1]
   cat("bestMortF:",bestMortF,"larvae:",numTrialLarvae,"\n")
+  
   #calc tot F in best trial, used to calc num males below
   bestTotF <- sum(vPopF)
   
@@ -140,10 +151,14 @@ rtMortalityStableSeek <- function( iMaxAge = 100,
   #set males requested to total females * MFratio
   fMalesRequested <- bestTotF * fMperF
   
-  #set trialLarvae high to start the while loop
-  numTrialMales <- fMalesRequested + 1
+#   #set trialLarvae high to start the while loop
+#   numTrialMales <- fMalesRequested + 1
+#   trial <- 1
+#   while( numTrialMales > fMalesRequested )
+  #**TRYING NEW VERSION that searches by decreasing mortality  
+  numTrialMales <- fMalesRequested - 1
   trial <- 1
-  while( numTrialMales > fMalesRequested )
+  while( numTrialMales < fMalesRequested )
   {
     #set age1 mort for this trial
     fMort <- vMorts[trial]
