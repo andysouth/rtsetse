@@ -3,13 +3,14 @@
 \alias{rtMortalityStableSeek}
 \title{seeks day1 mortality rates for F&M that give popn stability}
 \usage{
-rtMortalityStableSeek(iMaxAge = 100, iTargetPopAge0 = 100,
-  fInterval = 0.001, fMperF = 0.5, pMortLarva = 0.05,
-  iMortMinAgeStartF = 10, iMortMinAgeStopF = 60, fMortMinPropF = 0.2,
-  fMortOldPropF = 0.3, iMortMinAgeStartM = 10, iMortMinAgeStopM = 40,
-  fMortMinPropM = 0.2, fMortOldPropM = 0.3, propMortAdultDD = 0.25,
-  pMortPupa = 0.25, iPupDurF = 26, iPupDurM = 28, iFirstLarva = 16,
-  iInterLarva = 10, plot = TRUE, verbose = FALSE)
+rtMortalityStableSeek(iMaxAge = 120, iTargetPopAge0 = 100,
+  fInterval = 0.001, fHighestTestMort = 0.3, fMperF = 0.5,
+  pMortLarva = 0.05, iMortMinAgeStartF = 10, iMortMinAgeStopF = 60,
+  fMortMinPropF = 0.2, fMortOldPropF = 0.3, iMortMinAgeStartM = 10,
+  iMortMinAgeStopM = 40, fMortMinPropM = 0.2, fMortOldPropM = 0.3,
+  propMortAdultDD = 0.25, pMortPupa = 0.25, iPupDurF = 26,
+  iPupDurM = 28, iFirstLarva = 16, iInterLarva = 10, plot = TRUE,
+  verbose = FALSE)
 }
 \arguments{
 \item{iMaxAge}{max age of fly allowed in model}
@@ -17,6 +18,8 @@ rtMortalityStableSeek(iMaxAge = 100, iTargetPopAge0 = 100,
 \item{iTargetPopAge0}{target pop of both sexes at age 0}
 
 \item{fInterval}{the interval between mortalities used to test}
+
+\item{fHighestTestMort}{the highest mortality tested}
 
 \item{fMperF}{desired numbers of males per female, default=0.5}
 

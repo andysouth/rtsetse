@@ -16,6 +16,7 @@
 #' @param iMaxAge max age of fly allowed in model
 #' @param iTargetPopAge0 target pop of both sexes at age 0
 #' @param fInterval the interval between mortalities used to test
+#' @param fHighestTestMort the highest mortality tested
 #' @param fMperF desired numbers of males per female, default=0.5
 #' @param pMortLarva larval mortality per period
 #' 
@@ -43,9 +44,10 @@
 #' @export
 
 
-rtMortalityStableSeek <- function( iMaxAge = 100,
+rtMortalityStableSeek <- function( iMaxAge = 120,
                                   iTargetPopAge0 = 100,
                                   fInterval = 0.001,
+                                  fHighestTestMort = 0.3,
                                   fMperF = 0.5,
                                   pMortLarva = 0.05,
                                   
@@ -70,6 +72,8 @@ rtMortalityStableSeek <- function( iMaxAge = 100,
                                   plot = TRUE,
                                   verbose = FALSE )
 {
+  #todo: add in some testing & error msg for if stability not found
+  
   
   #create a vector of mortalities to test both M&F
   #starts low & increases
@@ -78,7 +82,7 @@ rtMortalityStableSeek <- function( iMaxAge = 100,
   #instead maybe I should start at higher mortalities
   #I want a popn that will persist, so better to have mortality that 
   #is a little too low rather than little too high
-  vMorts <- seq(0.4, fInterval, -fInterval)   
+  vMorts <- seq(fHighestTestMort, fInterval, -fInterval)   
   
   #impose pupal mort to get adults age0 (division by 2 for both sexes)
   popAge0MorF <- iTargetPopAge0/2 * (1-pMortPupa) 
