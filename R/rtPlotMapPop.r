@@ -16,7 +16,7 @@
 #' 
 #' @return ?nothing
 #' @examples
-#' tst <- rtPhase2Test2()
+#' tst <- rtPhase2Test3()
 #' rtPlotMapPop(tst) 
 #' @export
 

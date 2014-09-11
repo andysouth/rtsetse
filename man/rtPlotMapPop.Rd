@@ -30,7 +30,7 @@ Can plot a maximum of 16 days, will display the first 16 if you select more than
 For adults to start with but could be used for pupae too.
 }
 \examples{
-tst <- rtPhase2Test2()
+tst <- rtPhase2Test3()
 rtPlotMapPop(tst)
 }
 

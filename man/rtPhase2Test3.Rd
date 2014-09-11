@@ -4,11 +4,13 @@
 \title{a simple spatial tsetse population simulation, a 3rd test of phase2}
 \usage{
 rtPhase2Test3(nCol = 10, nRow = 10, pMove = 0.4, iDays = 4,
-  iMaxAge = 120, iCarryCap = 200, iStartAdults = 200, iStartAges = 1,
-  iStartPupae = "sameAsAdults", pMortF = 0.05, pMortM = 0.05,
-  loop = TRUE, pMortPupa = 0.25, iPupaDensThresh = 200, fSlopeDD = 1,
-  iPupDurF = 26, iPupDurM = 28, iFirstLarva = 16, iInterLarva = 10,
-  pMortLarva = 0.05, report = NULL)
+  iMaxAge = 120, iCarryCapF = 200, fMperF = 0.5, iStartAdults = 200,
+  iStartAges = 1, iStartPupae = "sameAsAdults", pMortF = 0.05,
+  pMortM = 0.05, iMortMinAgeStart = 10, iMortMinAgeStop = 50,
+  fMortMinProp = 0.2, fMortOldProp = 0.3, propMortAdultDD = 0.25,
+  pMortPupa = 0.25, propMortPupaDD = 0.25, iPupDurF = 26, iPupDurM = 28,
+  iFirstLarva = 16, iInterLarva = 10, pMortLarva = 0.05,
+  propMortLarvaDD = 0.25, report = NULL)
 }
 \arguments{
 \item{nCol}{number grid columns}
@@ -21,7 +23,9 @@ rtPhase2Test3(nCol = 10, nRow = 10, pMove = 0.4, iDays = 4,
 
 \item{iMaxAge}{max age of fly allowed in model (will warn if flies age past this)}
 
-\item{iCarryCap}{carrying capacity of adults}
+\item{iCarryCapF}{carrying capacity of adult females}
+
+\item{fMperF}{numbers of males per female, default 0.5 for half as many M as F}
 
 \item{iStartAdults}{number of adults to start simulation with}
 
@@ -30,17 +34,23 @@ rtPhase2Test3(nCol = 10, nRow = 10, pMove = 0.4, iDays = 4,
 \item{iStartPupae}{number of pupae to start simulation with (they get spread across sex&age)
 option "sameAsAdults" to set tot pupae same as tot adults.}
 
-\item{pMortF}{adult female mortality per day}
+\item{pMortF}{adult female mortality on day1, rates on later days are determined by following parameters.}
 
-\item{pMortM}{adult male mortality per day}
+\item{pMortM}{adult male mortality on day1, rates on later days are determined by following parameters.}
 
-\item{loop}{TEMPORARY test of loop versus apply approach, only TRUE works}
+\item{iMortMinAgeStart}{Age at which min death rates start.}
+
+\item{iMortMinAgeStop}{Age at which min death rates stop.}
+
+\item{fMortMinProp}{What proportion of the maximum death rate on day 0 is the minimum death rate.}
+
+\item{fMortOldProp}{What proportion of the maximum death rate on day 0 is the death rate after iDeathMinAgeStop.}
+
+\item{propMortAdultDD}{proportion of adult mortality that is density dependent}
 
 \item{pMortPupa}{pupal mortality per period}
 
-\item{iPupaDensThresh}{the threshold pupal density above which density dependence acts}
-
-\item{fSlopeDD}{the slope of density dependence, how mortality increases with density}
+\item{propMortPupaDD}{proportion of pupal mortality that is density dependent}
 
 \item{iPupDurF}{days it takes pupa(F) to develop}
 
@@ -52,13 +62,15 @@ option "sameAsAdults" to set tot pupae same as tot adults.}
 
 \item{pMortLarva}{larval mortality per period}
 
+\item{propMortLarvaDD}{proportion of larval mortality that is density dependent}
+
 \item{report}{filename for a report for this run, if not specified no report is produced}
 }
 \value{
 a multi-dimensional array [day,x,y,sex,ages]
 }
 \description{
-\code{rtPhase2Test3} goes back to more hat-trick like desnity dependence.
+\code{rtPhase2Test3} goes back to more hat-trick like density dependence.
 runs a simple spatial popn simulation as a test of phase 2
 model components. Concentrates on movement parameters and mortality so that
 it can be used to test popn spread under different popn growth rates.
@@ -67,6 +79,7 @@ it can be used to test popn spread under different popn growth rates.
 \examples{
 \dontrun{
 tst <- rtPhase2Test3()
+rtPlotMapPop(tst)
 }
 }
 

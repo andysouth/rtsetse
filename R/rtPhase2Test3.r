@@ -1,6 +1,6 @@
 #' a simple spatial tsetse population simulation, a 3rd test of phase2
 #'
-#' \code{rtPhase2Test3} goes back to more hat-trick like desnity dependence.
+#' \code{rtPhase2Test3} goes back to more hat-trick like density dependence.
 #' runs a simple spatial popn simulation as a test of phase 2
 #' model components. Concentrates on movement parameters and mortality so that 
 #' it can be used to test popn spread under different popn growth rates.
@@ -10,24 +10,30 @@
 #' @param nCol number grid columns
 #' @param nRow number grid rows
 #' @param pMove probability of moving between cells
+# following are same as rtPhase1Test3
 #' @param iDays days to run simulation
 #' @param iMaxAge max age of fly allowed in model (will warn if flies age past this)
-#' @param iCarryCap carrying capacity of adults 
+#' @param iCarryCapF carrying capacity of adult females 
+#' @param fMperF numbers of males per female, default 0.5 for half as many M as F
 #' @param iStartAdults number of adults to start simulation with
 #' @param iStartAges spread start adults across the first n ages classes
 #' @param iStartPupae number of pupae to start simulation with (they get spread across sex&age)
 #'     option "sameAsAdults" to set tot pupae same as tot adults.
-#' @param pMortF adult female mortality per day 
-#' @param pMortM adult male mortality per day 
-#' @param loop TEMPORARY test of loop versus apply approach, only TRUE works 
+#' @param pMortF adult female mortality on day1, rates on later days are determined by following parameters.
+#' @param pMortM adult male mortality on day1, rates on later days are determined by following parameters.
+#' @param iMortMinAgeStart  Age at which min death rates start. 
+#' @param iMortMinAgeStop   Age at which min death rates stop.
+#' @param fMortMinProp  What proportion of the maximum death rate on day 0 is the minimum death rate.
+#' @param fMortOldProp  What proportion of the maximum death rate on day 0 is the death rate after iDeathMinAgeStop.
+#' @param propMortAdultDD proportion of adult mortality that is density dependent
 #' @param pMortPupa pupal mortality per period
-#' @param iPupaDensThresh the threshold pupal density above which density dependence acts
-#' @param fSlopeDD the slope of density dependence, how mortality increases with density
+#' @param propMortPupaDD proportion of pupal mortality that is density dependent
 #' @param iPupDurF days it takes pupa(F) to develop
 #' @param iPupDurM days it takes pupa(M) to develop
 #' @param iFirstLarva Age that female produces first larva
 #' @param iInterLarva Inter-larval period
 #' @param pMortLarva larval mortality per period
+#' @param propMortLarvaDD proportion of larval mortality that is density dependent
 #' 
 #' @param report filename for a report for this run, if not specified no report is produced
 
@@ -35,6 +41,7 @@
 #' @examples
 #' \dontrun{
 #' tst <- rtPhase2Test3()
+#' rtPlotMapPop(tst)
 #' }
 #' @export
 #' 
@@ -43,22 +50,27 @@ rtPhase2Test3 <- function(
                           nRow = 10,
                           pMove = 0.4,
                           iDays = 4,
-                          iMaxAge = 120, #7,
-                          iCarryCap = 200,
+                          iMaxAge = 120,
+                          iCarryCapF = 200,
+                          fMperF = 0.5,
                           iStartAdults = 200,
                           iStartAges = 1,
                           iStartPupae = "sameAsAdults",
                           pMortF = 0.05,
                           pMortM = 0.05,
-                          loop = TRUE,
+                          iMortMinAgeStart = 10,
+                          iMortMinAgeStop = 50,
+                          fMortMinProp = 0.2,
+                          fMortOldProp = 0.3,
+                          propMortAdultDD = 0.25,
                           pMortPupa = 0.25,
-                          iPupaDensThresh = 200,
-                          fSlopeDD = 1.0,                          
+                          propMortPupaDD = 0.25,
                           iPupDurF = 26,
                           iPupDurM = 28,
                           iFirstLarva = 16,
                           iInterLarva = 10,
                           pMortLarva = 0.05,
+                          propMortLarvaDD = 0.25,
                           report = NULL ) #"reportPhase2.html" ) 
 {
   
@@ -71,6 +83,11 @@ rtPhase2Test3 <- function(
   #callObject <- call() Error 'name' is missing  
   #named_args <- as.list(parent.frame()) #does something weird, just gives the output object
   lNamedArgs <- mget(names(formals()),sys.frame(sys.nframe()))
+  
+  
+  #setting a total carryCap from the female input
+  #used later e.g. in mortality
+  iCarryCap <- iCarryCapF * 1+fMperF
   
   #vectors for death rates for males & females
   #as a first test have mortality rates constant by age
@@ -152,9 +169,11 @@ rtPhase2Test3 <- function(
     #####################
     ## adult mortality ##
     
-    #! probably want to remove the carryCap bit of this
-    #! if density dependence is going to be implemented purely through pupal mort
-    aGrid <- rtMortalityGrid( aGrid, vpMortF, vpMortM, mCarryCap=mCarryCap, loop=loop )
+    aGrid <- rtMortalityGrid( aGrid, 
+                              vpMortF=vpMortF, 
+                              vpMortM=vpMortM,
+                              propDD=propMortAdultDD,
+                              mCarryCap=mCarryCap )
     
     
     ##################
@@ -202,10 +221,10 @@ rtPhase2Test3 <- function(
     ## pupal mortality ##
     # is applied at day1 for the whole period
     # !note that iPupaDensThresh is currently constant across the grid
-    aGridPup <- rtPupalMortalityRogersGrid( aGridPup,
-                                            pMortPupa=pMortPupa, 
-                                            iPupaDensThresh=iPupaDensThresh, 
-                                            fSlopeDD=fSlopeDD)
+    aGridPup <- rtPupalMortalityGrid( aGridPup,
+                                      pMort = pMortPupa, 
+                                      propDD = propMortPupaDD,
+                                      mCarryCap = mCarryCap )
     
     
     ####################

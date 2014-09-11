@@ -7,6 +7,7 @@
 
 #' @param vpMort a vector of age specific mortality rates
 #' @param title a title for the plot 
+#' @param col line colour 
 #' 
 #' @return ? nothing
 #' @examples
