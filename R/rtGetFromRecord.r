@@ -18,7 +18,7 @@
 
 #' @return an array, matrix or vector named with remaining dimensions of [x,y,sex,age]
 #' @examples
-#' aRecord <- rtPhase2Test2()
+#' aRecord <- rtPhase2Test3()
 #' aGrid <- rtGetFromRecord(aRecord,day=2) #gives raw array for one day
 #' rtGetFromRecord(aRecord,day=2,x='sum',y='sum',sex='sum') #age structure for whole pop
 #' rtGetFromRecord(aRecord,day=2,x='sum',y='sum',age='sum') #sex ratio for whole pop
@@ -26,6 +26,10 @@
 #' rtGetFromRecord(aRecord,day=2,x='all',y='all',age=c(1,2),sex='all')
 #' #this gives just 1
 #' rtGetFromRecord(aRecord,day=2,x='all',y='all',age=c(1,2),sex='sum')
+#' #new test case
+#' aRecord <- rtPhase2Test3(3,3,iDays=4)
+#' rtGetFromRecord(aRecord,day=1:3,x='all',y='all',age=c(1,2),sex='sum')
+
 #' @export
 
 
@@ -39,6 +43,8 @@ rtGetFromRecord <- function( aRecord,
                            ) 
 {
   #?? I may want the default to be sum rather than all
+  
+  #!BEWARE this function is tricky
   
   #aRecord[x,y,sex,age]
   allArgs <- c(day,x,y,sex,age)
@@ -87,16 +93,13 @@ rtGetFromRecord <- function( aRecord,
   # if at least 1 'sum' & 'all'  
   {    
     #the 'all' args need to be added to the MARGIN arg of apply
+    #(they were converted to TRUE above)
     marginArg <- NULL
-#     if ( identical(x,'all')) marginArg <- c(marginArg,'x')
-#     if ( identical(y,'all')) marginArg <- c(marginArg,'y')
-#     if ( identical(age,'all')) marginArg <- c(marginArg,'age')
-#     if ( identical(sex,'all')) marginArg <- c(marginArg,'sex') 
-    #the alls are converted to TRUE above
-    #but can't do if(x) in case x=='sum
+
     #adding | if( length(x)>1 ) would allow user to get back multiple cells rather than summing
     #but this way is probably more useful
-    if ( identical(day,TRUE)) marginArg <- c(marginArg,'day')
+    if ( identical(day,TRUE) | length(day)>1 ) marginArg <- c(marginArg,'day')
+    #if ( !identical(day,'sum')) marginArg <- c(marginArg,'day')
     if ( identical(x,TRUE)) marginArg <- c(marginArg,'x')
     if ( identical(y,TRUE)) marginArg <- c(marginArg,'y')
     if ( identical(age,TRUE)) marginArg <- c(marginArg,'age')

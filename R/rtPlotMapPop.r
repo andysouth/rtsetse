@@ -46,7 +46,7 @@ rtPlotMapPop <- function( aRecord,
     if (ifManyDays=='last') days <- (numDays-15):numDays
     else if (ifManyDays=='first') days <- 1:16
     else if (ifManyDays=='firstlast') days <- c(1:8, (numDays-7):numDays)
-    else if (ifManyDays=='spread') days <- seq(from=1, to=numDays, by=numDays/16)
+    else if (ifManyDays=='spread') days <- as.integer(seq(from=1, to=numDays, by=numDays/16))
     else stop("ifManyDays should be 'last','first' or 'spread' yours is ",ifManyDays)
   }
   
