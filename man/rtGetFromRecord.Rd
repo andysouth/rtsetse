@@ -34,7 +34,7 @@ thus \code{rtGetFromRecord(aRecord,x='sum',y='sum',sex='sum',age='sum')}
 would produce a single value of the total population on the grid.
 }
 \examples{
-aRecord <- rtPhase2Test2()
+aRecord <- rtPhase2Test3()
 aGrid <- rtGetFromRecord(aRecord,day=2) #gives raw array for one day
 rtGetFromRecord(aRecord,day=2,x='sum',y='sum',sex='sum') #age structure for whole pop
 rtGetFromRecord(aRecord,day=2,x='sum',y='sum',age='sum') #sex ratio for whole pop
@@ -42,5 +42,8 @@ rtGetFromRecord(aRecord,day=2,x='sum',y='sum',age='sum') #sex ratio for whole po
 rtGetFromRecord(aRecord,day=2,x='all',y='all',age=c(1,2),sex='all')
 #this gives just 1
 rtGetFromRecord(aRecord,day=2,x='all',y='all',age=c(1,2),sex='sum')
+#new test case
+aRecord <- rtPhase2Test3(3,3,iDays=4)
+rtGetFromRecord(aRecord,day=1:3,x='all',y='all',age=c(1,2),sex='sum')
 }
 

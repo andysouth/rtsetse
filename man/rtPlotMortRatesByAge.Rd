@@ -9,6 +9,8 @@ rtPlotMortRatesByAge(vpMort, title = "", col = "red")
 \item{vpMort}{a vector of age specific mortality rates}
 
 \item{title}{a title for the plot}
+
+\item{col}{line colour}
 }
 \value{
 ? nothing
