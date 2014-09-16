@@ -116,7 +116,7 @@ rtPhase1Test3 <- function( iDays = 30,
 #   vPopStartF[1:iStartAges] <- iStartAdults/(2*iStartAges)
 #   vPopStartM[1:iStartAges] <- iStartAdults/(2*iStartAges)
   
-  #9/9/14 trying to start popn at stability
+  #start popn at stability
   #initialising age structure with the calc num pupae from above
   vPopStartF <- rtSetAgeStructure(vpMortF, fPopAge0=fPupaPerSexAge)
   vPopStartM <- rtSetAgeStructure(vpMortM, fPopAge0=fPupaPerSexAge)
