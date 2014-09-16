@@ -4,13 +4,12 @@
 \title{a simple spatial tsetse population simulation, a 3rd test of phase2}
 \usage{
 rtPhase2Test3(nCol = 10, nRow = 10, pMove = 0.4, iDays = 4,
-  iMaxAge = 120, iCarryCapF = 200, fMperF = 0.5, iStartAdults = 200,
-  iStartAges = 1, iStartPupae = "sameAsAdults", pMortF = 0.05,
-  pMortM = 0.05, iMortMinAgeStart = 10, iMortMinAgeStop = 50,
-  fMortMinProp = 0.2, fMortOldProp = 0.3, propMortAdultDD = 0.25,
-  pMortPupa = 0.25, propMortPupaDD = 0.25, iPupDurF = 26, iPupDurM = 28,
-  iFirstLarva = 16, iInterLarva = 10, pMortLarva = 0.05,
-  propMortLarvaDD = 0.25, report = NULL)
+  iMaxAge = 120, iCarryCapF = 200, fMperF = 0.5, fStartPopPropCC = 1,
+  pMortF = 0.05, pMortM = 0.05, iMortMinAgeStart = 10,
+  iMortMinAgeStop = 50, fMortMinProp = 0.2, fMortOldProp = 0.3,
+  propMortAdultDD = 0.25, pMortPupa = 0.25, propMortPupaDD = 0.25,
+  iPupDurF = 26, iPupDurM = 28, iFirstLarva = 16, iInterLarva = 10,
+  pMortLarva = 0.05, propMortLarvaDD = 0.25, report = NULL)
 }
 \arguments{
 \item{nCol}{number grid columns}
@@ -27,11 +26,7 @@ rtPhase2Test3(nCol = 10, nRow = 10, pMove = 0.4, iDays = 4,
 
 \item{fMperF}{numbers of males per female, default 0.5 for half as many M as F}
 
-\item{iStartAdults}{number of adults to start simulation with}
-
-\item{iStartAges}{spread start adults across the first n ages classes}
-
-\item{iStartPupae}{number of pupae to start simulation with (they get spread across sex&age)
+\item{fStartPopPropCC}{starting population as a proportion of carrying capacity, default = 1
 option "sameAsAdults" to set tot pupae same as tot adults.}
 
 \item{pMortF}{adult female mortality on day1, rates on later days are determined by following parameters.}

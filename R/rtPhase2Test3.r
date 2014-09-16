@@ -15,9 +15,10 @@
 #' @param iMaxAge max age of fly allowed in model (will warn if flies age past this)
 #' @param iCarryCapF carrying capacity of adult females 
 #' @param fMperF numbers of males per female, default 0.5 for half as many M as F
-#' @param iStartAdults number of adults to start simulation with
-#' @param iStartAges spread start adults across the first n ages classes
-#' @param iStartPupae number of pupae to start simulation with (they get spread across sex&age)
+#' @param fStartPopPropCC starting population as a proportion of carrying capacity, default = 1
+# @param iStartAdults number of adults to start simulation with
+# @param iStartAges spread start adults across the first n ages classes
+# @param iStartPupae number of pupae to start simulation with (they get spread across sex&age)
 #'     option "sameAsAdults" to set tot pupae same as tot adults.
 #' @param pMortF adult female mortality on day1, rates on later days are determined by following parameters.
 #' @param pMortM adult male mortality on day1, rates on later days are determined by following parameters.
@@ -52,10 +53,11 @@ rtPhase2Test3 <- function(
                           iDays = 4,
                           iMaxAge = 120,
                           iCarryCapF = 200,
-                          fMperF = 0.5,
-                          iStartAdults = 200,
-                          iStartAges = 1,
-                          iStartPupae = "sameAsAdults",
+                          fMperF = 0.5,           
+                          fStartPopPropCC = 1,
+                          #iStartAdults = 200,
+                          #iStartAges = 1,
+                          #iStartPupae = "sameAsAdults",
                           pMortF = 0.05,
                           pMortM = 0.05,
                           iMortMinAgeStart = 10,
@@ -133,23 +135,28 @@ rtPhase2Test3 <- function(
   
     
   #ADULTS
-  # 'x','y','sex','age'
-  #dimnames <- list(1:nCol,1:nRow,c("F","M"),1:iMaxAge)
+  #create array of 0s to start
   dimnames1 <- list( paste0('x',1:nCol), paste0('y',1:nRow), c("F","M"), paste0('age',1:iMaxAge))
   names(dimnames1) <- c("x","y","sex","age")
   aGrid <- array(0, dim=c(nCol,nRow,2,iMaxAge), dimnames=dimnames1)  
-  #adding half of starting adults as each gender to starting cell
+
+  #as an initial test just populate a single central cell at CC
+  #coords of central cell
+  xStart <- (nCol+1)/2
+  yStart <- (nRow+1)/2 
+  
+  #start popn at stability
+  #initialising age structure with the calc num pupae from above
+  vPopStartF <- rtSetAgeStructure(vpMortF, fPopAge0=fPupaPerSexAge)
+  vPopStartM <- rtSetAgeStructure(vpMortM, fPopAge0=fPupaPerSexAge)
+  
+  #adding half of starting adults as each gender to a starting cell in middle
   #2 params allow number and distribution of flies across age classes to be set
-  aGrid[(nCol+1)/2, (nRow+1)/2, , 1:iStartAges] <- iStartAdults/(2*iStartAges)
-  
-  #aF[5,5,] <- 100 #could be used easily to fill a constant age structure
-  
+  aGrid[xStart, yStart,'F', ] <- vPopStartF
+  aGrid[xStart, yStart,'M', ] <- vPopStartM  
 
   
-  
-  
-  
-# access array dimensions by name 
+# to access array dimensions by name 
 #   aGrid['x1','y1','M',] #an age structure for one cell
 #   sum(aGrid['x1','y1','M',]) #total M in one cell
 #   sum(aGrid['x1','y1',,]) #total pop in one cell
@@ -158,7 +165,6 @@ rtPhase2Test3 <- function(
 #   apply(aGrid,MARGIN=c('x','y'),sum) #grid for all ages & sexes
 #   apply(aGrid,MARGIN=c('age'),sum) #summed age structure for whole pop
 #   apply(aGrid,MARGIN=c('sex'),sum) #summed sex ratio for whole pop  
-#   #using apply on subset
   
   
   # the most sensible way to save popn record
