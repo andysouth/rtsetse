@@ -101,11 +101,14 @@ rtMortalityStableSeek <- function( iMaxAge = 120,
 #   #try increasing mortalities while trial is above threshold
 #   while( numTrialLarvae > popAge0MorF )
 
-  #**TRYING NEW VERSION that searches by decreasing mortality
-  numTrialLarvae <- popAge0MorF-1
+  #search by decreasing mortality until numTrialLarvae goes above a threshold
+  #first set below that threshold
+#   numTrialLarvae <- popAge0MorF-1
+#   trial <- 1
+#   while( numTrialLarvae < popAge0MorF )
+  numTrialLarvae <- iTargetPopAge0-1
   trial <- 1
-  #try increasing mortalities while trial is above threshold
-  while( numTrialLarvae < popAge0MorF )
+  while( numTrialLarvae < iTargetPopAge0 )
   {
     #set age1 mort for this trial
     fMort <- vMorts[trial]
@@ -131,6 +134,8 @@ rtMortalityStableSeek <- function( iMaxAge = 120,
     lLarvae <- rtLarvalDeposition( vPopF, vpDeposit )    
     #summing M&F
     numTrialLarvae  <- lLarvae$iLarvaeF + lLarvae$iLarvaeM  
+    #***WHAT IF I JUST SET TO F HERE ?***
+    #numTrialLarvae  <- lLarvae$iLarvaeF  
     
     if (verbose) cat("trial MortF:",fMort,"totF:",sum(vPopF),"larvae:",numTrialLarvae,"\n")
     
@@ -197,7 +202,7 @@ rtMortalityStableSeek <- function( iMaxAge = 120,
   {
     plot( vMorts, vLarvae, type='l', ylab='larvae', xlab='female mortality age1' )
     #add starting pop age1
-    abline(h=popAge0MorF, col='red')  
+    abline(h=iTargetPopAge0, col='red')  
     mtext(paste("Sought mortalities F:",bestMortF,"  M:",bestMortM))
   }
   
