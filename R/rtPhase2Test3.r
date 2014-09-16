@@ -84,15 +84,52 @@ rtPhase2Test3 <- function(
   #named_args <- as.list(parent.frame()) #does something weird, just gives the output object
   lNamedArgs <- mget(names(formals()),sys.frame(sys.nframe()))
   
+  #age dependeny mortality
+  #beware the first arg is mortality on day1 rather than average mortality
+  #todo: change to pass iMaxAge rather than vPop
+  vpMortF <- rtSetMortRatesByAge( vPop=c(1:iMaxAge), 
+                                  pMortAge1 = pMortF,
+                                  iMortMinAgeStart = iMortMinAgeStart,
+                                  iMortMinAgeStop = iMortMinAgeStop,
+                                  fMortMinProp = fMortMinProp,
+                                  fMortOldProp = fMortOldProp )  
+  #todo: change to pass iMaxAge rather than vPop
+  vpMortM <- rtSetMortRatesByAge( vPop=c(1:iMaxAge), 
+                                  pMortAge1 = pMortM,
+                                  iMortMinAgeStart = iMortMinAgeStart,
+                                  iMortMinAgeStop = iMortMinAgeStop,
+                                  fMortMinProp = fMortMinProp,
+                                  fMortOldProp = fMortOldProp ) 
   
   #setting a total carryCap from the female input
-  #used later e.g. in mortality
   iCarryCap <- iCarryCapF * (1+fMperF)
+  #create a matrix for carrying capacity on the grid
+  #first test make it constant
+  #I could name the dimensions, x & y here
+  mCarryCap <- matrix(iCarryCap, ncol=nCol, nrow=nRow)
   
-  #vectors for death rates for males & females
-  #as a first test have mortality rates constant by age
-  vpMortF <- rep(pMortF,iMaxAge) 
-  vpMortM <- rep(pMortM,iMaxAge) 
+
+  #PUPAE ----
+
+  iMaxPupAge <- max(iPupDurM, iPupDurF)
+  dimnamesPup <- list( paste0('x',1:nCol), paste0('y',1:nRow), c("F","M"), paste0('age',1:iMaxPupAge))
+  names(dimnamesPup) <- c("x","y","sex","age")
+  aGridPup <- array(0, dim=c(nCol,nRow,2,iMaxPupAge), dimnames=dimnamesPup)  
+  
+  #calculating start numbers of pupae
+  fPupaPerSexAge <- rtCalcPupaPerSexAge(pMortPupa = pMortPupa, 
+                                        vpMortF = vpMortF,
+                                        fStartPopPropCC = fStartPopPropCC,
+                                        iCarryCapF = iCarryCapF)
+  
+  #vectors for pupae filled with same number of pupae at all ages
+  #because males stay in the ground longer this means there will be more males 
+  vPupaM <- rep(fPupaPerSexAge, iPupDurM)
+  #make the F vector up to the same length as the M with extra 0's
+  vPupaF <- c(rep(fPupaPerSexAge, iPupDurF),rep(0,iPupDurM-iPupDurF))
+  #then put each pupal vector into the array
+  aGridPup[(nCol+1)/2, (nRow+1)/2,'F', ] <- vPupaF
+  aGridPup[(nCol+1)/2, (nRow+1)/2,'M', ] <- vPupaM
   
     
   #ADULTS
@@ -107,37 +144,9 @@ rtPhase2Test3 <- function(
   
   #aF[5,5,] <- 100 #could be used easily to fill a constant age structure
   
-  #PUPAE 
-  #similar array to adults except numAges is different
-  #and can potentially be different betwenn M&F
-  iMaxPupAge <- max(iPupDurM, iPupDurF)
-  dimnamesPup <- list( paste0('x',1:nCol), paste0('y',1:nRow), c("F","M"), paste0('age',1:iMaxPupAge))
-  names(dimnamesPup) <- c("x","y","sex","age")
-  aGridPup <- array(0, dim=c(nCol,nRow,2,iMaxPupAge), dimnames=dimnamesPup)  
-  
-  #option to set tot pupae same as tot adults
-  if (iStartPupae=="sameAsAdults")
-    iStartPupae <- iStartAdults
-  
-  #pupae are done slightly differently from adults
-  #it puts indivs into all age classes
-  #because males stay in the ground longer this means there will be more males
-  #next 3 lines same code as from rtPhase1Test2.r
-  fPupaPerSexAge <- iStartPupae/(iPupDurF+iPupDurM)
-  vPupaM <- rep(fPupaPerSexAge, iPupDurM)
-  #make the F vector up to the same length as the M with extra 0's
-  #vPupaF <- rep(fPupaPerSexAge, iPupDurF)
-  vPupaF <- c(rep(fPupaPerSexAge, iPupDurF),rep(0,iPupDurM-iPupDurF))
-  #then put each pupal vector into the array
-  aGridPup[(nCol+1)/2, (nRow+1)/2,'F', ] <- vPupaF
-  aGridPup[(nCol+1)/2, (nRow+1)/2,'M', ] <- vPupaM
+
   
   
-  
-  #create a matrix for carrying capacity on the grid
-  #first test make it constant
-  #I could name the dimensions, x & y here
-  mCarryCap <- matrix(iCarryCap, ncol=nCol, nrow=nRow)
   
   
 # access array dimensions by name 

@@ -94,30 +94,14 @@ rtPhase1Test3 <- function( iDays = 30,
   #used later e.g. in mortality
   iCarryCap <- iCarryCapF * (1+fMperF)
   
-  #to set num pupae per age class following hat-trick StabCalc c345
-  #50*(1-pMortPupa)*pupDurF*andyCorrect4CarCap 
-  #todo: check whether this is how Hat-trick does carrycap
-  
-  #todo: refactor these nasty variable names
-  #1 create a reference popn that produces 100 larvae
-  fPopFAge0Ref <- 50*(1-pMortPupa)
-  vPopFRef <- rtSetAgeStructure(vpMortF, fPopAge0=fPopFAge0Ref)
-  fTotPopFRef <- sum(vPopFRef) 
-  #fCorrect4CarryCap <- iCarryCapF / fTotPopFRef 
-  #16/9/14 andy added ability to set starting popn by proportion of CC
-  #here just influences the pupae, this effects adult age structure later
-  fCorrect4CarryCap <- fStartPopPropCC * iCarryCapF / fTotPopFRef   
-  
-  #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  # setting pupae ################
-  #!BEWARE I'm not sure this is right yet
-  fPupaPerSexAge <- fPopFAge0Ref*fCorrect4CarryCap
+  #calculating start numbers of pupae
+  fPupaPerSexAge <- rtCalcPupaPerSexAge(pMortPupa = pMortPupa, 
+                                        vpMortF = vpMortF,
+                                        fStartPopPropCC = fStartPopPropCC,
+                                        iCarryCapF = iCarryCapF)
     
-  #vectors for pupae
-  #because males stay in the ground longer this means there will be more males
-  #fPupaPerSexAge <- iStartPupae/(iPupDurF+iPupDurM)
-  
-  #fills vectors with same number of pupae at all ages
+  #vectors for pupae filled with same number of pupae at all ages
+  #because males stay in the ground longer this means there will be more males 
   vPupaF <- rep(fPupaPerSexAge, iPupDurF)
   vPupaM <- rep(fPupaPerSexAge, iPupDurM)
   
