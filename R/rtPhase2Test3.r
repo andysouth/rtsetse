@@ -87,7 +87,7 @@ rtPhase2Test3 <- function(
   
   #setting a total carryCap from the female input
   #used later e.g. in mortality
-  iCarryCap <- iCarryCapF * 1+fMperF
+  iCarryCap <- iCarryCapF * (1+fMperF)
   
   #vectors for death rates for males & females
   #as a first test have mortality rates constant by age
