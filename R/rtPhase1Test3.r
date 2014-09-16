@@ -10,6 +10,7 @@
 #' @param iMaxAge max age of fly allowed in model (will warn if flies age past this)
 #' @param iCarryCapF carrying capacity of adult females 
 #' @param fMperF numbers of males per female, default 0.5 for half as many M as F
+#' @param fStartPopPropCC starting population as a proportion of carrying capacity, default = 1
 #' @param iStartAdults number of adults to start simulation with
 #' @param iStartAges spread start adults across the first n ages classes
 #' @param iStartPupae number of pupae to start simulation with (they get spread across sex&age)
@@ -42,6 +43,7 @@ rtPhase1Test3 <- function( iDays = 30,
                           iMaxAge = 120,
                           iCarryCapF = 200,
                           fMperF = 0.5,
+                          fStartPopPropCC = 1,
                           iStartAdults = 200,
                           iStartAges = 1,
                           iStartPupae = 200,
@@ -90,7 +92,7 @@ rtPhase1Test3 <- function( iDays = 30,
   
   #setting a total carryCap from the female input
   #used later e.g. in mortality
-  iCarryCap <- iCarryCapF * 1+fMperF
+  iCarryCap <- iCarryCapF * (1+fMperF)
   
   #to set num pupae per age class following hat-trick StabCalc c345
   #50*(1-pMortPupa)*pupDurF*andyCorrect4CarCap 
@@ -101,7 +103,10 @@ rtPhase1Test3 <- function( iDays = 30,
   fPopFAge0Ref <- 50*(1-pMortPupa)
   vPopFRef <- rtSetAgeStructure(vpMortF, fPopAge0=fPopFAge0Ref)
   fTotPopFRef <- sum(vPopFRef) 
-  fCorrect4CarryCap <- iCarryCapF / fTotPopFRef
+  #fCorrect4CarryCap <- iCarryCapF / fTotPopFRef 
+  #16/9/14 andy added ability to set starting popn by proportion of CC
+  #here just influences the pupae, this effects adult age structure later
+  fCorrect4CarryCap <- fStartPopPropCC * iCarryCapF / fTotPopFRef   
   
   #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # setting pupae ################

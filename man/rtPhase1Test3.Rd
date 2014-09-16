@@ -4,12 +4,13 @@
 \title{an a-spatial tsetse population simulation, a third test of phase1}
 \usage{
 rtPhase1Test3(iDays = 30, iMaxAge = 120, iCarryCapF = 200, fMperF = 0.5,
-  iStartAdults = 200, iStartAges = 1, iStartPupae = 200, pMortF = 0.05,
-  pMortM = 0.05, iMortMinAgeStart = 10, iMortMinAgeStop = 50,
-  fMortMinProp = 0.2, fMortOldProp = 0.3, propMortAdultDD = 0.25,
-  pMortPupa = 0.25, propMortPupaDD = 0.25, iPupDurF = 26, iPupDurM = 28,
-  iFirstLarva = 16, iInterLarva = 10, pMortLarva = 0.05,
-  propMortLarvaDD = 0.25, plot = FALSE, verbose = TRUE)
+  fStartPopPropCC = 1, iStartAdults = 200, iStartAges = 1,
+  iStartPupae = 200, pMortF = 0.05, pMortM = 0.05,
+  iMortMinAgeStart = 10, iMortMinAgeStop = 50, fMortMinProp = 0.2,
+  fMortOldProp = 0.3, propMortAdultDD = 0.25, pMortPupa = 0.25,
+  propMortPupaDD = 0.25, iPupDurF = 26, iPupDurM = 28, iFirstLarva = 16,
+  iInterLarva = 10, pMortLarva = 0.05, propMortLarvaDD = 0.25,
+  plot = FALSE, verbose = TRUE)
 }
 \arguments{
 \item{iDays}{days to run simulation}
@@ -19,6 +20,8 @@ rtPhase1Test3(iDays = 30, iMaxAge = 120, iCarryCapF = 200, fMperF = 0.5,
 \item{iCarryCapF}{carrying capacity of adult females}
 
 \item{fMperF}{numbers of males per female, default 0.5 for half as many M as F}
+
+\item{fStartPopPropCC}{starting population as a proportion of carrying capacity, default = 1}
 
 \item{iStartAdults}{number of adults to start simulation with}
 
