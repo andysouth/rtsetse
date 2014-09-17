@@ -1,7 +1,7 @@
 rtsetse
 ========================================================
 
-rtsetse is (or will be) an R package for simulating tsetse fly populations.
+rtsetse is an R package for simulating tsetse fly populations.
 
 It follows from Hat-Trick, an Excel based Tsetse model see rtsetse.org.
 
@@ -27,6 +27,4 @@ User interfaces to some of these phases can be accessed on the web at the links 
 
 Shiny app name  | What it does  | To access on web
 ------------- | -------------| -------------
-shinytse2v2 | aspatial model with dd through pupal mortality | http://andysouth.shinyapps.io/shinytse2v2/
-shinytse4 | simple grid model with dd | http://andysouth.shinyapps.io/shinytse4/
-shinytse5 | feeding demo | http://andysouth.shinyapps.io/shinytse5/
+shinytse7 | User Interface running aspatial and gridded models | http://andysouth.shinyapps.io/shinytse7/
