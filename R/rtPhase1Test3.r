@@ -210,30 +210,14 @@ rtPhase1Test3 <- function( iDays = 30,
     vPupaM[1] <- iLarvaeM
     
     ## pupal mortality ##
-    # is applied at day1 for the whole period
-    #!arg now that I've implemented density dependence each sex needs to know about
-    #?the abundance of the other, I might want to change the way I do this
-    #vPupaF <- rtPupalMortality(vPupaF, pMortPupa)
-    #vPupaM <- rtPupalMortality(vPupaM, pMortPupa)  
+    #applied at day1 for the whole period
+    #because of density dependence each sex needs to know about density of the other
     #iCarryCapPupa set from iCarryCap here because hat-trick default runs show similar numbers of ads & pupae at stability
-    ## 19/6/14 temp replaced
-    lPupae <- rtPupalMortality(vPupaF=vPupaF, vPupaM=vPupaM, pMort=pMortPupa, propDD=propMortPupaDD, iCarryCapPupa=iCarryCap )
-    
-    ## 19/6/14 trying alternative mechanism for density dependence
-    ## use popn growth since previous day to set level of DD
-    ## doesn't really make mechanisitic sense to me, but is a start
-    #fPopNow <- sum(vPopF+vPopM)
-    #fPopPre <- sum(dfRecordF[,paste0("day",day-1)] + dfRecordM[,paste0("day",day-1)])    
-    ## 24/6/14 I couldn't get above to stabilise the pop
-    ## because I'm using ad pop might be a time lag
-    ## makes more intuitive sense to use the pupal pop
-    
-#     fPopNow <- sum(vPupaF) + sum(vPupaM)
-#     fPopPre <- sum(dfRecordPupaF[,paste0("day",day-1)]) + sum(dfRecordPupaM[,paste0("day",day-1)])      
-#     cat("day",day)
-#     lPupae <- rtPupalMortalityDD2(vPupaF=vPupaF, vPupaM=vPupaM, pMort=pMortPupa, iCarryCapPupa=iCarryCap, fPopNow=fPopNow, fPopPre=fPopPre )
-    
-    
+    lPupae <- rtPupalMortality(vPupaF=vPupaF, 
+                               vPupaM=vPupaM, 
+                               pMort=pMortPupa, 
+                               propDD=propMortPupaDD, 
+                               iCarryCapPupa=iCarryCap )
     
     
     vPupaF <- lPupae$vPupaF
