@@ -130,6 +130,7 @@ rtPhase2Test3 <- function(
   #make the F vector up to the same length as the M with extra 0's
   vPupaF <- c(rep(fPupaPerSexAge, iPupDurF),rep(0,iPupDurM-iPupDurF))
   #then put each pupal vector into the array
+  #here just at central cell
   aGridPup[(nCol+1)/2, (nRow+1)/2,'F', ] <- vPupaF
   aGridPup[(nCol+1)/2, (nRow+1)/2,'M', ] <- vPupaM
   
