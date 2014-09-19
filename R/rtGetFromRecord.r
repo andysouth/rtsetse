@@ -1,53 +1,62 @@
-#' to access population data from a record array [day,x,y,sex,age]
+#' to access population data from a record array [days,x,y,sex,age]
 #'
 #' \code{rtGetFromRecord} allows access to population data from a grid of sexes and ages. 
-#' You can specify which [day,x,y,sex,age] you want to get data for.  
+#' You can specify which [days,x,y,sex,age] you want to get data for.  
 #' Each variable defaults to 'all' so \code{rtGetFromRecord(aRecord)} would return the whole grid.   
 #' ='sum' can be used to sum across dimensions, 
 #' thus \code{rtGetFromRecord(aRecord,x='sum',y='sum',sex='sum',age='sum')} 
 #' would produce a single value of the total population on the grid.
 
 #' @param aRecord an array with the age distributions of males & females [x,y,sex,age] 
-#' @param day day of the simulation starting at 1
+#' @param days day of the simulation starting at 1 options 'all', 'sum', 
+#'    a number >0 and <days in the simulation, or a series e.g. c(1,2) or c(4:7)
 #' @param x grid column number 
 #' @param y grid row number 
 #' @param sex 'all' returns both sexes separately,'M','F', 'sum' sums sexes
 #' @param age 'all' returns age distribution, 'sum' sums all ages, or an integer age
 #'     or an age range too, e.g. c(2:3)
 #' @param drop whether to drop dimensions that just have a single value, TRUE as default 
+#' @param verbose print what it's doing 
+
 
 #' @return an array, matrix or vector named with remaining dimensions of [x,y,sex,age]
 #' @examples
 #' aRecord <- rtPhase2Test3()
-#' aGrid <- rtGetFromRecord(aRecord,day=2) #gives raw array for one day
-#' rtGetFromRecord(aRecord,day=2,x='sum',y='sum',sex='sum') #age structure for whole pop
-#' rtGetFromRecord(aRecord,day=2,x='sum',y='sum',age='sum') #sex ratio for whole pop
+#' aGrid <- rtGetFromRecord(aRecord,days=2) #gives raw array for one day
+#' rtGetFromRecord(aRecord,days=2,x='sum',y='sum',sex='sum') #age structure for whole pop
+#' rtGetFromRecord(aRecord,days=2,x='sum',y='sum',age='sum') #sex ratio for whole pop
 #' #slight anomally this gives 4 grids
-#' rtGetFromRecord(aRecord,day=2,x='all',y='all',age=c(1,2),sex='all')
+#' rtGetFromRecord(aRecord,days=2,x='all',y='all',age=c(1,2),sex='all')
 #' #this gives just 1
-#' rtGetFromRecord(aRecord,day=2,x='all',y='all',age=c(1,2),sex='sum')
+#' rtGetFromRecord(aRecord,days=2,x='all',y='all',age=c(1,2),sex='sum')
 #' #new test case
 #' aRecord <- rtPhase2Test3(3,3,iDays=4)
-#' rtGetFromRecord(aRecord,day=1:3,x='all',y='all',age=c(1,2),sex='sum')
+#' rtGetFromRecord(aRecord,days=1:3,x='all',y='all',age=c(1,2),sex='sum')
+#' #to subset days for a specified cell, do this
+#' #tst2 <- rtGetFromRecord(aRecord,x=2,y=2,sex='sum',age='sum',days=c(1:3))
+#' #plot(tst2,type='l')
 
 #' @export
 
 
 rtGetFromRecord <- function( aRecord,
-                           day='all',
+                           days='all',
                            x='all',
                            y='all',
                            sex='all',
                            age='all',
-                           drop=TRUE
+                           drop=TRUE,
+                           verbose=FALSE
                            ) 
 {
   #?? I may want the default to be sum rather than all
   
   #!BEWARE this function is tricky
   
+  if(verbose) cat("in rtGetFromRecord() days=",days," x=",x," y=",y," sex=",sex," age=",age," drop=",drop,"\n")
+  
   #aRecord[x,y,sex,age]
-  allArgs <- c(day,x,y,sex,age)
+  allArgs <- c(days,x,y,sex,age)
   
   if ( class(aRecord)!="array" | length(dim(aRecord)) != 5 )
        stop("the first arg needs to be an array with 5 dimensions [day,x,y,sex,age], yours is a ",class(aRecord)," with length(dim)=",length(dim(aRecord)),"\n")
@@ -61,7 +70,7 @@ rtGetFromRecord <- function( aRecord,
   #convert 'all' values to a variable that can be used to
   #access all elements of an array
   #allArgs[ which(allArgs=='all') ] <- TRUE
-  if ( identical(day,'all')) day<-TRUE
+  if ( identical(days,'all')) days<-TRUE
   if ( identical(x,'all')) x<-TRUE
   if ( identical(y,'all')) y<-TRUE
   if ( identical(age,'all')) age<-TRUE
@@ -71,23 +80,25 @@ rtGetFromRecord <- function( aRecord,
   if (! 'sum' %in% allArgs )
   {
     #this allows for e.g. age=c(1:10)
-    #toReturn <- aRecord[day,x,y,sex,age, drop=FALSE]
+    #toReturn <- aRecord[days,x,y,sex,age, drop=FALSE]
     #i think I do want to drop dimensions that go to 1
     #e.g. if selecting a single day
     #I could allow user to pass the drop param & set it to default TRUE
-    toReturn <- aRecord[day,x,y,sex,age, drop=drop]
-    
-  } else if (! 'all' %in% allArgs )
-  # if at least one 'sum' but no 'all'  
-  { 
-    #now change the sum args to TRUE so that they are summed in the sum statement
-    if ( identical(day,'sum')) day<-TRUE
-    if ( identical(x,'sum')) x<-TRUE
-    if ( identical(y,'sum')) y<-TRUE
-    if ( identical(age,'sum')) age<-TRUE
-    if ( identical(sex,'sum')) sex<-TRUE    
-    
-    toReturn <- sum( aRecord[day,x,y,sex,age] ) 
+    toReturn <- aRecord[days,x,y,sex,age, drop=drop]
+
+#19/9/14 seems next bit not needed & it stopped the returning of selected days for a single cell
+#tst2 <- rtGetFromRecord(aRecord,x=2,y=2,sex='sum',age='sum',days=c(1:3))
+#   } else if (! 'all' %in% allArgs )
+#   # if at least one 'sum' but no 'all'  
+#   { 
+#     #now change the sum args to TRUE so that they are summed in the sum statement
+#     if ( identical(days,'sum')) days<-TRUE
+#     if ( identical(x,'sum')) x<-TRUE
+#     if ( identical(y,'sum')) y<-TRUE
+#     if ( identical(age,'sum')) age<-TRUE
+#     if ( identical(sex,'sum')) sex<-TRUE    
+#     
+#     toReturn <- sum( aRecord[days,x,y,sex,age] ) 
     
   } else
   # if at least 1 'sum' & 'all'  
@@ -98,15 +109,15 @@ rtGetFromRecord <- function( aRecord,
 
     #adding | if( length(x)>1 ) would allow user to get back multiple cells rather than summing
     #but this way is probably more useful
-    if ( identical(day,TRUE) | length(day)>1 ) marginArg <- c(marginArg,'day')
-    #if ( !identical(day,'sum')) marginArg <- c(marginArg,'day')
+    if ( identical(days,TRUE) | length(days)>1 ) marginArg <- c(marginArg,'day')
+    #if ( !identical(days,'sum')) marginArg <- c(marginArg,'days')
     if ( identical(x,TRUE)) marginArg <- c(marginArg,'x')
     if ( identical(y,TRUE)) marginArg <- c(marginArg,'y')
     if ( identical(age,TRUE)) marginArg <- c(marginArg,'age')
     if ( identical(sex,TRUE)) marginArg <- c(marginArg,'sex')  
 
     #now change any sum args to TRUE so that all vals are included in the apply statement
-    if ( identical(day,'sum')) day<-TRUE
+    if ( identical(days,'sum')) days<-TRUE
     if ( identical(x,'sum')) x<-TRUE
     if ( identical(y,'sum')) y<-TRUE
     if ( identical(age,'sum')) age<-TRUE
@@ -114,7 +125,7 @@ rtGetFromRecord <- function( aRecord,
     
     #toReturn <- apply( aRecord, MARGIN=marginArg, sum )
 
-    toReturn <- apply( aRecord[day,x,y,sex,age], MARGIN=marginArg, sum )
+    toReturn <- apply( aRecord[days,x,y,sex,age], MARGIN=marginArg, sum )
   }
     
   

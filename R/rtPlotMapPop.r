@@ -13,6 +13,7 @@
 #'    'spread' try to spread out days, e.g. if 32 it would plot 2,4,6, etc. can lead to uneven intervals.
 #' @param sex which sex to plot, 'both' or 'MF' for both, 'M' males, 'F' females
 #' @param title a title for the plot  
+#' @param verbose print what it's doing 
 #' 
 #' @return ?nothing
 #' @examples
@@ -24,7 +25,8 @@ rtPlotMapPop <- function( aRecord,
                           days = 'all',
                           ifManyDays = 'spread',
                           sex = 'MF',
-                          title = NULL )
+                          title = NULL,
+                          verbose = FALSE)
 {
   #to sum the age structures in each cell on each day
   #and give result as [days,x,y]
@@ -62,7 +64,7 @@ rtPlotMapPop <- function( aRecord,
   #this works when sex=TRUE from above
   #aDays <- apply(aRecord[days,,,sex, ,drop=FALSE],MARGIN=c(1,2,3),sum) 
   #this works when sex='sum' from above
-  aDays <- rtGetFromRecord(aRecord, day=days, sex=sex, age='sum', drop=FALSE)
+  aDays <- rtGetFromRecord(aRecord, days=days, sex=sex, age='sum', drop=FALSE, verbose=verbose)
   #the drop=FALSE is to cope with nRow or nCol == 1
   
   

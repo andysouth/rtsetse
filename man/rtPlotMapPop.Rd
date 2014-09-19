@@ -4,7 +4,7 @@
 \title{plots map(s) of populations}
 \usage{
 rtPlotMapPop(aRecord, days = "all", ifManyDays = "spread", sex = "MF",
-  title = NULL)
+  title = NULL, verbose = FALSE)
 }
 \arguments{
 \item{aRecord}{array of day,x,y,sex,age}
@@ -19,6 +19,8 @@ a number >0 and <days in the simulation, or a series e.g. c(1,2) or c(4:7)}
 \item{sex}{which sex to plot, 'both' or 'MF' for both, 'M' males, 'F' females}
 
 \item{title}{a title for the plot}
+
+\item{verbose}{print what it's doing}
 }
 \value{
 ?nothing
