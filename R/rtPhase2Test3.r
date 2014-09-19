@@ -86,6 +86,16 @@ rtPhase2Test3 <- function(
   #named_args <- as.list(parent.frame()) #does something weird, just gives the output object
   lNamedArgs <- mget(names(formals()),sys.frame(sys.nframe()))
   
+  #as an initial test just populate a single central cell at CC
+  #coords of central cell
+  xStart <- (nCol+1)/2
+  yStart <- (nRow+1)/2 
+  #code below would set start pop in all cells
+  #!NO it doesn't work because of vector recycling
+  #xStart <- c(1:nCol)
+  #yStart <- c(1:nRow) 
+  
+  
   #age dependeny mortality
   #beware the first arg is mortality on day1 rather than average mortality
   #todo: change to pass iMaxAge rather than vPop
@@ -112,7 +122,6 @@ rtPhase2Test3 <- function(
   
 
   #PUPAE ----
-
   iMaxPupAge <- max(iPupDurM, iPupDurF)
   dimnamesPup <- list( paste0('x',1:nCol), paste0('y',1:nRow), c("F","M"), paste0('age',1:iMaxPupAge))
   names(dimnamesPup) <- c("x","y","sex","age")
@@ -130,9 +139,9 @@ rtPhase2Test3 <- function(
   #make the F vector up to the same length as the M with extra 0's
   vPupaF <- c(rep(fPupaPerSexAge, iPupDurF),rep(0,iPupDurM-iPupDurF))
   #then put each pupal vector into the array
-  #here just at central cell
-  aGridPup[(nCol+1)/2, (nRow+1)/2,'F', ] <- vPupaF
-  aGridPup[(nCol+1)/2, (nRow+1)/2,'M', ] <- vPupaM
+  #here just at central cell (unless xStart,yStart set to all above)
+  aGridPup[xStart, yStart, 'F', ] <- vPupaF
+  aGridPup[xStart, yStart, 'M', ] <- vPupaM
   
     
   #ADULTS
@@ -141,10 +150,6 @@ rtPhase2Test3 <- function(
   names(dimnames1) <- c("x","y","sex","age")
   aGrid <- array(0, dim=c(nCol,nRow,2,iMaxAge), dimnames=dimnames1)  
 
-  #as an initial test just populate a single central cell at CC
-  #coords of central cell
-  xStart <- (nCol+1)/2
-  yStart <- (nRow+1)/2 
   
   #start popn at stability
   #initialising age structure with the calc num pupae from above
@@ -152,10 +157,11 @@ rtPhase2Test3 <- function(
   vPopStartM <- rtSetAgeStructure(vpMortM, fPopAge0=fPupaPerSexAge)
   
   #adding half of starting adults as each gender to a starting cell in middle
-  #2 params allow number and distribution of flies across age classes to be set
   aGrid[xStart, yStart,'F', ] <- vPopStartF
   aGrid[xStart, yStart,'M', ] <- vPopStartM  
 
+  #this doesn't do what I expect when xStart or yStart are vectors
+  
   
 # to access array dimensions by name 
 #   aGrid['x1','y1','M',] #an age structure for one cell
