@@ -117,9 +117,11 @@ rtPhase2Test3 <- function(
   iCarryCap <- iCarryCapF * (1+fMperF)
   #create a matrix for carrying capacity on the grid
   #first test make it constant
-  #I could name the dimensions, x & y here
-  mCarryCap <- matrix(iCarryCap, ncol=nCol, nrow=nRow)
-  
+  #naming dimensions of carry cap matrix
+  dimnamesCarryCap <- list( paste0('x',1:nCol), paste0('y',1:nRow))
+  names(dimnamesCarryCap) <- c("x","y")  
+  mCarryCap <- matrix(iCarryCap, ncol=nCol, nrow=nRow, dimnames=dimnamesCarryCap)
+
 
   #PUPAE ----
   iMaxPupAge <- max(iPupDurM, iPupDurF)
