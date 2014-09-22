@@ -1,11 +1,9 @@
-#' a simple spatial tsetse population simulation, a 3rd test of phase2
+#' a simple spatial tsetse population simulation, start popn in a single central cell
 #'
 #' \code{rtPhase2Test3} goes back to more hat-trick like density dependence.
 #' runs a simple spatial popn simulation as a test of phase 2
 #' model components. Concentrates on movement parameters and mortality so that 
 #' it can be used to test popn spread under different popn growth rates.
-#' ! check if it works when nRow & nCol == 1 (the aspatial model)
-
 
 #' @param nCol number grid columns
 #' @param nRow number grid rows
