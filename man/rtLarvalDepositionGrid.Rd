@@ -15,7 +15,7 @@ rtLarvalDepositionGrid(aGrid, aGridPup, vpDeposit, verbose = FALSE)
 \item{verbose}{whether to output progress messages to console}
 }
 \value{
-a list containing integer numbers of larvae: iLarvaeF, iLarvaeM
+updated array of pupae [x,y,sex,age]
 }
 \description{
 \code{rtLarvalDepositionGrid} returns the number of male and female larvae deposited in each grid cell

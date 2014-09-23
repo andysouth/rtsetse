@@ -133,9 +133,8 @@ rtMortalityStableSeek <- function( iMaxAge = 120,
     #calc M&F larvae using the deposition rates set above
     lLarvae <- rtLarvalDeposition( vPopF, vpDeposit )    
     #summing M&F
-    numTrialLarvae  <- lLarvae$iLarvaeF + lLarvae$iLarvaeM  
-    #***WHAT IF I JUST SET TO F HERE ?***
-    #numTrialLarvae  <- lLarvae$iLarvaeF  
+    numTrialLarvae  <- lLarvae$fLarvaeF + lLarvae$fLarvaeM  
+
     
     if (verbose) cat("trial MortF:",fMort,"totF:",sum(vPopF),"larvae:",numTrialLarvae,"\n")
     

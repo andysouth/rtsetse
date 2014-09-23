@@ -37,6 +37,7 @@
 #' \cr dataframes of adult age structure over time dfRecordPupa F & M
 #' @examples
 #' tst <- rtPhase1Test3()
+#' rtPlotPopAndPupae(tst$dfRecordF, tst$dfRecordM, tst$dfRecordPupaF, tst$dfRecordPupaM)
 #' @export
 
 rtPhase1Test3 <- function( iDays = 30,
@@ -179,9 +180,6 @@ rtPhase1Test3 <- function( iDays = 30,
     vPupaM <- rtAgeing(vPupaM, label="pupae M")
     
     
-    #temporary test setting emerged pupae directly from deposited larvae
-    #vPopF[1] <- iLarvaeF
-    #vPopM[1] <- iLarvaeM
     
     ###############
     ## fecundity ##
@@ -200,14 +198,11 @@ rtPhase1Test3 <- function( iDays = 30,
                                             iCarryCap = iCarryCap)  
     #use the deposition rates set above
     lLarvae <- rtLarvalDeposition( vPopF, vpDeposit )    
-    #! an ugly way of doing I can improve
-    iLarvaeF <- lLarvae$iLarvaeF
-    iLarvaeM <- lLarvae$iLarvaeM  
     
     #Pupae at day1 set from deposited larvae
     #! be careful about where pupal ageing occurs
-    vPupaF[1] <- iLarvaeF
-    vPupaM[1] <- iLarvaeM
+    vPupaF[1] <- lLarvae$fLarvaeF
+    vPupaM[1] <- lLarvae$fLarvaeM
     
     ## pupal mortality ##
     #applied at day1 for the whole period
@@ -225,7 +220,7 @@ rtPhase1Test3 <- function( iDays = 30,
       
     if ( verbose )
     {
-      cat( "Larvae F: ",iLarvaeF,"  M: ",iLarvaeM,"\n\n")      
+      cat( "Larvae F: ",lLarvae$fLarvaeF,"  M: ",lLarvae$fLarvaeM,"\n\n")    
     }
 
     

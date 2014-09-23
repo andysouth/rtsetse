@@ -155,8 +155,8 @@ rtPhase1Test2 <- function( iDays = 30,
     
     
     #temporary test setting emerged pupae directly from deposited larvae
-    #vPopF[1] <- iLarvaeF
-    #vPopM[1] <- iLarvaeM
+    #vPopF[1] <- fLarvaeF
+    #vPopM[1] <- fLarvaeM
     
     ###############
     ## fecundity ##
@@ -170,15 +170,12 @@ rtPhase1Test2 <- function( iDays = 30,
                                             propMortDD = propMortLarvaDD,
                                             iCarryCap = iCarryCap)  
     #use the deposition rates set above
-    lLarvae <- rtLarvalDeposition( vPopF, vpDeposit )    
-    #! an ugly way of doing I can improve
-    iLarvaeF <- lLarvae$iLarvaeF
-    iLarvaeM <- lLarvae$iLarvaeM  
+    lLarvae <- rtLarvalDeposition( vPopF, vpDeposit ) 
     
     #Pupae at day1 set from deposited larvae
     #! be careful about where pupal ageing occurs
-    vPupaF[1] <- iLarvaeF
-    vPupaM[1] <- iLarvaeM
+    vPupaF[1] <- lLarvae$fLarvaeF
+    vPupaM[1] <- lLarvae$fLarvaeM
     
     ## pupal mortality ##
     # is applied at day1 for the whole period
@@ -217,7 +214,7 @@ rtPhase1Test2 <- function( iDays = 30,
     
     if ( verbose )
     {
-      cat( "Larvae F: ",iLarvaeF,"  M: ",iLarvaeM,"\n\n")      
+      cat( "Larvae F: ",lLarvae$fLarvaeF,"  M: ",lLarvae$fLarvaeM,"\n\n")      
     }
     
     

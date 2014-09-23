@@ -77,5 +77,6 @@ This differs from previous tests in being closer to Hat-trick.
 }
 \examples{
 tst <- rtPhase1Test3()
+rtPlotPopAndPupae(tst$dfRecordF, tst$dfRecordM, tst$dfRecordPupaF, tst$dfRecordPupaM)
 }
 

@@ -71,6 +71,13 @@ if mCarryCapF is not passed, then carryCap would be constant across the grid.
 \dontrun{
 tst <- rtPhase5Test()
 rtPlotMapPop(tst)
+#now try an unequal matrix
+mCarryCapF <- matrix( 10*(1:16), 4, 4)
+tst <- rtPhase5Test(mCarryCapF)
+rtPlotMapPop(tst)
+#an unequal matrix starting at a fraction of CC
+tst <- rtPhase5Test(mCarryCapF, fStartPopPropCC = 0.5)
+rtPlotMapPop(tst)
 }
 }
 

@@ -11,7 +11,7 @@ rtLarvalDeposition(vFem, vpDeposit)
 \item{vpDeposit}{a vector of age-specific deposition probabilities of Females}
 }
 \value{
-a list containing integer numbers of larvae: iLarvaeF, iLarvaeM
+a list containing numbers of larvae: iLarvaeF, iLarvaeM
 }
 \description{
 \code{rtLarvalDeposition} returns the number of resulting pupa male and female
@@ -19,7 +19,7 @@ a list containing integer numbers of larvae: iLarvaeF, iLarvaeM
 \details{
 from the age structure of adult females
 and 'birth' probabilities per female.
-BEWARE that this round the number of larvae down to an integer. WHich I probably don't need to do.
+It used to round the number of larvae down to an integer, now allows fractional larvae.
 
 See \code{\link{rtLarvalDepositionGrid}} for the grid version.
 }
