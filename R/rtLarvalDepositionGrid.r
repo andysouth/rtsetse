@@ -11,7 +11,7 @@
 #' @param vpDeposit a vector of age-specific deposition probabilities of Females 
 #' @param verbose whether to output progress messages to console 
 #' 
-#' @return a list containing integer numbers of larvae: iLarvaeF, iLarvaeM
+#' @return updated array of pupae [x,y,sex,age]
 #' @export
 
 rtLarvalDepositionGrid <- function( aGrid,
@@ -62,7 +62,6 @@ rtLarvalDepositionGrid <- function( aGrid,
   #it would be easy to make the model probabilistic by assigning gender with a 0.5 probability
   
   #return
-  #invisible( list(iLarvaeF=iLarvaeF, iLarvaeM=iLarvaeM) )
   invisible( aGridPup )
   
 } 
