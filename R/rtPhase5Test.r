@@ -143,11 +143,16 @@ rtPhase5Test <- function( mCarryCapF = matrix(200,4,4),
   #I don't need to go through x&y can just go through all elements of the matrix
   #BUT if I do that it's trickier to put initialise components of my later arrays
   #for( cell in seq_along(mCarryCapF))
+  message("starting grid loop for rows,cols=",nrow(mCarryCapF),", ",ncol(mCarryCapF))
+
   for( row in 1:nrow(mCarryCapF) ) #y
   {
     for( col in 1:ncol(mCarryCapF) ) #x
     {
-      iCarryCapF <- mCarryCapF[col,row]      
+      
+      #!BEWARE of transposing dimensions
+      #matrices are referenced by row,col which is y,x
+      iCarryCapF <- mCarryCapF[row,col]      
       
       #cat(iCarryCapF,"\n")
       
