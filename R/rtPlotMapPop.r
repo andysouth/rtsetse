@@ -115,6 +115,7 @@ rtPlotMapPop <- function( aRecord,
   titles <- paste(dimnames(aDays)$day, sexTitle) 
   
   #set extents for plotting (otherwise they go from 0-1)
+  #this also ensures that cells maintain square aspect ratio 
   extent(brick1) <- extent(c(0, ncol(brick1), 0, nrow(brick1)))
 
   plot(brick1, main=titles, breaks=breaks, col=colourP)  
