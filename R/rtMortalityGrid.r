@@ -46,8 +46,10 @@ rtMortalityGrid <- function( aGrid,
         
         #cat(paste("x,y:",x,",",y,"dim(mCarryCap)=",dim(mCarryCap),"\n"))
         
-        #!!!annoying issue about confusing dimensions
-        #!!!i changed int around just to get it to work
+        #!BEWARE
+        #!potentially confusing issue of matrix dimensions
+        #!i changed int around to get it to work
+        #! might be right, matrices are indexed by rows,cols. rows=y, cols=x
         
         #get carry cap from the matrix
         #iCarryCap <- mCarryCap[x,y]  
