@@ -56,18 +56,24 @@ rtMortalityGrid <- function( aGrid,
         iCarryCap <- mCarryCap[y,x]  
         
         
-        aGrid[x,y,,] <- rtMortality(vFem = aGrid[x,y,'F',],
-                                    vMal = aGrid[x,y,'M',],
-                                    vpMortF,
-                                    vpMortM,
-                                    returnArray = TRUE,
-                                    propDD = propDD, 
-                                    iCarryCap = iCarryCap )
+        #only apply mortality if there are flies in the cell
+        #the condition is not essential but should save time
+        if ( sum(aGrid[x,y,,]) > 0 )
+        {
+          aGrid[x,y,,] <- rtMortality(vFem = aGrid[x,y,'F',],
+                                      vMal = aGrid[x,y,'M',],
+                                      vpMortF,
+                                      vpMortM,
+                                      returnArray = TRUE,
+                                      propDD = propDD, 
+                                      iCarryCap = iCarryCap )          
+        }
+        
       }#y
     }#x
 
 
-  } else {
+  } else { #!BEWARE this is an unused, unfinished non-loop solution
     
     
     #create a low level mort function (similar to what I started with!)
