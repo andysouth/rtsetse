@@ -32,6 +32,7 @@ rtMortality <- function( vFem,
   #density dependence
   #different to pupal & larval mortality in that dd needs to be
   #applied to a vector of age-specific mortality probabilities
+  #!BEWARE of what happens when vectors are passed
   #surprisingly it seems to work on vectors as well as single values
   if ( propDD > 0 )
   {
