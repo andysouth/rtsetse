@@ -28,7 +28,10 @@ rtDensityDependence <- function( fPopn,
   #mortality at density SCC = pMort  
   #therefore pMort = pMort*(1-propDD) + pMort*propDD*(density/iCarryCap)
   
-  pMort <- pMort*(1-propDD) + pMort*propDD*(fPopn/iCarryCap)
+  #to trap problems if popn or cc are 0
+  if ( fPopn==0 | iCarryCap==0 ) pMort <- rep(1,length(pMort))
+  
+  else pMort <- pMort*(1-propDD) + pMort*propDD*(fPopn/iCarryCap)
   
   return(pMort)
 }
