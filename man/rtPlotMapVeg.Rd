@@ -3,19 +3,28 @@
 \alias{rtPlotMapVeg}
 \title{plots a vegetation map (raster)}
 \usage{
-rtPlotMapVeg(map, title = NULL, col = c("white", "dark green",
+rtPlotMapVeg(map, title = NULL, colours = c("white", "dark green",
   "forest green", "green1", "light blue", "orange", "pale goldenrod"),
-  veg = c("white", "dark green", "forest green", "green1", "light blue",
-  "orange", "pale goldenrod"))
+  labels = c("no go area", "dense forest", "thicket", "open forest",
+  "savannah", "bush", "grass"), inset = -0.26, pt.cex = 2, cex = 0.9,
+  bty = "n")
 }
 \arguments{
 \item{map}{either a file or an object}
 
 \item{title}{a title for the plot}
 
-\item{col}{colours to use for the vegetation categories, default value gives similar to hat-trick}
+\item{colours}{to use for the vegetation categories, default value gives similar to hat-trick}
 
-\item{veg}{text labels for vegetation categories, default value gives similar to hat-trick}
+\item{labels}{text labels for vegetation categories, default value gives similar to hat-trick}
+
+\item{inset}{for the legend, make it less -ve to move from edge}
+
+\item{pt.cex}{size of boxes in legend}
+
+\item{cex}{size of text in legend}
+
+\item{bty}{whether to have box around legend "o" for yes}
 }
 \value{
 a raster object (numeric) of the passed map

@@ -7,8 +7,12 @@
 
 #' @param map either a file or an object
 #' @param title a title for the plot  
-#' @param col colours to use for the vegetation categories, default value gives similar to hat-trick
-#' @param veg text labels for vegetation categories, default value gives similar to hat-trick
+#' @param colours to use for the vegetation categories, default value gives similar to hat-trick
+#' @param labels text labels for vegetation categories, default value gives similar to hat-trick
+#' @param inset for the legend, make it less -ve to move from edge
+#' @param pt.cex size of boxes in legend
+#' @param cex size of text in legend
+#' @param bty whether to have box around legend "o" for yes
 #' 
 #' @return a raster object (numeric) of the passed map
 # @examples
@@ -16,8 +20,13 @@
 
 rtPlotMapVeg <- function( map,
                           title = NULL,
-                          col = c("white", "dark green", "forest green", "green1", "light blue", "orange", "pale goldenrod"), 
-                          veg = c("white", "dark green", "forest green", "green1", "light blue", "orange", "pale goldenrod")
+                          colours = c("white", "dark green", "forest green", "green1", "light blue", "orange", "pale goldenrod"), 
+                          labels = c("no go area", "dense forest", "thicket", "open forest", "savannah", "bush", "grass"),
+                          inset = -0.26,
+                          pt.cex = 2,
+                          cex = 0.9,
+                          bty = "n"
+                          
                           )
 {
 
@@ -38,7 +47,6 @@ rtPlotMapVeg <- function( map,
 
                             
   #all these steps do seem to be necessary to convert to a numeric matrix then raster
-
   
   
   #replacing characters with numbers
@@ -58,14 +66,24 @@ rtPlotMapVeg <- function( map,
   #convert to raster object
   mapRaster <- raster(mapMatrixNumeric)
   
+  #set extents for plotting (otherwise they go from 0-1)
+  #this also ensures that cells maintain square aspect ratio 
+  extent(mapRaster) <- extent(c(0, ncol(mapRaster), 0, nrow(mapRaster)))
+  
   #plot
   #this nearly works, but breaks screws up plotting and I'm missing one colour
-  plot(mapRaster, col=col, main=title, breaks=c(0.5:6.5), lab.breaks=veg)
+  #plot(mapRaster, col=col, main=title, breaks=c(0.5:6.5), lab.breaks=veg)
   
   #plot(mapRaster, col=col, main=title)
   
   #legend=FALSE turns off the default legend
   #
+  
+  plot(mapRaster,legend=FALSE, col=colours, main=title)
+  
+  
+  legend("right", legend=labels, pch=22, xpd=NA, inset=inset, col="black", pt.bg=colours, pt.cex=pt.cex, cex=cex, bty=bty)
+  
   
   #returning raster object
   invisible(mapRaster)
