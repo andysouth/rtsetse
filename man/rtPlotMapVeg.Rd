@@ -6,7 +6,7 @@
 rtPlotMapVeg(map, title = NULL, colours = c("white", "dark green",
   "forest green", "green1", "light blue", "orange", "pale goldenrod"),
   labels = c("no go area", "dense forest", "thicket", "open forest",
-  "savannah", "bush", "grass"), inset = -0.26, pt.cex = 2, cex = 0.9,
+  "savannah", "bush", "grass"), inset = -0.26, pt.cex = 1.7, cex = 0.9,
   bty = "n")
 }
 \arguments{

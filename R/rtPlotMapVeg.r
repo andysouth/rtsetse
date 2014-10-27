@@ -23,7 +23,7 @@ rtPlotMapVeg <- function( map,
                           colours = c("white", "dark green", "forest green", "green1", "light blue", "orange", "pale goldenrod"), 
                           labels = c("no go area", "dense forest", "thicket", "open forest", "savannah", "bush", "grass"),
                           inset = -0.26,
-                          pt.cex = 2,
+                          pt.cex = 1.7,
                           cex = 0.9,
                           bty = "n"
                           
@@ -79,12 +79,45 @@ rtPlotMapVeg <- function( map,
   #legend=FALSE turns off the default legend
   #
   
-  plot(mapRaster,legend=FALSE, col=colours, main=title)
+  #problem with plot() is that axes expand to fill available space
+  #plot(mapRaster,legend=FALSE, col=colours, main=title)
+  #legend("right", legend=labels, pch=22, xpd=NA, inset=inset, col="black", pt.bg=colours, pt.cex=pt.cex, cex=cex, bty=bty)
   
   
-  legend("right", legend=labels, pch=22, xpd=NA, inset=inset, col="black", pt.bg=colours, pt.cex=pt.cex, cex=cex, bty=bty)
+  #seeing if I can apply a RAT (raster attribute table) to allow me to use levelplot from rasterVis
+  #and solve expanding axis problems
+#   mapRaster <- ratify(mapRaster) 
+#   rat <- levels(mapRaster)[[1]]
+#   #rat$legend <- c('Class A', 'Class B', 'Class C', 'Class D')
+#   rat$legend <- labels
+#   levels(mapRaster) <- rat
+#   
+#   levelplot(mapRaster)
+  #levelplot(mapRaster, fill=colours)
   
-  
+  #spplot solution
+  #plot( spplot(mapRaster, at=c(-0.5:6.5), col.regions=colours ) )
+  #names.attr=labels does nothing
+  #zcol=labels gives error
+
+  plot( spplot(mapRaster, at=c(-0.5:6.5), col.regions=colours, colorkey=FALSE,
+               key= list(space="right",
+                        text=list(labels=labels, cex=cex), 
+                        points=list(pch=22, fill=colours, cex=pt.cex),
+                        between=0.5
+                        )) )
+
+
+#   #can I add my nicer labelled cat legend ?
+#   p1 <- spplot(mapRaster, at=c(-0.5:6.5), col.regions=colours, colorkey=FALSE ) 
+# 
+#   #adding legend using lattice
+#   p1 <- update( key=list(text=list(labels), 
+#                          points=list(pch=21, 
+#                          fill=colours,
+#                          space="right")))
+#   plot( p1 )
+
   #returning raster object
   invisible(mapRaster)
 }
