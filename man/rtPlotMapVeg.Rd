@@ -3,10 +3,10 @@
 \alias{rtPlotMapVeg}
 \title{plots a vegetation map (raster)}
 \usage{
-rtPlotMapVeg(map, title = NULL, colours = c("white", "dark green",
-  "forest green", "green1", "light blue", "orange", "pale goldenrod"),
-  labels = c("no go area", "dense forest", "thicket", "open forest",
-  "savannah", "bush", "grass"), inset = -0.26, pt.cex = 1.7, cex = 0.9,
+rtPlotMapVeg(map, title = NULL, colours = c("dark green", "forest green",
+  "green1", "light blue", "orange", "pale goldenrod", "white"),
+  labels = c("dense forest", "thicket", "open forest", "savannah", "bush",
+  "grass", "no go area"), inset = -0.26, pt.cex = 1.7, cex = 0.9,
   bty = "n")
 }
 \arguments{

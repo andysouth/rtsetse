@@ -20,8 +20,8 @@
 
 rtPlotMapVeg <- function( map,
                           title = NULL,
-                          colours = c("white", "dark green", "forest green", "green1", "light blue", "orange", "pale goldenrod"), 
-                          labels = c("no go area", "dense forest", "thicket", "open forest", "savannah", "bush", "grass"),
+                          colours = c("dark green", "forest green", "green1", "light blue", "orange", "pale goldenrod", "white" ), 
+                          labels = c("dense forest", "thicket", "open forest", "savannah", "bush", "grass", "no go area" ),
                           inset = -0.26,
                           pt.cex = 1.7,
                           cex = 0.9,
@@ -56,7 +56,7 @@ rtPlotMapVeg <- function( map,
   mapMatrix <- gsub("S",4,mapMatrix)
   mapMatrix <- gsub("B",5,mapMatrix)
   mapMatrix <- gsub("G",6,mapMatrix)
-  mapMatrix <- gsub("N",0,mapMatrix)
+  mapMatrix <- gsub("N",7,mapMatrix) #0 or 7
   
   mapNumeric <- as.numeric(mapMatrix)
   #mapFactor <- as.factor(mapMatrix)
@@ -100,7 +100,9 @@ rtPlotMapVeg <- function( map,
   #names.attr=labels does nothing
   #zcol=labels gives error
 
-  plot( spplot(mapRaster, at=c(-0.5:6.5), col.regions=colours, colorkey=FALSE,
+  #when I had no-go set to 0 I used the top one
+  #plot( spplot(mapRaster, at=c(-0.5:6.5), col.regions=colours, colorkey=FALSE,
+  plot( spplot(mapRaster, at=c(0.5:7.5), col.regions=colours, colorkey=FALSE,
                key= list(space="right",
                         text=list(labels=labels, cex=cex), 
                         points=list(pch=22, fill=colours, cex=pt.cex),
