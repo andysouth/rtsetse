@@ -1,0 +1,12 @@
+To reference rtsetse in publications, please cite the following:
+
+
+Andy South and Glyn Vale: "rtsetse, an R package for simulating tsetse populations". October 2014.
+
+
+@online{south-rtsetse-2014,
+  author      = {Andy South and Glyn Vale},
+  title       = {rtsetse, an R package for simulating tsetse populations},
+  version     = {1},
+  date        = {2014-10-24}
+}
