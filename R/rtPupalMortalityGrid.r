@@ -6,7 +6,9 @@
 #' @param aGridPup array with the age distributions of pupal males & females [x,y,sex,age]  
 #' @param pMort a mortality probability 
 #' @param propDD proportion of mortality that is density dependent 
-#' @param mCarryCap matrix [x,y] of carrying capacities
+#' @param mCarryCap a matrix of Carrying Capacities for each cell as an integer (an alternative to iCarryCap)
+#' @param iCarryCap a single integer Carrying Capacities for all cells as an integer (an alternative to mCarryCap)
+
 #' 
 #' @return updated aGridPup
 #' @export
@@ -14,14 +16,14 @@
 rtPupalMortalityGrid <- function( aGridPup,
                                   pMort = 0.25,
                                   propDD = 0.25,
-                                  mCarryCap = NA ) 
+                                  mCarryCap = NULL,
+                                  iCarryCap = NULL ) 
   
 {  
   
-  #LOOP solution
-  #to implement DD on a grid 
+  #checks
+  if (is.null(iCarryCap) & is.null(mCarryCap)) stop("you must specify one of either mCarryCap or iCarryCap")
   
-  #calls existing rtMortality() function (modified to return an array)
   
   for(x in seq_along(dimnames(aGridPup)$x)){
     for(y in seq_along(dimnames(aGridPup)$y)){
@@ -30,8 +32,9 @@ rtPupalMortalityGrid <- function( aGridPup,
       
       #!BEWARE potentially confusing issue of matrix dimensions
       #!matrices are indexed by rows,cols. rows=y, cols=x
-      iCarryCap <- mCarryCap[y,x] 
       
+      #if no single CarryCap value get it from the grid
+      if ( is.null(iCarryCap) ) iCarryCap <- mCarryCap[y,x]  
       
       vPupaF <- aGridPup[x,y,'F',] #an age structure for one cell
       vPupaM <- aGridPup[x,y,'M',]  
