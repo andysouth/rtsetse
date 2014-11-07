@@ -1,10 +1,9 @@
-#' simple spatial tsetse population simulation, start popn across whole grid
+#' DEPRECATED spatial tsetse population simulation with carrying capacity varying over the grid
 #'
 #' \code{rtPhase5Test} developed from \code{rtPhase2Test3}
-#' Difference being this accepts a grid of carrying capacities, 
-#' and initialises popns in all cells on the grid.
-#' I might want to allow nCol,nRow & iCarryCapF to be used instead of mCarryCapF 
-#' if mCarryCapF is not passed, then carryCap would be constant across the grid.
+#' Deprecated and replaced by \code{rtPhase5Test2}
+#' This accepts a grid of carrying capacities, and initialises popns in all cells on the grid.
+#' Deprecated because original Hat-trick keeps CC constant across the grid (just varying mortality and movement)
 
 #' @param mCarryCapF a matrix of female carrying capacities
 # @param nCol number grid columns
