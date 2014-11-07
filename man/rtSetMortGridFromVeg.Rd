@@ -10,7 +10,7 @@ rtSetMortGridFromVeg(mVegetation = matrix(c("D", "T", "O", "S", "D", "D"),
 \arguments{
 \item{mVegetation}{a matrix of vegetation types}
 
-\item{dfMortByVeg}{#'}
+\item{dfMortByVeg}{a lookup table specifying mortality multiplier (percent) for each vegetation type}
 }
 \value{
 a grid of mortality multipliers
