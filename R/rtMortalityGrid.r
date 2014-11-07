@@ -42,8 +42,6 @@ rtMortalityGrid <- function( aGrid,
       #!BEWARE potentially confusing issue of matrix dimensions
       #!matrices are indexed by rows,cols. rows=y, cols=x
       
-      #get carry cap from the matrix
-      #iCarryCap <- mCarryCap[x,y]  
       #if no single CarryCap value get it from the grid
       if ( is.null(iCarryCap) ) iCarryCap <- mCarryCap[y,x]  
       
