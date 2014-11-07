@@ -10,7 +10,8 @@
 #' @param vpMortF a vector of age-specific mortality probabilities of Females 
 #' @param vpMortM a vector of age-specific mortality probabilities of Males 
 #' @param propDD proportion of mortality that is density dependent 
-#' @param mCarryCap a matrix of Carrying Capacities for each cell as an integer
+#' @param mCarryCap a matrix of Carrying Capacities for each cell as an integer (an alternative to iCarryCap)
+#' @param iCarryCap a single integer Carrying Capacities for all cells as an integer (an alternative to mCarryCap)
 #' 
 #' @return an array with the age distributions of males & females [x,y,sex,age]
 #' @export
@@ -19,24 +20,27 @@ rtMortalityGrid <- function( aGrid,
                          vpMortF,
                          vpMortM,
                          propDD = 0.25,
-                         mCarryCap = NA ) 
+                         mCarryCap = NULL,
+                         iCarryCap = NULL ) 
 {
  
   #aGrid[x,y,sex,age]
 
+  if (is.null(iCarryCap) & is.null(mCarryCap)) stop("you must specify one of either mCarryCap or iCarryCap")
+  
     
   for(x in seq_along(dimnames(aGrid)$x)){
     for(y in seq_along(dimnames(aGrid)$y)){
       
       #cat(paste("x,y:",x,",",y,"dim(mCarryCap)=",dim(mCarryCap),"\n"))
       
-      #!BEWARE
-      #!potentially confusing issue of matrix dimensions
+      #!BEWARE potentially confusing issue of matrix dimensions
       #!matrices are indexed by rows,cols. rows=y, cols=x
       
       #get carry cap from the matrix
       #iCarryCap <- mCarryCap[x,y]  
-      iCarryCap <- mCarryCap[y,x]  
+      #if no single CarryCap value get it from the grid
+      if ( is.null(iCarryCap) ) iCarryCap <- mCarryCap[y,x]  
       
       
       #only apply mortality if there are flies in the cell
