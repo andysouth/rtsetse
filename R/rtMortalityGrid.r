@@ -31,8 +31,13 @@ rtMortalityGrid <- function( aGrid,
   #checks
   if (is.null(iCarryCap) & is.null(mCarryCap)) stop("you must specify one of either mCarryCap or iCarryCap")
   
-  #TODO check that the mortMult grid matches dimensions of the array
-  
+  #check that the mortMult grid matches dimensions of the array
+  if ( ! is.null(mMortMultGrid))
+  {
+    if ( length(dimnames(aGrid)$x) != ncol(mMortMultGrid) | length(dimnames(aGrid)$y) != nrow(mMortMultGrid) )
+      stop("xy dimensions of the tsetse grid array",length(dimnames(aGrid)$x),",",length(dimnames(aGrid)$y),
+           "don't match those of the mortality multiplier",ncol(mMortMultGrid),",",nrow(mMortMultGrid)) 
+  }
     
   for(x in seq_along(dimnames(aGrid)$x)){
     for(y in seq_along(dimnames(aGrid)$y)){
