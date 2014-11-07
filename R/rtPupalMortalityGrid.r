@@ -28,11 +28,10 @@ rtPupalMortalityGrid <- function( aGridPup,
       
       #cat(paste("x,y:",x,",",y,"dim(mCarryCap)=",dim(mCarryCap),"\n"))
       
-      #!!!annoying issue about confusing dimensions
-      #!!!i changed int around just to get it to work    
-      #get carry cap from the array
-      #iCarryCap <- mCarryCap[x,y]  
+      #!BEWARE potentially confusing issue of matrix dimensions
+      #!matrices are indexed by rows,cols. rows=y, cols=x
       iCarryCap <- mCarryCap[y,x] 
+      
       
       vPupaF <- aGridPup[x,y,'F',] #an age structure for one cell
       vPupaM <- aGridPup[x,y,'M',]  
