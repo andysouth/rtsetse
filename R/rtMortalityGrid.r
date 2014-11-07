@@ -22,41 +22,38 @@ rtMortalityGrid <- function( aGrid,
                          mCarryCap = NA ) 
 {
  
- 
   #aGrid[x,y,sex,age]
-  #mort differs by sex & age
 
     
-    for(x in seq_along(dimnames(aGrid)$x)){
-      for(y in seq_along(dimnames(aGrid)$y)){
-        
-        #cat(paste("x,y:",x,",",y,"dim(mCarryCap)=",dim(mCarryCap),"\n"))
-        
-        #!BEWARE
-        #!potentially confusing issue of matrix dimensions
-        #!i changed int around to get it to work
-        #! might be right, matrices are indexed by rows,cols. rows=y, cols=x
-        
-        #get carry cap from the matrix
-        #iCarryCap <- mCarryCap[x,y]  
-        iCarryCap <- mCarryCap[y,x]  
-        
-        
-        #only apply mortality if there are flies in the cell
-        #the condition is not essential but should save time
-        if ( sum(aGrid[x,y,,]) > 0 )
-        {
-          aGrid[x,y,,] <- rtMortality(vFem = aGrid[x,y,'F',],
-                                      vMal = aGrid[x,y,'M',],
-                                      vpMortF,
-                                      vpMortM,
-                                      returnArray = TRUE,
-                                      propDD = propDD, 
-                                      iCarryCap = iCarryCap )          
-        }
-        
-      }#y
-    }#x
+  for(x in seq_along(dimnames(aGrid)$x)){
+    for(y in seq_along(dimnames(aGrid)$y)){
+      
+      #cat(paste("x,y:",x,",",y,"dim(mCarryCap)=",dim(mCarryCap),"\n"))
+      
+      #!BEWARE
+      #!potentially confusing issue of matrix dimensions
+      #!matrices are indexed by rows,cols. rows=y, cols=x
+      
+      #get carry cap from the matrix
+      #iCarryCap <- mCarryCap[x,y]  
+      iCarryCap <- mCarryCap[y,x]  
+      
+      
+      #only apply mortality if there are flies in the cell
+      #the condition is not essential but should save time
+      if ( sum(aGrid[x,y,,]) > 0 )
+      {
+        aGrid[x,y,,] <- rtMortality(vFem = aGrid[x,y,'F',],
+                                    vMal = aGrid[x,y,'M',],
+                                    vpMortF,
+                                    vpMortM,
+                                    returnArray = TRUE,
+                                    propDD = propDD, 
+                                    iCarryCap = iCarryCap )          
+      }
+      
+    }#y
+  }#x
 
 
 
