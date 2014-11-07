@@ -6,8 +6,8 @@
 #' if the passed matrix contains a code not present in the table it returns NA.
 
 #' @param mVegetation a matrix of vegetation types
-#' @param dfMortByVeg
-#' #' 
+#' @param dfMortByVeg a lookup table specifying mortality multiplier (percent) for each vegetation type
+#' 
 #' @return a grid of mortality multipliers
 #' 
 #' @examples
