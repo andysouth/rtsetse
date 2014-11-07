@@ -3,8 +3,7 @@
 \alias{rtMortalityGrid}
 \title{tsetse mortality on a grid **in development**}
 \usage{
-rtMortalityGrid(aGrid, vpMortF, vpMortM, propDD = 0.25, mCarryCap = NA,
-  loop = TRUE)
+rtMortalityGrid(aGrid, vpMortF, vpMortM, propDD = 0.25, mCarryCap = NA)
 }
 \arguments{
 \item{aGrid}{an array with the age distributions of males & females [x,y,sex,age]}
@@ -16,8 +15,6 @@ rtMortalityGrid(aGrid, vpMortF, vpMortM, propDD = 0.25, mCarryCap = NA,
 \item{propDD}{proportion of mortality that is density dependent}
 
 \item{mCarryCap}{a matrix of Carrying Capacities for each cell as an integer}
-
-\item{loop}{TEMPORARY var to test a loop vs apply solution, only loop=TRUE works fully}
 }
 \value{
 an array with the age distributions of males & females [x,y,sex,age]
