@@ -3,8 +3,8 @@
 \alias{rtMortalityGrid}
 \title{tsetse mortality on a grid **in development**}
 \usage{
-rtMortalityGrid(aGrid, vpMortF, vpMortM, propDD = 0.25, mCarryCap = NULL,
-  iCarryCap = NULL)
+rtMortalityGrid(aGrid, vpMortF, vpMortM, propDD = 0.25,
+  mMortMultGrid = NULL, mCarryCap = NULL, iCarryCap = NULL)
 }
 \arguments{
 \item{aGrid}{an array with the age distributions of males & females [x,y,sex,age]}
@@ -14,6 +14,8 @@ rtMortalityGrid(aGrid, vpMortF, vpMortM, propDD = 0.25, mCarryCap = NULL,
 \item{vpMortM}{a vector of age-specific mortality probabilities of Males}
 
 \item{propDD}{proportion of mortality that is density dependent}
+
+\item{mMortMultGrid}{a grid of mortality multipliers (derived from vegetation)}
 
 \item{mCarryCap}{a matrix of Carrying Capacities for each cell as an integer (an alternative to iCarryCap)}
 
