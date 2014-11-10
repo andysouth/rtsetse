@@ -19,16 +19,27 @@ rtSetMortGridFromVeg <- function( mVegetation = matrix(c("D","T","O","S","D","D"
                                   )
 {
   
-  #TODO give a warning if the matrix gives a code not present in the df
+  #gives a warning if the matrix gives a code not present in the df
   #currently it returns NA, may want to modify that
   #if ( NA %in% match(mVegetation, dfMortByVeg$code) )
-  badCodePosns <- which(is.na( match(mVegetation, dfMortByVeg$code)))  
-  if ( length(badCodePosns) > 0 )
-    warning("some codes in your grid don't match those in the lookup: ",paste(mVegetation[badCodePosns],""),"\n")
-  
+  #badCodePosns <- which(is.na( match(mVegetation, dfMortByVeg$code))) 
+  badCodePosns <- which(!mVegetation %in% dfMortByVeg$code)
+  badCodes <- unique( mVegetation[ badCodePosns ])
   
   #match returns vector of positions of (first) matches of arg1 in arg2
   vMortMult <- dfMortByVeg$mortality[ match(mVegetation, dfMortByVeg$code)]
+  
+  if ( length(badCodePosns) > 0 )
+  {
+    warning("some codes in your grid don't match those in the lookup: ",paste(badCodes,""),"\n",
+            "mortality for these codes will be set to 999 * standard\n" )
+    #TODO what should I do with bad codes ?
+    #I could set them to the standard mortality, 
+    #or to 999 * mortality to make it clear there is a problem with them
+    #could do that by adding the bad codes on to the lookup
+    #this is easier
+    vMortMult[ badCodePosns ] <- 999
+  }
   
   #resetting the matrix dimensions from the passed matrix prior to returning
   mMortMult <- matrix(vMortMult, nrow=nrow(mVegetation))
