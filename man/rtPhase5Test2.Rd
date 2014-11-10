@@ -72,14 +72,14 @@ This accepts a grid of vegetation and how mortality varies by vegetation
 }
 \examples{
 \dontrun{
-tst <- rtPhase5Test()
+tst <- rtPhase5Test2()
 rtPlotMapPop(tst)
 #now try an unequal matrix
 mCarryCapF <- matrix( 10*(1:16), 4, 4)
-tst <- rtPhase5Test(mCarryCapF)
+tst <- rtPhase5Test2(mCarryCapF)
 rtPlotMapPop(tst)
 #an unequal matrix starting at a fraction of CC
-tst <- rtPhase5Test(mCarryCapF, fStartPopPropCC = 0.5)
+tst <- rtPhase5Test2(mCarryCapF, fStartPopPropCC = 0.5)
 rtPlotMapPop(tst)
 }
 }
