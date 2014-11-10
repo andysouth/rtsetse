@@ -49,19 +49,25 @@ rtGetFromRecord <- function( aRecord,
                            verbose=FALSE
                            ) 
 {
-  #?? I may want the default to be sum rather than all
   
   #!BEWARE this function is tricky
+  cat("in rtGetFromRecord() days=",days," x=",x," y=",y," sex=",sex," age=",age," drop=",drop,"\n")
+  
+  #?? I may want the default to be sum rather than all
+  
+  #checks
+  #check that aRecord is an arry with 5 dimensions
+  if ( class(aRecord)!="array" | length(dim(aRecord)) != 5 )
+    stop("the first arg needs to be an array with 5 dimensions [day,x,y,sex,age], yours is a ",class(aRecord)," with length(dim)=",length(dim(aRecord)),"\n")
+  #check that the dimensions are named as expected
+  if ( ! identical( names(dimnames(aRecord)),c("day","x","y","sex","age")) )
+    stop("array dimensions should be named day,x,y,sex,age yours are: ", names(dimnames(aRecord)) )
   
   if(verbose) cat("in rtGetFromRecord() days=",days," x=",x," y=",y," sex=",sex," age=",age," drop=",drop,"\n")
   
   #aRecord[x,y,sex,age]
   allArgs <- c(days,x,y,sex,age)
   
-  if ( class(aRecord)!="array" | length(dim(aRecord)) != 5 )
-       stop("the first arg needs to be an array with 5 dimensions [day,x,y,sex,age], yours is a ",class(aRecord)," with length(dim)=",length(dim(aRecord)),"\n")
-  #I may also want to test that 
-  #if (identical( names(dimnames(aRecord)),c("day","x","y","sex","age")))
   
   #add tests that x,y,sex & age have appropriate values
   
