@@ -52,17 +52,21 @@ rtMortalityGrid <- function( aGrid,
       
       
       #apply mortality multiplier for this cell
+      #BUG1 was here sequential mutliplication of mort rates
+      vpMortFVeg <- vpMortF
+      vpMortMVeg <- vpMortM
       if ( !is.null(mMortMultGrid) )
       {
         iMortMult <- mMortMultGrid[y,x]
         if (iMortMult != 100)
         {
           #first convert percent to proportion
+          #BUG2 I need to correct multiplication of mortality probabilities
           iMortMult <- iMortMult/100
-          vpMortF <- vpMortF*iMortMult
-          vpMortM <- vpMortM*iMortMult        
+          vpMortFVeg <- vpMortF*iMortMult
+          vpMortMVeg <- vpMortM*iMortMult        
         }
-      }
+      } 
       
       
       #only apply mortality if flies in cell (to save time)
@@ -70,8 +74,8 @@ rtMortalityGrid <- function( aGrid,
       {
         aGrid[x,y,,] <- rtMortality(vFem = aGrid[x,y,'F',],
                                     vMal = aGrid[x,y,'M',],
-                                    vpMortF,
-                                    vpMortM,
+                                    vpMortFVeg,
+                                    vpMortMVeg,
                                     returnArray = TRUE,
                                     propDD = propDD, 
                                     iCarryCap = iCarryCap )          
