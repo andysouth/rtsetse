@@ -94,17 +94,21 @@ rtGetFromRecord <- function( aRecord,
 
 #19/9/14 seems next bit not needed & it stopped the returning of selected days for a single cell
 #tst2 <- rtGetFromRecord(aRecord,x=2,y=2,sex='sum',age='sum',days=c(1:3))
-#   } else if (! 'all' %in% allArgs )
-#   # if at least one 'sum' but no 'all'  
-#   { 
-#     #now change the sum args to TRUE so that they are summed in the sum statement
-#     if ( identical(days,'sum')) days<-TRUE
-#     if ( identical(x,'sum')) x<-TRUE
-#     if ( identical(y,'sum')) y<-TRUE
-#     if ( identical(age,'sum')) age<-TRUE
-#     if ( identical(sex,'sum')) sex<-TRUE    
-#     
-#     toReturn <- sum( aRecord[days,x,y,sex,age] ) 
+#10/11/14 seems it is needed for returning totpop for a selected day
+#rtGetFromRecord(aRecord,days=2,x='sum',y='sum',sex='sum',age='sum')
+#cool now both fixed by reinstating the loop and adding length(days) condition
+#  } else if (! 'all' %in% allArgs )
+  } else if (! 'all' %in% allArgs & length(days) == 1 )
+  # if at least one 'sum' but no 'all' & just one day 
+  { 
+    #now change the sum args to TRUE so that they are summed in the sum statement
+    if ( identical(days,'sum')) days<-TRUE
+    if ( identical(x,'sum')) x<-TRUE
+    if ( identical(y,'sum')) y<-TRUE
+    if ( identical(age,'sum')) age<-TRUE
+    if ( identical(sex,'sum')) sex<-TRUE    
+    
+    toReturn <- sum( aRecord[days,x,y,sex,age] ) 
     
   } else
   # if at least 1 'sum' & 'all'  
