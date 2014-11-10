@@ -23,7 +23,7 @@ or an age range too, e.g. c(2:3)}
 
 \item{drop}{whether to drop dimensions that just have a single value, TRUE as default}
 
-\item{verbose}{print what it's doing}
+\item{verbose}{print what it's doing T/F}
 }
 \value{
 an array, matrix or vector named with remaining dimensions of [x,y,sex,age]
