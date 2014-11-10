@@ -35,7 +35,7 @@
 #' @param iInterLarva Inter-larval period
 #' @param pMortLarva larval mortality per period
 #' @param propMortLarvaDD proportion of larval mortality that is density dependent
-#' 
+#' @param verbose print what it's doing T/F
 #' @param report filename for a report for this run, if not specified no report is produced
 
 #' @return a multi-dimensional array [day,x,y,sex,ages]
@@ -82,6 +82,7 @@ rtPhase5Test2 <- function( mVegetation = matrix(c("D","T","O","S","D","D"),nrow=
                           iInterLarva = 10,
                           pMortLarva = 0.05,
                           propMortLarvaDD = 0.25,
+                          verbose = TRUE,
                           report = NULL ) #"reportPhase2.html" ) 
 {
   
@@ -92,6 +93,8 @@ rtPhase5Test2 <- function( mVegetation = matrix(c("D","T","O","S","D","D"),nrow=
   #getting the arguments
   lNamedArgs <- mget(names(formals()),sys.frame(sys.nframe()))
     
+  if (verbose) cat("starting rtPhase5Test2 with arguments:",paste0(names(lNamedArgs),"=",lNamedArgs,","),"\n")
+  
   #age dependent mortality
   #beware the first arg is mortality on day1 rather than average mortality
   #todo: change to pass iMaxAge rather than vPop
@@ -113,6 +116,7 @@ rtPhase5Test2 <- function( mVegetation = matrix(c("D","T","O","S","D","D"),nrow=
   mMortMultGrid <- rtSetMortGridFromVeg( mVegetation = mVegetation,
                                          dfMortByVeg = dfMortByVeg )
   
+  if (verbose) cat("mortality multiplier grid set to:",mMortMultGrid,"\n")
 
   #setting a total carryCap from the female input
   iCarryCap <- iCarryCapF * (1+fMperF)
@@ -133,13 +137,15 @@ rtPhase5Test2 <- function( mVegetation = matrix(c("D","T","O","S","D","D"),nrow=
   names(dimnames1) <- c("x","y","sex","age")
   aGrid <- array(0, dim=c(nCol,nRow,2,iMaxAge), dimnames=dimnames1)    
 
-  #NEW loop for each cell in the grid
-  #to enable initiation of pupae at carryCap in each
+  #loop for each cell in the grid
+  #to enable initiation of pupae and adults at carrycap in each
   #I don't need to go through x&y can just go through all elements of the matrix
   #BUT if I do that it's trickier to put initialise components of my later arrays
   #for( cell in seq_along(mVegetation))
-  message("starting grid loop for rows,cols=",nrow(mVegetation),", ",ncol(mVegetation))
-
+  #message("starting grid loop for rows,cols=",nrow(mVegetation),", ",ncol(mVegetation))
+  if (verbose) cat("starting loop to fill grid of rows,cols=",nrow(mVegetation),", ",ncol(mVegetation),"\n")
+  
+  
   for( row in 1:nrow(mVegetation) ) #y
   {
     for( col in 1:ncol(mVegetation) ) #x
@@ -200,6 +206,9 @@ rtPhase5Test2 <- function( mVegetation = matrix(c("D","T","O","S","D","D"),nrow=
   #! even with this they get lost later
   names(dimnames(aRecord)) <- c('day','x','y','sex','age')
   
+
+  if (verbose) cat("starting loop for",iDays,"days\n")
+
   #for( day in 1:iDays ) {
   #changing to starting at day1, so first changes happen on day2
   #for( day in 2:iDays ) {
@@ -208,6 +217,7 @@ rtPhase5Test2 <- function( mVegetation = matrix(c("D","T","O","S","D","D"),nrow=
     
     #####################
     ## adult mortality ##
+    if (verbose) cat("imposing adult mortality popbefore=",sum(aGrid))
     
     aGrid <- rtMortalityGrid( aGrid, 
                               vpMortF=vpMortF, 
@@ -216,9 +226,11 @@ rtPhase5Test2 <- function( mVegetation = matrix(c("D","T","O","S","D","D"),nrow=
                               propDD=propMortAdultDD,
                               iCarryCap=iCarryCap )
     
+    if (verbose) cat(" popafter=",sum(aGrid),"/n")    
     
     ##################
     ## adult ageing ##    
+    if (verbose) cat("ageing\n")
     aGrid <- rtAgeingGrid(aGrid)
     
     #the third dimension (age) loses it's label
@@ -236,6 +248,7 @@ rtPhase5Test2 <- function( mVegetation = matrix(c("D","T","O","S","D","D"),nrow=
     l <- rtPupalEmergenceGrid( aGrid, aGridPup, iPupDurF=iPupDurF, iPupDurM=iPupDurM )
     aGrid <- l$aGrid 
     aGridPup <- l$aGridPup 
+    
     
     ## pupal ageing ##
     aGridPup <- rtAgeingGrid(aGridPup, label="pupae")
@@ -255,6 +268,8 @@ rtPhase5Test2 <- function( mVegetation = matrix(c("D","T","O","S","D","D"),nrow=
     #uses the deposition rates set above
     aGridPup <- rtLarvalDepositionGrid( aGrid=aGrid, aGridPup=aGridPup, vpDeposit )    
 
+    if (verbose) cat("pupae deposited =", sum(aGridPup[,,,'age1']), "\n" )
+    
     #the new age 1 pupae can be checked by (shows a grid each for M&F)
     #aGridPup[,,,'age1']
     
@@ -291,15 +306,19 @@ rtPhase5Test2 <- function( mVegetation = matrix(c("D","T","O","S","D","D"),nrow=
       aGrid <- aperm(aGrid, c(3,4,1,2))
       
     }
-        
-    cat("day",day,"\n")
     
-    #aF
     
     #dim(abind(x,y,along=0))     # binds on new dimension before first
     #dim(abind(x,y,rev.along=0)) # binds on new dimension after last
     aRecord <- abind::abind(aRecord, aGrid, along=1, use.first.dimnames=TRUE) #along=1 binds on first dimension
+    #seems these dimension names get lost
+    dimnames(aRecord)[[1]] <- paste0('day',1:day) #just goes to the current day 
+    names(dimnames(aRecord)) <- c('day','x','y','sex','age')    
     
+    cat("day",day,"\n")
+    
+    if (verbose) cat("adult popn =",rtGetFromRecord(aRecord,days=day,x='sum',y='sum',sex='sum',age='sum'),"\n")
+    #sum(aRecord[day,,,,]) #gives same
     
   } #end of iDays loop
   

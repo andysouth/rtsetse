@@ -11,7 +11,8 @@ rtPhase5Test2(mVegetation = matrix(c("D", "T", "O", "S", "D", "D"), nrow = 2),
   iMortMinAgeStop = 50, fMortMinProp = 0.2, fMortOldProp = 0.3,
   propMortAdultDD = 0.25, pMortPupa = 0.25, propMortPupaDD = 0.25,
   iPupDurF = 26, iPupDurM = 28, iFirstLarva = 16, iInterLarva = 10,
-  pMortLarva = 0.05, propMortLarvaDD = 0.25, report = NULL)
+  pMortLarva = 0.05, propMortLarvaDD = 0.25, verbose = TRUE,
+  report = NULL)
 }
 \arguments{
 \item{mVegetation}{a matrix of vegetation codes}
@@ -58,6 +59,8 @@ option "sameAsAdults" to set tot pupae same as tot adults.}
 \item{pMortLarva}{larval mortality per period}
 
 \item{propMortLarvaDD}{proportion of larval mortality that is density dependent}
+
+\item{verbose}{print what it's doing T/F}
 
 \item{report}{filename for a report for this run, if not specified no report is produced}
 }
