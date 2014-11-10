@@ -16,7 +16,7 @@
 #' @param age 'all' returns age distribution, 'sum' sums all ages, or an integer age
 #'     or an age range too, e.g. c(2:3)
 #' @param drop whether to drop dimensions that just have a single value, TRUE as default 
-#' @param verbose print what it's doing 
+#' @param verbose print what it's doing T/F
 
 
 #' @return an array, matrix or vector named with remaining dimensions of [x,y,sex,age]
