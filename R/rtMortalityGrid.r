@@ -52,7 +52,9 @@ rtMortalityGrid <- function( aGrid,
       
       
       #apply mortality multiplier for this cell
-      #BUG1 was here sequential mutliplication of mort rates
+      #TODO this doesn't seem like an efficient way of doing
+      #should I instead create an array of the age-specific mortalities
+      #but might get tricky
       vpMortFVeg <- vpMortF
       vpMortMVeg <- vpMortM
       if ( !is.null(mMortMultGrid) )
@@ -66,8 +68,13 @@ rtMortalityGrid <- function( aGrid,
           vpMortFVeg <- vpMortF*iMortMult
           vpMortMVeg <- vpMortM*iMortMult 
           #check here that no mortalities go above 1
-          if ( max(vpMortFVeg) > 1 | max(vpMortFVeg) > 1 )
-            stop("mortality probability has gone above 1")
+          if ( max(vpMortFVeg) > 1 | max(vpMortMVeg) > 1 )
+          {
+            warning("mortality probabilities have gone above 1, setting them to 1")  
+            vpMortFVeg[ which(vpMortFVeg>1) ] <- 1
+            vpMortMVeg[ which(vpMortMVeg>1) ] <- 1
+          }
+
         }
       } 
       
