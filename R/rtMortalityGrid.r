@@ -61,10 +61,13 @@ rtMortalityGrid <- function( aGrid,
         if (iMortMult != 100)
         {
           #first convert percent to proportion
-          #BUG2 I need to correct multiplication of mortality probabilities
           iMortMult <- iMortMult/100
+          #this is how mortalities are multiplied in hat-trick
           vpMortFVeg <- vpMortF*iMortMult
-          vpMortMVeg <- vpMortM*iMortMult        
+          vpMortMVeg <- vpMortM*iMortMult 
+          #check here that no mortalities go above 1
+          if ( max(vpMortFVeg) > 1 | max(vpMortFVeg) > 1 )
+            stop("mortality probability has gone above 1")
         }
       } 
       
