@@ -39,6 +39,7 @@ rtMortalityGrid <- function( aGrid,
            "don't match those of the mortality multiplier",ncol(mMortMultGrid),",",nrow(mMortMultGrid)) 
   }
     
+  iHighMortCounter <- 0 #to count if mort goes above 1
   for(x in seq_along(dimnames(aGrid)$x)){
     for(y in seq_along(dimnames(aGrid)$y)){
       
@@ -70,11 +71,10 @@ rtMortalityGrid <- function( aGrid,
           #check here that no mortalities go above 1
           if ( max(vpMortFVeg) > 1 | max(vpMortMVeg) > 1 )
           {
-            warning("mortality probabilities have gone above 1, setting them to 1")  
+            iHighMortCounter <- iHighMortCounter + 1
             vpMortFVeg[ which(vpMortFVeg>1) ] <- 1
             vpMortMVeg[ which(vpMortMVeg>1) ] <- 1
           }
-
         }
       } 
       
@@ -94,7 +94,8 @@ rtMortalityGrid <- function( aGrid,
     }#y
   }#x
 
-
+  if ( iHighMortCounter > 0  )
+    warning("mortality probabilities went above 1 and were set to 1", iHighMortCounter,"times")  
 
   #returning a modified array
   invisible( aGrid )
