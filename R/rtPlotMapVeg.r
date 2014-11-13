@@ -34,9 +34,12 @@ rtPlotMapVeg <- function( map,
   if (class(map)=='character')
   {
     #read into a dataframe
-    map <- read.table(map, as.is=TRUE)
+    #map <- read.table(map, as.is=TRUE)
     #convert to a character matrix
-    mapMatrix <- as.matrix(map)
+    #mapMatrix <- as.matrix(map)
+    
+    mapMatrix <- rtReadMapVeg(map)
+    
   } else if (class(map)=='matrix')
   {
     mapMatrix <- map
