@@ -226,11 +226,11 @@ rtPhase5Test2 <- function( mVegetation = matrix(c("D","T","O","S","D","D"),nrow=
                               propDD=propMortAdultDD,
                               iCarryCap=iCarryCap )
     
-    if (verbose) cat(" popafter=",sum(aGrid),"/n")    
+    if (verbose) cat(" popafter=",sum(aGrid),"\n")    
     
     ##################
     ## adult ageing ##    
-    if (verbose) cat("ageing\n")
+    #if (verbose) cat("ageing\n")
     aGrid <- rtAgeingGrid(aGrid)
     
     #the third dimension (age) loses it's label
