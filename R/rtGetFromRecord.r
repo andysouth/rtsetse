@@ -119,10 +119,11 @@ rtGetFromRecord <- function( aRecord,
 
     #adding | if( length(x)>1 ) would allow user to get back multiple cells rather than summing
     #but this way is probably more useful
-    if ( identical(days,TRUE) | length(days)>1 ) marginArg <- c(marginArg,'day')
+    #added length(dimnames(aRecord)... bits to protect against calling it when days,x or y=1
+    if ( (identical(days,TRUE) | length(days)>1) & length(dimnames(aRecord)$day) > 1 ) marginArg <- c(marginArg,'day')
     #if ( !identical(days,'sum')) marginArg <- c(marginArg,'days')
-    if ( identical(x,TRUE)) marginArg <- c(marginArg,'x')
-    if ( identical(y,TRUE)) marginArg <- c(marginArg,'y')
+    if ( identical(x,TRUE) & length(dimnames(aRecord)$x) > 1 ) marginArg <- c(marginArg,'x')
+    if ( identical(y,TRUE) & length(dimnames(aRecord)$y) > 1) marginArg <- c(marginArg,'y')
     if ( identical(age,TRUE)) marginArg <- c(marginArg,'age')
     if ( identical(sex,TRUE)) marginArg <- c(marginArg,'sex')  
 
