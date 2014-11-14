@@ -1,0 +1,8 @@
+code ,name,mortality
+D,Dense Forest,100
+T,Thicket,100
+O,Open Forest,100
+S,Savannah,100
+B,Bush,100
+G,Grass,100
+N,No-go area,999

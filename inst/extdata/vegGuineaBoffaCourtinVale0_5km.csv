@@ -1,0 +1,8 @@
+code ,name,mortality
+D,Swamp 50-100,100
+T,Swamp 1-49,100
+O,Main river 5,100
+S,Minor river 2,100
+B,Savannah,100
+G,Cultivation,100
+N,NoGo,999

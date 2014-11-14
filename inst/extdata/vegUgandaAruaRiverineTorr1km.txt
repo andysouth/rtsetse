@@ -1,0 +1,56 @@
+ncols         50
+nrows         50
+xllcorner     0.0
+yllcorner     0.0
+cellsize      1
+NODATA_value  -9999
+D	D	D	O	O	O	O	O	S	S	S	O	O	O	S	T	G	O	T	T	O	O	O	O	O	O	O	O	O	O	O	O	O	D	D	D	D	O	O	O	O	O	O	O	G	O	O	O	O	O
+O	D	D	T	T	S	S	T	S	S	O	O	O	T	T	O	O	O	O	O	O	O	O	O	O	O	T	T	T	G	G	O	O	O	T	O	O	O	O	O	O	O	O	O	O	O	O	O	T	O
+O	O	D	O	O	S	S	T	O	S	O	O	S	S	O	O	O	O	O	O	G	O	O	O	O	T	T	O	T	T	O	O	O	O	O	O	O	O	G	O	O	O	O	O	O	O	O	O	T	T
+O	D	D	O	O	O	S	S	O	O	O	O	S	T	T	O	O	O	O	O	O	O	O	T	T	T	O	O	T	T	T	O	O	O	O	O	O	O	O	O	O	O	O	O	O	G	O	O	O	O
+O	D	O	O	O	O	O	O	O	O	T	S	S	O	T	O	O	O	T	O	O	O	T	T	T	O	G	O	O	G	T	T	T	O	O	O	O	O	O	O	T	T	O	O	T	T	T	T	T	G
+O	D	O	O	O	G	O	O	O	O	T	O	O	O	O	O	O	O	T	T	O	O	O	O	O	O	O	O	O	O	O	O	T	T	O	O	O	O	O	O	O	T	G	O	O	O	O	O	T	T
+O	D	O	O	O	O	O	O	O	S	S	O	O	O	O	O	O	O	O	T	T	O	O	O	O	O	O	O	T	T	T	O	T	T	O	O	T	T	O	O	O	T	T	O	G	O	O	O	O	T
+O	D	O	O	O	O	O	O	S	S	S	S	S	O	O	O	O	O	T	T	T	O	O	O	T	T	T	T	T	T	T	T	T	O	O	O	T	G	G	G	G	G	T	T	G	O	O	O	O	T
+O	D	T	O	O	B	T	T	T	O	O	O	O	O	O	O	O	O	O	O	T	T	O	O	O	O	G	O	O	O	G	T	T	T	O	T	T	O	G	O	O	O	O	T	O	O	O	O	O	O
+D	D	T	O	T	T	T	T	O	O	O	O	O	O	O	O	O	T	O	O	T	T	O	O	O	O	O	O	O	O	O	T	O	T	O	T	G	O	O	O	O	O	O	T	G	G	G	O	T	T
+D	O	T	T	T	O	O	O	O	O	O	O	O	O	O	O	T	T	O	T	T	T	O	O	O	O	G	G	O	O	O	T	O	T	T	T	T	G	O	O	O	G	T	T	O	O	O	O	O	O
+D	O	O	O	T	T	O	O	O	O	O	O	O	O	T	T	T	T	O	T	T	T	G	O	O	O	G	O	O	O	O	T	T	O	T	T	T	O	O	T	O	O	G	T	T	T	T	O	O	O
+D	O	O	O	O	T	T	T	T	T	O	O	O	O	O	T	T	T	T	T	T	T	O	O	O	O	O	O	O	O	O	T	T	O	T	T	O	O	O	T	O	O	G	O	O	O	T	T	O	O
+D	O	O	O	O	T	T	O	O	T	O	O	O	B	B	O	O	O	O	T	O	T	O	O	O	G	O	G	O	O	O	O	T	T	T	T	O	O	O	T	O	O	O	O	O	O	O	T	O	O
+D	O	O	O	O	O	T	S	O	O	O	O	O	O	O	O	O	O	T	O	O	T	T	G	O	O	O	O	O	O	G	O	T	O	O	T	O	O	T	T	O	O	O	O	O	O	O	T	T	T
+D	O	O	O	O	O	S	S	O	O	O	O	O	O	O	O	O	O	O	G	O	O	T	T	O	O	T	O	G	O	O	O	T	T	G	T	T	T	O	D	O	O	O	O	O	G	O	O	O	T
+D	O	S	S	O	O	S	S	O	O	O	O	O	O	O	O	O	O	O	O	O	T	T	T	T	T	T	G	G	O	O	T	O	T	O	O	T	T	O	D	G	O	O	O	O	O	O	O	O	O
+D	O	O	O	O	O	S	S	O	O	O	O	T	T	T	O	O	O	O	O	O	O	T	T	T	T	T	O	O	O	O	T	T	T	T	T	T	T	T	D	G	O	O	O	O	O	O	O	T	O
+D	O	O	O	O	O	O	O	O	O	O	O	O	O	T	T	T	O	O	O	O	T	T	T	T	T	T	T	T	O	T	T	T	G	O	O	O	O	D	D	D	D	O	O	O	O	O	O	O	O
+O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	T	O	O	O	O	O	O	T	T	O	O	O	T	T	T	T	G	G	O	O	O	O	D	O	O	D	D	O	O	O	O	O	O	O
+O	O	O	O	O	O	O	S	S	S	O	O	O	T	T	O	T	T	O	O	O	O	O	T	O	O	O	O	O	O	G	O	O	O	O	O	O	O	D	D	O	O	D	G	O	O	O	O	O	O
+O	O	O	O	O	G	O	O	O	T	T	O	O	O	T	T	T	T	T	T	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	T	D	D	O	D	D	O	D	O	O	O	O	O	O	O
+T	T	T	T	T	O	O	O	O	O	T	O	O	O	O	O	O	O	O	T	O	O	O	O	O	O	O	O	O	T	O	O	G	G	G	D	D	D	D	D	D	O	D	D	O	O	O	O	O	O
+O	G	O	O	O	O	O	O	O	O	T	T	T	O	O	O	O	O	O	T	T	G	O	O	O	O	G	O	O	T	T	T	O	O	O	D	G	G	G	O	D	D	D	D	D	O	O	O	O	O
+T	O	O	O	O	O	O	O	O	O	O	T	T	T	O	O	T	T	T	T	T	O	O	O	O	O	O	O	O	O	O	T	T	D	D	D	G	O	O	O	O	O	D	D	D	O	O	O	O	O
+T	T	O	O	O	O	O	O	T	T	T	T	O	T	T	O	O	O	T	T	O	O	O	O	O	O	O	O	O	O	O	D	D	D	G	O	O	O	O	O	O	G	O	O	D	D	O	O	O	O
+O	T	T	T	O	O	O	O	O	T	T	O	O	O	T	T	O	T	T	T	T	O	O	O	O	O	D	D	D	D	D	D	G	O	G	G	O	O	O	O	O	O	O	O	D	D	D	D	D	D
+O	O	O	O	O	O	O	G	O	O	O	O	O	O	O	T	T	O	O	T	O	O	O	D	D	D	D	D	D	D	G	O	G	O	G	G	O	O	O	T	O	O	O	O	O	D	D	D	D	O
+D	D	O	O	O	T	T	O	T	O	O	O	O	O	O	T	T	T	T	T	T	D	D	D	D	O	G	O	O	O	G	G	O	O	O	O	O	O	O	T	T	O	O	O	O	O	O	O	O	O
+O	D	O	O	O	O	T	T	T	T	O	O	O	O	T	T	O	T	T	T	D	D	O	O	O	O	O	O	G	O	O	O	O	G	O	O	O	O	O	T	G	O	O	O	O	D	D	D	D	D
+O	T	T	O	O	T	T	T	T	T	T	T	O	O	O	O	O	O	O	D	D	O	O	O	O	O	O	O	O	O	T	T	O	O	O	O	T	T	T	D	D	O	O	D	D	D	O	O	D	D
+O	T	T	T	T	T	O	O	O	O	O	T	T	O	O	O	O	O	D	D	O	O	O	O	O	O	O	O	O	T	G	T	T	O	O	O	G	O	O	O	D	D	D	D	O	O	O	D	D	B
+O	O	O	O	O	O	O	S	T	T	T	T	T	T	T	T	O	D	D	O	O	O	O	O	O	O	O	O	O	T	T	G	T	T	T	T	O	O	T	T	T	T	T	O	G	O	O	D	O	B
+O	O	O	O	O	S	S	S	S	T	T	O	T	O	T	T	T	D	O	O	O	O	O	O	O	O	O	O	O	O	T	T	T	T	T	T	T	T	T	O	O	O	O	T	T	T	D	D	O	O
+O	O	O	O	O	S	S	O	O	T	T	O	O	O	O	O	O	D	O	O	O	O	O	O	O	O	O	O	O	O	O	O	G	T	T	T	T	T	O	O	O	O	O	T	O	T	T	O	O	O
+O	O	O	O	O	O	O	T	T	T	O	O	O	O	T	T	D	D	T	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	T	O	O	O	O	O	O	O	T	T	T	O	O	O	O
+S	O	O	O	O	O	O	T	O	O	O	T	O	O	O	D	D	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	T	T	O	O	B	B	B
+S	O	O	T	T	T	T	O	O	O	T	T	O	O	D	D	T	T	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	B	B	B	B
+S	O	O	O	O	T	T	O	O	O	T	T	T	D	D	O	O	T	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	D	D	D	D	D	O	O	O	O	O	D	G	O	B
+S	O	O	O	O	T	T	T	T	T	T	T	D	D	O	O	O	O	O	O	O	T	T	T	O	O	O	O	O	O	T	O	G	O	O	O	D	D	D	O	D	D	D	D	O	G	D	D	D	D
+O	O	O	O	O	O	O	O	O	T	T	T	D	D	O	O	O	O	O	O	O	O	O	T	O	O	O	O	O	O	T	T	T	T	T	T	O	O	T	T	T	T	T	D	D	D	D	D	B	D
+O	O	O	O	O	T	T	T	T	T	G	G	G	G	G	G	G	G	G	O	O	O	O	O	T	O	O	O	O	O	O	G	G	G	O	T	T	T	T	O	O	O	O	O	O	B	B	D	D	D
+O	O	O	O	T	T	O	O	T	T	G	G	G	G	G	G	G	G	G	O	O	O	O	T	T	O	O	O	O	O	O	O	G	O	O	O	O	O	O	O	O	O	O	O	O	B	B	B	O	O
+O	O	O	O	T	O	O	O	T	T	T	D	D	O	O	O	O	O	O	O	O	O	T	T	T	T	O	O	O	B	T	T	G	O	O	O	O	G	O	O	O	O	O	G	O	O	G	G	G	O
+O	O	O	T	T	O	O	O	T	T	G	G	G	G	G	G	G	G	G	T	T	T	T	O	O	T	T	T	T	T	T	T	T	T	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O
+O	O	O	O	O	O	O	O	O	G	N	G	G	N	N	G	G	G	G	T	T	O	O	O	O	O	O	T	O	O	O	O	T	T	T	T	T	T	O	O	O	O	O	O	O	O	O	O	O	O
+O	O	O	O	O	O	O	O	O	G	N	N	G	G	N	G	G	G	G	T	O	O	O	O	O	O	O	G	O	G	O	O	O	O	O	D	D	T	O	O	O	O	O	O	O	G	G	G	G	G
+O	O	O	O	O	O	O	O	O	G	N	N	G	G	N	G	G	G	G	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	D	D	D	D	D	D	D	D	D	O	O	O	G	G	G	G
+O	O	O	O	O	O	O	O	T	G	N	N	N	G	N	G	G	G	G	O	O	O	O	O	O	O	O	O	O	O	O	O	D	D	D	O	O	O	D	D	D	D	D	D	D	D	B	G	G	G
+O	O	O	O	O	O	O	O	T	G	N	N	N	G	G	G	G	G	G	O	O	O	O	O	O	O	O	O	O	O	O	D	D	O	O	O	O	O	O	O	O	O	O	O	O	D	D	D	D	G

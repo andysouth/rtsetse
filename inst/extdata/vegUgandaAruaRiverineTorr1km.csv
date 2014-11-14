@@ -1,0 +1,8 @@
+code ,name,mortality
+D,Riverine1,100
+T,Riverine2,100
+O,Riverine3,100
+S,Papyrus swamp,100
+B,Seasonal swamp,100
+G,Barren/suburban,100
+N,NoGo/Urban,999
