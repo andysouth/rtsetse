@@ -163,37 +163,44 @@ rtPhase5Test2 <- function( mVegetation = matrix(c("D","T","O","S","D","D"),nrow=
   for( row in 1:nrow(mVegetation) ) #y
   {
     for( col in 1:ncol(mVegetation) ) #x
-    {
-      
+    {      
       #!BEWARE of transposing dimensions
       #matrices are referenced by row,col which is y,x
       #iCarryCapF <- mCarryCapF[row,col]      
       
-      
-      #calculating start numbers of pupae
-      fPupaPerSexAge <- rtCalcPupaPerSexAge(pMortPupa = pMortPupa, 
-                                            vpMortF = vpMortF,
-                                            fStartPopPropCC = fStartPopPropCC,
-                                            iCarryCapF = iCarryCapF)
-      
-      #vectors for pupae filled with same number of pupae at all ages
-      #because males stay in the ground longer this means there will be more males 
-      vPupaM <- rep(fPupaPerSexAge, iPupDurM)
-      #make the F vector up to the same length as the M with extra 0's
-      vPupaF <- c(rep(fPupaPerSexAge, iPupDurF),rep(0,iPupDurM-iPupDurF))
-      #then put each pupal vector into the array
-      aGridPup[col, row, 'F', ] <- vPupaF
-      aGridPup[col, row, 'M', ] <- vPupaM      
-      
-      #adults per cell based on fPupaPerSexAge for this cell
-      #start age structure at stability
-      vPopStartF <- rtSetAgeStructure(vpMortF, fPopAge0=fPupaPerSexAge)
-      vPopStartM <- rtSetAgeStructure(vpMortM, fPopAge0=fPupaPerSexAge)
-      
-      #adding adults to this cell
-      aGrid[col, row,'F', ] <- vPopStartF
-      aGrid[col, row,'M', ] <- vPopStartM  
-      
+      #don't put flies into no-go areas
+      if ( mVegetation[row,col] != 'N')
+      {      
+        #TODO check whether pupae have to be calculated for each cell
+        #vpMortF is passed, do I need to apply the veg mortality multiplier ?
+        #even if I do, I could do it once for each veg type 
+        #and store before the row,col loop  
+        #likewise for adults
+          
+        #calculating start numbers of pupae
+        fPupaPerSexAge <- rtCalcPupaPerSexAge(pMortPupa = pMortPupa, 
+                                              vpMortF = vpMortF,
+                                              fStartPopPropCC = fStartPopPropCC,
+                                              iCarryCapF = iCarryCapF)
+        
+        #vectors for pupae filled with same number of pupae at all ages
+        #because males stay in the ground longer this means there will be more males 
+        vPupaM <- rep(fPupaPerSexAge, iPupDurM)
+        #make the F vector up to the same length as the M with extra 0's
+        vPupaF <- c(rep(fPupaPerSexAge, iPupDurF),rep(0,iPupDurM-iPupDurF))
+        #then put each pupal vector into the array
+        aGridPup[col, row, 'F', ] <- vPupaF
+        aGridPup[col, row, 'M', ] <- vPupaM      
+        
+        #adults per cell based on fPupaPerSexAge for this cell
+        #start age structure at stability
+        vPopStartF <- rtSetAgeStructure(vpMortF, fPopAge0=fPupaPerSexAge)
+        vPopStartM <- rtSetAgeStructure(vpMortM, fPopAge0=fPupaPerSexAge)
+        
+        #adding adults to this cell
+        aGrid[col, row,'F', ] <- vPopStartF
+        aGrid[col, row,'M', ] <- vPopStartM  
+      } #end if not no-go area
     } #end row    
   } #end col
 
