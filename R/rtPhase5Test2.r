@@ -4,8 +4,8 @@
 #' 
 #' This accepts a grid of vegetation and how mortality varies by vegetation
 
-#' @param mVegetation a matrix of vegetation codes
-#' @param dfMortByVeg a lookup table specifying mortality multiplier (percent) for each vegetation type
+#' @param mVegetation a matrix or filepath for a map of vegetation codes
+#' @param dfMortByVeg a dataframe or filepath to a lookup table specifying mortality multiplier (percent) for each vegetation type
 # @param mCarryCapF a matrix of female carrying capacities
 # @param nCol number grid columns
 # @param nRow number grid rows
@@ -94,6 +94,20 @@ rtPhase5Test2 <- function( mVegetation = matrix(c("D","T","O","S","D","D"),nrow=
   lNamedArgs <- mget(names(formals()),sys.frame(sys.nframe()))
     
   if (verbose) cat("starting rtPhase5Test2 with arguments:",paste0(names(lNamedArgs),"=",lNamedArgs,","),"\n")
+  
+  #read in the vegetation map if it has been specified as a filepath
+  if ( class(mVegetation) =="character" )
+  {
+    mVegetation <- rtReadMapVeg(mVegetation)
+  }
+  #read in the attribute file if it has been specified as a filepath  
+  if ( class(dfMortByVeg) =="character" )
+  {
+    #TODO add some checks to this
+    if (!file.exists(dfMortByVeg)) stop("your specified vegetation attribute file seems not to exist here:",dfMortByVeg)
+    dfMortByVeg <- read.csv(dfMortByVeg, as.is=TRUE) 
+  }
+  
   
   #age dependent mortality
   #beware the first arg is mortality on day1 rather than average mortality
@@ -215,6 +229,8 @@ rtPhase5Test2 <- function( mVegetation = matrix(c("D","T","O","S","D","D"),nrow=
   #this ensures the loop isn't entered unless iDays is >1
   for( day in seq(from=2,length.out=iDays-1) ) {
     
+    cat("day",day," of ",iDays,"\n")
+    
     #####################
     ## adult mortality ##
     if (verbose) cat("imposing adult mortality popbefore=",sum(aGrid))
@@ -315,7 +331,6 @@ rtPhase5Test2 <- function( mVegetation = matrix(c("D","T","O","S","D","D"),nrow=
     dimnames(aRecord)[[1]] <- paste0('day',1:day) #just goes to the current day 
     names(dimnames(aRecord)) <- c('day','x','y','sex','age')    
     
-    cat("day",day,"\n")
     
     if (verbose) cat("adult popn =",rtGetFromRecord(aRecord,days=day,x='sum',y='sum',sex='sum',age='sum'),"\n")
     #sum(aRecord[day,,,,]) #gives same
