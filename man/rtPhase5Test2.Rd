@@ -3,16 +3,16 @@
 \alias{rtPhase5Test2}
 \title{spatial tsetse population simulation with mortality varying over the grid}
 \usage{
-rtPhase5Test2(mVegetation = matrix(c("D", "T", "O", "S", "D", "D"), nrow = 2),
-  dfMortByVeg = data.frame(code = c("D", "T", "O", "S"), mortality = c(100,
-  200, 300, 400), stringsAsFactors = FALSE), pMove = 0.4, iDays = 4,
-  iMaxAge = 120, iCarryCapF = 200, fMperF = 0.5, fStartPopPropCC = 1,
-  pMortF = 0.05, pMortM = 0.05, iMortMinAgeStart = 10,
-  iMortMinAgeStop = 50, fMortMinProp = 0.2, fMortOldProp = 0.3,
-  propMortAdultDD = 0.25, pMortPupa = 0.25, propMortPupaDD = 0.25,
-  iPupDurF = 26, iPupDurM = 28, iFirstLarva = 16, iInterLarva = 10,
-  pMortLarva = 0.05, propMortLarvaDD = 0.25, verbose = TRUE,
-  report = NULL)
+rtPhase5Test2(mVegetation = matrix(c("D", "T", "O", "S", "D", "N"), nrow = 2),
+  dfMortByVeg = data.frame(code = c("D", "T", "O", "S", "N"), mortality =
+  c(100, 200, 300, 400, 500), stringsAsFactors = FALSE), pMove = 0.4,
+  iDays = 4, iMaxAge = 120, iCarryCapF = 200, fMperF = 0.5,
+  fStartPopPropCC = 1, pMortF = 0.05, pMortM = 0.05,
+  iMortMinAgeStart = 10, iMortMinAgeStop = 50, fMortMinProp = 0.2,
+  fMortOldProp = 0.3, propMortAdultDD = 0.25, pMortPupa = 0.25,
+  propMortPupaDD = 0.25, iPupDurF = 26, iPupDurM = 28, iFirstLarva = 16,
+  iInterLarva = 10, pMortLarva = 0.05, propMortLarvaDD = 0.25,
+  verbose = TRUE, report = NULL)
 }
 \arguments{
 \item{mVegetation}{a matrix or filepath for a map of vegetation codes}
