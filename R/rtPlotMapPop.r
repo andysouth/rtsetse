@@ -15,7 +15,7 @@
 #' @param title a title for the plot  
 #' @param verbose print what it's doing 
 #' 
-#' @return ?nothing
+#' @return raster brick used for plotting
 #' @examples
 #' tst <- rtPhase2Test3()
 #' rtPlotMapPop(tst) 
@@ -124,5 +124,7 @@ rtPlotMapPop <- function( aRecord,
   extent(brick1) <- extent(c(0, ncol(brick1), 0, nrow(brick1)))
 
   plot(brick1, main=titles, breaks=breaks, col=colourP)  
+
+  invisible(brick1)
   
 }
