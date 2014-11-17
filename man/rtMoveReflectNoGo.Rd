@@ -32,4 +32,15 @@ This function works on a single age class, it can be made to work on multiple ag
 by passing an array[x,y,age] to aaply(.margins=3)
 Doesn't try to cope with nrow or ncol==1.
 }
+\examples{
+#1 nogo neighbour
+rtMoveReflectNoGo(m = matrix(c(0,0,0,0,1,0,0,0,0),nrow=3),
+                  mnog = matrix(c(1,0,1,1,1,1,1,1,1),nrow=3), verbose=TRUE)
+#2 nogo neighbours
+rtMoveReflectNoGo(m = matrix(c(0,0,0,0,1,0,0,0,0),nrow=3),
+                  mnog = matrix(c(1,0,1,0,1,1,1,1,1),nrow=3), verbose=TRUE)
+#4 nogo neighbours
+rtMoveReflectNoGo(m = matrix(c(0,0,0,0,1,0,0,0,0),nrow=3),
+                  mnog = matrix(c(1,0,1,0,1,0,1,0,1),nrow=3), verbose=TRUE)
+}
 
