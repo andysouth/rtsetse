@@ -15,9 +15,6 @@
 
 rtMoveReflect <- function(m, pMove=0.4) {
   
-  #this puts zeros in, but I could modify it to copy the boundary cell
-  #simply by replacing these bits rep(0,nrow(m))
-  #that would create reflecting boundaries.
   
   #!beware that this doesn't cope with nrow=1 or ncol=1 
   #see rtMoveIsland() which tries (and i think fails) to sort 
