@@ -26,15 +26,15 @@
 #' rtMoveReflectNoGo(m = matrix(c(0,0,0,0,1,0,0,0,0),nrow=3),
 #'                   mnog = matrix(c(1,0,1,0,1,1,1,1,1),nrow=3), verbose=TRUE)
 #' #4 nogo neighbours, all flies stay
-#' rtMoveReflectNoGo(m = matrix(c(0,0,0,0,1,0,0,0,0),nrow=3),
-#'                   mnog = matrix(c(1,0,1,0,1,0,1,0,1),nrow=3), verbose=TRUE)
+#' rtMoveReflectNoGo(m = matrix(c(0,0,0,0,1,0,0,0,0),nrow=3), mnog = matrix(c(1,0,1,0,1,0,1,0,1),nrow=3), verbose=TRUE)
 #' @export
 
-rtMoveReflectNoGo <- function(m = matrix(c(0,0,0,0,1,0,0,0,0),nrow=3),
-                          mnog = matrix(c(1,0,1,1,1,1,1,1,1),nrow=3),
+rtMoveReflectNoGo <- function(m = matrix(c(0,0,0,0,1,0,0,0,0,0,0,0),nrow=3),
+                          mnog = matrix(c(1,0,1,1,1,1,1,1,1,1,1,1),nrow=3),
                           pMove=0.4,
                           verbose=FALSE) {
   
+  #cat("in rtMoveReflectNoGo\n")
   
   #!beware that this doesn't cope with nrow=1 or ncol=1 
   #see rtMoveIsland() which tries (and i think fails) to sort 
@@ -101,6 +101,9 @@ rtMoveReflectNoGo <- function(m = matrix(c(0,0,0,0,1,0,0,0,0),nrow=3),
   #this avoids duplicate levels problems outside the function
   dimnames(mNew) <- dimnames(m)
   
+# cat("\nmnog\n") 
+# print(mnog)
+
   if (verbose)
   {
     cat("m\n") 
@@ -117,13 +120,23 @@ rtMoveReflectNoGo <- function(m = matrix(c(0,0,0,0,1,0,0,0,0),nrow=3),
 
   #one way of testing this is that the total number of flies shouldn't have changed
   #(i think reflecting edges mean should get same in as out)
-  #might float rounding cause problems ?
-  if (sum(m) != sum(mNew))
+  #float rounding cause small differences, this checks for differences >1 fly
+  if (sum(m) - sum(mNew) > 1)
     warning("in rtMoveReflectNoGo() num flies seems to have changed during movement, before=",sum(m)," after=",sum(mNew),"\n")
     
 
-  return( mNew )
+  invisible( mNew )
 }
+
+#difficulties
+#how do movers get into the bottom corner in this e.g. (might be to do with reflecting boundaries)
+#rtMoveReflectNoGo(m = matrix(c(0,1,0,0,1,0,0,1,0),nrow=3), mnog = matrix(c(1,0,1,0,1,0,1,0,1),nrow=3), verbose=TRUE)
+
+#this works well and shows no movement to the bottom row
+#rtMoveReflectNoGo(m = matrix(c(0,1,0,0,1,0,0,1,0),nrow=3), mnog = matrix(c(0,1,0,0,1,0,0,1,0),nrow=3), verbose=TRUE)
+#this works too
+#rtMoveReflectNoGo(m = matrix(c(0,1,0,0,1,0,0,1,0),nrow=3), mnog = matrix(c(1,1,0,1,1,0,1,1,0),nrow=3), verbose=TRUE)
+
 
 #simple test
 #!create a unit-test based on this

@@ -3,9 +3,9 @@
 \alias{rtMoveReflectNoGo}
 \title{movement with NoGo areas, to cells NESW, reflecting boundaries}
 \usage{
-rtMoveReflectNoGo(m = matrix(c(0, 0, 0, 0, 1, 0, 0, 0, 0), nrow = 3),
-  mnog = matrix(c(1, 0, 1, 1, 1, 1, 1, 1, 1), nrow = 3), pMove = 0.4,
-  verbose = FALSE)
+rtMoveReflectNoGo(m = matrix(c(0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0), nrow = 3),
+  mnog = matrix(c(1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1), nrow = 3),
+  pMove = 0.4, verbose = FALSE)
 }
 \arguments{
 \item{m}{a matrix of cells containing a single number representing one age}
@@ -39,8 +39,7 @@ rtMoveReflectNoGo(m = matrix(c(0,0,0,0,1,0,0,0,0),nrow=3),
 #2 nogo neighbours
 rtMoveReflectNoGo(m = matrix(c(0,0,0,0,1,0,0,0,0),nrow=3),
                   mnog = matrix(c(1,0,1,0,1,1,1,1,1),nrow=3), verbose=TRUE)
-#4 nogo neighbours
-rtMoveReflectNoGo(m = matrix(c(0,0,0,0,1,0,0,0,0),nrow=3),
-                  mnog = matrix(c(1,0,1,0,1,0,1,0,1),nrow=3), verbose=TRUE)
+#4 nogo neighbours, all flies stay
+rtMoveReflectNoGo(m = matrix(c(0,0,0,0,1,0,0,0,0),nrow=3), mnog = matrix(c(1,0,1,0,1,0,1,0,1),nrow=3), verbose=TRUE)
 }
 
