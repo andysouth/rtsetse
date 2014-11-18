@@ -34,9 +34,9 @@ rtMortalityGrid <- function( aGrid,
   #check that the mortMult grid matches dimensions of the array
   if ( ! is.null(mMortMultGrid))
   {
-    if ( length(dimnames(aGrid)$x) != ncol(mMortMultGrid) | length(dimnames(aGrid)$y) != nrow(mMortMultGrid) )
+    if ( length(dimnames(aGrid)$x) != dim(mMortMultGrid)[1] | length(dimnames(aGrid)$y) != dim(mMortMultGrid)[2] )
       stop("xy dimensions of the tsetse grid array",length(dimnames(aGrid)$x),",",length(dimnames(aGrid)$y),
-           "don't match those of the mortality multiplier",ncol(mMortMultGrid),",",nrow(mMortMultGrid)) 
+           "don't match those of the mortality multiplier",dim(mMortMultGrid)[1],",",dim(mMortMultGrid)[2]) 
   }
     
   iHighMortCounter <- 0 #to count if mort goes above 1
@@ -47,10 +47,11 @@ rtMortalityGrid <- function( aGrid,
       
       #!BEWARE potentially confusing issue of matrix dimensions
       #!matrices are indexed by rows,cols. rows=y, cols=x
+      #!but in rtsetse all matrices now referenced [x,y]
       
-      #if no single CarryCap value get it from the grid
-      if ( is.null(iCarryCap) ) iCarryCap <- mCarryCap[y,x]  
-      
+      #if no single CarryCap value get it from the grid (not a standrad feature)
+      #if ( is.null(iCarryCap) ) iCarryCap <- mCarryCap[y,x]  
+      if ( is.null(iCarryCap) ) iCarryCap <- mCarryCap[x,y]        
       
       #apply mortality multiplier for this cell
       #TODO this doesn't seem like an efficient way of doing
@@ -60,7 +61,9 @@ rtMortalityGrid <- function( aGrid,
       vpMortMVeg <- vpMortM
       if ( !is.null(mMortMultGrid) )
       {
-        iMortMult <- mMortMultGrid[y,x]
+        #iMortMult <- mMortMultGrid[y,x]
+        #in rtsetse all matrices now referenced [x,y]
+        iMortMult <- mMortMultGrid[x,y]
         if (iMortMult != 100)
         {
           #first convert percent to proportion

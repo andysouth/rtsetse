@@ -135,15 +135,18 @@ rtPhase5Test2 <- function( mVegetation = matrix(c("D","T","O","S","D","N"),nrow=
   iCarryCap <- iCarryCapF * (1+fMperF)
 
   #get nCol&nRow form the vegetation matrix
-  nCol <- ncol(mVegetation)
-  nRow <- nrow(mVegetation)
+  #nCol <- ncol(mVegetation)
+  #nRow <- nrow(mVegetation)
+  nX <- dim(mVegetation)[1]
+  nY <- dim(mVegetation)[2]
 
   #mnog a matrix of cells of 0&1, 0 for nogo areas, used in movement 
   #name dimensions to try to avoid confusion with x,y
   mnog <- ifelse( mVegetation=="N",0,1)
   #BEWARE! confusion bewteen x&y dimensions
-  mnog <- t(mnog) #transpose
-  dimnamesMatrix <- list( paste0('x',1:nCol), paste0('y',1:nRow))
+  #cat("beware transpose removed!!!!!!!!!!!!!!!!!!!!!")
+  #mnog <- t(mnog) #transpose
+  dimnamesMatrix <- list( paste0('x',1:nX), paste0('y',1:nY))
   names(dimnamesMatrix) <- c("x","y")
   dimnames(mnog) <- dimnamesMatrix
   
@@ -151,33 +154,30 @@ rtPhase5Test2 <- function( mVegetation = matrix(c("D","T","O","S","D","N"),nrow=
   #create arrays of 0s for pupae & adults to start
   #PUPAE ----
   iMaxPupAge <- max(iPupDurM, iPupDurF)
-  dimnamesPup <- list( paste0('x',1:nCol), paste0('y',1:nRow), c("F","M"), paste0('age',1:iMaxPupAge))
+  dimnamesPup <- list( paste0('x',1:nX), paste0('y',1:nY), c("F","M"), paste0('age',1:iMaxPupAge))
   names(dimnamesPup) <- c("x","y","sex","age")
-  aGridPup <- array(0, dim=c(nCol,nRow,2,iMaxPupAge), dimnames=dimnamesPup)  
+  aGridPup <- array(0, dim=c(nX,nY,2,iMaxPupAge), dimnames=dimnamesPup)  
   #ADULTS
-  dimnames1 <- list( paste0('x',1:nCol), paste0('y',1:nRow), c("F","M"), paste0('age',1:iMaxAge))
+  dimnames1 <- list( paste0('x',1:nX), paste0('y',1:nY), c("F","M"), paste0('age',1:iMaxAge))
   names(dimnames1) <- c("x","y","sex","age")
-  aGrid <- array(0, dim=c(nCol,nRow,2,iMaxAge), dimnames=dimnames1)    
+  aGrid <- array(0, dim=c(nX,nY,2,iMaxAge), dimnames=dimnames1)    
 
   #loop for each cell in the grid
   #to enable initiation of pupae and adults at carrycap in each
-  #I don't need to go through x&y can just go through all elements of the matrix
-  #BUT if I do that it's trickier to put initialise components of my later arrays
-  #for( cell in seq_along(mVegetation))
-  #message("starting grid loop for rows,cols=",nrow(mVegetation),", ",ncol(mVegetation))
-  if (verbose) cat("starting loop to fill grid of rows,cols=",nrow(mVegetation),", ",ncol(mVegetation),"\n")
+  #more transparent to go through x&y than all elements of the matrix
+  if (verbose) cat("starting loop to fill grid of x,y=",nX,", ",nY,"\n")  
   
-  
-  for( row in 1:nrow(mVegetation) ) #y
+  for( y in 1:nY ) #y
   {
-    for( col in 1:ncol(mVegetation) ) #x
+    for( x in 1:nX ) #x
     {      
       #!BEWARE of transposing dimensions
       #matrices are referenced by row,col which is y,x
       #iCarryCapF <- mCarryCapF[row,col]      
       
       #don't put flies into no-go areas
-      if ( mVegetation[row,col] != 'N')
+      #if ( mVegetation[row,col] != 'N')
+      if ( mnog[x,y] != 0 )        
       {      
         #TODO check whether pupae have to be calculated for each cell
         #vpMortF is passed, do I need to apply the veg mortality multiplier ?
@@ -197,8 +197,8 @@ rtPhase5Test2 <- function( mVegetation = matrix(c("D","T","O","S","D","N"),nrow=
         #make the F vector up to the same length as the M with extra 0's
         vPupaF <- c(rep(fPupaPerSexAge, iPupDurF),rep(0,iPupDurM-iPupDurF))
         #then put each pupal vector into the array
-        aGridPup[col, row, 'F', ] <- vPupaF
-        aGridPup[col, row, 'M', ] <- vPupaM      
+        aGridPup[x, y, 'F', ] <- vPupaF
+        aGridPup[x, y, 'M', ] <- vPupaM      
         
         #adults per cell based on fPupaPerSexAge for this cell
         #start age structure at stability
@@ -206,11 +206,11 @@ rtPhase5Test2 <- function( mVegetation = matrix(c("D","T","O","S","D","N"),nrow=
         vPopStartM <- rtSetAgeStructure(vpMortM, fPopAge0=fPupaPerSexAge)
         
         #adding adults to this cell
-        aGrid[col, row,'F', ] <- vPopStartF
-        aGrid[col, row,'M', ] <- vPopStartM  
+        aGrid[x, y,'F', ] <- vPopStartF
+        aGrid[x, y,'M', ] <- vPopStartM  
       } #end if not no-go area
-    } #end row    
-  } #end col
+    } #end y    
+  } #end x
 
 #22/9/14 end of part changed for rtPhase5Test()
 
@@ -316,9 +316,9 @@ rtPhase5Test2 <- function( mVegetation = matrix(c("D","T","O","S","D","N"),nrow=
     
     ####################
     ## movement adult ##
-    #only if >1 row or col
-
-    if( nRow > 1 | nCol > 1) {  
+    
+    #errors if x or y is 1
+    if( nX > 1 | nY > 1) {  
       
       #can nearly use apply to move both M&F in one command
       #aGrid2 <- apply(aGrid,MARGIN=c('age','sex'),function(m) rtMoveIsland(m, pMove=pMove))

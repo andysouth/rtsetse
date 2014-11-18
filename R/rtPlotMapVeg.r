@@ -5,7 +5,7 @@
 #' initially accepts hat-trick format vegetation maps
 #' which have character values of : D T O S B G N for 7 categories
 
-#' @param map either a file or an object
+#' @param map either a file or an rtsetse matrix [x,y] NOT [y,x]
 #' @param title a title for the plot  
 #' @param colours to use for the vegetation categories, default value gives similar to hat-trick
 #' @param labels text labels for vegetation categories, default value gives similar to hat-trick
@@ -66,6 +66,8 @@ rtPlotMapVeg <- function( map,
   #mapNumeric <- as.numeric(mapFactor)
   
   mapMatrixNumeric <- matrix(mapNumeric,nrow=nrow(mapMatrix))
+  #transpose so that dimensions are y,x as raster expects
+  mapMatrixNumeric <- t(mapMatrixNumeric)
   #convert to raster object
   mapRaster <- raster(mapMatrixNumeric)
   

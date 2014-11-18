@@ -35,8 +35,18 @@ rtReadMapVeg <- function( inFile ) {
   #sort dimnames that appear in file table
   #reverse y so that 1 is at lower left
   #I could use this to make the lables correspond to latlons in future
-  dimnames(mat)[[1]] <- c(nrow(mat):1)
-  dimnames(mat)[[2]] <- c(1:ncol(mat)) 
+  #dimnames(mat)[[1]] <- c(nrow(mat):1)
+  #dimnames(mat)[[2]] <- c(1:ncol(mat)) 
+  #add x& y for further clarity
+  dimnames(mat)[[1]] <- c(paste0("y",nrow(mat):1))
+  dimnames(mat)[[2]] <- c(paste0("x",1:ncol(mat))) 
+  #these names are then transposed below
+  names(dimnames(mat)) <- c("y","x")
+  
+  #BEWARE! matrix dimensioning trickiness
+  #transpose so that the dimensions are x,y
+  mat <- t(mat)
+  
   
   #returning matrix
   return(mat)
