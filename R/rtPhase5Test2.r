@@ -128,9 +128,8 @@ rtPhase5Test2 <- function( mVegetation = matrix(c("D","T","O","S","D","N"),nrow=
   
   #create mortality multiplier grid from the vegetation grid
   mMortMultGrid <- rtSetMortGridFromVeg( mVegetation = mVegetation,
-                                         dfMortByVeg = dfMortByVeg )
-  
-  if (verbose) cat("mortality multiplier grid set to:",mMortMultGrid,"\n")
+                                         dfMortByVeg = dfMortByVeg )  
+  #if (verbose) cat("mortality multiplier grid set to:",mMortMultGrid,"\n")
 
   #setting a total carryCap from the female input
   iCarryCap <- iCarryCapF * (1+fMperF)
@@ -139,7 +138,16 @@ rtPhase5Test2 <- function( mVegetation = matrix(c("D","T","O","S","D","N"),nrow=
   nCol <- ncol(mVegetation)
   nRow <- nrow(mVegetation)
 
-
+  #mnog a matrix of cells of 0&1, 0 for nogo areas, used in movement 
+  #name dimensions to try to avoid confusion with x,y
+  mnog <- ifelse( mVegetation=="N",0,1)
+  #BEWARE! confusion bewteen x&y dimensions
+  mnog <- t(mnog) #transpose
+  dimnamesMatrix <- list( paste0('x',1:nCol), paste0('y',1:nRow))
+  names(dimnamesMatrix) <- c("x","y")
+  dimnames(mnog) <- dimnamesMatrix
+  
+  
   #create arrays of 0s for pupae & adults to start
   #PUPAE ----
   iMaxPupAge <- max(iPupDurM, iPupDurF)
@@ -322,7 +330,10 @@ rtPhase5Test2 <- function( mVegetation = matrix(c("D","T","O","S","D","N"),nrow=
       #having margins .margins=c(1,2) didn't make movement work correctly
       
       #changing to reflecting boundaries
-      aGrid <- plyr::aaply(aGrid,.margins=c(3,4), .drop=FALSE,function(m) rtMoveReflect(m, pMove=pMove)) 
+      #aGrid <- plyr::aaply(aGrid,.margins=c(3,4), .drop=FALSE,function(m) rtMoveReflect(m, pMove=pMove)) 
+      
+      #movement avoiding no-go areas
+      aGrid <- plyr::aaply(aGrid,.margins=c(3,4), .drop=FALSE,function(m) rtMoveReflectNoGo(m, mnog=mnog, pMove=pMove)) 
       
       
       #put array dimensions back in correct order
