@@ -23,7 +23,7 @@ a number >0 and <days in the simulation, or a series e.g. c(1,2) or c(4:7)}
 \item{verbose}{print what it's doing}
 }
 \value{
-?nothing
+raster brick used for plotting
 }
 \description{
 \code{rtPlotMapPop} plots map(s) of populations from simulation outputs
