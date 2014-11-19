@@ -6,7 +6,7 @@
 rtPlotMeanAgeGrid(aGrid, title = "Mean Age across whole grid")
 }
 \arguments{
-\item{aGrid}{array of day,x,y,sex,age}
+\item{aGrid}{array of day,y,x,sex,age}
 
 \item{title}{a title for the plot}
 }
@@ -15,7 +15,7 @@ rtPlotMeanAgeGrid(aGrid, title = "Mean Age across whole grid")
 }
 \description{
 \code{rtPlotMeanAgeGrid} plots change in mean age of M&F over whole grid
-from a passed matrix of day,x,y,sex,age.
+from a passed array of day,y,x,sex,age.
 Uses a different approach from rtPlotPopAndPupae using reshape2, dplyr & ggplot2.
 EXPERIMENTAL
 }

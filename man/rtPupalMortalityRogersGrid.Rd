@@ -7,7 +7,7 @@ rtPupalMortalityRogersGrid(aGridPup, pMortPupa = 0.25,
   iPupaDensThresh = 200, fSlopeDD = 1)
 }
 \arguments{
-\item{aGridPup}{array with the age distributions of pupal males & females [x,y,sex,age]}
+\item{aGridPup}{array with the age distributions of pupal males & females [y,x,sex,age]}
 
 \item{pMortPupa}{a density independent mortality probability}
 

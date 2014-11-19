@@ -10,7 +10,7 @@ rtPlotMapVeg(map, title = NULL, colours = c("dark green", "forest green",
   bty = "n")
 }
 \arguments{
-\item{map}{either a file or an object}
+\item{map}{either a file or an rtsetse matrix [y,x]}
 
 \item{title}{a title for the plot}
 

@@ -6,12 +6,12 @@
 #' and 'birth' probabilities per female.  
 
 
-#' @param aGrid array with the age distributions of males & females [x,y,sex,age] 
-#' @param aGridPup array with the age distributions of pupal males & females [x,y,sex,age]  
+#' @param aGrid array with the age distributions of males & females [y,x,sex,age] 
+#' @param aGridPup array with the age distributions of pupal males & females [y,x,sex,age]  
 #' @param vpDeposit a vector of age-specific deposition probabilities of Females 
 #' @param verbose whether to output progress messages to console 
 #' 
-#' @return updated array of pupae [x,y,sex,age]
+#' @return updated array of pupae [y,x,sex,age]
 #' @export
 
 rtLarvalDepositionGrid <- function( aGrid,
@@ -35,7 +35,7 @@ rtLarvalDepositionGrid <- function( aGrid,
   #vpDeposit <- seq(length(aFs[1,1,]))
   
   #line that multiplies each age structure by age specific probability vector
-  tst2 <- apply(aFs,MARGIN=c('x','y'), function(v) v*vpDeposit )    
+  tst2 <- apply(aFs,MARGIN=c('y','x'), function(v) v*vpDeposit )    
   #to put array components back in correct order
   aFs2 <- aperm(tst2, c(2,3,1))
   
@@ -43,8 +43,8 @@ rtLarvalDepositionGrid <- function( aGrid,
   #in the test it multiplied age 2 by 2 as expected from the vector1,2 etc.
   
   #Now want to sum the larvae per cell
-  #and it might be returned as a matrix [x,y]
-  mLarvae <- apply(aFs2, MARGIN=c('x','y'), sum) 
+  #and it might be returned as a matrix [y,x]
+  mLarvae <- apply(aFs2, MARGIN=c('y','x'), sum) 
   
   #testing total larvae on the grid
   if (verbose) print(mLarvae)  

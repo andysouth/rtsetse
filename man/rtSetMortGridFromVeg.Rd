@@ -4,8 +4,9 @@
 \title{setting a grid of mortality multipliers from a vegetation grid}
 \usage{
 rtSetMortGridFromVeg(mVegetation = matrix(c("D", "T", "O", "S", "D", "D"),
-  nrow = 2), dfMortByVeg = data.frame(code = c("D", "T", "O", "S"), mortality
-  = c(100, 200, 300, 400), stringsAsFactors = FALSE))
+  nrow = 2), dfMortByVeg = data.frame(code = c("D", "T", "O", "S", "B", "G",
+  "N"), mortality = c(100, 200, 300, 400, 500, 600, 700), stringsAsFactors =
+  FALSE))
 }
 \arguments{
 \item{mVegetation}{a matrix of vegetation types}

@@ -3,8 +3,8 @@
 \alias{rtMoveReflectNoGo}
 \title{movement with NoGo areas, to cells NESW, reflecting boundaries}
 \usage{
-rtMoveReflectNoGo(m = matrix(c(0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0), nrow = 3),
-  mnog = matrix(c(1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1), nrow = 3),
+rtMoveReflectNoGo(m = array(c(0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0), dim = c(3,
+  4)), mnog = array(c(1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1), dim = c(3, 4)),
   pMove = 0.4, verbose = FALSE)
 }
 \arguments{
@@ -34,12 +34,12 @@ Doesn't try to cope with nrow or ncol==1.
 }
 \examples{
 #1 nogo neighbour
-rtMoveReflectNoGo(m = matrix(c(0,0,0,0,1,0,0,0,0),nrow=3),
-                  mnog = matrix(c(1,0,1,1,1,1,1,1,1),nrow=3), verbose=TRUE)
+rtMoveReflectNoGo(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)), mnog = array(c(1,0,1,1,1,1,1,1,1,1,1,1),dim=c(3,4)), verbose=TRUE)
 #2 nogo neighbours
-rtMoveReflectNoGo(m = matrix(c(0,0,0,0,1,0,0,0,0),nrow=3),
-                  mnog = matrix(c(1,0,1,0,1,1,1,1,1),nrow=3), verbose=TRUE)
+rtMoveReflectNoGo(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)), mnog = array(c(1,0,1,0,1,1,1,1,1,1,1,1),dim=c(3,4)), verbose=TRUE)
+#3 nogo neighbours
+rtMoveReflectNoGo(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)), mnog = array(c(1,0,1,0,1,0,1,1,1,1,1,1),dim=c(3,4)), verbose=TRUE)
 #4 nogo neighbours, all flies stay
-rtMoveReflectNoGo(m = matrix(c(0,0,0,0,1,0,0,0,0),nrow=3), mnog = matrix(c(1,0,1,0,1,0,1,0,1),nrow=3), verbose=TRUE)
+rtMoveReflectNoGo(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)), mnog = array(c(1,0,1,0,1,0,1,0,1,1,1,1),dim=c(3,4)), verbose=TRUE)
 }
 

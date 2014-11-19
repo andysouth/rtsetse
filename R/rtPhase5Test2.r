@@ -54,7 +54,7 @@
 #' @export
 #' 
 rtPhase5Test2 <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(2,3)),
-                          dfMortByVeg = data.frame(code=c("D","T","O","S","N"),mortality=c(100,200,300,400,500),stringsAsFactors = FALSE),
+                          dfMortByVeg = data.frame(code=c("D","T","O","S","B","G","N"),mortality=c(100,200,300,400,500,600,700),stringsAsFactors = FALSE),
 #                           mCarryCapF = matrix(200,4,4),
 #                           nCol = 10,
 #                           nRow = 10,
@@ -137,47 +137,40 @@ rtPhase5Test2 <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(
   #get nCol&nRow form the vegetation matrix
   #nCol <- ncol(mVegetation)
   #nRow <- nrow(mVegetation)
-  nX <- dim(mVegetation)[1]
-  nY <- dim(mVegetation)[2]
+  # y,x matrix indexing
+  nY <- dim(mVegetation)[1]
+  nX <- dim(mVegetation)[2]
 
   #mnog a matrix of cells of 0&1, 0 for nogo areas, used in movement 
   #name dimensions to try to avoid confusion with x,y
   mnog <- ifelse( mVegetation=="N",0,1)
   #BEWARE! confusion bewteen x&y dimensions
-  #cat("beware transpose removed!!!!!!!!!!!!!!!!!!!!!")
   #mnog <- t(mnog) #transpose
-  dimnamesMatrix <- list( paste0('x',1:nX), paste0('y',1:nY))
-  names(dimnamesMatrix) <- c("x","y")
+  #TODO not sure whether to name Y nY:1 or 1:nY
+  dimnamesMatrix <- list( y=paste0('y',1:nY), x=paste0('x',1:nX) )
   dimnames(mnog) <- dimnamesMatrix
   
   
   #create arrays of 0s for pupae & adults to start
   #PUPAE ----
   iMaxPupAge <- max(iPupDurM, iPupDurF)
-  dimnamesPup <- list( paste0('x',1:nX), paste0('y',1:nY), c("F","M"), paste0('age',1:iMaxPupAge))
-  names(dimnamesPup) <- c("x","y","sex","age")
-  aGridPup <- array(0, dim=c(nX,nY,2,iMaxPupAge), dimnames=dimnamesPup)  
+  dimnamesPup <- list( y=paste0('y',1:nY), x=paste0('x',1:nX), sex=c("F","M"), age=paste0('age',1:iMaxPupAge))
+  aGridPup <- array(0, dim=c(nY,nX,2,iMaxPupAge), dimnames=dimnamesPup)  
   #ADULTS
-  dimnames1 <- list( paste0('x',1:nX), paste0('y',1:nY), c("F","M"), paste0('age',1:iMaxAge))
-  names(dimnames1) <- c("x","y","sex","age")
-  aGrid <- array(0, dim=c(nX,nY,2,iMaxAge), dimnames=dimnames1)    
+  dimnames1 <- list( y=paste0('y',1:nY), x=paste0('x',1:nX), sex=c("F","M"), age=paste0('age',1:iMaxAge))
+  aGrid <- array(0, dim=c(nY,nX,2,iMaxAge), dimnames=dimnames1)    
 
   #loop for each cell in the grid
   #to enable initiation of pupae and adults at carrycap in each
   #more transparent to go through x&y than all elements of the matrix
-  if (verbose) cat("starting loop to fill grid of x,y=",nX,", ",nY,"\n")  
+  if (verbose) cat("starting loop to fill grid of y,x=",nY,", ",nX,"\n")  
   
   for( y in 1:nY ) #y
   {
     for( x in 1:nX ) #x
-    {      
-      #!BEWARE of transposing dimensions
-      #matrices are referenced by row,col which is y,x
-      #iCarryCapF <- mCarryCapF[row,col]      
-      
+    {             
       #don't put flies into no-go areas
-      #if ( mVegetation[row,col] != 'N')
-      if ( mnog[x,y] != 0 )        
+      if ( mnog[y,x] != 0 )        
       {      
         #TODO check whether pupae have to be calculated for each cell
         #vpMortF is passed, do I need to apply the veg mortality multiplier ?
@@ -197,8 +190,8 @@ rtPhase5Test2 <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(
         #make the F vector up to the same length as the M with extra 0's
         vPupaF <- c(rep(fPupaPerSexAge, iPupDurF),rep(0,iPupDurM-iPupDurF))
         #then put each pupal vector into the array
-        aGridPup[x, y, 'F', ] <- vPupaF
-        aGridPup[x, y, 'M', ] <- vPupaM      
+        aGridPup[y, x, 'F', ] <- vPupaF
+        aGridPup[y, x, 'M', ] <- vPupaM      
         
         #adults per cell based on fPupaPerSexAge for this cell
         #start age structure at stability
@@ -206,8 +199,8 @@ rtPhase5Test2 <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(
         vPopStartM <- rtSetAgeStructure(vpMortM, fPopAge0=fPupaPerSexAge)
         
         #adding adults to this cell
-        aGrid[x, y,'F', ] <- vPopStartF
-        aGrid[x, y,'M', ] <- vPopStartM  
+        aGrid[y, x,'F', ] <- vPopStartF
+        aGrid[y, x,'M', ] <- vPopStartM  
       } #end if not no-go area
     } #end y    
   } #end x
@@ -217,12 +210,12 @@ rtPhase5Test2 <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(
   
   
 # to access array dimensions by name 
-#   aGrid['x1','y1','M',] #an age structure for one cell
-#   sum(aGrid['x1','y1','M',]) #total M in one cell
-#   sum(aGrid['x1','y1',,]) #total pop in one cell
+#   aGrid['y1','x1','M',] #an age structure for one cell
+#   sum(aGrid['y1','x1','M',]) #total M in one cell
+#   sum(aGrid['y1','x1',,]) #total pop in one cell
 #   aGrid[,,'M','age2'] #a grid of one age  
 #   aGrid[,,'F',] #grid of age structures just for F
-#   apply(aGrid,MARGIN=c('x','y'),sum) #grid for all ages & sexes
+#   apply(aGrid,MARGIN=c('y','x'),sum) #grid for all ages & sexes
 #   apply(aGrid,MARGIN=c('age'),sum) #summed age structure for whole pop
 #   apply(aGrid,MARGIN=c('sex'),sum) #summed sex ratio for whole pop  
   
@@ -233,7 +226,7 @@ rtPhase5Test2 <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(
   aRecord <- abind::abind(aGrid,along=0) #along=0 binds on new dimension before first
   #! look at keeping names(dimnames(aRecordF))
   #! even with this they get lost later
-  names(dimnames(aRecord)) <- c('day','x','y','sex','age')
+  names(dimnames(aRecord)) <- c('day','y','x','sex','age')
   
 
   if (verbose) cat("starting loop for",iDays,"days\n")
@@ -269,7 +262,7 @@ rtPhase5Test2 <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(
     #"duplicated levels in factors are deprecated"
     #!this corrected the warnings
     #dimnames(aF) <- list(NULL,NULL,NULL)   
-    names(dimnames(aGrid)) <- c('x','y','sex','age')
+    names(dimnames(aGrid)) <- c('y','x','sex','age')
     
     
     #####################
@@ -347,10 +340,10 @@ rtPhase5Test2 <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(
     aRecord <- abind::abind(aRecord, aGrid, along=1, use.first.dimnames=TRUE) #along=1 binds on first dimension
     #seems these dimension names get lost
     dimnames(aRecord)[[1]] <- paste0('day',1:day) #just goes to the current day 
-    names(dimnames(aRecord)) <- c('day','x','y','sex','age')    
+    names(dimnames(aRecord)) <- c('day','y','x','sex','age')    
     
     
-    if (verbose) cat("adult popn =",rtGetFromRecord(aRecord,days=day,x='sum',y='sum',sex='sum',age='sum'),"\n")
+    if (verbose) cat("adult popn =",rtGetFromRecord(aRecord,days=day,y='sum',x='sum',sex='sum',age='sum'),"\n")
     #sum(aRecord[day,,,,]) #gives same
     
   } #end of iDays loop
@@ -359,7 +352,7 @@ rtPhase5Test2 <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(
   #dimnames(aRecord)[[1]] <- paste0('day',0:iDays) #previously I started at day0
   dimnames(aRecord)[[1]] <- paste0('day',1:iDays) #previously I started at day0
   #resetting dimnames
-  names(dimnames(aRecord)) <- c('day','x','y','sex','age')
+  names(dimnames(aRecord)) <- c('day','y','x','sex','age')
 
   #produce a report on the model run, with text & graphs
   if (length(report)>0) rtReportPhase2( aRecord=aRecord, lNamedArgs=lNamedArgs, filename=report )
@@ -376,12 +369,12 @@ rtPhase5Test2 <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(
 #tst['day0',,,'F','age1']
 #tst['day1',,,'F','age1']
 #aGrid <- tst['day1',,,,] #an array for one day
-#tst['day1','x1','y1','F',] #an age structure for one cell on one day
+#tst['day1','y1','x1','F',] #an age structure for one cell on one day
 #apply(tst,MARGIN=c('age'),sum) #summed age structure across grid over all days
 #apply(tst,MARGIN=c('day','age'),sum) #summed age structure across grid for each day
 #apply(tst,MARGIN=c('day','age','sex'),sum) #as above separated by MF
-#apply(tst,MARGIN=c('x','y','day'),sum) #grid for each day all ages & sexes
-#apply(tst['day14',,,,],MARGIN=c('x','y'),sum) #grid for a selected day all ages & sexes
+#apply(tst,MARGIN=c('y','x','day'),sum) #grid for each day all ages & sexes
+#apply(tst['day14',,,,],MARGIN=c('y','x'),sum) #grid for a selected day all ages & sexes
 
 # #testing plotting age structure by day summed across whole grid
 # aS <- apply(tst,MARGIN=c('day','age'),sum) #summed age structure across grid for each day

@@ -3,7 +3,7 @@
 #' \code{rtPupalMortalityGrid} applies \code{\link{rtPupalMortality}} to a grid.
 #' It does that by simply calling that function for each cell in the grid.
 #' 
-#' @param aGridPup array with the age distributions of pupal males & females [x,y,sex,age]  
+#' @param aGridPup array with the age distributions of pupal males & females [y,x,sex,age]  
 #' @param pMort a mortality probability 
 #' @param propDD proportion of mortality that is density dependent 
 #' @param mCarryCap a matrix of Carrying Capacities for each cell as an integer (an alternative to iCarryCap)
@@ -33,11 +33,11 @@ rtPupalMortalityGrid <- function( aGridPup,
       #!BEWARE potentially confusing issue of matrix dimensions
       #!matrices are indexed by rows,cols. rows=y, cols=x
       
-      #if no single CarryCap value get it from the grid
+      #if no single CarryCap value get it from the grid - not a standard feature
       if ( is.null(iCarryCap) ) iCarryCap <- mCarryCap[y,x]  
       
-      vPupaF <- aGridPup[x,y,'F',] #an age structure for one cell
-      vPupaM <- aGridPup[x,y,'M',]  
+      vPupaF <- aGridPup[y,x,'F',] #an age structure for one cell
+      vPupaM <- aGridPup[y,x,'M',]  
       
       #these 3 lines are the same way it is called in rtPhase1Test3()
       #!BEWARE iCarryCapPupa set from iCarryCap here because hat-trick default runs show similar numbers of ads & pupae at stability
@@ -50,8 +50,8 @@ rtPupalMortalityGrid <- function( aGridPup,
       vPupaF <- lPupae$vPupaF
       vPupaM <- lPupae$vPupaM
       
-      aGridPup[x,y,'F',] <- vPupaF
-      aGridPup[x,y,'M',] <- vPupaM      
+      aGridPup[y,x,'F',] <- vPupaF
+      aGridPup[y,x,'M',] <- vPupaM      
       
     }#y
   }#x

@@ -2,7 +2,7 @@
 #' 
 #' \code{rtAgeingGrid} advances the age of all classes in the vectors in each cell of the passed grid
 
-#' @param a an array of the age distributions in each grid cell [x,y,sex,age] 
+#' @param a an array of the age distributions in each grid cell [y,x,sex,age] 
 #' @param label a string describing what is being passed, added to any warning messages 
 #' 
 #' @return an updated array
@@ -43,11 +43,11 @@ rtAgeingGrid <- function( a, label )
 
 #previous versions were just for an array of F
 #this works on both M&F
-  for(x in seq(dim(a)[1])) {
-    for(y in seq(dim(a)[2])) {
+  for(y in seq(dim(a)[1])) {
+    for(x in seq(dim(a)[2])) {
       #for(mf in seq(dim(a)[3])) {
-        a[x,y,'F',] <- c(0, a[x,y,'F',-length(a[x,y,'F',])])
-        a[x,y,'M',] <- c(0, a[x,y,'M',-length(a[x,y,'M',])])
+        a[y,x,'F',] <- c(0, a[y,x,'F',-length(a[y,x,'F',])])
+        a[y,x,'M',] <- c(0, a[y,x,'M',-length(a[y,x,'M',])])
         #}
     }
   }

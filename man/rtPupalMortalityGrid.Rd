@@ -7,7 +7,7 @@ rtPupalMortalityGrid(aGridPup, pMort = 0.25, propDD = 0.25,
   mCarryCap = NULL, iCarryCap = NULL)
 }
 \arguments{
-\item{aGridPup}{array with the age distributions of pupal males & females [x,y,sex,age]}
+\item{aGridPup}{array with the age distributions of pupal males & females [y,x,sex,age]}
 
 \item{pMort}{a mortality probability}
 

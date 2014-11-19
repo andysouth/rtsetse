@@ -12,8 +12,8 @@
 #' Can get it to return vectors of both pupae & adults
 
 
-#' @param aGrid an array with the age distributions of males & females [x,y,sex,age] 
-#' @param aGridPup an array with the age distributions of pupal males & females [x,y,sex,age] 
+#' @param aGrid an array with the age distributions of males & females [y,x,sex,age] 
+#' @param aGridPup an array with the age distributions of pupal males & females [y,x,sex,age] 
 #' @param iPupDurF days it takes pupa(F) to develop
 #' @param iPupDurM days it takes pupa(M) to develop
 #' 
