@@ -6,16 +6,16 @@
 rtLarvalDepositionGrid(aGrid, aGridPup, vpDeposit, verbose = FALSE)
 }
 \arguments{
-\item{aGrid}{array with the age distributions of males & females [x,y,sex,age]}
+\item{aGrid}{array with the age distributions of males & females [y,x,sex,age]}
 
-\item{aGridPup}{array with the age distributions of pupal males & females [x,y,sex,age]}
+\item{aGridPup}{array with the age distributions of pupal males & females [y,x,sex,age]}
 
 \item{vpDeposit}{a vector of age-specific deposition probabilities of Females}
 
 \item{verbose}{whether to output progress messages to console}
 }
 \value{
-updated array of pupae [x,y,sex,age]
+updated array of pupae [y,x,sex,age]
 }
 \description{
 \code{rtLarvalDepositionGrid} returns the number of male and female larvae deposited in each grid cell

@@ -6,9 +6,9 @@
 rtPupalEmergenceGrid(aGrid, aGridPup, iPupDurF = 26, iPupDurM = 28)
 }
 \arguments{
-\item{aGrid}{an array with the age distributions of males & females [x,y,sex,age]}
+\item{aGrid}{an array with the age distributions of males & females [y,x,sex,age]}
 
-\item{aGridPup}{an array with the age distributions of pupal males & females [x,y,sex,age]}
+\item{aGridPup}{an array with the age distributions of pupal males & females [y,x,sex,age]}
 
 \item{iPupDurF}{days it takes pupa(F) to develop}
 

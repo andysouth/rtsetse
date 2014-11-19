@@ -7,7 +7,7 @@ rtMortalityGrid(aGrid, vpMortF, vpMortM, propDD = 0.25,
   mMortMultGrid = NULL, mCarryCap = NULL, iCarryCap = NULL)
 }
 \arguments{
-\item{aGrid}{an array with the age distributions of males & females [x,y,sex,age]}
+\item{aGrid}{an array with the age distributions of males & females [y,x,sex,age]}
 
 \item{vpMortF}{a vector of age-specific mortality probabilities of Females}
 

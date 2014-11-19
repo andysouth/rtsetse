@@ -60,13 +60,13 @@ rtGetFromRecord <- function( aRecord,
   if ( class(aRecord)!="array" | length(dim(aRecord)) != 5 )
     stop("the first arg needs to be an array with 5 dimensions [day,x,y,sex,age], yours is a ",class(aRecord)," with length(dim)=",length(dim(aRecord)),"\n")
   #check that the dimensions are named as expected
-  if ( ! identical( names(dimnames(aRecord)),c("day","x","y","sex","age")) )
-    stop("array dimensions should be named day,x,y,sex,age yours are: ", names(dimnames(aRecord)) )
+  if ( ! identical( names(dimnames(aRecord)),c("day","y","x","sex","age")) )
+    stop("array dimensions should be named day,y,x,sex,age yours are: ", names(dimnames(aRecord)) )
   
-  if(verbose) cat("in rtGetFromRecord() days=",days," x=",x," y=",y," sex=",sex," age=",age," drop=",drop,"\n")
+  if(verbose) cat("in rtGetFromRecord() days=",days," y=",y," x=",x," sex=",sex," age=",age," drop=",drop,"\n")
   
   #aRecord[x,y,sex,age]
-  allArgs <- c(days,x,y,sex,age)
+  allArgs <- c(days,y,x,sex,age)
   
   
   #add tests that x,y,sex & age have appropriate values
@@ -77,8 +77,8 @@ rtGetFromRecord <- function( aRecord,
   #access all elements of an array
   #allArgs[ which(allArgs=='all') ] <- TRUE
   if ( identical(days,'all')) days<-TRUE
-  if ( identical(x,'all')) x<-TRUE
   if ( identical(y,'all')) y<-TRUE
+  if ( identical(x,'all')) x<-TRUE
   if ( identical(age,'all')) age<-TRUE
   if ( identical(sex,'all')) sex<-TRUE
   
@@ -90,7 +90,7 @@ rtGetFromRecord <- function( aRecord,
     #i think I do want to drop dimensions that go to 1
     #e.g. if selecting a single day
     #I could allow user to pass the drop param & set it to default TRUE
-    toReturn <- aRecord[days,x,y,sex,age, drop=drop]
+    toReturn <- aRecord[days,y,x,sex,age, drop=drop]
 
 #19/9/14 seems next bit not needed & it stopped the returning of selected days for a single cell
 #tst2 <- rtGetFromRecord(aRecord,x=2,y=2,sex='sum',age='sum',days=c(1:3))
@@ -103,12 +103,12 @@ rtGetFromRecord <- function( aRecord,
   { 
     #now change the sum args to TRUE so that they are summed in the sum statement
     if ( identical(days,'sum')) days<-TRUE
-    if ( identical(x,'sum')) x<-TRUE
     if ( identical(y,'sum')) y<-TRUE
+    if ( identical(x,'sum')) x<-TRUE
     if ( identical(age,'sum')) age<-TRUE
     if ( identical(sex,'sum')) sex<-TRUE    
     
-    toReturn <- sum( aRecord[days,x,y,sex,age] ) 
+    toReturn <- sum( aRecord[days,y,x,sex,age] ) 
     
   } else
   # if at least 1 'sum' & 'all'  
@@ -122,21 +122,21 @@ rtGetFromRecord <- function( aRecord,
     #added length(dimnames(aRecord)... bits to protect against calling it when days,x or y=1
     if ( (identical(days,TRUE) | length(days)>1) & length(dimnames(aRecord)$day) > 1 ) marginArg <- c(marginArg,'day')
     #if ( !identical(days,'sum')) marginArg <- c(marginArg,'days')
-    if ( identical(x,TRUE) & length(dimnames(aRecord)$x) > 1 ) marginArg <- c(marginArg,'x')
     if ( identical(y,TRUE) & length(dimnames(aRecord)$y) > 1) marginArg <- c(marginArg,'y')
+    if ( identical(x,TRUE) & length(dimnames(aRecord)$x) > 1 ) marginArg <- c(marginArg,'x')
     if ( identical(age,TRUE)) marginArg <- c(marginArg,'age')
     if ( identical(sex,TRUE)) marginArg <- c(marginArg,'sex')  
 
     #now change any sum args to TRUE so that all vals are included in the apply statement
     if ( identical(days,'sum')) days<-TRUE
-    if ( identical(x,'sum')) x<-TRUE
     if ( identical(y,'sum')) y<-TRUE
+    if ( identical(x,'sum')) x<-TRUE
     if ( identical(age,'sum')) age<-TRUE
     if ( identical(sex,'sum')) sex<-TRUE   
     
     #toReturn <- apply( aRecord, MARGIN=marginArg, sum )
 
-    toReturn <- apply( aRecord[days,x,y,sex,age], MARGIN=marginArg, sum )
+    toReturn <- apply( aRecord[days,y,x,sex,age], MARGIN=marginArg, sum )
   }
     
   

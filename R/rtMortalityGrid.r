@@ -6,7 +6,7 @@
 #' \cr It uses the length of the age structure vectors passed to it.
 #' \cr There could be an option to do F only if only F are passed.
 
-#' @param aGrid an array with the age distributions of males & females [x,y,sex,age] 
+#' @param aGrid an array with the age distributions of males & females [y,x,sex,age] 
 #' @param vpMortF a vector of age-specific mortality probabilities of Females 
 #' @param vpMortM a vector of age-specific mortality probabilities of Males 
 #' @param propDD proportion of mortality that is density dependent 
@@ -34,8 +34,8 @@ rtMortalityGrid <- function( aGrid,
   #check that the mortMult grid matches dimensions of the array
   if ( ! is.null(mMortMultGrid))
   {
-    if ( length(dimnames(aGrid)$x) != dim(mMortMultGrid)[1] | length(dimnames(aGrid)$y) != dim(mMortMultGrid)[2] )
-      stop("xy dimensions of the tsetse grid array",length(dimnames(aGrid)$x),",",length(dimnames(aGrid)$y),
+    if ( length(dimnames(aGrid)$y) != dim(mMortMultGrid)[1] | length(dimnames(aGrid)$x) != dim(mMortMultGrid)[2] )
+      stop("yx dimensions of the tsetse grid array",length(dimnames(aGrid)$y),",",length(dimnames(aGrid)$x),
            "don't match those of the mortality multiplier",dim(mMortMultGrid)[1],",",dim(mMortMultGrid)[2]) 
   }
     
@@ -49,9 +49,8 @@ rtMortalityGrid <- function( aGrid,
       #!matrices are indexed by rows,cols. rows=y, cols=x
       #!but in rtsetse all matrices now referenced [x,y]
       
-      #if no single CarryCap value get it from the grid (not a standrad feature)
-      #if ( is.null(iCarryCap) ) iCarryCap <- mCarryCap[y,x]  
-      if ( is.null(iCarryCap) ) iCarryCap <- mCarryCap[x,y]        
+      #if no single CarryCap value get it from the grid (not a standard feature)
+      if ( is.null(iCarryCap) ) iCarryCap <- mCarryCap[y,x]     
       
       #apply mortality multiplier for this cell
       #TODO this doesn't seem like an efficient way of doing
@@ -63,7 +62,7 @@ rtMortalityGrid <- function( aGrid,
       {
         #iMortMult <- mMortMultGrid[y,x]
         #in rtsetse all matrices now referenced [x,y]
-        iMortMult <- mMortMultGrid[x,y]
+        iMortMult <- mMortMultGrid[y,x]
         if (iMortMult != 100)
         {
           #first convert percent to proportion
@@ -83,10 +82,10 @@ rtMortalityGrid <- function( aGrid,
       
       
       #only apply mortality if flies in cell (to save time)
-      if ( sum(aGrid[x,y,,]) > 0 )
+      if ( sum(aGrid[y,x,,]) > 0 )
       {
-        aGrid[x,y,,] <- rtMortality(vFem = aGrid[x,y,'F',],
-                                    vMal = aGrid[x,y,'M',],
+        aGrid[y,x,,] <- rtMortality(vFem = aGrid[y,x,'F',],
+                                    vMal = aGrid[y,x,'M',],
                                     vpMortFVeg,
                                     vpMortMVeg,
                                     returnArray = TRUE,

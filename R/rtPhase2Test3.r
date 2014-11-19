@@ -36,7 +36,7 @@
 #' 
 #' @param report filename for a report for this run, if not specified no report is produced
 
-#' @return a multi-dimensional array [day,x,y,sex,ages]
+#' @return a multi-dimensional array [day,y,x,sex,ages]
 #' @examples
 #' \dontrun{
 #' tst <- rtPhase2Test3()
@@ -45,8 +45,8 @@
 #' @export
 #' 
 rtPhase2Test3 <- function( 
-                          nCol = 10,
-                          nRow = 10,
+                          nCol = 9,
+                          nRow = 7,
                           pMove = 0.4,
                           iDays = 4,
                           iMaxAge = 120,
@@ -78,6 +78,11 @@ rtPhase2Test3 <- function(
   #if( nRow < 2 | nCol < 2 )
   #  stop("movement does not work if less than 2 grid rows or columns")
 
+  #TODO set passing to this as nY & nX
+  #this is to make consistent with a later developments and using y,x
+  nY <- nRow
+  nX <- nCol
+  
   #testing getting the arguments
   #callObject <- match.call() only returns specified args
   #callObject <- call() Error 'name' is missing  
@@ -116,16 +121,17 @@ rtPhase2Test3 <- function(
   #create a matrix for carrying capacity on the grid
   #first test make it constant
   #naming dimensions of carry cap matrix
-  dimnamesCarryCap <- list( paste0('x',1:nCol), paste0('y',1:nRow))
-  names(dimnamesCarryCap) <- c("x","y")  
+  dimnamesCarryCap <- list( y=paste0('y',1:nRow), x=paste0('x',1:nCol))
   mCarryCap <- matrix(iCarryCap, ncol=nCol, nrow=nRow, dimnames=dimnamesCarryCap)
 
 
   #PUPAE ----
   iMaxPupAge <- max(iPupDurM, iPupDurF)
-  dimnamesPup <- list( paste0('x',1:nCol), paste0('y',1:nRow), c("F","M"), paste0('age',1:iMaxPupAge))
-  names(dimnamesPup) <- c("x","y","sex","age")
-  aGridPup <- array(0, dim=c(nCol,nRow,2,iMaxPupAge), dimnames=dimnamesPup)  
+  #dimnamesPup <- list( paste0('x',1:nCol), paste0('y',1:nRow), c("F","M"), paste0('age',1:iMaxPupAge))
+  #names(dimnamesPup) <- c("x","y","sex","age")
+  #aGridPup <- array(0, dim=c(nCol,nRow,2,iMaxPupAge), dimnames=dimnamesPup)  
+  dimnamesPup <- list( y=paste0('y',1:nY), x=paste0('x',1:nX), sex=c("F","M"), age=paste0('age',1:iMaxPupAge))
+  aGridPup <- array(0, dim=c(nY,nX,2,iMaxPupAge), dimnames=dimnamesPup)  
   
   #calculating start numbers of pupae
   fPupaPerSexAge <- rtCalcPupaPerSexAge(pMortPupa = pMortPupa, 
@@ -140,16 +146,15 @@ rtPhase2Test3 <- function(
   vPupaF <- c(rep(fPupaPerSexAge, iPupDurF),rep(0,iPupDurM-iPupDurF))
   #then put each pupal vector into the array
   #here just at central cell (unless xStart,yStart set to all above)
-  aGridPup[xStart, yStart, 'F', ] <- vPupaF
-  aGridPup[xStart, yStart, 'M', ] <- vPupaM
+  aGridPup[yStart, xStart, 'F', ] <- vPupaF
+  aGridPup[yStart, xStart, 'M', ] <- vPupaM
   
     
   #ADULTS
   #create array of 0s to start
-  dimnames1 <- list( paste0('x',1:nCol), paste0('y',1:nRow), c("F","M"), paste0('age',1:iMaxAge))
-  names(dimnames1) <- c("x","y","sex","age")
-  aGrid <- array(0, dim=c(nCol,nRow,2,iMaxAge), dimnames=dimnames1)  
-
+  dimnames1 <- list( y=paste0('y',1:nY), x=paste0('x',1:nX), sex=c("F","M"), age=paste0('age',1:iMaxAge))
+  aGrid <- array(0, dim=c(nY,nX,2,iMaxAge), dimnames=dimnames1)    
+  
   
   #start popn at stability
   #initialising age structure with the calc num pupae from above
@@ -157,8 +162,8 @@ rtPhase2Test3 <- function(
   vPopStartM <- rtSetAgeStructure(vpMortM, fPopAge0=fPupaPerSexAge)
   
   #adding half of starting adults as each gender to a starting cell in middle
-  aGrid[xStart, yStart,'F', ] <- vPopStartF
-  aGrid[xStart, yStart,'M', ] <- vPopStartM  
+  aGrid[yStart, xStart, 'F', ] <- vPopStartF
+  aGrid[yStart, xStart, 'M', ] <- vPopStartM  
 
   #this doesn't do what I expect when xStart or yStart are vectors
   
@@ -180,7 +185,7 @@ rtPhase2Test3 <- function(
   aRecord <- abind::abind(aGrid,along=0) #along=0 binds on new dimension before first
   #! look at keeping names(dimnames(aRecordF))
   #! even with this they get lost later
-  names(dimnames(aRecord)) <- c('day','x','y','sex','age')
+  names(dimnames(aRecord)) <- c('day','y','x','sex','age')
   
   #for( day in 1:iDays ) {
   #changing to starting at day1, so first changes happen on day2
@@ -207,7 +212,7 @@ rtPhase2Test3 <- function(
     #"duplicated levels in factors are deprecated"
     #!this corrected the warnings
     #dimnames(aF) <- list(NULL,NULL,NULL)   
-    names(dimnames(aGrid)) <- c('x','y','sex','age')
+    names(dimnames(aGrid)) <- c('y','x','sex','age')
     
     
     #####################
@@ -288,7 +293,7 @@ rtPhase2Test3 <- function(
   #dimnames(aRecord)[[1]] <- paste0('day',0:iDays) #previously I started at day0
   dimnames(aRecord)[[1]] <- paste0('day',1:iDays) #previously I started at day0
   #resetting dimnames
-  names(dimnames(aRecord)) <- c('day','x','y','sex','age')
+  names(dimnames(aRecord)) <- c('day','y','x','sex','age')
 
   #produce a report on the model run, with text & graphs
   if (length(report)>0) rtReportPhase2( aRecord=aRecord, lNamedArgs=lNamedArgs, filename=report )

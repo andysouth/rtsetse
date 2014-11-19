@@ -3,7 +3,7 @@
 #' \code{rtPupalMortalityRogersGrid} applies \code{\link{rtPupalMortalityRogers}} to a grid.
 #' It does that by simply calling that function for each cell in the grid.
 #' 
-#' @param aGridPup array with the age distributions of pupal males & females [x,y,sex,age]  
+#' @param aGridPup array with the age distributions of pupal males & females [y,x,sex,age]  
 #' @param pMortPupa a density independent mortality probability 
 #' @param iPupaDensThresh the threshold above which density dependence acts
 #' @param fSlopeDD the slope of density dependence, how mortality increases with density
@@ -39,8 +39,8 @@ rtPupalMortalityRogersGrid <- function( aGridPup,
       #actually matrix of cc's not yet setup as an input
       #iPupaDensThresh <- mCarryCap[y,x]
       
-      vPupaF <- aGridPup[x,y,'F',] #an age structure for one cell
-      vPupaM <- aGridPup[x,y,'M',]  
+      vPupaF <- aGridPup[y,x,'F',] #an age structure for one cell
+      vPupaM <- aGridPup[y,x,'M',]  
       
       #these 3 lines are the same way it is called in rtPhase1Test2()
       #I could improve it here and there
@@ -52,8 +52,8 @@ rtPupalMortalityRogersGrid <- function( aGridPup,
       vPupaF <- lPupae$vPupaF
       vPupaM <- lPupae$vPupaM
       
-      aGridPup[x,y,'F',] <- vPupaF
-      aGridPup[x,y,'M',] <- vPupaM      
+      aGridPup[y,x,'F',] <- vPupaF
+      aGridPup[y,x,'M',] <- vPupaM      
       
     }#y
   }#x

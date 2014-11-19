@@ -4,7 +4,7 @@
 #' \cr Requires the raster package.
 
 #' @param df a dataframe with days in columns and ages in rows
-#'     OR an array of [day,x,y,sex,age]
+#'     OR an array of [day,y,x,sex,age]
 #' @param title a title for the plot  
 #' 
 #' @return nothing

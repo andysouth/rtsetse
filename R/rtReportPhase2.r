@@ -2,7 +2,7 @@
 #'
 #' \code{rtReportPhase2} creates a pdf of text and graphical output for this run.  
 
-#' @param aRecord output from phase2 a multi-dimensional array for adults [day,x,y,sex,ages] *later it may need to include pupae*
+#' @param aRecord output from phase2 a multi-dimensional array for adults [day,y,x,sex,ages] *later it may need to include pupae*
 #' @param lNamedArgs a list of the arguments and their values passed to rtPhase2Test2
 #' @param filename a name for the report file
 #' 

@@ -3,14 +3,14 @@
 \alias{rtGetFromGrid}
 \title{to access population data from the grid of [x,y,sex,age]}
 \usage{
-rtGetFromGrid(aGrid, x = "all", y = "all", sex = "all", age = "all")
+rtGetFromGrid(aGrid, y = "all", x = "all", sex = "all", age = "all")
 }
 \arguments{
-\item{aGrid}{an array with the age distributions of males & females [x,y,sex,age]}
-
-\item{x}{grid column number}
+\item{aGrid}{an array with the age distributions of males & females [y,x,sex,age]}
 
 \item{y}{grid row number}
+
+\item{x}{grid column number}
 
 \item{sex}{'all' returns both sexes separately,'M','F', 'sum' sums sexes}
 
@@ -18,7 +18,7 @@ rtGetFromGrid(aGrid, x = "all", y = "all", sex = "all", age = "all")
     ?or maybe an age range too}
 }
 \value{
-an array, matrix or vector named with remaining dimensions of [x,y,sex,age]
+an array, matrix or vector named with remaining dimensions of [y,x,sex,age]
 }
 \description{
 NOT USED YET. I might not even need it. rtGetFromRecord() likely to be more useful.

@@ -1,11 +1,10 @@
 #' plots popn of M&F over multiple days and grid cells
 #' 
 #' \code{rtPlotPopGrid} plots change in M&F numbers over whole grid 
-#' from a passed matrix of day,x,y,sex,age.  
+#' from a passed matrix of day,y,x,sex,age.  
 #' Uses a different approach from rtPlotPopAndPupae using reshape2, dplyr & ggplot2.  
-#' EXPERIMENTAL
 
-#' @param aGrid array of day,x,y,sex,age
+#' @param aGrid array of day,y,x,sex,age
 #' @param title a title for the plot  
 #' 
 #' @return ?ggplot2 object
