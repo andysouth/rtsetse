@@ -54,7 +54,7 @@
 #' @export
 #' 
 rtPhase5Test2 <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(2,3)),
-                          dfMortByVeg = data.frame(code=c("D","T","O","S","B","G","N"),mortality=c(100,200,300,400,500,600,700),stringsAsFactors = FALSE),
+                          dfMortByVeg = data.frame(code=c("D","T","O","S","B","G","N"),mortality=c(200,150,110,100,110,210,999),pupmortality=c(120,110,105,100,120,170,999),stringsAsFactors = FALSE),
 #                           mCarryCapF = matrix(200,4,4),
 #                           nCol = 10,
 #                           nRow = 10,
