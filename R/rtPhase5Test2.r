@@ -82,7 +82,7 @@ rtPhase5Test2 <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(
                           iInterLarva = 10,
                           pMortLarva = 0.05,
                           propMortLarvaDD = 0.25,
-                          verbose = TRUE,
+                          verbose = FALSE,
                           report = NULL ) #"reportPhase2.html" ) 
 {
   
