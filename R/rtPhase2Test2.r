@@ -1,10 +1,10 @@
-#' a simple spatial tsetse population simulation, a 2nd test of phase2
+#' DEPRECATED simple spatial tsetse population simulation, a 2nd test of phase2
 #'
-#' \code{rtPhase2Test2} runs a simple spatial popn simulation as a test of phase 2
+#' \code{rtPhase2Test2} replaced by \code{rtPhase2Test3}
+#' runs a simple spatial popn simulation as a test of phase 2
 #' model components. Concentrates on movement parameters and mortality so that 
 #' it can be used to test popn spread under different popn growth rates.
 #' Uses things developed in gridTest.r. 
-#' ! check if it works when nRow & nCol == 1 (the aspatial model)
 
 
 #' @param nCol number grid columns
@@ -19,7 +19,6 @@
 #'     option "sameAsAdults" to set tot pupae same as tot adults.
 #' @param pMortF adult female mortality per day 
 #' @param pMortM adult male mortality per day 
-#' @param loop TEMPORARY test of loop versus apply approach, only TRUE works 
 #' @param pMortPupa pupal mortality per period
 #' @param iPupaDensThresh the threshold pupal density above which density dependence acts
 #' @param fSlopeDD the slope of density dependence, how mortality increases with density
@@ -50,7 +49,6 @@ rtPhase2Test2 <- function(
                           iStartPupae = "sameAsAdults",
                           pMortF = 0.05,
                           pMortM = 0.05,
-                          loop = TRUE,
                           pMortPupa = 0.25,
                           iPupaDensThresh = 200,
                           fSlopeDD = 1.0,                          
@@ -154,7 +152,7 @@ rtPhase2Test2 <- function(
     
     #! probably want to remove the carryCap bit of this
     #! if density dependence is going to be implemented purely through pupal mort
-    aGrid <- rtMortalityGrid( aGrid, vpMortF, vpMortM, mCarryCap=mCarryCap, loop=loop )
+    aGrid <- rtMortalityGrid( aGrid, vpMortF, vpMortM, mCarryCap=mCarryCap )
     
     
     ##################

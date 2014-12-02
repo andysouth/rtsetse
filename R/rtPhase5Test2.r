@@ -13,7 +13,7 @@
 # following are same as rtPhase1Test3
 #' @param iDays days to run simulation
 #' @param iMaxAge max age of fly allowed in model (will warn if flies age past this)
-# @param iCarryCapF carrying capacity of adult females 
+#' @param iCarryCapF carrying capacity of adult females 
 #' @param fMperF numbers of males per female, default 0.5 for half as many M as F
 #' @param fStartPopPropCC starting population as a proportion of carrying capacity, default = 1
 # @param iStartAdults number of adults to start simulation with

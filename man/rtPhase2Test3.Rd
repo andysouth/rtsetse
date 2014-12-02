@@ -3,7 +3,7 @@
 \alias{rtPhase2Test3}
 \title{a simple spatial tsetse population simulation, start popn in a single central cell}
 \usage{
-rtPhase2Test3(nCol = 10, nRow = 10, pMove = 0.4, iDays = 4,
+rtPhase2Test3(nCol = 9, nRow = 7, pMove = 0.4, iDays = 4,
   iMaxAge = 120, iCarryCapF = 200, fMperF = 0.5, fStartPopPropCC = 1,
   pMortF = 0.05, pMortM = 0.05, iMortMinAgeStart = 10,
   iMortMinAgeStop = 50, fMortMinProp = 0.2, fMortOldProp = 0.3,
@@ -62,7 +62,7 @@ option "sameAsAdults" to set tot pupae same as tot adults.}
 \item{report}{filename for a report for this run, if not specified no report is produced}
 }
 \value{
-a multi-dimensional array [day,x,y,sex,ages]
+a multi-dimensional array [day,y,x,sex,ages]
 }
 \description{
 \code{rtPhase2Test3} goes back to more hat-trick like density dependence.

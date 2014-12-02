@@ -5,14 +5,15 @@
 \usage{
 rtPhase5Test2(mVegetation = array(c("D", "T", "O", "S", "N", "N"), dim = c(2,
   3)), dfMortByVeg = data.frame(code = c("D", "T", "O", "S", "B", "G", "N"),
-  mortality = c(100, 200, 300, 400, 500, 600, 700), stringsAsFactors = FALSE),
-  pMove = 0.4, iDays = 4, iMaxAge = 120, iCarryCapF = 200,
-  fMperF = 0.5, fStartPopPropCC = 1, pMortF = 0.05, pMortM = 0.05,
+  mortality = c(200, 150, 110, 100, 110, 210, 999), pupmortality = c(120, 110,
+  105, 100, 120, 170, 999), stringsAsFactors = FALSE), pMove = 0.4,
+  iDays = 4, iMaxAge = 120, iCarryCapF = 200, fMperF = 0.5,
+  fStartPopPropCC = 1, pMortF = 0.05, pMortM = 0.05,
   iMortMinAgeStart = 10, iMortMinAgeStop = 50, fMortMinProp = 0.2,
   fMortOldProp = 0.3, propMortAdultDD = 0.25, pMortPupa = 0.25,
   propMortPupaDD = 0.25, iPupDurF = 26, iPupDurM = 28, iFirstLarva = 16,
   iInterLarva = 10, pMortLarva = 0.05, propMortLarvaDD = 0.25,
-  verbose = TRUE, report = NULL)
+  verbose = FALSE, report = NULL)
 }
 \arguments{
 \item{mVegetation}{a matrix or filepath for a map of vegetation codes}
@@ -24,6 +25,8 @@ rtPhase5Test2(mVegetation = array(c("D", "T", "O", "S", "N", "N"), dim = c(2,
 \item{iDays}{days to run simulation}
 
 \item{iMaxAge}{max age of fly allowed in model (will warn if flies age past this)}
+
+\item{iCarryCapF}{carrying capacity of adult females}
 
 \item{fMperF}{numbers of males per female, default 0.5 for half as many M as F}
 
