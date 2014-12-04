@@ -258,10 +258,8 @@ rtPhase5Test2 <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(
     aGrid <- rtAgeingGrid(aGrid)
     
     #the third dimension (age) loses it's label
-    #just trying putting it back to see if that solves
     #"duplicated levels in factors are deprecated"
-    #!this corrected the warnings
-    #dimnames(aF) <- list(NULL,NULL,NULL)   
+    #this corrected the warnings
     names(dimnames(aGrid)) <- c('y','x','sex','age')
     
     
@@ -345,6 +343,7 @@ rtPhase5Test2 <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(
     
     if (verbose) cat("adult popn =",rtGetFromRecord(aRecord,days=day,y='sum',x='sum',sex='sum',age='sum'),"\n")
     #sum(aRecord[day,,,,]) #gives same
+  
     
   } #end of iDays loop
   
