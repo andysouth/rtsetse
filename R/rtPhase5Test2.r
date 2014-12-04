@@ -348,8 +348,7 @@ rtPhase5Test2 <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(
   } #end of iDays loop
   
   #ensuring that dimnames for the days dimension of aRecord is set
-  #dimnames(aRecord)[[1]] <- paste0('day',0:iDays) #previously I started at day0
-  dimnames(aRecord)[[1]] <- paste0('day',1:iDays) #previously I started at day0
+  dimnames(aRecord)[[1]] <- paste0('day',1:iDays) #previously I started at day0, with 0:iDays
   #resetting dimnames
   names(dimnames(aRecord)) <- c('day','y','x','sex','age')
 
