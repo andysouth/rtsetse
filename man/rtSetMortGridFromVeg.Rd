@@ -26,6 +26,6 @@ From a vegetation grid and a table specifying the multiplier for each vegetation
 if the passed matrix contains a code not present in the table it returns NA.
 }
 \examples{
-mMortMult <- rtSetMortGridFromVeg()
+mMortMult <- rtSetMortGridFromVeg("adult")
 }
 

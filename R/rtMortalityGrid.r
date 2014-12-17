@@ -10,7 +10,7 @@
 #' @param vpMortF a vector of age-specific mortality probabilities of Females 
 #' @param vpMortM a vector of age-specific mortality probabilities of Males 
 #' @param propDD proportion of mortality that is density dependent 
-#' @param mMortMultGrid a grid of mortality multipliers (derived from vegetation)
+#' @param mMortMultGrid an optional grid of mortality multipliers (derived from vegetation)
 #' @param mCarryCap a matrix of Carrying Capacities for each cell as an integer (an alternative to iCarryCap)
 #' @param iCarryCap a single integer Carrying Capacities for all cells as an integer (an alternative to mCarryCap)
 #' 

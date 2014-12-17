@@ -15,7 +15,7 @@ rtMortalityGrid(aGrid, vpMortF, vpMortM, propDD = 0.25,
 
 \item{propDD}{proportion of mortality that is density dependent}
 
-\item{mMortMultGrid}{a grid of mortality multipliers (derived from vegetation)}
+\item{mMortMultGrid}{an optional grid of mortality multipliers (derived from vegetation)}
 
 \item{mCarryCap}{a matrix of Carrying Capacities for each cell as an integer (an alternative to iCarryCap)}
 

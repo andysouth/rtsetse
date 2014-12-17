@@ -4,7 +4,7 @@
 \title{tsetse pupal mortality on a GRID}
 \usage{
 rtPupalMortalityGrid(aGridPup, pMort = 0.25, propDD = 0.25,
-  mCarryCap = NULL, iCarryCap = NULL)
+  mMortMultGridPup = NULL, mCarryCap = NULL, iCarryCap = NULL)
 }
 \arguments{
 \item{aGridPup}{array with the age distributions of pupal males & females [y,x,sex,age]}
@@ -12,6 +12,8 @@ rtPupalMortalityGrid(aGridPup, pMort = 0.25, propDD = 0.25,
 \item{pMort}{a mortality probability}
 
 \item{propDD}{proportion of mortality that is density dependent}
+
+\item{mMortMultGridPup}{an optional grid of mortality multipliers (derived from vegetation)}
 
 \item{mCarryCap}{a matrix of Carrying Capacities for each cell as an integer (an alternative to iCarryCap)}
 
