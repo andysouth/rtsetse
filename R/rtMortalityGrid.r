@@ -45,54 +45,55 @@ rtMortalityGrid <- function( aGrid,
       
       #cat(paste("x,y:",x,",",y,"dim(mCarryCap)=",dim(mCarryCap),"\n"))
       
-      #!BEWARE potentially confusing issue of matrix dimensions
-      #!matrices are indexed by rows,cols. rows=y, cols=x
-      #!but in rtsetse all matrices now referenced [x,y]
-      
-      #if no single CarryCap value get it from the grid (not a standard feature)
-      if ( is.null(iCarryCap) ) iCarryCap <- mCarryCap[y,x]     
-      
-      #apply mortality multiplier for this cell
-      #TODO this doesn't seem like an efficient way of doing
-      #should I instead create an array of the age-specific mortalities
-      #but might get tricky
-      vpMortFVeg <- vpMortF
-      vpMortMVeg <- vpMortM
-      if ( !is.null(mMortMultGrid) )
-      {
-        #iMortMult <- mMortMultGrid[y,x]
-        #in rtsetse all matrices now referenced [x,y]
-        iMortMult <- mMortMultGrid[y,x]
-        if (iMortMult != 100)
-        {
-          #first convert percent to proportion
-          iMortMult <- iMortMult/100
-          #this is how mortalities are multiplied in hat-trick
-          vpMortFVeg <- vpMortF*iMortMult
-          vpMortMVeg <- vpMortM*iMortMult 
-          #check here that no mortalities go above 1
-          if ( max(vpMortFVeg) > 1 | max(vpMortMVeg) > 1 )
-          {
-            iHighMortCounter <- iHighMortCounter + 1
-            vpMortFVeg[ which(vpMortFVeg>1) ] <- 1
-            vpMortMVeg[ which(vpMortMVeg>1) ] <- 1
-          }
-        }
-      } 
-      
-      
       #only apply mortality if flies in cell (to save time)
       if ( sum(aGrid[y,x,,]) > 0 )
       {
+      
+        #!BEWARE potentially confusing issue of matrix dimensions
+        #!matrices are indexed by rows,cols. rows=y, cols=x
+        #!but in rtsetse all matrices now referenced [x,y]
+        
+        #if no single CarryCap value get it from the grid (not a standard feature)
+        if ( is.null(iCarryCap) ) iCarryCap <- mCarryCap[y,x]     
+        
+        #apply mortality multiplier for this cell
+        #TODO this doesn't seem like an efficient way of doing
+        #should I instead create an array of the age-specific mortalities
+        #but might get tricky
+        vpMortFVeg <- vpMortF
+        vpMortMVeg <- vpMortM
+        if ( !is.null(mMortMultGrid) )
+        {
+          #iMortMult <- mMortMultGrid[y,x]
+          #in rtsetse all matrices now referenced [x,y]
+          iMortMult <- mMortMultGrid[y,x]
+          if (iMortMult != 100)
+          {
+            #first convert percent to proportion
+            iMortMult <- iMortMult/100
+            #this is how mortalities are multiplied in hat-trick
+            vpMortFVeg <- vpMortF*iMortMult
+            vpMortMVeg <- vpMortM*iMortMult 
+            #check here that no mortalities go above 1
+            if ( max(vpMortFVeg) > 1 | max(vpMortMVeg) > 1 )
+            {
+              iHighMortCounter <- iHighMortCounter + 1
+              vpMortFVeg[ which(vpMortFVeg>1) ] <- 1
+              vpMortMVeg[ which(vpMortMVeg>1) ] <- 1
+            }
+          }
+        } 
+      
+        #apply mortality for this cell
         aGrid[y,x,,] <- rtMortality(vFem = aGrid[y,x,'F',],
                                     vMal = aGrid[y,x,'M',],
                                     vpMortFVeg,
                                     vpMortMVeg,
                                     returnArray = TRUE,
                                     propDD = propDD, 
-                                    iCarryCap = iCarryCap )          
-      }
-      
+                                    iCarryCap = iCarryCap )  
+        
+      }#end of if pop in cell > 0     
     }#y
   }#x
 
