@@ -35,6 +35,7 @@
 #' @param iInterLarva Inter-larval period
 #' @param pMortLarva larval mortality per period
 #' @param propMortLarvaDD proportion of larval mortality that is density dependent
+#' @param pControl extra mortality probability due to control, first go at implementing control. TODO improve this
 #' @param verbose print what it's doing T/F
 #' @param report filename for a report for this run, if not specified no report is produced
 
@@ -82,6 +83,7 @@ rtPhase5Test2 <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(
                           iInterLarva = 10,
                           pMortLarva = 0.05,
                           propMortLarvaDD = 0.25,
+                          pControl = 0,
                           verbose = FALSE,
                           report = NULL ) #"reportPhase2.html" ) 
 {
@@ -326,11 +328,14 @@ rtPhase5Test2 <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(
       #movement avoiding no-go areas
       aGrid <- plyr::aaply(aGrid,.margins=c(3,4), .drop=FALSE,function(m) rtMoveReflectNoGo(m, mnog=mnog, pMove=pMove)) 
       
-      
       #put array dimensions back in correct order
       aGrid <- aperm(aGrid, c(3,4,1,2))
       
     }
+    
+    #4/12/14 first go at implementing control
+    #TODO make this better, just temporarily here !!
+    if (pControl > 0 ) aGrid <- rtControlTestGrid1(aGrid, pControl=pControl)
     
     
     #dim(abind(x,y,along=0))     # binds on new dimension before first
