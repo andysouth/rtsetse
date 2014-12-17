@@ -1,23 +1,32 @@
 #' setting a grid of mortality multipliers from a vegetation grid
 #'
 #' \code{rtSetMortGridFromVeg} 
-#' creates a grid of multipliers to be applied to the standard mortality rates.
+#' creates a grid of multipliers to be applied to the standard adult or pupa mortality rates.
 #' From a vegetation grid and a table specifying the multiplier for each vegetation.
 #' if the passed matrix contains a code not present in the table it returns NA.
 
+
+#' @param sAdultOrPupa "adult" or "pupa"
 #' @param mVegetation a matrix of vegetation types
 #' @param dfMortByVeg a lookup table specifying mortality multiplier (percent) for each vegetation type
 #' 
 #' @return a grid of mortality multipliers
 #' 
 #' @examples
-#' mMortMult <- rtSetMortGridFromVeg()
+#' mMortMult <- rtSetMortGridFromVeg("adult")
 #' @export
 
-rtSetMortGridFromVeg <- function( mVegetation = matrix(c("D","T","O","S","D","D"),nrow=2),
-                                  dfMortByVeg = data.frame(code=c("D","T","O","S","B","G","N"),mortality=c(100,200,300,400,500,600,700),stringsAsFactors = FALSE)
+rtSetMortGridFromVeg <- function( sAdultOrPupa = "",
+                                  mVegetation = array(c("D","T","O","S","N","N"),dim=c(2,3)),
+                                  dfMortByVeg = data.frame(code=c("D","T","O","S","B","G","N"),mortality=c(200,150,110,100,110,210,999),pupmortality=c(120,110,105,100,120,170,999),stringsAsFactors = FALSE)
                                   )
 {
+  
+  sAdultOrPupaColumn <- ""
+  if ( sAdultOrPupa == "adult") sAdultOrPupaColumn <- "mortality"
+  else if ( sAdultOrPupa == "pupa") sAdultOrPupaColumn <- "pupmortality"  
+  else if ( sAdultOrPupa == "") stop("you need to specify adult or pupa")
+  else stop("you need to specify 'adult' or 'pupa' you have",sAdultOrPupa)
   
   #gives a warning if the matrix gives a code not present in the df
   #currently it returns NA, may want to modify that
@@ -27,7 +36,9 @@ rtSetMortGridFromVeg <- function( mVegetation = matrix(c("D","T","O","S","D","D"
   badCodes <- unique( mVegetation[ badCodePosns ])
   
   #match returns vector of positions of (first) matches of arg1 in arg2
-  vMortMult <- dfMortByVeg$mortality[ match(mVegetation, dfMortByVeg$code)]
+  #vMortMult <- dfMortByVeg$mortality[ match(mVegetation, dfMortByVeg$code)]
+  #now allowing for ad or pup column
+  vMortMult <- dfMortByVeg[[sAdultOrPupaColumn]][ match(mVegetation, dfMortByVeg$code)]
   
   if ( length(badCodePosns) > 0 )
   {

@@ -3,12 +3,15 @@
 \alias{rtSetMortGridFromVeg}
 \title{setting a grid of mortality multipliers from a vegetation grid}
 \usage{
-rtSetMortGridFromVeg(mVegetation = matrix(c("D", "T", "O", "S", "D", "D"),
-  nrow = 2), dfMortByVeg = data.frame(code = c("D", "T", "O", "S", "B", "G",
-  "N"), mortality = c(100, 200, 300, 400, 500, 600, 700), stringsAsFactors =
+rtSetMortGridFromVeg(sAdultOrPupa = "", mVegetation = array(c("D", "T", "O",
+  "S", "N", "N"), dim = c(2, 3)), dfMortByVeg = data.frame(code = c("D", "T",
+  "O", "S", "B", "G", "N"), mortality = c(200, 150, 110, 100, 110, 210, 999),
+  pupmortality = c(120, 110, 105, 100, 120, 170, 999), stringsAsFactors =
   FALSE))
 }
 \arguments{
+\item{sAdultOrPupa}{"adult" or "pupa"}
+
 \item{mVegetation}{a matrix of vegetation types}
 
 \item{dfMortByVeg}{a lookup table specifying mortality multiplier (percent) for each vegetation type}
@@ -18,7 +21,7 @@ a grid of mortality multipliers
 }
 \description{
 \code{rtSetMortGridFromVeg}
-creates a grid of multipliers to be applied to the standard mortality rates.
+creates a grid of multipliers to be applied to the standard adult or pupa mortality rates.
 From a vegetation grid and a table specifying the multiplier for each vegetation.
 if the passed matrix contains a code not present in the table it returns NA.
 }

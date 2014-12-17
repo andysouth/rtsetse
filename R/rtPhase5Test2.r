@@ -129,10 +129,16 @@ rtPhase5Test2 <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(
                                   fMortOldProp = fMortOldProp ) 
   
   #create mortality multiplier grid from the vegetation grid
-  mMortMultGrid <- rtSetMortGridFromVeg( mVegetation = mVegetation,
+  mMortMultGrid <- rtSetMortGridFromVeg( sAdultOrPupa ="adult",
+                                         mVegetation = mVegetation,
                                          dfMortByVeg = dfMortByVeg )  
   #if (verbose) cat("mortality multiplier grid set to:",mMortMultGrid,"\n")
-
+  #create pupal mortality multiplier grid from the vegetation grid
+  mMortMultGridPup <- rtSetMortGridFromVeg( sAdultOrPupa ="pupa",
+                                         mVegetation = mVegetation,
+                                         dfMortByVeg = dfMortByVeg )    
+  
+  
   #setting a total carryCap from the female input
   iCarryCap <- iCarryCapF * (1+fMperF)
 
