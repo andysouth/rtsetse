@@ -1,8 +1,8 @@
-code ,name,mortality
-D,Example,100
-T,These,100
-O,Names,100
-S,Can be,100
-B,Anything,100
-G,You,100
-N,Like,999
+code,name,mortality,pupmortality
+D,Example,100,100
+T,These,100,100
+O,Names,100,100
+S,Can be,100,100
+B,Anything,100,100
+G,You,100,100
+N,Like,100,100

@@ -1,4 +1,4 @@
-code ,name,mortality,pupmortality
+code,name,mortality,pupmortality
 D,Dense Forest,200,120
 T,Thicket,150,110
 O,Open Forest,110,105
