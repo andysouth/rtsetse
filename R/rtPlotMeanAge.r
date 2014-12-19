@@ -9,7 +9,7 @@
 #' 
 #' @return nothing
 #' @examples
-#' tst <- rtPhase1Test(iDays=100)
+#' tst <- rt_runAspatial(iDays=100)
 # 'rtPlotMeanAge(tst$dfRecordF, tst$dfRecordM)
 
 #' @export

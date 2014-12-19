@@ -24,7 +24,7 @@ nothing
 for males and females and pupae
 }
 \examples{
-tst <- rtPhase1Test3()
+tst <- rt_runAspatial()
 rtPlotPopAndPupae(tst$dfRecordF, tst$dfRecordM, tst$dfRecordPupaF, tst$dfRecordPupaM)
 }
 

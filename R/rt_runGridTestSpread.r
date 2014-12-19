@@ -1,6 +1,6 @@
 #' a simple spatial tsetse population simulation, start popn in a single central cell
 #'
-#' \code{rtPhase2Test3} goes back to more hat-trick like density dependence.
+#' \code{rt_runGridTestSpread} goes back to more hat-trick like density dependence.
 #' runs a simple spatial popn simulation as a test of phase 2
 #' model components. Concentrates on movement parameters and mortality so that 
 #' it can be used to test popn spread under different popn growth rates.
@@ -8,7 +8,7 @@
 #' @param nCol number grid columns
 #' @param nRow number grid rows
 #' @param pMove probability of moving between cells
-# following are same as rtPhase1Test3
+# following are same as rt_runAspatial
 #' @param iDays days to run simulation
 #' @param iMaxAge max age of fly allowed in model (will warn if flies age past this)
 #' @param iCarryCapF carrying capacity of adult females 
@@ -39,12 +39,12 @@
 #' @return a multi-dimensional array [day,y,x,sex,ages]
 #' @examples
 #' \dontrun{
-#' tst <- rtPhase2Test3()
+#' tst <- rt_runGridTestSpread()
 #' rtPlotMapPop(tst)
 #' }
 #' @export
 #' 
-rtPhase2Test3 <- function( 
+rt_runGridTestSpread <- function( 
                           nCol = 9,
                           nRow = 7,
                           pMove = 0.4,

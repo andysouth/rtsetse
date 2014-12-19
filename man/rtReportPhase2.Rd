@@ -19,7 +19,7 @@ rtReportPhase2(aRecord, lNamedArgs, filename = "reportPhase2.html")
 \code{rtReportPhase2} creates a pdf of text and graphical output for this run.
 }
 \examples{
-#tst <- rtPhase2Test2()
+#tst <- rt_runGridTestSpread()
 #rtReportPhase2(tst, lNamedArgs, filename="myoutput.pdf")
 }
 

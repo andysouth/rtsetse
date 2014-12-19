@@ -20,6 +20,6 @@ nothing
 Will also work on just a single dataframe.
 }
 \examples{
-tst <- rtPhase1Test(iDays=100)
+tst <- rt_runAspatial(iDays=100)
 }
 

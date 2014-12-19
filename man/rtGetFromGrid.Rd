@@ -30,7 +30,7 @@ thus \code{rtGetFromGrid(aGrid,x='sum',y='sum',sex='sum',age='sum')}
 would produce a single value of the total population on the grid.
 }
 \examples{
-tst <- rtPhase2Test2()
+tst <- rt_runGrid()
 aGrid <- tst['day2',,,,]
 rtGetFromGrid(aGrid,x='sum',y='sum',sex='sum') #age structure for whole pop
 rtGetFromGrid(aGrid,x='sum',y='sum',age='sum') #sex ratio for whole pop

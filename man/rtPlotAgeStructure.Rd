@@ -19,7 +19,7 @@ nothing
 \cr Requires the raster package.
 }
 \examples{
-tst <- rtPhase1Test2()
+tst <- rt_runAspatial()
 rtPlotAgeStructure(tst$dfRecordF)
 }
 

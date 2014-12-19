@@ -1,10 +1,10 @@
 #' an a-spatial tsetse population simulation, a third test of phase1
 #'
-#' \code{rtPhase1Test3} runs an a-spatial popn simulation as a test of phase 1 model components.
+#' \code{rt_runAspatial} runs an a-spatial popn simulation as a test of phase 1 model components.
 #' This differs from previous tests in being closer to Hat-trick.
 #' \cr ~ uses age-dependent mortalities.  
 #' \cr ~ tries to start popn. at stable age structure.
-#' \cr rtPhase1Test3 was developed from rtPhase1Test
+#' \cr rt_runAspatial was developed from rtPhase1Test3
 
 #' @param iDays days to run simulation
 #' @param iMaxAge max age of fly allowed in model (will warn if flies age past this)
@@ -36,11 +36,11 @@
 #' \cr dataframes of adult age structure over time dfRecordF & M
 #' \cr dataframes of adult age structure over time dfRecordPupa F & M
 #' @examples
-#' tst <- rtPhase1Test3()
+#' tst <- rt_runAspatial()
 #' rtPlotPopAndPupae(tst$dfRecordF, tst$dfRecordM, tst$dfRecordPupaF, tst$dfRecordPupaM)
 #' @export
 
-rtPhase1Test3 <- function( iDays = 30,
+rt_runAspatial <- function( iDays = 30,
                           iMaxAge = 120,
                           iCarryCapF = 200,
                           fMperF = 0.5,

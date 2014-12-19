@@ -11,7 +11,7 @@
 #' 
 #' @return aGrid updated array of y,x,sex,age
 #' @examples
-#' aRecord <- rtPhase2Test2()
+#' aRecord <- rt_runGrid()
 #' aGrid <- rtGetFromRecord(aRecord,days=1)
 #' aGridControlled <- rtControlTestGrid1(aGrid) 
 #' @export

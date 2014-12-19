@@ -9,7 +9,7 @@
 #' 
 #' @return nothing
 #' @examples
-#' tst <- rtPhase1Test2()
+#' tst <- rt_runAspatial()
 #' rtPlotAgeStructure(tst$dfRecordF) 
 #' @export
 
@@ -17,7 +17,6 @@ rtPlotAgeStructure <- function( df, title=NULL )
 {
 
   #! 17/7/14 this is a temporary hack to accept
-  #a different output from rtPhase2Test2
   #an array of [day,x,y,sex,age]
   #I should make it accept this properly and give options to do
   #'M','F','MF' and even selected grid cells later
@@ -34,7 +33,7 @@ rtPlotAgeStructure <- function( df, title=NULL )
     rast <- raster::flip(rast, direction='y')
     
   } else {
-    #this is the original code accepting the output from rtPhase1Test2
+    #this is the original code accepting the output from rt_runAspatial
     #convert the dataframe to a matrix object
     mat <- as.matrix(df)
     #convert the matrix to a raster object

@@ -17,7 +17,7 @@
 #' 
 #' @return an array, matrix or vector named with remaining dimensions of [y,x,sex,age]
 #' @examples
-#' tst <- rtPhase2Test2()
+#' tst <- rt_runGrid()
 #' aGrid <- tst['day2',,,,]
 #' rtGetFromGrid(aGrid,x='sum',y='sum',sex='sum') #age structure for whole pop
 #' rtGetFromGrid(aGrid,x='sum',y='sum',age='sum') #sex ratio for whole pop

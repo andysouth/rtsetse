@@ -8,7 +8,7 @@
 #' 
 #' @return ?nothing maybe
 #' @examples
-#' #tst <- rtPhase2Test2()
+#' #tst <- rt_runGridTestSpread()
 #' #rtReportPhase2(tst, lNamedArgs, filename="myoutput.pdf")
 #' @export
 #' 

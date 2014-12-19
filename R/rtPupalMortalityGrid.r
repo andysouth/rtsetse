@@ -70,7 +70,7 @@ rtPupalMortalityGrid <- function( aGridPup,
       
       
       
-      #these 3 lines are the same way it is called in rtPhase1Test3()
+      #these 3 lines are the same way it is called in rt_runAspatial()
       #!BEWARE iCarryCapPupa set from iCarryCap here because hat-trick default runs show similar numbers of ads & pupae at stability
       lPupae <- rtPupalMortality(vPupaF=vPupaF, 
                                  vPupaM=vPupaM, 

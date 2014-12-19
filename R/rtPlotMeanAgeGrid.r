@@ -10,7 +10,7 @@
 #' 
 #' @return ?ggplot2 object
 #' @examples
-#' tst <- rtPhase2Test2()
+#' tst <- rt_runGridTestSpread()
 #' rtPlotMeanAgeGrid(tst) 
 #' @export
 

@@ -17,7 +17,7 @@
 #' 
 #' @return raster brick used for plotting
 #' @examples
-#' tst <- rtPhase2Test3()
+#' tst <- rt_runGridTestSpread()
 #' rtPlotMapPop(tst) 
 #' @export
 

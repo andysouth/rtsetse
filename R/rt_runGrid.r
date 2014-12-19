@@ -1,6 +1,6 @@
 #' spatial tsetse population simulation with mortality varying over the grid
 #'
-#' \code{rtPhase5Test2} replaces \code{rtPhase5Test}
+#' \code{rt_runGrid} was called \code{rtPhase5Test2}
 #' 
 #' This accepts a grid of vegetation and how mortality varies by vegetation
 
@@ -10,7 +10,7 @@
 # @param nCol number grid columns
 # @param nRow number grid rows
 #' @param pMove probability of moving between cells
-# following are same as rtPhase1Test3
+# following are same as rt_runAspatial
 #' @param iDays days to run simulation
 #' @param iMaxAge max age of fly allowed in model (will warn if flies age past this)
 #' @param iCarryCapF carrying capacity of adult females 
@@ -42,19 +42,19 @@
 #' @return a multi-dimensional array [day,x,y,sex,ages]
 #' @examples
 #' \dontrun{
-#' tst <- rtPhase5Test2()
+#' tst <- rt_runGrid()
 #' rtPlotMapPop(tst)
 #' #now try an unequal matrix
 #' mCarryCapF <- matrix( 10*(1:16), 4, 4)
-#' tst <- rtPhase5Test2(mCarryCapF)
+#' tst <- rt_runGrid(mCarryCapF)
 #' rtPlotMapPop(tst) 
 #' #an unequal matrix starting at a fraction of CC
-#' tst <- rtPhase5Test2(mCarryCapF, fStartPopPropCC = 0.5)
+#' tst <- rt_runGrid(mCarryCapF, fStartPopPropCC = 0.5)
 #' rtPlotMapPop(tst) 
 #' }
 #' @export
 #' 
-rtPhase5Test2 <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(2,3)),
+rt_runGrid <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(2,3)),
                           dfMortByVeg = data.frame(code=c("D","T","O","S","B","G","N"),mortality=c(200,150,110,100,110,210,999),pupmortality=c(120,110,105,100,120,170,999),stringsAsFactors = FALSE),
 #                           mCarryCapF = matrix(200,4,4),
 #                           nCol = 10,
@@ -95,7 +95,7 @@ rtPhase5Test2 <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(
   #getting the arguments
   lNamedArgs <- mget(names(formals()),sys.frame(sys.nframe()))
     
-  if (verbose) cat("starting rtPhase5Test2 with arguments:",paste0(names(lNamedArgs),"=",lNamedArgs,","),"\n")
+  if (verbose) cat("starting rt_runGrid with arguments:",paste0(names(lNamedArgs),"=",lNamedArgs,","),"\n")
   
   #read in the vegetation map if it has been specified as a filepath
   if ( class(mVegetation) =="character" )

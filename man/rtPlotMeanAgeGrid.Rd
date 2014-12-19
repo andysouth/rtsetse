@@ -20,7 +20,7 @@ Uses a different approach from rtPlotPopAndPupae using reshape2, dplyr & ggplot2
 EXPERIMENTAL
 }
 \examples{
-tst <- rtPhase2Test2()
+tst <- rt_runGridTestSpread()
 rtPlotMeanAgeGrid(tst)
 }
 

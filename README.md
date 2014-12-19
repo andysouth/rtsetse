@@ -11,7 +11,9 @@ To develop a Hat-trick replacement I am following a modular programming approach
 
 I have organised development in phases with each phase producing a testable deliverable. The components of each phase will be combined to produce a modular product. Some user-interface components for inputs and outputs will be developed within each phase. A later phase will work on how best to combine these and add to them to create a coherent tool.
 
-All functions in the package are currently preceded by rt. There are functions called rtPhase[n]Test() which test the development phases as shown below.
+All functions in the package are currently preceded by rt. There are functions called rt_run*() which perform simulation runs.
+
+The development phases have been :
 
 * **Phase 1 : Population1**:  an age-structured a-spatial population simulation for tsetse
 * **Phase 2 : Movement1**:  random movement independent of vegetation

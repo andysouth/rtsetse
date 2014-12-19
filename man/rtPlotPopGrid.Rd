@@ -19,7 +19,7 @@ from a passed matrix of day,y,x,sex,age.
 Uses a different approach from rtPlotPopAndPupae using reshape2, dplyr & ggplot2.
 }
 \examples{
-tst <- rtPhase2Test2()
+tst <- rt_runGridTestSpread()
 rtPlotPopGrid(tst)
 }
 
