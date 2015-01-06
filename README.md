@@ -5,7 +5,7 @@ rtsetse is an R package for simulating tsetse fly populations.
 
 It follows from Hat-Trick, an Excel based Tsetse model see rtsetse.org.
 
-Development by Andy South in 2014. Do get in touch with comments or questions.
+Development by Andy South in 2014-15. Do get in touch with comments or questions.
 
 To develop a Hat-trick replacement I am following a modular programming approach, building a series of components that can be tested in isolation and can contribute to a useful, maintainable and modifiable tool. Within the 6 months available it will not be possible to provide all the functionality of the current Hat-Trick but it will be possible to provide a functioning model that can be built upon.
 
