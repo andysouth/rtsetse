@@ -1,5 +1,3 @@
-D	T	O	
-S	B	G	
-N	N	N
-
-
+D	T
+O	S
+B	N
