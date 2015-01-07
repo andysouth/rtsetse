@@ -8,6 +8,7 @@
 #' @param iControlBorder the number of cells around the edge where no control applied
 #' if there are insufficient cells in the passed grid, then it applies control to all cells
 #' (this allows small tests to be run)  
+#' @param verbose print what it's doing T/F
 #' 
 #' @return aGrid updated array of y,x,sex,age
 #' @examples
@@ -16,7 +17,7 @@
 #' aGridControlled <- rtControlTestGrid1(aGrid) 
 #' @export
 
-rtControlTestGrid1 <- function(aGrid, pControl=0.1, iControlBorder=8)
+rtControlTestGrid1 <- function(aGrid, pControl=0.1, iControlBorder=8, verbose = TRUE)
 {
 
   

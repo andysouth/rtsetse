@@ -3,7 +3,8 @@
 \alias{rtControlTestGrid1}
 \title{first test of tsetse control}
 \usage{
-rtControlTestGrid1(aGrid, pControl = 0.1, iControlBorder = 8)
+rtControlTestGrid1(aGrid, pControl = 0.1, iControlBorder = 8,
+  verbose = TRUE)
 }
 \arguments{
 \item{aGrid}{array of y,x,sex,age}
@@ -13,6 +14,8 @@ rtControlTestGrid1(aGrid, pControl = 0.1, iControlBorder = 8)
 \item{iControlBorder}{the number of cells around the edge where no control applied
 if there are insufficient cells in the passed grid, then it applies control to all cells
 (this allows small tests to be run)}
+
+\item{verbose}{print what it's doing T/F}
 }
 \value{
 aGrid updated array of y,x,sex,age
