@@ -95,7 +95,8 @@ rtPlotMapPop <- function( aRecord,
   #this adds a single z dimension if it has been lost
   else if (length(dim(aDays))==2) {
     #need to sort dimnames too, gets annoyingly fiddly
-    tmpnames <- list(x=dimnames(aDays)$x,y=dimnames(aDays)$y,day=days)
+    #BUGFIX 7/1/15 y before x
+    tmpnames <- list(y=dimnames(aDays)$y, x=dimnames(aDays)$x, day=days)
     aDays2 <- array(aDays, dim=c(dim(aDays),1), dimnames=tmpnames)
     aDays <- aDays2
     
