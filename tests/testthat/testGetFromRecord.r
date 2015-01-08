@@ -14,10 +14,20 @@ test_that("array retrievals work as expected", {
   aRecord <- array(1:nVals, dim=c(nDays,nY,nX,2,iMaxAge), dimnames=dimnames1)
   
   #1st element of array
-  expect_equal( rtGetFromRecord(aRecord, days=1, y=1, x=1, sex='F', age=1), aRecord[1,1,1,'F',1] )
+  expect_equal( rtGetFromRecord(aRecord, days=1, y=1, x=1, sex='F', age=1), 
+                aRecord[1,1,1,'F',1] )
   #last element of array
-  expect_equal( rtGetFromRecord(aRecord, days=nDays, y=nY, x=nX, sex='M', age=iMaxAge), aRecord[nDays,nY,nX,'M',iMaxAge] )
-  
+  expect_equal( rtGetFromRecord(aRecord, days=nDays, y=nY, x=nX, sex='M', age=iMaxAge), 
+                aRecord[nDays,nY,nX,'M',iMaxAge] )
+  #age structure for whole popn on final day is length of iMaxAge
+  expect_equal( length(rtGetFromRecord(aRecord,days=nDays,x='sum',y='sum',sex='sum')), 
+                iMaxAge ) 
+  #raw grid array for one day
+  expect_equal( rtGetFromRecord(aRecord,days=2),
+                aRecord[2,,,,] )
+  #sex ratio for whole pop on final day is length 2
+  expect_equal( length(rtGetFromRecord(aRecord,days=2,x='sum',y='sum',age='sum')),
+                2 )
 
 })
 
