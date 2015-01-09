@@ -3,12 +3,14 @@
 \alias{rtMoveReflect}
 \title{movement to cells NESW, reflecting boundaries}
 \usage{
-rtMoveReflect(m, pMove = 0.4)
+rtMoveReflect(m, pMove = 0.4, verbose = FALSE)
 }
 \arguments{
 \item{m}{a matrix of cells containing a single number representing one age}
 
 \item{pMove}{proportion of popn that moves out of the cell.}
+
+\item{verbose}{print what it's doing T/F}
 }
 \value{
 an updated matrix following movement

@@ -9,11 +9,12 @@
 
 #' @param m a matrix of cells containing a single number representing one age
 #' @param pMove proportion of popn that moves out of the cell.
+#' @param verbose print what it's doing T/F
 #' 
 #' @return an updated matrix following movement
 #' @export
 
-rtMoveReflect <- function(m, pMove=0.4) {
+rtMoveReflect <- function(m, pMove=0.4, verbose=FALSE) {
   
   
   #!beware that this doesn't cope with nrow=1 or ncol=1 
@@ -49,11 +50,19 @@ rtMoveReflect <- function(m, pMove=0.4) {
   #this avoids duplicate levels problems outside the function
   dimnames(mNew) <- dimnames(m)
   
+  
+  if (verbose)
+  {
+    cat("popn before\n") 
+    print(m)
+    cat("\nmStayers\n") 
+    print(mStayers)
+    cat("\nmArrivers\n") 
+    print(mArrivers)
+    cat("\nmNew\n") 
+    print(mNew)
+  }
+  
   return( mNew )
 }
 
-#simple test
-#!create a unit-test based on this
-#m=matrix(c(0,1,0),nrow=3,ncol=3)
-#m=matrix(c(1:9),nrow=3,ncol=3)
-#rtMoveReflect(m)
