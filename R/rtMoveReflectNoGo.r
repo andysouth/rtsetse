@@ -106,9 +106,9 @@ rtMoveReflectNoGo <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
 
   if (verbose)
   {
-    cat("m\n") 
+    cat("popn before\n") 
     print(m)
-    cat("\nmnog\n") 
+    cat("\nno-go areas (0=nogo)\n") 
     print(mnog)
     cat("\nmStayers\n") 
     print(mStayers)
