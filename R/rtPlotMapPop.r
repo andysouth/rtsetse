@@ -1,11 +1,11 @@
 #' plots map(s) of populations
 #' 
 #' \code{rtPlotMapPop} plots map(s) of populations from simulation outputs 
-#' i.e. a passed array of day,x,y,sex,age.  
+#' i.e. a passed array of day,y,x,sex,age.  
 #' Can plot a maximum of 16 days, will display the first 16 if you select more than this.
 #' For adults to start with but could be used for pupae too. 
 
-#' @param aRecord array of day,x,y,sex,age
+#' @param aRecord array of day,y,x,sex,age
 #' @param days which days to plot, options 'all', 'final', 
 #'    a number >0 and <days in the simulation, or a series e.g. c(1,2) or c(4:7)
 #' @param ifManyDays days to plot if days='all' and num days > 16, Options: 
@@ -29,7 +29,7 @@ rtPlotMapPop <- function( aRecord,
                           verbose = FALSE)
 {
   #to sum the age structures in each cell on each day
-  #and give result as [days,x,y]
+  #and give result as [days,y,x]
  
   #subsetting of days
   #be careful that day0 is element1
@@ -60,7 +60,7 @@ rtPlotMapPop <- function( aRecord,
   } else if (sex != 'M' & sex != 'F') 
     stop("sex should be 'M','F','MF' or 'both', yours is ",sex)
   
-  #to give an array of [days,x,y]
+  #to give an array of [days,y,x]
   #this works when sex=TRUE from above
   #aDays <- apply(aRecord[days,,,sex, ,drop=FALSE],MARGIN=c(1,2,3),sum) 
   #this works when sex='sum' from above
@@ -89,7 +89,7 @@ rtPlotMapPop <- function( aRecord,
   #colourP <- topo.colors(nb) 
   
   #rearranging dimensions for raster brick
-  #needs to be x,y,z
+  #needs to be y,x,z
   if (length(dim(aDays))==3)
     aDays <- aperm(aDays, c(2, 3, 1))
   #this adds a single z dimension if it has been lost
@@ -113,7 +113,7 @@ rtPlotMapPop <- function( aRecord,
   # create raster brick (a collection of raster maps)
   #brick1 <- brick(aDays) 
   
-  #BEWARE! trying to sort that dimensions x,y don't get transposed
+  #BEWARE! trying to sort that dimensions y,x don't get transposed
   #brick1 <- brick(aDays, transpose=TRUE)
   brick1 <- brick(aDays)
 

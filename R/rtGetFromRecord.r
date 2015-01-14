@@ -1,13 +1,13 @@
-#' to access population data from a record array [days,x,y,sex,age]
+#' to access population data from a record array [days,y,x,sex,age]
 #'
 #' \code{rtGetFromRecord} allows access to population data from a grid of sexes and ages. 
-#' You can specify which [days,x,y,sex,age] you want to get data for.  
+#' You can specify which [days,y,x,sex,age] you want to get data for.  
 #' Each variable defaults to 'all' so \code{rtGetFromRecord(aRecord)} would return the whole grid.   
 #' ='sum' can be used to sum across dimensions, 
 #' thus \code{rtGetFromRecord(aRecord,x='sum',y='sum',sex='sum',age='sum')} 
 #' would produce a single value of the total population on the grid.
 
-#' @param aRecord an array with the age distributions of males & females [x,y,sex,age] 
+#' @param aRecord an array with the age distributions of males & females [y,x,sex,age] 
 #' @param days day of the simulation starting at 1 options 'all', 'sum', 
 #'    a number >0 and <days in the simulation, or a series e.g. c(1,2) or c(4:7)
 #' @param x grid column number 
@@ -19,7 +19,7 @@
 #' @param verbose print what it's doing T/F
 
 
-#' @return an array, matrix or vector named with remaining dimensions of [x,y,sex,age]
+#' @return an array, matrix or vector named with remaining dimensions of [y,x,sex,age]
 #' @examples
 #' aRecord <- rt_runGridTestSpread()
 #' aGrid <- rtGetFromRecord(aRecord,days=2) #gives raw array for one day
@@ -58,18 +58,18 @@ rtGetFromRecord <- function( aRecord,
   #checks
   #check that aRecord is an arry with 5 dimensions
   if ( class(aRecord)!="array" | length(dim(aRecord)) != 5 )
-    stop("the first arg needs to be an array with 5 dimensions [day,x,y,sex,age], yours is a ",class(aRecord)," with length(dim)=",length(dim(aRecord)),"\n")
+    stop("the first arg needs to be an array with 5 dimensions [day,y,x,sex,age], yours is a ",class(aRecord)," with length(dim)=",length(dim(aRecord)),"\n")
   #check that the dimensions are named as expected
   if ( ! identical( names(dimnames(aRecord)),c("day","y","x","sex","age")) )
     stop("array dimensions should be named day,y,x,sex,age yours are: ", names(dimnames(aRecord)) )
   
   if(verbose) cat("in rtGetFromRecord() days=",days," y=",y," x=",x," sex=",sex," age=",age," drop=",drop,"\n")
   
-  #aRecord[x,y,sex,age]
+  #aRecord[y,x,sex,age]
   allArgs <- c(days,y,x,sex,age)
   
   
-  #add tests that x,y,sex & age have appropriate values
+  #add tests that y,x,sex & age have appropriate values
   
   #see table in liverpoolNotes from 23/7/14 about how to access different parts of array
   
@@ -86,7 +86,7 @@ rtGetFromRecord <- function( aRecord,
   if (! 'sum' %in% allArgs )
   {
     #this allows for e.g. age=c(1:10)
-    #toReturn <- aRecord[days,x,y,sex,age, drop=FALSE]
+    #toReturn <- aRecord[days,y,x,sex,age, drop=FALSE]
     #i think I do want to drop dimensions that go to 1
     #e.g. if selecting a single day
     #I could allow user to pass the drop param & set it to default TRUE

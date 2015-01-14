@@ -28,7 +28,7 @@ rtLarvalDepositionGrid <- function( aGrid,
   #i want to multiply the F age structure in each cell by the age dependent deposition rates
   
   #aGrid['x1','y1','F',] #F age structure for one cell
-  #drop=FALSE stops array dimensions being lost e.g. if x,y == 1
+  #drop=FALSE stops array dimensions being lost e.g. if y,x == 1
   aFs <- aGrid[,,'F', ,drop=FALSE] #F age structures for all cells
     
   #create a test vpDeposit

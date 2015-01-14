@@ -39,7 +39,7 @@
 #' @param verbose print what it's doing T/F
 #' @param report filename for a report for this run, if not specified no report is produced
 
-#' @return a multi-dimensional array [day,x,y,sex,ages]
+#' @return a multi-dimensional array [day,y,x,sex,ages]
 #' @examples
 #' \dontrun{
 #' tst <- rt_runGrid()
@@ -150,7 +150,7 @@ rt_runGrid <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(2,3
   nX <- dim(mVegetation)[2]
 
   #mnog a matrix of cells of 0&1, 0 for nogo areas, used in movement 
-  #name dimensions to try to avoid confusion with x,y
+  #name dimensions to try to avoid confusion with y,x
   mnog <- ifelse( mVegetation=="N",0,1)
   #BEWARE! confusion bewteen x&y dimensions
   #mnog <- t(mnog) #transpose
@@ -344,8 +344,7 @@ rt_runGrid <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(2,3
     if (pControl > 0 ) aGrid <- rtControlTestGrid1(aGrid, pControl=pControl)
     
     
-    #dim(abind(x,y,along=0))     # binds on new dimension before first
-    #dim(abind(x,y,rev.along=0)) # binds on new dimension after last
+    #bind todays grid [y,x,sex,age] onto a record for all days [day,y,x,sex,age]
     aRecord <- abind::abind(aRecord, aGrid, along=1, use.first.dimnames=TRUE) #along=1 binds on first dimension
     #seems these dimension names get lost
     dimnames(aRecord)[[1]] <- paste0('day',1:day) #just goes to the current day 

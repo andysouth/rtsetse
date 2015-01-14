@@ -70,7 +70,7 @@ option "sameAsAdults" to set tot pupae same as tot adults.}
 \item{report}{filename for a report for this run, if not specified no report is produced}
 }
 \value{
-a multi-dimensional array [day,x,y,sex,ages]
+a multi-dimensional array [day,y,x,sex,ages]
 }
 \description{
 \code{rt_runGrid} was called \code{rtPhase5Test2}

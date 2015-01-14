@@ -39,7 +39,7 @@ rtPupalMortalityGrid <- function( aGridPup,
   for(x in seq_along(dimnames(aGridPup)$x)){
     for(y in seq_along(dimnames(aGridPup)$y)){
       
-      #cat(paste("x,y:",x,",",y,"dim(mCarryCap)=",dim(mCarryCap),"\n"))
+      #cat(paste("y,x:",y,",",x,"dim(mCarryCap)=",dim(mCarryCap),"\n"))
       
       #!BEWARE potentially confusing issue of matrix dimensions
       #!matrices are indexed by rows,cols. rows=y, cols=x

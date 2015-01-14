@@ -22,10 +22,10 @@ rtMortalityGrid(aGrid, vpMortF, vpMortM, propDD = 0.25,
 \item{iCarryCap}{a single integer Carrying Capacities for all cells as an integer (an alternative to mCarryCap)}
 }
 \value{
-an array with the age distributions of males & females [x,y,sex,age]
+an array with the age distributions of males & females [y,x,sex,age]
 }
 \description{
-\code{rtMortalityGrid} returns an array with the age distributions of males & females [x,y,sex,age]
+\code{rtMortalityGrid} returns an array with the age distributions of males & females [y,x,sex,age]
 \cr It accepts age and sex specific mortality probabilities.
 \cr !It should check that the length of the age structure and pMort vectors are the same
 \cr It uses the length of the age structure vectors passed to it.

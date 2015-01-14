@@ -280,10 +280,7 @@ rt_runGridTestSpread <- function(
         
     cat("day",day,"\n")
     
-    #aF
-    
-    #dim(abind(x,y,along=0))     # binds on new dimension before first
-    #dim(abind(x,y,rev.along=0)) # binds on new dimension after last
+    #bind todays grid [y,x,sex,age] onto a record for all days [day,y,x,sex,age]
     aRecord <- abind::abind(aRecord, aGrid, along=1, use.first.dimnames=TRUE) #along=1 binds on first dimension
     
     

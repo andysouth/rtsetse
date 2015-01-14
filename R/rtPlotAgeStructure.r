@@ -17,7 +17,7 @@ rtPlotAgeStructure <- function( df, title=NULL )
 {
 
   #! 17/7/14 this is a temporary hack to accept
-  #an array of [day,x,y,sex,age]
+  #an array of [day,y,x,sex,age]
   #I should make it accept this properly and give options to do
   #'M','F','MF' and even selected grid cells later
   if (class(df)=='array') {

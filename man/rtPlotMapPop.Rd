@@ -7,7 +7,7 @@ rtPlotMapPop(aRecord, days = "all", ifManyDays = "spread", sex = "MF",
   title = NULL, verbose = FALSE)
 }
 \arguments{
-\item{aRecord}{array of day,x,y,sex,age}
+\item{aRecord}{array of day,y,x,sex,age}
 
 \item{days}{which days to plot, options 'all', 'final',
 a number >0 and <days in the simulation, or a series e.g. c(1,2) or c(4:7)}
@@ -27,7 +27,7 @@ raster brick used for plotting
 }
 \description{
 \code{rtPlotMapPop} plots map(s) of populations from simulation outputs
-i.e. a passed array of day,x,y,sex,age.
+i.e. a passed array of day,y,x,sex,age.
 Can plot a maximum of 16 days, will display the first 16 if you select more than this.
 For adults to start with but could be used for pupae too.
 }

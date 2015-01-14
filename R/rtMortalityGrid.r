@@ -1,6 +1,6 @@
 #' tsetse mortality on a grid **in development**
 #'
-#' \code{rtMortalityGrid} returns an array with the age distributions of males & females [x,y,sex,age]
+#' \code{rtMortalityGrid} returns an array with the age distributions of males & females [y,x,sex,age]
 #' \cr It accepts age and sex specific mortality probabilities.
 #' \cr !It should check that the length of the age structure and pMort vectors are the same
 #' \cr It uses the length of the age structure vectors passed to it.
@@ -14,7 +14,7 @@
 #' @param mCarryCap a matrix of Carrying Capacities for each cell as an integer (an alternative to iCarryCap)
 #' @param iCarryCap a single integer Carrying Capacities for all cells as an integer (an alternative to mCarryCap)
 #' 
-#' @return an array with the age distributions of males & females [x,y,sex,age]
+#' @return an array with the age distributions of males & females [y,x,sex,age]
 #' @export
 
 rtMortalityGrid <- function( aGrid,
@@ -26,7 +26,7 @@ rtMortalityGrid <- function( aGrid,
                          iCarryCap = NULL ) 
 {
  
-  #aGrid[x,y,sex,age]
+  #aGrid[y,x,sex,age]
 
   #checks
   if (is.null(iCarryCap) & is.null(mCarryCap)) stop("you must specify one of either mCarryCap or iCarryCap")
@@ -43,7 +43,7 @@ rtMortalityGrid <- function( aGrid,
   for(x in seq_along(dimnames(aGrid)$x)){
     for(y in seq_along(dimnames(aGrid)$y)){
       
-      #cat(paste("x,y:",x,",",y,"dim(mCarryCap)=",dim(mCarryCap),"\n"))
+      #cat(paste("y,x:",y,",",x,"dim(mCarryCap)=",dim(mCarryCap),"\n"))
       
       #only apply mortality if flies in cell (to save time)
       if ( sum(aGrid[y,x,,]) > 0 )

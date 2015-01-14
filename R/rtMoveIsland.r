@@ -5,7 +5,7 @@
 #' In this initial version popn moving outside of the grid is lost
 #' and nothing arrives in from outside of the grid.
 #' This function works on a single age class, it can be made to work on multiple age classes
-#' by passing an array[x,y,age] to aaply(.margins=3)
+#' by passing an array[y,x,age] to aaply(.margins=3)
 #' Tries to cope with nrow or ncol==1 but I think fails.
 
 #' @param m a matrix of cells containing a single number representing one age

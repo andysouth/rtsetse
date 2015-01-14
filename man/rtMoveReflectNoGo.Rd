@@ -29,7 +29,7 @@ that didn't move to the nogo area in the preceeding timestep.
 This could represent flies turning back from an unpleasant area in one timestep and then trying other directions later.
 Boundaries are reflecting.
 This function works on a single age class, it can be made to work on multiple age classes
-by passing an array[x,y,age] to aaply(.margins=3)
+by passing an array[y,x,age] to aaply(.margins=3)
 Doesn't try to cope with nrow or ncol==1.
 }
 \examples{

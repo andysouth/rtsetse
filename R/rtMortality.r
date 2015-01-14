@@ -37,7 +37,7 @@ rtMortality <- function( vFem,
   if ( propDD > 0 )
   {
     #total pop in the cell
-    fPopn <- (sum(vFem)+sum(vMal)) #sum(aGrid[x,y,,])
+    fPopn <- (sum(vFem)+sum(vMal)) #sum(aGrid[y,x,,])
     
     vpMortF <- rtDensityDependence( fPopn = fPopn,
                                     pMort = vpMortF,
