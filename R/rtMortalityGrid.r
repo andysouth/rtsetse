@@ -51,9 +51,9 @@ rtMortalityGrid <- function( aGrid,
       
         #!BEWARE potentially confusing issue of matrix dimensions
         #!matrices are indexed by rows,cols. rows=y, cols=x
-        #!but in rtsetse all matrices now referenced [x,y]
         
         #if no single CarryCap value get it from the grid (not a standard feature)
+        #note in rtsetse all matrices referenced [y,x] [row,col]
         if ( is.null(iCarryCap) ) iCarryCap <- mCarryCap[y,x]     
         
         #apply mortality multiplier for this cell
@@ -64,8 +64,7 @@ rtMortalityGrid <- function( aGrid,
         vpMortMVeg <- vpMortM
         if ( !is.null(mMortMultGrid) )
         {
-          #iMortMult <- mMortMultGrid[y,x]
-          #in rtsetse all matrices now referenced [x,y]
+          #note in rtsetse all matrices referenced [y,x] [row,col]
           iMortMult <- mMortMultGrid[y,x]
           if (iMortMult != 100)
           {
