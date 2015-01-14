@@ -24,8 +24,8 @@ rtControlTestGrid1 <- function(aGrid, pControl=0.1, iControlBorder=8, verbose = 
   ny <- dim(aGrid)[1]
   nx <- dim(aGrid)[2]
   
-  #if there are insufficient cells in the passed grid, 
-  #then it applies control to all cells
+  #if there are insufficient cells in the passed grid to include the border
+  #control is applied to all cells (thus allowing small tests)
   if (iControlBorder*2 >= ny) ys4control <- TRUE
   else ys4control <- c((iControlBorder+1):(ny-iControlBorder))
   if (iControlBorder*2 >= nx) xs4control <- TRUE
@@ -39,7 +39,7 @@ rtControlTestGrid1 <- function(aGrid, pControl=0.1, iControlBorder=8, verbose = 
   fFliesAfterControl <- sum(aGrid)
   
   #I could print the number of flies killed just for info
-  if (verbose) cat("flies killed : ", fFliesBeforeControl-fFliesAfterControl)
+  if (verbose) cat("flies killed : ", fFliesBeforeControl-fFliesAfterControl,"\n")
   
   
   #return
