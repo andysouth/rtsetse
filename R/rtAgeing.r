@@ -1,6 +1,7 @@
-#' ageing of adults or pupae
+#' ageing of adults or pupae in a single population
 #' 
-#' \code{rtAgeing} simply advances the age of all classes in the passed vector
+#' \code{rtAgeing} simply advances the age of all classes in the passed vector.  
+#' Note this isn't called by \code{\link{rtAgeingGrid}} which is used for grid models.
 
 #' @param v a vector of age distribution 
 #' @param label a string describing what is being passed, added to any warning messages 

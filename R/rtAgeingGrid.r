@@ -1,6 +1,7 @@
 #' ageing of adults or pupae in all cells on a passed grid
 #' 
-#' \code{rtAgeingGrid} advances the age of all classes in the vectors in each cell of the passed grid
+#' \code{rtAgeingGrid} advances the age of all classes in the vectors in each cell of the passed grid.  
+#' note this doesn't call \code{\link{rtAgeing}} which is used in the aspatial model.
 
 #' @param a an array of the age distributions in each grid cell [y,x,sex,age] 
 #' @param label a string describing what is being passed, added to any warning messages 
