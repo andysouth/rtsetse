@@ -160,13 +160,11 @@ rt_runGrid <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(2,3
   
   
   #create arrays of 0s for pupae & adults to start
-  #PUPAE ----
+  #PUPAE
   iMaxPupAge <- max(iPupDurM, iPupDurF)
-  dimnamesPup <- list( y=paste0('y',1:nY), x=paste0('x',1:nX), sex=c("F","M"), age=paste0('age',1:iMaxPupAge))
-  aGridPup <- array(0, dim=c(nY,nX,2,iMaxPupAge), dimnames=dimnamesPup)  
+  aGridPup <- rtCreateGrid(nY=nY, nX=nX, nAge=iMaxPupAge, fill=0) 
   #ADULTS
-  dimnames1 <- list( y=paste0('y',1:nY), x=paste0('x',1:nX), sex=c("F","M"), age=paste0('age',1:iMaxAge))
-  aGrid <- array(0, dim=c(nY,nX,2,iMaxAge), dimnames=dimnames1)    
+  aGrid <- rtCreateGrid(nY=nY, nX=nX, nAge=iMaxAge, fill=0)  
 
   #loop for each cell in the grid
   #to enable initiation of pupae and adults at carrycap in each

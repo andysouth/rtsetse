@@ -125,14 +125,14 @@ rt_runGridTestSpread <- function(
   mCarryCap <- matrix(iCarryCap, ncol=nCol, nrow=nRow, dimnames=dimnamesCarryCap)
 
 
-  #PUPAE ----
+  #create arrays of 0s for pupae & adults to start
+  #PUPAE
   iMaxPupAge <- max(iPupDurM, iPupDurF)
-  #dimnamesPup <- list( paste0('x',1:nCol), paste0('y',1:nRow), c("F","M"), paste0('age',1:iMaxPupAge))
-  #names(dimnamesPup) <- c("x","y","sex","age")
-  #aGridPup <- array(0, dim=c(nCol,nRow,2,iMaxPupAge), dimnames=dimnamesPup)  
-  dimnamesPup <- list( y=paste0('y',1:nY), x=paste0('x',1:nX), sex=c("F","M"), age=paste0('age',1:iMaxPupAge))
-  aGridPup <- array(0, dim=c(nY,nX,2,iMaxPupAge), dimnames=dimnamesPup)  
+  aGridPup <- rtCreateGrid(nY=nY, nX=nX, nAge=iMaxPupAge, fill=0) 
+  #ADULTS
+  aGrid <- rtCreateGrid(nY=nY, nX=nX, nAge=iMaxAge, fill=0)  
   
+ 
   #calculating start numbers of pupae
   fPupaPerSexAge <- rtCalcPupaPerSexAge(pMortPupa = pMortPupa, 
                                         vpMortF = vpMortF,
@@ -149,11 +149,6 @@ rt_runGridTestSpread <- function(
   aGridPup[yStart, xStart, 'F', ] <- vPupaF
   aGridPup[yStart, xStart, 'M', ] <- vPupaM
   
-    
-  #ADULTS
-  #create array of 0s to start
-  dimnames1 <- list( y=paste0('y',1:nY), x=paste0('x',1:nX), sex=c("F","M"), age=paste0('age',1:iMaxAge))
-  aGrid <- array(0, dim=c(nY,nX,2,iMaxAge), dimnames=dimnames1)    
   
   
   #start popn at stability
