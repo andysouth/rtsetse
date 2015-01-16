@@ -9,10 +9,15 @@ test_that("array retrievals work as expected", {
   nY <- 3
   iMaxAge <- 4
   nDays <- 2
-  dimnames1 <- list( day=paste0('day',1:nDays), y=paste0('y',1:nY), x=paste0('x',1:nX), sex=c("F","M"), age=paste0('age',1:iMaxAge))
-  nVals <- nDays*nY*nX*2*iMaxAge
-  aRecord <- array(1:nVals, dim=c(nDays,nY,nX,2,iMaxAge), dimnames=dimnames1)
-  
+#   dimnames1 <- list( day=paste0('day',1:nDays), y=paste0('y',1:nY), x=paste0('x',1:nX), sex=c("F","M"), age=paste0('age',1:iMaxAge))
+#   nVals <- nDays*nY*nX*2*iMaxAge
+#   aRecord <- array(1:nVals, dim=c(nDays,nY,nX,2,iMaxAge), dimnames=dimnames1)
+  aRecord <- rtCreateRecord( nY=nY, nX=nX, nAge=4 )
+  #To fill array with sequential values
+  aRecord[] <- c(1:length(aRecord))
+
+
+
   #1st element of array
   expect_equal( rtGetFromRecord(aRecord, days=1, y=1, x=1, sex='F', age=1), 
                 aRecord[1,1,1,'F',1] )

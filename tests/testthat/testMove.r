@@ -42,9 +42,8 @@ test_that("movement of multiple age classes using plyr::aaply works", {
   nX <- 4
   nY <- 3
   iMaxAge <- 2
-  dimnames1 <- list( y=paste0('y',1:nY), x=paste0('x',1:nX), sex=c("F","M"), age=paste0('age',1:iMaxAge))
   #create an empty grid
-  aGrid <- array(0, dim=c(nY,nX,2,iMaxAge), dimnames=dimnames1)
+  aGrid <- rtCreateGrid(nY=nY, nX=nX, nAge=iMaxAge, fill=0)  
   
   #try repeating some of the tests for movement avoiding no-go areas from above
   #for different age classes

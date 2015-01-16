@@ -9,9 +9,9 @@ test_that("mortality on a grid with no density-dependence works", {
   nX <- 4
   nY <- 3
   iMaxAge <- 2
-  dimnames1 <- list( y=paste0('y',1:nY), x=paste0('x',1:nX), sex=c("F","M"), age=paste0('age',1:iMaxAge))
   #create an empty grid
-  aGrid <- array(0, dim=c(nY,nX,2,iMaxAge), dimnames=dimnames1)
+  aGrid <- rtCreateGrid(nY=nY, nX=nX, nAge=iMaxAge, fill=0)  
+  
   #put popn into grid
   aGrid[,,'F',1] <- array(c(1,0,0,0,0,0,0,0,0,0,0,0),dim=c(nY,nX))
   aGrid[,,'M',2] <- array(c(0,1,0,0,0,0,0,0,0,0,0,0),dim=c(nY,nX))
