@@ -339,7 +339,7 @@ rt_runGrid <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(2,3
     
     #4/12/14 first go at implementing control
     #TODO make this better, just temporarily here !!
-    if (pControl > 0 ) aGrid <- rtControlTestGrid1(aGrid, pControl=pControl)
+    if (pControl > 0 ) aGrid <- rtControlGrid(aGrid, pControl=pControl, iControlBorder=8)
     
     
     #bind todays grid [y,x,sex,age] onto a record for all days [day,y,x,sex,age]

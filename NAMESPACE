@@ -3,7 +3,7 @@
 export(rtAgeing)
 export(rtAgeingGrid)
 export(rtCalcPupaPerSexAge)
-export(rtControlTestGrid1)
+export(rtControlGrid)
 export(rtCreateGrid)
 export(rtCreateRecord)
 export(rtDDTest)
