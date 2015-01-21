@@ -3,7 +3,7 @@
 \alias{rtControlGrid}
 \title{first test of tsetse control}
 \usage{
-rtControlGrid(aGrid, pControl = 0.1, aGridControlModifier = NULL,
+rtControlGrid(aGrid, pControl = 0.1, mGridControlModifier = NULL,
   iControlBorder = 0, verbose = TRUE)
 }
 \arguments{
@@ -11,7 +11,7 @@ rtControlGrid(aGrid, pControl = 0.1, aGridControlModifier = NULL,
 
 \item{pControl}{proportion of adults to be killed by control (daily)}
 
-\item{aGridControlModifier}{an optional grid to modify control.
+\item{mGridControlModifier}{an optional grid to modify control.
 The control probability is multiplied by this. SO can use 0,1 grid for control/no control option.}
 
 \item{iControlBorder}{the number of cells around the edge where no control applied

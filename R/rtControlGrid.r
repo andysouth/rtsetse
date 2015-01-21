@@ -5,7 +5,7 @@
 
 #' @param aGrid array of y,x,sex,age
 #' @param pControl proportion of adults to be killed by control (daily)
-#' @param aGridControlModifier an optional grid to modify control. 
+#' @param mGridControlModifier an optional grid to modify control. 
 #' The control probability is multiplied by this. SO can use 0,1 grid for control/no control option.
 #' @param iControlBorder the number of cells around the edge where no control applied
 #' if there are insufficient cells in the passed grid, then it applies control to all cells
@@ -21,7 +21,7 @@
 
 rtControlGrid <- function(aGrid, 
                                pControl=0.1, 
-                               aGridControlModifier=NULL,
+                               mGridControlModifier=NULL,
                                iControlBorder=0, 
                                verbose = TRUE)
 {
@@ -36,13 +36,13 @@ rtControlGrid <- function(aGrid,
   mGridControl <- matrix(1, nrow=nY, ncol=nX)
   
   #if a control modification grid is specified
-  if (! is.null(aGridControlModifier))
+  if (! is.null(mGridControlModifier))
   {
     #check that dimensions of grid & control grid are the same
-    if ( !identical( dim(aGrid), dim(aGridControlModifier) ) )
-      stop("dimensions of grid and GridControlModifier are not the same")
+    if ( !identical( dim(mGridControl), dim(mGridControlModifier) ) )
+      stop("dimensions of gridControl and gridControlModifier are not the same")
     
-    mGridControl <- aGridControlModifier * mGridControl
+    mGridControl <- mGridControlModifier * mGridControl
   }  
   
   #if a border is specified
