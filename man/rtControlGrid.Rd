@@ -3,13 +3,21 @@
 \alias{rtControlGrid}
 \title{first test of tsetse control}
 \usage{
-rtControlGrid(aGrid, pControl = 0.1, mGridControlModifier = NULL,
-  iControlBorder = 0, verbose = TRUE)
+rtControlGrid(aGrid, vpControlF = NULL, vpControlM = NULL,
+  pControl = NULL, mGridControlModifier = NULL, iControlBorder = 0,
+  verbose = TRUE)
 }
 \arguments{
 \item{aGrid}{array of y,x,sex,age}
 
-\item{pControl}{proportion of adults to be killed by control (daily)}
+\item{vpControlF}{proportion by age of F to be killed by control (daily)
+age & sex dependent alternative to pControl}
+
+\item{vpControlM}{proportion by age of M to be killed by control (daily)
+age & sex dependent alternative to pControl}
+
+\item{pControl}{control independent of age & sex, proportion of adults to be killed by control (daily)
+age & sex INdependent alternative to vpControlF & vpControlM}
 
 \item{mGridControlModifier}{an optional grid to modify control.
 The control probability is multiplied by this. SO can use 0,1 grid for control/no control option.}
@@ -29,7 +37,9 @@ In a central control area.
 }
 \examples{
 aGrid <- rtCreateGrid(nY=3,nX=4,nAge=2,fill=1)
-aGridControlled <- rtControlGrid(aGrid)
-aGridControlled <- rtControlGrid(aGrid, iControlBorder=1)
+aGridControlled <- rtControlGrid(aGrid, pControl=0.1)
+aGridControlled <- rtControlGrid(aGrid, pControl=0.1, iControlBorder=1)
+#testing age & sex dependent control
+aGridControlled <- rtControlGrid(aGrid, vpControlF=c(0.1,0.2), vpControlM=c(0.3,0.4))
 }
 
