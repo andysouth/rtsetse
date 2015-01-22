@@ -79,7 +79,7 @@ rt_runGridTestSpread <- function(
   #  stop("movement does not work if less than 2 grid rows or columns")
 
   #TODO set passing to this as nY & nX
-  #this is to make consistent with a later developments and using y,x
+  #to make consistent with a later developments using y,x
   nY <- nRow
   nX <- nCol
   
