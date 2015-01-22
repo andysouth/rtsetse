@@ -201,7 +201,6 @@ rt_runGrid <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(2,3
 
 
   
-  
 # to access array dimensions by name 
 #   aGrid['y1','x1','M',] #an age structure for one cell
 #   sum(aGrid['y1','x1','M',]) #total M in one cell
@@ -355,29 +354,4 @@ rt_runGrid <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(2,3
   invisible(aRecord)
 }
 
-#accessing results
-#tst <- rtPhase2Test2()
-
-#tst['day0',,,'F','age1']
-#tst['day1',,,'F','age1']
-#aGrid <- tst['day1',,,,] #an array for one day
-#tst['day1','y1','x1','F',] #an age structure for one cell on one day
-#apply(tst,MARGIN=c('age'),sum) #summed age structure across grid over all days
-#apply(tst,MARGIN=c('day','age'),sum) #summed age structure across grid for each day
-#apply(tst,MARGIN=c('day','age','sex'),sum) #as above separated by MF
-#apply(tst,MARGIN=c('y','x','day'),sum) #grid for each day all ages & sexes
-#apply(tst['day14',,,,],MARGIN=c('y','x'),sum) #grid for a selected day all ages & sexes
-
-# #testing plotting age structure by day summed across whole grid
-# aS <- apply(tst,MARGIN=c('day','age'),sum) #summed age structure across grid for each day
-# #> class(aS) [1] "matrix"
-# #nearly works i think, except that dimensions for ages & days need to be swapped
-# rtPlotAgeStructure(aS)
-# aS2 <- aperm(aS,c(2,1))
-# aS2[1,]
-# rtPlotAgeStructure(aS2)
-# #need to reverse ages, but difficulty is that if I use rev() it reverses the numbers but not the names !
-# #reversing an individual dimension does work
-# #rev(aS2[,2])
-# aS3 <- apply(aS,MARGIN=c('day'),rev)
 
