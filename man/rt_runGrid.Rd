@@ -13,7 +13,7 @@ rt_runGrid(mVegetation = array(c("D", "T", "O", "S", "N", "N"), dim = c(2,
   fMortOldProp = 0.3, propMortAdultDD = 0.25, pMortPupa = 0.25,
   propMortPupaDD = 0.25, iPupDurF = 26, iPupDurM = 28, iFirstLarva = 16,
   iInterLarva = 10, pMortLarva = 0.05, propMortLarvaDD = 0.25,
-  pControl = 0, verbose = FALSE, report = NULL)
+  pControl = 0, iControlBorder = 8, verbose = FALSE, report = NULL)
 }
 \arguments{
 \item{mVegetation}{a matrix or filepath for a map of vegetation codes}
@@ -64,6 +64,8 @@ option "sameAsAdults" to set tot pupae same as tot adults.}
 \item{propMortLarvaDD}{proportion of larval mortality that is density dependent}
 
 \item{pControl}{extra mortality probability due to control, first go at implementing control. TODO improve this}
+
+\item{iControlBorder}{width (in cells) of border area not to control}
 
 \item{verbose}{print what it's doing T/F}
 

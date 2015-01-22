@@ -36,6 +36,7 @@
 #' @param pMortLarva larval mortality per period
 #' @param propMortLarvaDD proportion of larval mortality that is density dependent
 #' @param pControl extra mortality probability due to control, first go at implementing control. TODO improve this
+#' @param iControlBorder width (in cells) of border area not to control
 #' @param verbose print what it's doing T/F
 #' @param report filename for a report for this run, if not specified no report is produced
 
@@ -81,6 +82,7 @@ rt_runGrid <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(2,3
                           pMortLarva = 0.05,
                           propMortLarvaDD = 0.25,
                           pControl = 0,
+                          iControlBorder = 8,
                           verbose = FALSE,
                           report = NULL ) #"reportPhase2.html" ) 
 {
@@ -143,7 +145,7 @@ rt_runGrid <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(2,3
   mnog <- ifelse( mVegetation=="N",0,1)
 
   #may want to rename Y nY:1 or 1:nY
-  names(dimnames(mnog)) <- list( y=paste0('y',1:nY), x=paste0('x',1:nX) )
+  dimnames(mnog) <- list( y=paste0('y',1:nY), x=paste0('x',1:nX) )
     
   #create arrays of 0s for pupae & adults to start
   #PUPAE
@@ -313,9 +315,10 @@ rt_runGrid <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(2,3
       
     }
     
+    ## control ###
     #4/12/14 first go at implementing control
     #TODO make this better, just temporarily here !!
-    if (pControl > 0 ) aGrid <- rtControlGrid(aGrid, pControl=pControl, iControlBorder=8)
+    if (pControl > 0 ) aGrid <- rtControlGrid(aGrid, pControl=pControl, iControlBorder=iControlBorder)
     
     
     #bind todays grid [y,x,sex,age] onto a record for all days [day,y,x,sex,age]
