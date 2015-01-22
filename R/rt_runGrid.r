@@ -142,11 +142,9 @@ rt_runGrid <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(2,3
   #mnog a y,x matrix of cells of 0&1, 0 for nogo areas, used in movement 
   mnog <- ifelse( mVegetation=="N",0,1)
 
-  #TODO not sure whether to name Y nY:1 or 1:nY
-  dimnamesMatrix <- list( y=paste0('y',1:nY), x=paste0('x',1:nX) )
-  dimnames(mnog) <- dimnamesMatrix
-  
-  
+  #may want to rename Y nY:1 or 1:nY
+  names(dimnames(mnog)) <- list( y=paste0('y',1:nY), x=paste0('x',1:nX) )
+    
   #create arrays of 0s for pupae & adults to start
   #PUPAE
   iMaxPupAge <- max(iPupDurM, iPupDurF)
@@ -212,21 +210,16 @@ rt_runGrid <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(2,3
 #   apply(aGrid,MARGIN=c('sex'),sum) #summed sex ratio for whole pop  
   
   
-  # the most sensible way to save popn record
-  # would seem to be to use abind to just add another dimension
-  #library(abind)
+  # to save popn record use abind to add another dimension for days
   aRecord <- abind::abind(aGrid,along=0) #along=0 binds on new dimension before first
-  #! look at keeping names(dimnames(aRecordF))
-  #! even with this they get lost later
+  # replace lost dimension names
   names(dimnames(aRecord)) <- c('day','y','x','sex','age')
   
 
   if (verbose) cat("starting loop for",iDays,"days\n")
 
-  #for( day in 1:iDays ) {
-  #changing to starting at day1, so first changes happen on day2
-  #for( day in 2:iDays ) {
-  #this ensures the loop isn't entered unless iDays is >1
+  # start on day2 so that starting conditions are saved as day1
+  # the loop below isn't entered unless iDays is >1
   for( day in seq(from=2,length.out=iDays-1) ) {
     
     cat("day",day," of ",iDays,"\n")
@@ -250,8 +243,6 @@ rt_runGrid <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(2,3
     aGrid <- rtAgeingGrid(aGrid)
     
     #the third dimension (age) loses it's label
-    #"duplicated levels in factors are deprecated"
-    #this corrected the warnings
     names(dimnames(aGrid)) <- c('y','x','sex','age')
     
     
