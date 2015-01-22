@@ -56,9 +56,6 @@
 #' 
 rt_runGrid <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(2,3)),
                           dfMortByVeg = data.frame(code=c("D","T","O","S","B","G","N"),mortality=c(200,150,110,100,110,210,999),pupmortality=c(120,110,105,100,120,170,999),stringsAsFactors = FALSE),
-#                           mCarryCapF = matrix(200,4,4),
-#                           nCol = 10,
-#                           nRow = 10,
                           pMove = 0.4,
                           iDays = 4,
                           iMaxAge = 120,
@@ -137,23 +134,17 @@ rt_runGrid <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(2,3
   mMortMultGridPup <- rtSetMortGridFromVeg( sAdultOrPupa ="pupa",
                                          mVegetation = mVegetation,
                                          dfMortByVeg = dfMortByVeg )    
-  
-  
+    
   #setting a total carryCap from the female input
   iCarryCap <- iCarryCapF * (1+fMperF)
 
-  #get nCol&nRow form the vegetation matrix
-  #nCol <- ncol(mVegetation)
-  #nRow <- nrow(mVegetation)
-  # y,x matrix indexing
+  #get nY,nX from the vegetation matrix
   nY <- dim(mVegetation)[1]
   nX <- dim(mVegetation)[2]
 
-  #mnog a matrix of cells of 0&1, 0 for nogo areas, used in movement 
-  #name dimensions to try to avoid confusion with y,x
+  #mnog a y,x matrix of cells of 0&1, 0 for nogo areas, used in movement 
   mnog <- ifelse( mVegetation=="N",0,1)
-  #BEWARE! confusion bewteen x&y dimensions
-  #mnog <- t(mnog) #transpose
+
   #TODO not sure whether to name Y nY:1 or 1:nY
   dimnamesMatrix <- list( y=paste0('y',1:nY), x=paste0('x',1:nX) )
   dimnames(mnog) <- dimnamesMatrix
@@ -211,7 +202,6 @@ rt_runGrid <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(2,3
     } #end y    
   } #end x
 
-#22/9/14 end of part changed for rtPhase5Test()
 
   
   
@@ -304,7 +294,6 @@ rt_runGrid <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(2,3
     #####################
     ## pupal mortality ##
     # is applied at day1 for the whole period
-    # !note that iPupaDensThresh is currently constant across the grid
     aGridPup <- rtPupalMortalityGrid( aGridPup,
                                       pMort = pMortPupa, 
                                       propDD = propMortPupaDD,
