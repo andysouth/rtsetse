@@ -21,7 +21,7 @@ plots mortality rates by Age.
 Needs to be called separately for males & females.
 }
 \examples{
-vpMorts <- rtSetMortRatesByAge(c(1:100))
+vpMorts <- rtSetMortRatesByAge(iMaxAge = 100)
 rtPlotMortRatesByAge(vpMorts,"males")
 }
 

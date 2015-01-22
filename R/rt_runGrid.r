@@ -109,16 +109,13 @@ rt_runGrid <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(2,3
   
   
   #age dependent mortality
-  #beware the first arg is mortality on day1 rather than average mortality
-  #todo: change to pass iMaxAge rather than vPop
-  vpMortF <- rtSetMortRatesByAge( vPop=c(1:iMaxAge), 
+  vpMortF <- rtSetMortRatesByAge( iMaxAge = iMaxAge, 
                                   pMortAge1 = pMortF,
                                   iMortMinAgeStart = iMortMinAgeStart,
                                   iMortMinAgeStop = iMortMinAgeStop,
                                   fMortMinProp = fMortMinProp,
                                   fMortOldProp = fMortOldProp )  
-  #todo: change to pass iMaxAge rather than vPop
-  vpMortM <- rtSetMortRatesByAge( vPop=c(1:iMaxAge), 
+  vpMortM <- rtSetMortRatesByAge( iMaxAge = iMaxAge, 
                                   pMortAge1 = pMortM,
                                   iMortMinAgeStart = iMortMinAgeStart,
                                   iMortMinAgeStop = iMortMinAgeStop,

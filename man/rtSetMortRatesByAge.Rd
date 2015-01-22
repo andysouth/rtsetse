@@ -3,11 +3,11 @@
 \alias{rtSetMortRatesByAge}
 \title{setting age specific mortality rates for Tsetse}
 \usage{
-rtSetMortRatesByAge(vPop, pMortAge1 = 0.14, iMortMinAgeStart = 10,
+rtSetMortRatesByAge(iMaxAge, pMortAge1 = 0.14, iMortMinAgeStart = 10,
   iMortMinAgeStop = 50, fMortMinProp = 0.2, fMortOldProp = 0.3)
 }
 \arguments{
-\item{vPop}{a vector of age distribution (only used to get length)}
+\item{iMaxAge}{maximum age}
 
 \item{pMortAge1}{mortality rate at day 1 (the maximum)}
 
@@ -25,11 +25,11 @@ a vector of mortality probabilities
 \description{
 \code{rtSetMortRatesByAge}
 creates a vector of mortality rates by Age.
-Gets length of vector from vPop.
 Needs to be called separately for males & females.
-\cr As a first shot I have set defaults in between those for M&F.
+\cr I have set defaults in between those for M&F from Hat-trick.
 }
 \examples{
-vpMorts <- rtSetMortRatesByAge(c(1:100))
+vpMorts <- rtSetMortRatesByAge(iMaxAge = 100)
+rtPlotMortRatesByAge(vpMorts,"males")
 }
 

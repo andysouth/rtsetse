@@ -116,8 +116,7 @@ rtMortalityStableSeek <- function( iMaxAge = 120,
     #age independent
     #vpMort <- rep(fMort, iMaxAge)
     #age-dependent mortality
-    #!note it passes vector of 0s the func just uses vector to get maxAge
-    vpMort <- rtSetMortRatesByAge( vPop=rep(0, iMaxAge), 
+    vpMort <- rtSetMortRatesByAge(  iMaxAge = iMaxAge, 
                                     pMortAge1 = fMort,
                                     iMortMinAgeStart = iMortMinAgeStartF,
                                     iMortMinAgeStop = iMortMinAgeStopF,
@@ -174,8 +173,7 @@ rtMortalityStableSeek <- function( iMaxAge = 120,
     #age independent
     #vpMort <- rep(fMort, iMaxAge)
     #age-dependent mortality
-    #!note it passes vector of 0s the func just uses vector to get maxAge
-    vpMort <- rtSetMortRatesByAge( vPop=rep(0, iMaxAge), 
+    vpMort <- rtSetMortRatesByAge( iMaxAge = iMaxAge, 
                                    pMortAge1 = fMort,
                                    iMortMinAgeStart = iMortMinAgeStartM,
                                    iMortMinAgeStop = iMortMinAgeStopM,

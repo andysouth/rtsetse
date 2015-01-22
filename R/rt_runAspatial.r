@@ -74,17 +74,15 @@ rt_runAspatial <- function( iDays = 30,
   #constant by age
   #   vpMortF <- rep(pMortF,iMaxAge) 
   #   vpMortM <- rep(pMortM,iMaxAge) 
+  
   #age dependeny mortality
-  #beware the first arg is mortality on day1 rather than average mortality
-  #todo: change to pass iMaxAge rather than vPop
-  vpMortF <- rtSetMortRatesByAge( vPop=c(1:iMaxAge), 
+  vpMortF <- rtSetMortRatesByAge( iMaxAge = iMaxAge, 
                                   pMortAge1 = pMortF,
                                   iMortMinAgeStart = iMortMinAgeStart,
                                   iMortMinAgeStop = iMortMinAgeStop,
                                   fMortMinProp = fMortMinProp,
                                   fMortOldProp = fMortOldProp )  
-  #todo: change to pass iMaxAge rather than vPop
-  vpMortM <- rtSetMortRatesByAge( vPop=c(1:iMaxAge), 
+  vpMortM <- rtSetMortRatesByAge( iMaxAge = iMaxAge, 
                                   pMortAge1 = pMortM,
                                   iMortMinAgeStart = iMortMinAgeStart,
                                   iMortMinAgeStop = iMortMinAgeStop,
