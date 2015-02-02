@@ -7,7 +7,12 @@ It follows from Hat-Trick, an Excel based Tsetse model see rtsetse.org.
 
 Development by Andy South in 2014-15. Do get in touch with comments or questions.
 
-To develop a Hat-trick replacement I am following a modular programming approach, building a series of components that can be tested in isolation and can contribute to a useful, maintainable and modifiable tool. Within the 6 months available it will not be possible to provide all the functionality of the current Hat-Trick but it will be possible to provide a functioning model that can be built upon.
+You can install rtsetse from github using the devtools package
+
+  require(devtools)
+  install_github('AndySouth/rtsetse')
+
+To develop a Hat-trick replacement I am following a modular programming approach, building a series of components that can be tested in isolation and can contribute to a useful, maintainable and modifiable tool. Within the time available it will not be possible to provide all the functionality of the current Hat-Trick but it will be possible to provide a functioning model that can be built upon.
 
 I have organised development in phases with each phase producing a testable deliverable. The components of each phase will be combined to produce a modular product. Some user-interface components for inputs and outputs will be developed within each phase. A later phase will work on how best to combine these and add to them to create a coherent tool.
 
@@ -25,7 +30,7 @@ The development phases have been :
 * **Phase 8 : Tryp**:  adding infection of flies and hosts
 * **Phase 9 : Movement2**:  movement dependent on vegetation
 
-User interfaces to some of these phases can be accessed on the web at the links below and are available from a separate repository at : https://github.com/AndySouth/shinytse
+User interfaces can be accessed on the web at the links below and are available from a separate repository at : https://github.com/AndySouth/shinytse
 
 Shiny app name  | What it does  | To access on web
 ------------- | -------------| -------------
