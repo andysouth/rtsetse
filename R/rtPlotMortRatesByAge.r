@@ -11,7 +11,7 @@
 #' 
 #' @return ? nothing
 #' @examples
-#' vpMorts <- rtSetMortRatesByAge(c(1:100))
+#' vpMorts <- rtSetMortRatesByAge(iMaxAge = 100)
 #' rtPlotMortRatesByAge(vpMorts,"males") 
 #' @export
 

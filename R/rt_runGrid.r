@@ -36,6 +36,7 @@
 #' @param pMortLarva larval mortality per period
 #' @param propMortLarvaDD proportion of larval mortality that is density dependent
 #' @param pControl extra mortality probability due to control, first go at implementing control. TODO improve this
+#' @param iControlBorder width (in cells) of border area not to control
 #' @param verbose print what it's doing T/F
 #' @param report filename for a report for this run, if not specified no report is produced
 
@@ -56,9 +57,6 @@
 #' 
 rt_runGrid <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(2,3)),
                           dfMortByVeg = data.frame(code=c("D","T","O","S","B","G","N"),mortality=c(200,150,110,100,110,210,999),pupmortality=c(120,110,105,100,120,170,999),stringsAsFactors = FALSE),
-#                           mCarryCapF = matrix(200,4,4),
-#                           nCol = 10,
-#                           nRow = 10,
                           pMove = 0.4,
                           iDays = 4,
                           iMaxAge = 120,
@@ -84,6 +82,7 @@ rt_runGrid <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(2,3
                           pMortLarva = 0.05,
                           propMortLarvaDD = 0.25,
                           pControl = 0,
+                          iControlBorder = 8,
                           verbose = FALSE,
                           report = NULL ) #"reportPhase2.html" ) 
 {
@@ -112,16 +111,13 @@ rt_runGrid <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(2,3
   
   
   #age dependent mortality
-  #beware the first arg is mortality on day1 rather than average mortality
-  #todo: change to pass iMaxAge rather than vPop
-  vpMortF <- rtSetMortRatesByAge( vPop=c(1:iMaxAge), 
+  vpMortF <- rtSetMortRatesByAge( iMaxAge = iMaxAge, 
                                   pMortAge1 = pMortF,
                                   iMortMinAgeStart = iMortMinAgeStart,
                                   iMortMinAgeStop = iMortMinAgeStop,
                                   fMortMinProp = fMortMinProp,
                                   fMortOldProp = fMortOldProp )  
-  #todo: change to pass iMaxAge rather than vPop
-  vpMortM <- rtSetMortRatesByAge( vPop=c(1:iMaxAge), 
+  vpMortM <- rtSetMortRatesByAge( iMaxAge = iMaxAge, 
                                   pMortAge1 = pMortM,
                                   iMortMinAgeStart = iMortMinAgeStart,
                                   iMortMinAgeStop = iMortMinAgeStop,
@@ -137,28 +133,20 @@ rt_runGrid <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(2,3
   mMortMultGridPup <- rtSetMortGridFromVeg( sAdultOrPupa ="pupa",
                                          mVegetation = mVegetation,
                                          dfMortByVeg = dfMortByVeg )    
-  
-  
+    
   #setting a total carryCap from the female input
   iCarryCap <- iCarryCapF * (1+fMperF)
 
-  #get nCol&nRow form the vegetation matrix
-  #nCol <- ncol(mVegetation)
-  #nRow <- nrow(mVegetation)
-  # y,x matrix indexing
+  #get nY,nX from the vegetation matrix
   nY <- dim(mVegetation)[1]
   nX <- dim(mVegetation)[2]
 
-  #mnog a matrix of cells of 0&1, 0 for nogo areas, used in movement 
-  #name dimensions to try to avoid confusion with y,x
+  #mnog a y,x matrix of cells of 0&1, 0 for nogo areas, used in movement 
   mnog <- ifelse( mVegetation=="N",0,1)
-  #BEWARE! confusion bewteen x&y dimensions
-  #mnog <- t(mnog) #transpose
-  #TODO not sure whether to name Y nY:1 or 1:nY
-  dimnamesMatrix <- list( y=paste0('y',1:nY), x=paste0('x',1:nX) )
-  dimnames(mnog) <- dimnamesMatrix
-  
-  
+
+  #may want to rename Y nY:1 or 1:nY
+  dimnames(mnog) <- list( y=paste0('y',1:nY), x=paste0('x',1:nX) )
+    
   #create arrays of 0s for pupae & adults to start
   #PUPAE
   iMaxPupAge <- max(iPupDurM, iPupDurF)
@@ -211,9 +199,7 @@ rt_runGrid <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(2,3
     } #end y    
   } #end x
 
-#22/9/14 end of part changed for rtPhase5Test()
 
-  
   
 # to access array dimensions by name 
 #   aGrid['y1','x1','M',] #an age structure for one cell
@@ -226,21 +212,16 @@ rt_runGrid <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(2,3
 #   apply(aGrid,MARGIN=c('sex'),sum) #summed sex ratio for whole pop  
   
   
-  # the most sensible way to save popn record
-  # would seem to be to use abind to just add another dimension
-  #library(abind)
+  # to save popn record use abind to add another dimension for days
   aRecord <- abind::abind(aGrid,along=0) #along=0 binds on new dimension before first
-  #! look at keeping names(dimnames(aRecordF))
-  #! even with this they get lost later
+  # replace lost dimension names
   names(dimnames(aRecord)) <- c('day','y','x','sex','age')
   
 
   if (verbose) cat("starting loop for",iDays,"days\n")
 
-  #for( day in 1:iDays ) {
-  #changing to starting at day1, so first changes happen on day2
-  #for( day in 2:iDays ) {
-  #this ensures the loop isn't entered unless iDays is >1
+  # start on day2 so that starting conditions are saved as day1
+  # the loop below isn't entered unless iDays is >1
   for( day in seq(from=2,length.out=iDays-1) ) {
     
     cat("day",day," of ",iDays,"\n")
@@ -264,8 +245,6 @@ rt_runGrid <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(2,3
     aGrid <- rtAgeingGrid(aGrid)
     
     #the third dimension (age) loses it's label
-    #"duplicated levels in factors are deprecated"
-    #this corrected the warnings
     names(dimnames(aGrid)) <- c('y','x','sex','age')
     
     
@@ -304,7 +283,6 @@ rt_runGrid <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(2,3
     #####################
     ## pupal mortality ##
     # is applied at day1 for the whole period
-    # !note that iPupaDensThresh is currently constant across the grid
     aGridPup <- rtPupalMortalityGrid( aGridPup,
                                       pMort = pMortPupa, 
                                       propDD = propMortPupaDD,
@@ -337,9 +315,10 @@ rt_runGrid <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(2,3
       
     }
     
+    ## control ###
     #4/12/14 first go at implementing control
     #TODO make this better, just temporarily here !!
-    if (pControl > 0 ) aGrid <- rtControlGrid(aGrid, pControl=pControl, iControlBorder=8)
+    if (pControl > 0 ) aGrid <- rtControlGrid(aGrid, pControl=pControl, iControlBorder=iControlBorder)
     
     
     #bind todays grid [y,x,sex,age] onto a record for all days [day,y,x,sex,age]
@@ -369,29 +348,4 @@ rt_runGrid <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(2,3
   invisible(aRecord)
 }
 
-#accessing results
-#tst <- rtPhase2Test2()
-
-#tst['day0',,,'F','age1']
-#tst['day1',,,'F','age1']
-#aGrid <- tst['day1',,,,] #an array for one day
-#tst['day1','y1','x1','F',] #an age structure for one cell on one day
-#apply(tst,MARGIN=c('age'),sum) #summed age structure across grid over all days
-#apply(tst,MARGIN=c('day','age'),sum) #summed age structure across grid for each day
-#apply(tst,MARGIN=c('day','age','sex'),sum) #as above separated by MF
-#apply(tst,MARGIN=c('y','x','day'),sum) #grid for each day all ages & sexes
-#apply(tst['day14',,,,],MARGIN=c('y','x'),sum) #grid for a selected day all ages & sexes
-
-# #testing plotting age structure by day summed across whole grid
-# aS <- apply(tst,MARGIN=c('day','age'),sum) #summed age structure across grid for each day
-# #> class(aS) [1] "matrix"
-# #nearly works i think, except that dimensions for ages & days need to be swapped
-# rtPlotAgeStructure(aS)
-# aS2 <- aperm(aS,c(2,1))
-# aS2[1,]
-# rtPlotAgeStructure(aS2)
-# #need to reverse ages, but difficulty is that if I use rev() it reverses the numbers but not the names !
-# #reversing an individual dimension does work
-# #rev(aS2[,2])
-# aS3 <- apply(aS,MARGIN=c('day'),rev)
 
