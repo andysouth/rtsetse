@@ -9,8 +9,8 @@ Development by Andy South in 2014-15. Do get in touch with comments or questions
 
 You can install rtsetse from github using the devtools package
 
-`require(devtools)`
-`install_github('AndySouth/rtsetse')`
+    require(devtools)    
+    install_github('AndySouth/rtsetse')     
 
 To develop a Hat-trick replacement I am following a modular programming approach, building a series of components that can be tested in isolation and can contribute to a useful, maintainable and modifiable tool. Within the time available it will not be possible to provide all the functionality of the current Hat-Trick but it will be possible to provide a functioning model that can be built upon.
 
