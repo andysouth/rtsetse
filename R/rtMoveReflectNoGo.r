@@ -61,6 +61,9 @@ rtMoveReflectNoGo <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
   mW = cbind( m[,1], m[,-ncol(m)] )  
   
   #creating matrices of neighbouring nogo areas
+  #this doesn't need to be repeated every day
+  #it could be done at the start of a simulation, and passed probably as a list or array
+  #but time cost of doing this for a few 100 days is probably fairly low
   mnogN = rbind( mnog[1,], mnog[-nrow(mnog),] )
   mnogE = cbind( mnog[,-1], mnog[,ncol(mnog)] )
   mnogS = rbind( mnog[-1,], mnog[nrow(mnog),] )   
