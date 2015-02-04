@@ -6,6 +6,8 @@ test_that("vegetation dependent movement does what is expected", {
   
   mMovers <- array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4))
   
+  #these first three tests are just with movement from a single cell & include nogo
+  
   #1 nogo neighbour and veg movement multiplier set to 1
   #expect rtMoveReflectNoGoVeg() to give same results as rtMoveReflectNoGo()
   mnog <- array(c(1,0,1,1,1,1,1,1,1,1,1,1),dim=c(3,4))
@@ -22,6 +24,22 @@ test_that("vegetation dependent movement does what is expected", {
   mveg <- mMovers/2
   expect_equal( rtMoveReflectNoGoVeg(mMovers, mnog, mveg=mveg, pMove=0.4),
                 array(c(0, 0, 0, 0.05, 0.85, 0.05, 0, 0.05, 0, 0, 0, 0),dim=c(3,4)) )  
+  
+  
+  #now with 2 source cells and no nogo areas 
+  mMovers <- array(c(0,0,0,0,1,0,0,1,0,0,0,0),dim=c(3,4))
+  mnog <- array(c(1,1,1,1,1,1,1,1,1,1,1,1),dim=c(3,4))
+  
+  #expect that when veg is 0 for a cell no movement from that cell
+  mveg <- array(c(0,0,0,0,2,0,0,0,0,0,0,0),dim=c(3,4))
+  expect_equal( rtMoveReflectNoGoVeg(mMovers, mnog, mveg=mveg, pMove=0.4),
+                array(c(0, 0.2, 0, 0.2, 0.2, 0.2, 0, 1.2, 0, 0, 0, 0),dim=c(3,4)) ) 
+  
+  #expect that when veg is 0.5 & 2 for neighbouring cells ...
+  mveg <- array(c(0,0,0,0,0.5,0,0,2,0,0,0,0),dim=c(3,4))
+  expect_equal( rtMoveReflectNoGoVeg(mMovers, mnog, mveg=mveg, pMove=0.4),
+                array(c(0, 0.05, 0, 0.05, 1, 0.05, 0.2, 0.25, 0.2, 0, 0.2, 0),dim=c(3,4)) )   
+  
   
   
   
