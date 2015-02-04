@@ -74,7 +74,7 @@ rtMoveReflectNoGoVeg <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)
   #vegetation movement modifiers
   #multiplying mveg by the 0,1 of mnog will ensure that no movers come from there
   #(although there shouldn't be any popn there anyway, so it may not be necessary)
-  #BUT see below
+  #BUT removed because of, see below
   #mveg <- mveg*mnog
   
   mvegN = rbind( mveg[1,], mveg[-nrow(mveg),] )
@@ -82,7 +82,16 @@ rtMoveReflectNoGoVeg <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)
   mvegS = rbind( mveg[-1,], mveg[nrow(mveg),] )   
   mvegW = cbind( mveg[,1], mveg[,-ncol(mveg)] )  
   
-  #todo!!, need to put in a check for if pMove*mveg is >1
+  #todo!!, need to put in a check for if any cells in pMove*mveg are >1
+  #then should I just set them to 1 so that all indivs leave ?
+  indicesHighMove <- which((mveg*pMove > 1))
+  if (length(indicesHighMove) >0))
+  {
+    warning("your combination of pMove and vegetation movement multipliers causes ",length(indicesHighMove),
+            " cells to have proportion moving >1, these will be set to 1 and all will move out")
+    #reduce multiplier in cells so that the result will be 1 (all move)
+    mveg[indicesHighMove] <- 1/pMove
+  }
   
   #calc arrivers in a cell from it's 4 neighbours
   #mArrivers <- pMove*(mN + mE + mS + mW)/4
