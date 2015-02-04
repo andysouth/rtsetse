@@ -39,9 +39,7 @@ test_that("vegetation dependent movement does what is expected", {
   mveg <- array(c(0,0,0,0,0.5,0,0,2,0,0,0,0),dim=c(3,4))
   expect_equal( rtMoveReflectNoGoVeg(mMovers, mnog, mveg=mveg, pMove=0.4),
                 array(c(0, 0.05, 0, 0.05, 1, 0.05, 0.2, 0.25, 0.2, 0, 0.2, 0),dim=c(3,4)) )   
-  
-  
-  
+
   
 })
 
