@@ -6,7 +6,7 @@
 \alias{rtsetse-package}
 \title{simulating tsetse fly populations to investigate control options.}
 \description{
-rtsetse provides functions to create tsetse fly population simulations with age, sex and spatial structure.
+rtsetse is being developed to provide functions to create tsetse fly population simulations with age, sex and spatial structure.
 }
 \details{
 The main functions to run simulations are :
