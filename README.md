@@ -27,7 +27,7 @@ rt_runAspatial()         | age-structured a-spatial population simulation
 rt_runGridTestSpread()   | grid simulation, homogenous landscape, spread fro central populated cell
 rt_runGrid()             | grid simulation, landscape set from vegetation map, population starts at carrying capacity
 
-User interfaces can be accessed on the web at the links below and are available from a separate [https://github.com/AndySouth/shinytse](repository).
+User interfaces can be accessed on the web at the links below and are available from a separate [repository](https://github.com/AndySouth/shinytse).
 
 Shiny app link  | What it does  | To run locally
 ------------- | -------------| -------------
