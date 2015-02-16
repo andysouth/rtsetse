@@ -85,7 +85,7 @@ rtMoveReflectNoGoVeg <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)
   #todo!!, need to put in a check for if any cells in pMove*mveg are >1
   #then should I just set them to 1 so that all indivs leave ?
   indicesHighMove <- which((mveg*pMove > 1))
-  if (length(indicesHighMove) >0))
+  if (length(indicesHighMove) >0)
   {
     warning("your combination of pMove and vegetation movement multipliers causes ",length(indicesHighMove),
             " cells to have proportion moving >1, these will be set to 1 and all will move out")
