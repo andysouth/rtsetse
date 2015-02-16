@@ -1,3 +1,5 @@
+[![Travis-CI Build Status](https://travis-ci.org/AndySouth/rtsetse.png?branch=master)](https://travis-ci.org/AndySouth/rtsetse)
+
 rtsetse
 ========================================================
 
