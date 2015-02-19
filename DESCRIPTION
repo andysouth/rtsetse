@@ -17,4 +17,6 @@ Imports: sp,
     reshape2,
     ggplot2,
     rmarkdown
-Suggests: testthat
+Suggests: testthat,
+    knitr
+VignetteBuilder: knitr
