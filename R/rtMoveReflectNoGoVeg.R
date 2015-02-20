@@ -22,18 +22,18 @@
 #' @return an updated matrix following movement
 #' @examples
 #' #1 nogo neighbour
-#' rtMoveReflectNoGo(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)), mnog = array(c(1,0,1,1,1,1,1,1,1,1,1,1),dim=c(3,4)), verbose=TRUE)
+#' rtMoveReflectNoGoVeg(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)), mnog = array(c(1,0,1,1,1,1,1,1,1,1,1,1),dim=c(3,4)), verbose=TRUE)
 #' #2 nogo neighbours
-#' rtMoveReflectNoGo(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)), mnog = array(c(1,0,1,0,1,1,1,1,1,1,1,1),dim=c(3,4)), verbose=TRUE)
+#' rtMoveReflectNoGoVeg(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)), mnog = array(c(1,0,1,0,1,1,1,1,1,1,1,1),dim=c(3,4)), verbose=TRUE)
 #' #3 nogo neighbours
-#' rtMoveReflectNoGo(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)), mnog = array(c(1,0,1,0,1,0,1,1,1,1,1,1),dim=c(3,4)), verbose=TRUE)
+#' rtMoveReflectNoGoVeg(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)), mnog = array(c(1,0,1,0,1,0,1,1,1,1,1,1),dim=c(3,4)), verbose=TRUE)
 #' #4 nogo neighbours, all flies stay
-#' rtMoveReflectNoGo(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)), mnog = array(c(1,0,1,0,1,0,1,0,1,1,1,1),dim=c(3,4)), verbose=TRUE)
+#' rtMoveReflectNoGoVeg(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)), mnog = array(c(1,0,1,0,1,0,1,0,1,1,1,1),dim=c(3,4)), verbose=TRUE)
 #' @export
 
 rtMoveReflectNoGoVeg <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
-                                 mnog = array(c(1,0,1,1,1,1,1,1,1,1,1,1),dim=c(3,4)),
-                                 mveg = array(c(0,0,0,0,0.5,0,0,0,0,0,0,0),dim=c(3,4)),
+                                 mnog = NULL,
+                                 mveg = NULL,
                                  pMove=0.4,
                                  verbose=FALSE) {
   
@@ -66,21 +66,37 @@ rtMoveReflectNoGoVeg <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)
   #this doesn't need to be repeated every day
   #it could be done at the start of a simulation, and passed probably as a list or array
   #but time cost of doing this for a few 100 days is probably fairly low
-  mnogN = rbind( mnog[1,], mnog[-nrow(mnog),] )
-  mnogE = cbind( mnog[,-1], mnog[,ncol(mnog)] )
-  mnogS = rbind( mnog[-1,], mnog[nrow(mnog),] )   
-  mnogW = cbind( mnog[,1], mnog[,-ncol(mnog)] )
+  if (!is.null(mnog))
+  {
+    mnogN = rbind( mnog[1,], mnog[-nrow(mnog),] )
+    mnogE = cbind( mnog[,-1], mnog[,ncol(mnog)] )
+    mnogS = rbind( mnog[-1,], mnog[nrow(mnog),] )   
+    mnogW = cbind( mnog[,1], mnog[,-ncol(mnog)] )    
+  } else 
+  {
+    #set all these to 1 so they have no effect on movement calc later
+    mnog <- mnogN <- mnogE <- mnogS <- mnogW <- 1
+  }
+
  
   #vegetation movement modifiers
   #multiplying mveg by the 0,1 of mnog will ensure that no movers come from there
   #(although there shouldn't be any popn there anyway, so it may not be necessary)
   #BUT removed because of, see below
   #mveg <- mveg*mnog
-  
-  mvegN = rbind( mveg[1,], mveg[-nrow(mveg),] )
-  mvegE = cbind( mveg[,-1], mveg[,ncol(mveg)] )
-  mvegS = rbind( mveg[-1,], mveg[nrow(mveg),] )   
-  mvegW = cbind( mveg[,1], mveg[,-ncol(mveg)] )  
+
+  if (!is.null(mveg))
+  {
+    mvegN = rbind( mveg[1,], mveg[-nrow(mveg),] )
+    mvegE = cbind( mveg[,-1], mveg[,ncol(mveg)] )
+    mvegS = rbind( mveg[-1,], mveg[nrow(mveg),] )   
+    mvegW = cbind( mveg[,1], mveg[,-ncol(mveg)] )    
+  } else 
+  {
+    #set all these to 1 so they have no effect on movement calc later
+    mveg <- mvegN <- mvegE <- mvegS <- mvegW <- 1
+  }
+
   
   #todo!!, need to put in a check for if any cells in pMove*mveg are >1
   #then should I just set them to 1 so that all indivs leave ?
