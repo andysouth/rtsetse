@@ -1,6 +1,6 @@
 ---
 title: "movement in rtsetse"
-author: "Vignette Author"
+author: "Andy South"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -9,16 +9,219 @@ vignette: >
   \usepackage[utf8]{inputenc}
 ---
 
+[rtsetse](https://github.com/AndySouth/rtsetse) is an R package that simulates tsetse fly populations on a spatial grid to enable investigation of tsetse control.   
 
+The movement of tsetse flies is an important part of the simulation.   
 
+This vignette demonstrates movement functions of different levels of detail.
 
-## Figures
-
-The figure sizes have been customised so that you can easily put two images side-by-side. 
-
-```{r, fig.show='hold'}
-plot(1:10)
-plot(10:1)
+First we should load the package after installing from github if necessary.
+```{r, eval=TRUE, echo=TRUE, message=FALSE}
+#require(devtools)    
+#install_github('AndySouth/rtsetse')
+require(rtsetse)
 ```
+
+rtMoveReflectNoGoVeg() simulates movement with reflecting boundaries, avoidance of no-go areas and dependence on vegetation.
+
+This, and the other movement functions in rtsetse, accept a spatial matrix (y,x) defining the population of tsetse flies (of a particular age and gender). The function can be called repeatedly for different ages and sexes, allowing the movement rates to be age and sex dependent. For simplicity the examples shown here will just be for a single age and sex.
+
+### Movement with no vegetation effects or no-go areas
+
+```{r, "movement-no-nogo-or-veg", eval=TRUE, echo=TRUE, message=FALSE, fig.width=7}
+
+#set dimensions of the spatial grid
+nY <- 5
+nX <- 4
+nDays <- 12
+#create array to store grids over time
+a <- array(0, dim=c(nY, nX, nDays))
+
+#populate central cell of starting grid on day1
+a[3,3,1] <- 1
+#set proportion moving
+pMove <- 0.6
+
+for(day in 2:nDays)
+{
+  a[,,day] <- rtMoveReflectNoGoVeg(a[,,day-1], pMove=pMove)  
+}
+
+#quick way of displaying population spread over time
+require(raster)
+require(sp)
+require(RColorBrewer)
+spplot( raster::brick(a), 
+        names.attr=c(paste0("day",1:nDays)), 
+        col.regions=c("white",colorRampPalette(brewer.pal(9,"Greens"))(99)) )
+```
+
+
+### Movement avoiding no-go areas
+
+To avoid 'no-go' areas the code is identical to the above with the addition of a matrix for no-go areas. In this example the top row is set as a no-go area. You should be able to see that row remains unoccupied in the spread maps below. 
+
+```{r, "movement-nogo", eval=TRUE, echo=TRUE, message=FALSE, fig.width=7}
+
+#create array to store grids over time
+a <- array(0, dim=c(nY, nX, nDays))
+
+#creating empty no-go matrix
+mnog <- array(1, dim=c(nY,nX))
+#set first row to nogo (0)
+mnog[1,] <- 0
+
+#populate central cell of starting grid on day1
+a[3,3,1] <- 1
+#set proportion moving
+pMove <- 0.6
+
+for(day in 2:nDays)
+{
+  a[,,day] <- rtMoveReflectNoGoVeg(a[,,day-1], pMove=pMove, mnog=mnog)  
+}
+
+#display population spread over time
+spplot( raster::brick(a), 
+        names.attr=c(paste0("day",1:nDays)), 
+        col.regions=c("white",colorRampPalette(brewer.pal(9,"Greens"))(99)) )
+```
+
+
+### Movement dependent upon vegetation
+
+Within the Hat-trick tsetse simulation flies are assumed to move at different rates in different vegetation types. Flies move more quickly out of cells containing the vegetation types associated with faster movement. In rtsetse this is accomodated by allowing a movement multiplier to be applied to each cell. Where the movement multiplier is greater than 1 flies will move out faster, where it is less than 1 (but still greater than 0) flies will move out more slowly.
+
+We can demonstrate this with a first simple example where a vegetation matrix is created with lower movement in the 2nd row, and the simulation is started with a uniformly populated grid. In the spread maps we can see this row increases in population while those around it decrease.
+
+```{r, "movement-veg1", eval=TRUE, echo=TRUE, message=FALSE, fig.width=7}
+
+#create array to store grids over time
+a <- array(0, dim=c(nY, nX, nDays))
+
+#creating empty vegetation matrix
+mveg <- array(1, dim=c(nY,nX))
+#set 2nd row to lower movement
+mveg[2,] <- 0.5
+
+#fill starting grid on day1
+a[,,1] <- 1
+#set proportion moving
+pMove <- 0.6
+
+for(day in 2:nDays)
+{
+  a[,,day] <- rtMoveReflectNoGoVeg(a[,,day-1], pMove=pMove, mveg=mveg)  
+}
+
+#display population spread over time
+spplot( raster::brick(a), 
+        names.attr=c(paste0("day",1:nDays)), 
+        col.regions=c("white",colorRampPalette(brewer.pal(9,"Greens"))(99)) )
+```
+
+In a second example we can increase movement from the 2nd row and in the maps see that the population now becomes lower in that row.
+
+```{r, "movement-veg2", eval=TRUE, echo=FALSE, message=FALSE, fig.width=7}
+
+#create array to store grids over time
+a <- array(0, dim=c(nY, nX, nDays))
+
+#creating empty vegetation matrix
+mveg <- array(1, dim=c(nY,nX))
+#set 2nd row to higher movement
+mveg[2,] <- 1.5
+
+#fill starting grid on day1
+a[,,1] <- 1
+#set proportion moving
+pMove <- 0.6
+
+for(day in 2:nDays)
+{
+  a[,,day] <- rtMoveReflectNoGoVeg(a[,,day-1], pMove=pMove, mveg=mveg)  
+}
+
+#display population spread over time
+spplot( raster::brick(a), 
+        names.attr=c(paste0("day",1:nDays)), 
+        col.regions=c("white",colorRampPalette(brewer.pal(9,"Greens"))(99)) )
+```
+
+In a third example we can keep the higher movement in the 2nd row and add lower movement in the 4th row. As expected the population declines in the former and increases in the latter.
+
+```{r, "movement-veg3", eval=TRUE, echo=FALSE, message=FALSE, fig.width=7}
+#create array to store grids over time
+a <- array(0, dim=c(nY, nX, nDays))
+
+#creating empty vegetation matrix
+mveg <- array(1, dim=c(nY,nX))
+#set 2nd row to higher movement
+mveg[2,] <- 1.5
+#set 4th row to lower movement
+mveg[4,] <- 0.5
+
+#fill starting grid on day1
+a[,,1] <- 1
+#set proportion moving
+pMove <- 0.6
+
+for(day in 2:nDays)
+{
+  a[,,day] <- rtMoveReflectNoGoVeg(a[,,day-1], pMove=pMove, mveg=mveg)  
+}
+
+#display population spread over time
+spplot( raster::brick(a), 
+        names.attr=c(paste0("day",1:nDays)), 
+        col.regions=c("white",colorRampPalette(brewer.pal(9,"Greens"))(99)) )
+```
+
+Now what happens if we apply this movement to the representation of a real landscape ? Lets first use the Serengeti map dataset stored in rtsetse.
+
+```{r, "load-and-plot-serengeti", eval=TRUE, echo=TRUE, message=FALSE, fig.width=7}
+
+#get the vegetation map
+mVegCats <- rtReadMapVeg( system.file("extdata","vegTanzaniaSerengetiTorr1km.txt", package="rtsetse"))
+#plot veg map
+rtPlotMapVeg(mVegCats)
+
+```
+
+Then we convert the vegetation categories to movement multipliers and run the simulation. So the result map below is just for a single age and sex class with movement only and no births and deaths.
+
+```{r, "movement-serengeti1", eval=TRUE, echo=TRUE, message=FALSE, fig.width=7}
+
+#convert vegetation categories to movement multiplier values
+#use the same function as mortality, even though it isn't mortality
+dfMortByVeg <-  data.frame(code=c("D","T","O","S","B","G","N"),mortality=c(1.5,1.2,0.9,0.8,0.7,0.6,0.5))
+#todo change filenames to make this clearer
+mveg <- rtSetMortGridFromVeg( sAdultOrPupa ="adult",
+                                       mVegetation = mVegCats,
+                                       dfMortByVeg = dfMortByVeg )
+
+#can run for longer
+#nDays <- 24
+
+#create array to store grids over time
+#set dimensions from the veg grid
+a <- array(0, dim=c(dim(mveg), nDays))
+
+#fill starting grid on day1
+a[,,1] <- 1
+#set proportion moving
+pMove <- 0.6
+
+for(day in 2:nDays)
+{
+  a[,,day] <- rtMoveReflectNoGoVeg(a[,,day-1], pMove=pMove, mveg=mveg)  
+}
+
+#display population spread over time
+spplot( raster::brick(a), 
+        names.attr=c(paste0("day",1:nDays)), 
+        col.regions=c("white",colorRampPalette(brewer.pal(9,"Greens"))(99)) )
+```
+
 
 
