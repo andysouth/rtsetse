@@ -42,7 +42,7 @@ a <- array(0, dim=c(nY, nX, nDays))
 #populate central cell of starting grid on day1
 a[3,3,1] <- 1
 #set proportion moving
-pMove <- 0.6
+pMove <- 0.8
 
 for(day in 2:nDays)
 {
@@ -76,7 +76,7 @@ mnog[1,] <- 0
 #populate central cell of starting grid on day1
 a[3,3,1] <- 1
 #set proportion moving
-pMove <- 0.6
+pMove <- 0.8
 
 for(day in 2:nDays)
 {
@@ -104,12 +104,12 @@ a <- array(0, dim=c(nY, nX, nDays))
 #creating empty vegetation matrix
 mveg <- array(1, dim=c(nY,nX))
 #set 2nd row to lower movement
-mveg[2,] <- 0.5
+mveg[2,] <- 0.8
 
 #fill starting grid on day1
 a[,,1] <- 1
 #set proportion moving
-pMove <- 0.6
+pMove <- 0.8
 
 for(day in 2:nDays)
 {
@@ -132,12 +132,12 @@ a <- array(0, dim=c(nY, nX, nDays))
 #creating empty vegetation matrix
 mveg <- array(1, dim=c(nY,nX))
 #set 2nd row to higher movement
-mveg[2,] <- 1.5
+mveg[2,] <- 1.2
 
 #fill starting grid on day1
 a[,,1] <- 1
 #set proportion moving
-pMove <- 0.6
+pMove <- 0.8
 
 for(day in 2:nDays)
 {
@@ -159,14 +159,14 @@ a <- array(0, dim=c(nY, nX, nDays))
 #creating empty vegetation matrix
 mveg <- array(1, dim=c(nY,nX))
 #set 2nd row to higher movement
-mveg[2,] <- 1.5
+mveg[2,] <- 1.2
 #set 4th row to lower movement
-mveg[4,] <- 0.5
+mveg[4,] <- 0.8
 
 #fill starting grid on day1
 a[,,1] <- 1
 #set proportion moving
-pMove <- 0.6
+pMove <- 0.8
 
 for(day in 2:nDays)
 {
@@ -179,7 +179,7 @@ spplot( raster::brick(a),
         col.regions=c("white",colorRampPalette(brewer.pal(9,"Greens"))(99)) )
 ```
 
-Now what happens if we apply this movement to the representation of a real landscape ? Lets first use the Serengeti map dataset stored in rtsetse (copied from Hat-trick).
+Now what happens if we apply this movement to the representation of a real landscape ? Lets first use the Serengeti map dataset stored in rtsetse (copied from Hat-trick). The cell size in this map is 1km, 80% of the flies are simulated as moving to one of the four neighbouring cells per day, thus representing a reasonable mean displacement of 800m per day seen in Savannah tsetse (Vale et al. 1984). 
 
 ```{r, "load-and-plot-serengeti", eval=TRUE, echo=TRUE, message=FALSE, fig.width=7}
 
@@ -204,7 +204,7 @@ mveg <- rtSetMortGridFromVeg( sAdultOrPupa ="adult",
                                        dfMortByVeg = dfMoveByVeg )
 
 #can run for longer
-nDays <- 24
+nDays <- 12
 
 #create array to store grids over time
 #set dimensions from the veg grid
@@ -213,7 +213,7 @@ a <- array(0, dim=c(dim(mveg), nDays))
 #fill starting grid on day1
 a[,,1] <- 1
 #set proportion moving
-pMove <- 0.6
+pMove <- 0.8
 
 for(day in 2:nDays)
 {
