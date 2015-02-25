@@ -3,6 +3,8 @@ title: "movement in rtsetse"
 author: "Andy South"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
+#to produce a pdf
+#output: rmarkdown::pdf_document
 vignette: >
   %\VignetteIndexEntry{movement in rtsetse}
   %\VignetteEngine{knitr::rmarkdown}
@@ -177,7 +179,7 @@ spplot( raster::brick(a),
         col.regions=c("white",colorRampPalette(brewer.pal(9,"Greens"))(99)) )
 ```
 
-Now what happens if we apply this movement to the representation of a real landscape ? Lets first use the Serengeti map dataset stored in rtsetse.
+Now what happens if we apply this movement to the representation of a real landscape ? Lets first use the Serengeti map dataset stored in rtsetse (copied from Hat-trick).
 
 ```{r, "load-and-plot-serengeti", eval=TRUE, echo=TRUE, message=FALSE, fig.width=7}
 
@@ -188,20 +190,21 @@ rtPlotMapVeg(mVegCats)
 
 ```
 
-Then we convert the vegetation categories to movement multipliers and run the simulation. So the result map below is just for a single age and sex class with movement only and no births and deaths.
+We can convert the vegetation categories to movement multipliers using the suggestions from Hat-trick for flies preferring Savannah and run the simulation.
+
 
 ```{r, "movement-serengeti1", eval=TRUE, echo=TRUE, message=FALSE, fig.width=7}
 
 #convert vegetation categories to movement multiplier values
 #use the same function as mortality, even though it isn't mortality
-dfMortByVeg <-  data.frame(code=c("D","T","O","S","B","G","N"),mortality=c(1.5,1.2,0.9,0.8,0.7,0.6,0.5))
+dfMoveByVeg <-  data.frame(code=c("D","T","O","S","B","G","N"),mortality=c(0.85, 0.9, 0.95, 1, 1.05, 1.1, 0))
 #todo change filenames to make this clearer
 mveg <- rtSetMortGridFromVeg( sAdultOrPupa ="adult",
                                        mVegetation = mVegCats,
-                                       dfMortByVeg = dfMortByVeg )
+                                       dfMortByVeg = dfMoveByVeg )
 
 #can run for longer
-#nDays <- 24
+nDays <- 24
 
 #create array to store grids over time
 #set dimensions from the veg grid
@@ -221,7 +224,15 @@ for(day in 2:nDays)
 spplot( raster::brick(a), 
         names.attr=c(paste0("day",1:nDays)), 
         col.regions=c("white",colorRampPalette(brewer.pal(9,"Greens"))(99)) )
+
+
+#to look more closely at the final day
+spplot( raster::raster(a[,,nDays]), 
+        names.attr=c(paste0("day",nDays)), 
+        col.regions=c("white",colorRampPalette(brewer.pal(9,"Greens"))(99)) )
+
 ```
 
+The maps above are just for a single age and sex class with movement only and no births and deaths. They give some indication of the population distribution that might be expected if vegetation influenced movement only and there was no effect of vegetation on mortality. Note also that these results do not include any change in behaviour at vegetation boundaries.  
 
 
