@@ -179,7 +179,7 @@ spplot( raster::brick(a),
         col.regions=c("white",colorRampPalette(brewer.pal(9,"Greens"))(99)) )
 ```
 
-Now what happens if we apply this movement to the representation of a real landscape ? Lets first use the Serengeti map dataset stored in rtsetse (copied from Hat-trick). The cell size in this map is 1km, 80% of the flies are simulated as moving to one of the four neighbouring cells per day, thus representing a reasonable mean displacement of 800m per day seen in Savannah tsetse (Vale et al. 1984). 
+Now what happens if we apply this movement to the representation of a real landscape ? Lets first use the Serengeti map dataset stored in rtsetse (copied from Hat-trick). The cell size in this map is 1km, 80% of the flies are simulated as moving to one of the four neighbouring cells per day, thus representing a reasonable mean displacement of 800m per day seen in Savannah tsetse (Vale et al. 1984).
 
 ```{r, "load-and-plot-serengeti", eval=TRUE, echo=TRUE, message=FALSE, fig.width=7}
 
@@ -190,7 +190,7 @@ rtPlotMapVeg(mVegCats)
 
 ```
 
-We can convert the vegetation categories to movement multipliers using the suggestions from Hat-trick for flies preferring Savannah and run the simulation.
+We can convert the vegetation categories to movement multipliers using the suggestions from Hat-trick for flies preferring Savannah and run the simulation. Note that the percentage of flies moving out of cells per day seems very high (88% in grass, 80% in savannah and 68% in woodland). Is this reasonable ?   
 
 
 ```{r, "movement-serengeti1", eval=TRUE, echo=TRUE, message=FALSE, fig.width=7}
@@ -233,6 +233,6 @@ spplot( raster::raster(a[,,nDays]),
 
 ```
 
-The maps above are just for a single age and sex class with movement only and no births and deaths. They give some indication of the population distribution that might be expected if vegetation influenced movement only and there was no effect of vegetation on mortality. Note also that these results do not include any change in behaviour at vegetation boundaries.  
+The maps above are just for a single age and sex class with movement only and no births and deaths. They give some indication of the population distribution that might be expected if vegetation influenced movement only and there was no effect of vegetation on mortality. Note also that these results do not yet include any change in behaviour at vegetation boundaries. Hat-trick allows for movements to less preferred habitats to be decreased. Movement resulting in a decline in preference of 1,2,3,4,5 categories is set to 30%,10%,3%,1%,0.3% respectively of what it would have been otherwise. I am currently working on implememnting this in rtsetse.    
 
 
