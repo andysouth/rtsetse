@@ -19,4 +19,8 @@ either from a text or gridascii file
 initially accepts hat-trick format vegetation maps
 which have character values of : D T O S B G N for 7 categories
 }
+\examples{
+#read in example vegetation map
+mVegCats <- rtReadMapVeg( system.file("extdata","vegTanzaniaSerengetiTorr1km.txt", package="rtsetse"))
+}
 

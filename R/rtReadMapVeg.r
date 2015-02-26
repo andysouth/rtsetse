@@ -9,7 +9,9 @@
 #' 
 #' @return a matrix (character) of the passed map
 #' TODO it might be better to return a raster, then I can use it to store info from the gridascii header
-# @examples
+#' @examples
+#' #read in example vegetation map
+#' mVegCats <- rtReadMapVeg( system.file("extdata","vegTanzaniaSerengetiTorr1km.txt", package="rtsetse"))
 #' @export
 
 rtReadMapVeg <- function( inFile ) {
