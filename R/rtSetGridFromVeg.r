@@ -31,13 +31,9 @@ rtSetGridFromVeg <- function(     mVegetation = array(c("D","T","O","S","N","N")
   if ( length(badCodePosns) > 0 )
   {
     warning("some codes in your grid don't match those in the lookup: ",paste(badCodes,""),"\n",
-            "mortality for these codes will be set to 999 * standard\n" )
+            "results for these codes will be set to NA\n" )
     #TODO what should I do with bad codes ?
-    #I could set them to the standard mortality, 
-    #or to 999 * mortality to make it clear there is a problem with them
-    #could do that by adding the bad codes on to the lookup
-    #this is easier
-    vResult[ badCodePosns ] <- 999
+    vResult[ badCodePosns ] <- NA
   }
   
   #resetting the matrix dimensions from the passed matrix prior to returning
