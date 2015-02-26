@@ -1,8 +1,8 @@
 #' spatial tsetse population simulation with mortality varying over the grid
 #'
-#' \code{rt_runGrid} was called \code{rtPhase5Test2}
+#' \code{rt_runGrid} is the main function of the rtsetse package to run a spatial simulation
 #' 
-#' This accepts a grid of vegetation and how mortality varies by vegetation
+#' This accepts a grid of vegetation and how mortality varies by vegetation.
 
 #' @param mVegetation a matrix or filepath for a map of vegetation codes
 #' @param dfMortByVeg a dataframe or filepath to a lookup table specifying mortality multiplier (percent) for each vegetation type

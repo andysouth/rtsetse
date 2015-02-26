@@ -76,10 +76,10 @@ option "sameAsAdults" to set tot pupae same as tot adults.}
 a multi-dimensional array [day,y,x,sex,ages]
 }
 \description{
-\code{rt_runGrid} was called \code{rtPhase5Test2}
+\code{rt_runGrid} is the main function of the rtsetse package to run a spatial simulation
 }
 \details{
-This accepts a grid of vegetation and how mortality varies by vegetation
+This accepts a grid of vegetation and how mortality varies by vegetation.
 }
 \examples{
 \dontrun{
