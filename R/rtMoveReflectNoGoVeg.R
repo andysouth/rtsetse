@@ -48,6 +48,11 @@ rtMoveReflectNoGoVeg <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)
   #to speed up can just return if there are no popns in matrix
   if ( sum(m)==0 ) return(m)
   
+  #~~~~~~~~~~~~~~~~~~~~~~~~~~
+  #in the code below matrices with NESW on end are source cells
+  #matrices without are destination cells
+  #~~~~~~~~~~~~~~~~~~~~~~~~~~
+  
   #speed efficient way of doing movement
   #create a copy of the matrix shifted 1 cell in each cardinal direction
   #island model uses 0's
@@ -79,11 +84,7 @@ rtMoveReflectNoGoVeg <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)
   }
 
  
-  #vegetation movement modifiers
-  #multiplying mveg by the 0,1 of mnog will ensure that no movers come from there
-  #(although there shouldn't be any popn there anyway, so it may not be necessary)
-  #BUT removed because of, see below
-  #mveg <- mveg*mnog
+  #vegetation movement modifiers from source cells
 
   if (!is.null(mveg))
   {
@@ -98,8 +99,8 @@ rtMoveReflectNoGoVeg <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)
   }
 
   
-  #todo!!, need to put in a check for if any cells in pMove*mveg are >1
-  #then should I just set them to 1 so that all indivs leave ?
+  #check for if any cells in pMove*mveg are >1
+  #if so set to 1 so that all indivs leave
   indicesHighMove <- which((mveg*pMove > 1))
   if (length(indicesHighMove) >0)
   {
@@ -111,16 +112,18 @@ rtMoveReflectNoGoVeg <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)
   
   #calc arrivers in a cell from it's 4 neighbours
   #mArrivers <- pMove*(mN + mE + mS + mW)/4
-  #so that neighbouring nogo areas don't provide arrivers to this cell
-  #mArrivers <- pMove*(mN*mnogN + mE*mnogE + mS*mnogS + mW*mnogW)/4
   
+  #add that movers aren't received at a cell if it is nogo
   #below is version used in rtMoveRelfectNoGo
   #mArrivers <- pMove*(mN*mnog + mE*mnog + mS*mnog + mW*mnog)/4  
-  #now I don't need to include mnog because of multiplication with mveg above
-  #OR DO I, it's mnog at the destination cell that matters, and mveg at the source cell
+
+  #mnog at the destination cell that matters, and mveg at the source cell
   #uses mvegN & mN etc for source cells, mnog for the destination cells 
-  mArrivers <- pMove*(mN*mvegN*mnog + mE*mvegE*mnog + mS*mvegS*mnog + mW*mvegW*mnog)/4  
+  #mArrivers <- pMove*(mN*mvegN*mnog + mE*mvegE*mnog + mS*mvegS*mnog + mW*mvegW*mnog)/4 
+  #this is equivalent to above and simpler
+  mArrivers <- pMove*mnog*(mN*mvegN + mE*mvegE + mS*mvegS + mW*mvegW)/4    
   
+  #version without nogo areas and vegetation effects
   #mStayers <- (1-pMove)*m  
   #so that flies that would have moved into a neighbouring nogoarea stay
   #if all neighbours are nogo then all flies stay
@@ -131,10 +134,14 @@ rtMoveReflectNoGoVeg <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)
   #below is version used in rtMoveRelfectNoGo
   #mStayers <- m * (1- pMove * (mnogN + mnogE + mnogS + mnogW)/4 ) 
   #stayers are influenced by veg in source cell (mveg) & nogo areas in destination cells (mnogN etc)
-  #BEWARE! this is tricky does it do what I think ?
+  #BEWARE! this is tricky
+  #if no neighbouring cells are nogo, all movers move (* (1+1+1+1)/4)
+  #if 1 neighbouring cell is nogo, 3/4 movers move (* (0+1+1+1)/4)  
+  #if 2 neighbouring cells nogo, 1/2 movers move (* (0+0+1+1)/4)    
   mStayers <- m * (1- pMove * mveg * (mnogN + mnogE + mnogS + mnogW)/4 )   
   
 
+  #below is not needed now, but might be
   #the num nogo neighbours for every neighbour of this cell
 #   mNumNogNeighbs <- ifelse(mnogW==0,1,0)+
 #                      ifelse(mnogN==0,1,0)+
