@@ -8,7 +8,7 @@ Maintainer: Andy South <southandy@gmail.com>
 Description: Tsetse fly population simulation to inform management. Successor
     to hat-trick, see www.tsetse.org.
 License: GPL (>= 2)
-Depends: R (>= 2.10.0),
+Depends: R (>= 2.10.0)
 Imports: sp,
     raster,
     plyr,
