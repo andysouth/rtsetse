@@ -16,6 +16,8 @@
 #' @param m a matrix of cells containing a single number representing one age
 #' @param mnog a matrix of cells of 0&1, 0 for nogo areas 
 #' @param mveg a matrix of vegetation movement modifiers >1 increases movement out of the cell, <1 decreases movement out of the cell 
+#' @param mvegCats a matrix of vegetation categories
+#' @param iBestVeg which is the preferred vegetation number (1-5) for this species 
 #' @param pMove proportion of popn that moves out of the cell.
 #' @param verbose print what it's doing T/F
 #' 
@@ -34,6 +36,8 @@
 rtMoveReflectNoGoVegBoundary <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
                                  mnog = NULL,
                                  mveg = NULL,
+                                 mvegCats = array(c("O","O","O","O","S","O","O","O","O","O","O","O"),dim=c(3,4)),
+                                 iBestVeg = 4,
                                  pMove=0.4,
                                  verbose=FALSE) {
   
@@ -144,13 +148,13 @@ rtMoveReflectNoGoVegBoundary <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),di
   #mvegCats <- rtReadMapVeg( system.file("extdata","vegTanzaniaSerengetiTorr1km.txt", package="rtsetse"))
   
   #test vegCats
-  mvegCats <- array(c("O","O","O","O","S","O","O","O","O","O","O","O"),dim=c(3,4))
+  
   
   #for now can just convert to difPref
   mvegNum <- rtSetGridFromVeg( mvegCats, dfLookup=data.frame(from=c("D","T","O","S","B","G","N"),to=c(1,2,3,4,5,6,999),stringsAsFactors = FALSE ))
-  iBest <- 4 
+  #iBestVeg <- 4 
   #matrix of difference of veg in cell from best
-  mvegDifPref <- abs(iBest-mvegNum)
+  mvegDifPref <- abs(iBestVeg-mvegNum)
   
   #remember
   #in the code below matrices with NESW on end are source cells
