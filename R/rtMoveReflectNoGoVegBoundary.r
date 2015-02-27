@@ -66,10 +66,15 @@ rtMoveReflectNoGoVegBoundary <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),di
   #mW = cbind( rep(0,nrow(m)), m[,-ncol(m)] )
   #reflecting boundaries
   #0's from island model above are replaced with a copy of boundary row or col
-  mN = rbind( m[1,], m[-nrow(m),] )
-  mE = cbind( m[,-1], m[,ncol(m)] )
-  mS = rbind( m[-1,], m[nrow(m),] ) 
-  mW = cbind( m[,1], m[,-ncol(m)] )  
+  #mN = rbind( m[1,], m[-nrow(m),] )
+  #mE = cbind( m[,-1], m[,ncol(m)] )
+  #mS = rbind( m[-1,], m[nrow(m),] ) 
+  #mW = cbind( m[,1], m[,-ncol(m)] )  
+  
+  mN <- shiftGridReflectN(m)
+  mE <- shiftGridReflectE(m)
+  mS <- shiftGridReflectS(m) 
+  mW <- shiftGridReflectW(m)  
   
   #creating matrices of neighbouring nogo areas
   #this doesn't need to be repeated every day
@@ -77,10 +82,10 @@ rtMoveReflectNoGoVegBoundary <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),di
   #but time cost of doing this for a few 100 days is probably fairly low
   if (!is.null(mnog))
   {
-    mnogN = rbind( mnog[1,], mnog[-nrow(mnog),] )
-    mnogE = cbind( mnog[,-1], mnog[,ncol(mnog)] )
-    mnogS = rbind( mnog[-1,], mnog[nrow(mnog),] )   
-    mnogW = cbind( mnog[,1], mnog[,-ncol(mnog)] )    
+    mnogN <- shiftGridReflectN(mnog)
+    mnogE <- shiftGridReflectE(mnog)
+    mnogS <- shiftGridReflectS(mnog)  
+    mnogW <- shiftGridReflectW(mnog)   
   } else 
   {
     #set all these to 1 so they have no effect on movement calc later
@@ -92,10 +97,10 @@ rtMoveReflectNoGoVegBoundary <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),di
   
   if (!is.null(mveg))
   {
-    mvegN = rbind( mveg[1,], mveg[-nrow(mveg),] )
-    mvegE = cbind( mveg[,-1], mveg[,ncol(mveg)] )
-    mvegS = rbind( mveg[-1,], mveg[nrow(mveg),] )   
-    mvegW = cbind( mveg[,1], mveg[,-ncol(mveg)] )    
+    mvegN <- shiftGridReflectN(mveg)
+    mvegE <- shiftGridReflectE(mveg)
+    mvegS <- shiftGridReflectS(mveg)   
+    mvegW <- shiftGridReflectW(mveg)    
   } else 
   {
     #set all these to 1 so they have no effect on movement calc later
@@ -162,10 +167,10 @@ rtMoveReflectNoGoVegBoundary <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),di
   #~~~~~~~~~~~~~~~~~~~~~~~~~~
   #so I need to create NESW matrices that represent the change in veg preference associated with that move
   #first create copies
-  mvegDifPrefN <- rbind( mvegDifPref[1,], mvegDifPref[-nrow(mvegDifPref),] )
-  mvegDifPrefE <- cbind( mvegDifPref[,-1], mvegDifPref[,ncol(mvegDifPref)] )
-  mvegDifPrefS <- rbind( mvegDifPref[-1,], mvegDifPref[nrow(mvegDifPref),] )   
-  mvegDifPrefW <- cbind( mvegDifPref[,1], mvegDifPref[,-ncol(mvegDifPref)] )      
+  mvegDifPrefN <- shiftGridReflectN(mvegDifPref)
+  mvegDifPrefE <- shiftGridReflectN(mvegDifPref)
+  mvegDifPrefS <- shiftGridReflectN(mvegDifPref)   
+  mvegDifPrefW <- shiftGridReflectN(mvegDifPref)      
   #then do calculation, source-destination
   mvegDifPrefN <- mvegDifPrefN - mvegDifPref
   mvegDifPrefE <- mvegDifPrefE - mvegDifPref
@@ -184,19 +189,15 @@ rtMoveReflectNoGoVegBoundary <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),di
   
   #******HERE
   #these go the opposite way
-#   mvegbmultSN <- rbind( mvegbmultS[1,], mvegbmultS[-nrow(mvegbmultN),] )
-#   mvegbmultWE <- cbind( mvegbmultW[,-1], mvegbmultW[,ncol(mvegbmultE)] )
-#   mvegbmultNS <- rbind( mvegbmultN[-1,], mvegbmultN[nrow(mvegbmultS),] )   
-#   mvegbmultEW <- cbind( mvegbmultE[,1], mvegbmultE[,-ncol(mvegbmultW)] )    
+  #and all boundary values are replaced with 1
+  #because for reflecting boundaries there will be no change in vegetation 
+  #associated with movements in and out of the grid  
 
   mvegbmultSN <- rbind( rep(1,ncol(m)), mvegbmultS[-nrow(mvegbmultN),] )
   mvegbmultWE <- cbind( mvegbmultW[,-1], rep(1,nrow(m)) )
   mvegbmultNS <- rbind( mvegbmultN[-1,], rep(1,ncol(m)) )   
   mvegbmultEW <- cbind( rep(1,nrow(m)), mvegbmultE[,-ncol(mvegbmultW)] )      
-  #mN = rbind( rep(0,ncol(m)), m[-nrow(m),] )
-  #mE = cbind( m[,-1], rep(0,nrow(m)) )
-  #mS = rbind( m[-1,], rep(0,ncol(m)) )
-  #mW = cbind( rep(0,nrow(m)), m[,-ncol(m)] )
+
   
                                    
   #calc arrivers in a cell from it's 4 neighbours
@@ -283,5 +284,27 @@ rtMoveReflectNoGoVegBoundary <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),di
   
   invisible( mNew )
 }
+
+#non exported helper functions
+
+#' shift a matrix one cell N, copy boundary to represent reflection
+#' @param m matrix
+#' @return shifted matrix
+shiftGridReflectN <- function(m) { mnew <- rbind( m[1,], m[-nrow(m),] ) }
+#' shift a matrix one cell E, copy boundary to represent reflection
+#' @param m matrix
+#' @return shifted matrix
+shiftGridReflectE <- function(m) { mnew <- cbind( m[,-1], m[,ncol(m)] ) }
+#' shift a matrix one cell S, copy boundary to represent reflection
+#' @param m matrix
+#' @return shifted matrix
+shiftGridReflectS <- function(m) { mnew <- rbind( m[-1,], m[nrow(m),] ) }
+#' shift a matrix one cell W, copy boundary to represent reflection
+#' @param m matrix
+#' @return shifted matrix
+shiftGridReflectW <- function(m) { mnew <- cbind( m[,1], m[,-ncol(m)] ) }
+
+
+
 
 
