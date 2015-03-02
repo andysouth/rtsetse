@@ -36,7 +36,7 @@
 rtMoveReflectNoGoVegBoundary <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
                                  mnog = NULL,
                                  mveg = NULL,
-                                 mvegCats = array(c("O","O","O","O","S","O","O","O","O","O","O","O"),dim=c(3,4)),
+                                 mVegCats = array(c("O","O","O","O","S","O","O","O","O","O","O","O"),dim=c(3,4)),
                                  iBestVeg = 4,
                                  pMove=0.4,
                                  verbose=FALSE) {
@@ -152,11 +152,9 @@ rtMoveReflectNoGoVegBoundary <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),di
   #todo get this to work on a simpler version
   #mvegCats <- rtReadMapVeg( system.file("extdata","vegTanzaniaSerengetiTorr1km.txt", package="rtsetse"))
   
-  #test vegCats
-  
   
   #for now can just convert to difPref
-  mvegNum <- rtSetGridFromVeg( mvegCats, dfLookup=data.frame(from=c("D","T","O","S","B","G","N"),to=c(1,2,3,4,5,6,999),stringsAsFactors = FALSE ))
+  mvegNum <- rtSetGridFromVeg( mVegCats, dfLookup=data.frame(from=c("D","T","O","S","B","G","N"),to=c(1,2,3,4,5,6,999),stringsAsFactors = FALSE ))
   #iBestVeg <- 4 
   #matrix of difference of veg in cell from best
   mvegDifPref <- abs(iBestVeg-mvegNum)
