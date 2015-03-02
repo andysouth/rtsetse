@@ -2,6 +2,17 @@ library(rtsetse)
 
 context("Movement")
 
+test_that("reduced movement down preferedness gradients works", {
+  
+  #first just test that it runs without a warning about number of movers changing
+  mvegCats <- rtReadMapVeg( system.file("extdata","vegTanzaniaSerengetiTorr1km.txt", package="rtsetse"))
+  mMovers <- array(1,dim=dim(mvegCats))
+  
+  rtMoveReflectNoGoVegBoundary(mMovers, mvegCats=mvegCats, iBestVeg = 4)
+  
+  
+})
+
 test_that("vegetation dependent movement does what is expected", {
   
   mMovers <- array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4))
