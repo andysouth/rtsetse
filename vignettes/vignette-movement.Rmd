@@ -193,18 +193,18 @@ rtPlotMapVeg(mVegCats)
 We can convert the vegetation categories to movement multipliers using the suggestions from Hat-trick for flies preferring Savannah and run the simulation. Note that the percentage of flies moving out of cells per day seems very high (88% in grass, 80% in savannah and 68% in woodland). Is this reasonable ?   
 
 
-```{r, "movement-serengeti1", eval=TRUE, echo=TRUE, message=FALSE, fig.width=7}
+```{r, "movement-serengeti1-veg", eval=TRUE, echo=TRUE, message=FALSE, fig.width=7}
 
 #convert vegetation categories to movement multiplier values
 dfMoveByVeg <-  data.frame(code=c("D","T","O","S","B","G","N"),move=c(0.85, 0.9, 0.95, 1, 1.05, 1.1, 0))
-mveg <- rtSetGridFromVeg( mVegetation=mVegCats, dfLookup=dfMoveByVeg )
+mVeg <- rtSetGridFromVeg( mVegetation=mVegCats, dfLookup=dfMoveByVeg )
 
 #can run for longer
 nDays <- 12
 
 #create array to store grids over time
 #set dimensions from the veg grid
-a <- array(0, dim=c(dim(mveg), nDays))
+a <- array(0, dim=c(dim(mVeg), nDays))
 
 #fill starting grid on day1
 a[,,1] <- 1
@@ -213,7 +213,7 @@ pMove <- 0.8
 
 for(day in 2:nDays)
 {
-  a[,,day] <- rtMoveReflectNoGoVeg(a[,,day-1], pMove=pMove, mveg=mveg)  
+  a[,,day] <- rtMoveReflectNoGoVeg(a[,,day-1], pMove=pMove, mveg=mVeg)  
 }
 
 #display population spread over time
@@ -229,6 +229,41 @@ spplot( raster::raster(a[,,nDays]),
 
 ```
 
-The maps above are just for a single age and sex class with movement only and no births and deaths. They give some indication of the population distribution that might be expected if vegetation influenced movement only and there was no effect of vegetation on mortality. Note also that these results do not yet include any change in behaviour at vegetation boundaries. Hat-trick allows for movements to less preferred habitats to be decreased. Movement resulting in a decline in preference of 1,2,3,4,5 categories is set to 30%,10%,3%,1%,0.3% respectively of what it would have been otherwise. I am currently working on implememnting this in rtsetse.    
+The maps above are just for a single age and sex class with movement only and no births and deaths. They give some indication of the population distribution that might be expected if vegetation influenced movement only and there was no effect of vegetation on mortality. Note also that these results do not yet include any change in behaviour at vegetation boundaries. Hat-trick allows for movements to less preferred habitats to be decreased. Movement resulting in a decline in preference of 1,2,3,4,5 categories is set to 30%,10%,3%,1%,0.3% respectively of what it would have been otherwise. I am currently working on implemementing this in rtsetse and the preliminary results are below.    
+
+```{r, "movement-serengeti2-boundaries", eval=TRUE, echo=TRUE, message=FALSE, fig.width=7}
+
+#can run for longer
+nDays <- 12
+
+#create array to store grids over time
+#set dimensions from the veg grid
+a <- array(0, dim=c(dim(mVegCats), nDays))
+
+#fill starting grid on day1
+a[,,1] <- 1
+#set proportion moving
+pMove <- 0.8
+
+for(day in 2:nDays)
+{
+  #because mVeg is not specified here, only the vegetation boundary effect operates
+  a[,,day] <- rtMoveReflectNoGoVegBoundary(a[,,day-1], pMove=pMove, mVegCats=mVegCats)  
+}
+
+#display population spread over time
+spplot( raster::brick(a), 
+        names.attr=c(paste0("day",1:nDays)), 
+        col.regions=c("white",colorRampPalette(brewer.pal(9,"Greens"))(99)) )
+
+
+#to look more closely at the final day
+spplot( raster::raster(a[,,nDays]), 
+        names.attr=c(paste0("day",nDays)), 
+        col.regions=c("white",colorRampPalette(brewer.pal(9,"Greens"))(99)) )
+
+```
+
+
 
 
