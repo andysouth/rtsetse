@@ -193,11 +193,15 @@ rtMoveReflectNoGoVegBoundary <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),di
   #because for reflecting boundaries there will be no change in vegetation 
   #associated with movements in and out of the grid  
 
-  mvegbmultSN <- rbind( rep(1,ncol(m)), mvegbmultS[-nrow(mvegbmultN),] )
-  mvegbmultWE <- cbind( mvegbmultW[,-1], rep(1,nrow(m)) )
-  mvegbmultNS <- rbind( mvegbmultN[-1,], rep(1,ncol(m)) )   
-  mvegbmultEW <- cbind( rep(1,nrow(m)), mvegbmultE[,-ncol(mvegbmultW)] )      
+#   mvegbmultSN <- rbind( rep(1,ncol(m)), mvegbmultS[-nrow(mvegbmultN),] )
+#   mvegbmultWE <- cbind( mvegbmultW[,-1], rep(1,nrow(m)) )
+#   mvegbmultNS <- rbind( mvegbmultN[-1,], rep(1,ncol(m)) )   
+#   mvegbmultEW <- cbind( rep(1,nrow(m)), mvegbmultE[,-ncol(mvegbmultW)] )      
 
+  mvegbmultSN <- shiftGridIslandN( mvegbmultS, fill=1 )
+  mvegbmultWE <- shiftGridIslandE( mvegbmultW, fill=1 )
+  mvegbmultNS <- shiftGridIslandS( mvegbmultN, fill=1 )   
+  mvegbmultEW <- shiftGridIslandW( mvegbmultE, fill=1 )   
   
                                    
   #calc arrivers in a cell from it's 4 neighbours
@@ -287,24 +291,57 @@ rtMoveReflectNoGoVegBoundary <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),di
 
 #non exported helper functions
 
+#~~~reflecting movement helper functions~~~
+
 #' shift a matrix one cell N, copy boundary to represent reflection
 #' @param m matrix
 #' @return shifted matrix
 shiftGridReflectN <- function(m) { mnew <- rbind( m[1,], m[-nrow(m),] ) }
+
 #' shift a matrix one cell E, copy boundary to represent reflection
 #' @param m matrix
 #' @return shifted matrix
 shiftGridReflectE <- function(m) { mnew <- cbind( m[,-1], m[,ncol(m)] ) }
+
 #' shift a matrix one cell S, copy boundary to represent reflection
 #' @param m matrix
 #' @return shifted matrix
 shiftGridReflectS <- function(m) { mnew <- rbind( m[-1,], m[nrow(m),] ) }
+
 #' shift a matrix one cell W, copy boundary to represent reflection
 #' @param m matrix
 #' @return shifted matrix
 shiftGridReflectW <- function(m) { mnew <- cbind( m[,1], m[,-ncol(m)] ) }
 
+#~~~island movement helper functions~~~
 
+#' shift a matrix one cell N
+#' fill empty cells with 0 for island model (or passed value)
+#' @param m matrix
+#' @param fill value to put in empty cells, default=0 for island model
+#' @return shifted matrix
+shiftGridIslandN <- function(m, fill) { mnew <- rbind( rep(fill, ncol(m)), m[-nrow(m),] ) }
+
+#' shift a matrix one cell E
+#' fill empty cells with 0 for island model (or passed value)
+#' @param m matrix
+#' @param fill value to put in empty cells, default=0 for island model
+#' @return shifted matrix
+shiftGridIslandE <- function(m, fill) { mnew <- cbind( m[,-1], rep(fill, nrow(m)) ) }
+
+#' shift a matrix one cell S
+#' fill empty cells with 0 for island model (or passed value)
+#' @param m matrix
+#' @param fill value to put in empty cells, default=0 for island model
+#' @return shifted matrix
+shiftGridIslandS <- function(m, fill) { mnew <- rbind( m[-1,], rep(fill, ncol(m)) ) }
+
+#' shift a matrix one cell W
+#' fill empty cells with 0 for island model (or passed value)
+#' @param m matrix
+#' @param fill value to put in empty cells, default=0 for island model
+#' @return shifted matrix
+shiftGridIslandW <- function(m, fill) { mnew <- cbind( rep(fill, nrow(m)), m[,-ncol(m)] ) }
 
 
 
