@@ -229,7 +229,25 @@ spplot( raster::raster(a[,,nDays]),
 
 ```
 
-The maps above are just for a single age and sex class with movement only and no births and deaths. They give some indication of the population distribution that might be expected if vegetation influenced movement only and there was no effect of vegetation on mortality. Note also that these results do not yet include any change in behaviour at vegetation boundaries. Hat-trick allows for movements to less preferred habitats to be decreased. Movement resulting in a decline in preference of 1,2,3,4,5 categories is set to 30%,10%,3%,1%,0.3% respectively of what it would have been otherwise. I am currently working on implemementing this in rtsetse and the preliminary results are below.    
+The maps above are just for a single age and sex class with movement only and no births and deaths.   
+
+
+The results above also do not include any change in behaviour at vegetation boundaries. Hat-trick allows for movements to less preferred vegetation types to be decreased. The six potential vegetation types in Hat-trick are ordered by decreasing density of vegetation.
+
+1. Dense Forest
+2. Thicket
+3. Open Forest
+4. Savannah
+5. Bush
+6. Grass
+
+The default names can be changed, but the ordering by density needs to remain.
+
+The user chooses a preferred ('best') vegetation type for the flies being considered. As expalined in the Hat-trick documentation :
+
+> If the fly is in a certain vegetation type and is headed to the same vegetation type, or to one that is better, ie, the best or a type that is closer to the best type, then the fly will keep going with no adjustment to the evacuation rate. Otherwise, the fly must be headed to a vegetation type that differs more markedly from the best than the one the fly is  in. The fly will then tend to turn back, with a probability that is greater the more the vegetation type to which it is  headed differs from the best. In deciding whether vegetataion is closer to the best, one that is X categories denser than the best is regarded as no worse than one that is X categories less dense than the best.
+
+Movement resulting in a decline in preference of 1,2,3,4,5 categories is set to 30%,10%,3%,1%,0.3% respectively of what it would have been otherwise. The results of implemementing this mechanism in rtsetse are shown below.    
 
 ```{r, "movement-serengeti2-boundaries", eval=TRUE, echo=TRUE, message=FALSE, fig.width=7}
 
@@ -264,9 +282,95 @@ spplot( raster::raster(a[,,nDays]),
 
 ```
 
-Now adding together the 2 vegetation effects (i.e. on movement rates and reduced movement to less preferred).
+The white cells in the above map show areas of low density that result from areas of less preferred vegetation (grass) neighbouring areas of preferred vegetation (savannah). These boundary cells have lower densities than cells within poor habitat. This is because boundary cells are losing migrants in all directions but are not receiving as many migrants back. This effect persists even after running for thousands of days of movement only, but would be affected by differences in mortality. 
 
-```{r, "movement-serengeti3-both-veg-effects", eval=TRUE, echo=TRUE, message=FALSE, fig.width=7}
+
+I would have expected that flies should accumulate in the prefferred habitat (e.g. savannah over grassland). That doesn't seem to be happening. Here is a check on the lower right corner of the Serengeti map.
+
+```{r, "movement-serengeti3-boundary-check", eval=TRUE, echo=TRUE, message=FALSE, fig.width=3, fig.show='hold'}
+#note reduced fig.width & fig.show='hold' above to fit 2 plots side by side
+
+#get the vegetation map
+mVegCats <- rtReadMapVeg( system.file("extdata","vegTanzaniaSerengetiTorr1km.txt", package="rtsetse"))
+#subset SE corner
+m2 <- mVegCats[40:50,40:50]
+
+nDays <- 99
+
+#create array to store grids over time
+#set dimensions from the veg grid
+a <- array(0, dim=c(dim(m2), nDays))
+
+#fill starting grid on day1
+a[,,1] <- 1
+#set proportion moving
+pMove <- 0.8
+
+for(day in 2:nDays)
+{
+  #because mVeg is not specified here, only the vegetation boundary effect operates
+  a[,,day] <- rtMoveReflectNoGoVegBoundary(a[,,day-1], pMove=pMove, mVegCats=m2)  
+}
+
+#plot vegetation map
+rtPlotMapVeg(m2)
+
+#plot final day
+spplot( raster::raster(a[,,nDays]), 
+        names.attr=c(paste0("day",nDays)), 
+        col.regions=c("white",colorRampPalette(brewer.pal(9,"Greens"))(99)) )
+
+```
+
+The figure above shows that even after 99 days the number of flies in grass cells is the same as that in savannah. It is only grass cells bounding savannah that have low numbers. This makes me want to check my mechanism further.
+
+```{r, "movement-serengeti3-boundary-check2", eval=TRUE, echo=TRUE, message=FALSE, fig.width=3, fig.show='hold'}
+#note reduced fig.width & fig.show='hold' above to fit 2 plots side by side
+
+#create very simple test veg map
+nY <- 5
+nX <- 4
+# G for Grass, S for Savannah
+#vertical split
+#m2 <- array("G", dim=c(nY,nX))
+#m2[1:(nY*nX/2)] <- "S"
+#horizontal split
+m2 <- array("G", dim=c(nY,nX))
+m2[1:round(nY/2),] <- "S"
+
+
+nDays <- 99
+
+#create array to store grids over time
+#set dimensions from the veg grid
+a <- array(0, dim=c(dim(m2), nDays))
+
+#fill starting grid on day1
+a[,,1] <- 1
+#set proportion moving
+pMove <- 0.8
+
+for(day in 2:nDays)
+{
+  #because mVeg is not specified here, only the vegetation boundary effect operates
+  a[,,day] <- rtMoveReflectNoGoVegBoundary(a[,,day-1], pMove=pMove, mVegCats=m2)  
+}
+
+#plot vegetation map
+rtPlotMapVeg(m2)
+
+#plot final day
+spplot( raster::raster(a[,,nDays]), 
+        names.attr=c(paste0("day",nDays)), 
+        col.regions=c("white",colorRampPalette(brewer.pal(9,"Greens"))(99)) )
+
+```
+
+
+
+Adding together the 2 vegetation effects is shown below.
+
+```{r, "movement-serengeti4-both-veg-effects", eval=TRUE, echo=TRUE, message=FALSE, fig.width=7}
 
 #can run for longer
 nDays <- 12
@@ -298,6 +402,8 @@ spplot( raster::raster(a[,,nDays]),
         col.regions=c("white",colorRampPalette(brewer.pal(9,"Greens"))(99)) )
 
 ```
+
+Now that it seems these vegetation movement effects are working I need to add them into the main simulation including births and deaths.
 
 
 
