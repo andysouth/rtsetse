@@ -264,6 +264,40 @@ spplot( raster::raster(a[,,nDays]),
 
 ```
 
+Now adding together the 2 vegetation effects (i.e. on movement rates and reduced movement to less preferred).
+
+```{r, "movement-serengeti3-both-veg-effects", eval=TRUE, echo=TRUE, message=FALSE, fig.width=7}
+
+#can run for longer
+nDays <- 12
+
+#create array to store grids over time
+#set dimensions from the veg grid
+a <- array(0, dim=c(dim(mVegCats), nDays))
+
+#fill starting grid on day1
+a[,,1] <- 1
+#set proportion moving
+pMove <- 0.8
+
+for(day in 2:nDays)
+{
+  #because mVeg is not specified here, only the vegetation boundary effect operates
+  a[,,day] <- rtMoveReflectNoGoVegBoundary(a[,,day-1], pMove=pMove, mVegCats=mVegCats, mveg=mVeg)  
+}
+
+#display population spread over time
+spplot( raster::brick(a), 
+        names.attr=c(paste0("day",1:nDays)), 
+        col.regions=c("white",colorRampPalette(brewer.pal(9,"Greens"))(99)) )
+
+
+#to look more closely at the final day
+spplot( raster::raster(a[,,nDays]), 
+        names.attr=c(paste0("day",nDays)), 
+        col.regions=c("white",colorRampPalette(brewer.pal(9,"Greens"))(99)) )
+
+```
 
 
 
