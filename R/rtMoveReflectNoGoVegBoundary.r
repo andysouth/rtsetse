@@ -166,9 +166,9 @@ rtMoveReflectNoGoVegBoundary <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),di
   #so I need to create NESW matrices that represent the change in veg preference associated with that move
   #first create copies
   mvegDifPrefN <- shiftGridReflectN(mvegDifPref)
-  mvegDifPrefE <- shiftGridReflectN(mvegDifPref)
-  mvegDifPrefS <- shiftGridReflectN(mvegDifPref)   
-  mvegDifPrefW <- shiftGridReflectN(mvegDifPref)      
+  mvegDifPrefE <- shiftGridReflectE(mvegDifPref)
+  mvegDifPrefS <- shiftGridReflectS(mvegDifPref)   
+  mvegDifPrefW <- shiftGridReflectW(mvegDifPref)      
   #then do calculation, source-destination
   mvegDifPrefN <- mvegDifPrefN - mvegDifPref
   mvegDifPrefE <- mvegDifPrefE - mvegDifPref
