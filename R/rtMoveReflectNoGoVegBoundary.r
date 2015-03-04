@@ -16,7 +16,7 @@
 #' @param m a matrix of cells containing a single number representing one age
 #' @param mnog a matrix of cells of 0&1, 0 for nogo areas 
 #' @param mveg a matrix of vegetation movement modifiers >1 increases movement out of the cell, <1 decreases movement out of the cell 
-#' @param mvegCats a matrix of vegetation categories
+#' @param mVegCats a matrix of vegetation categories
 #' @param iBestVeg which is the preferred vegetation number (1-5) for this species 
 #' @param pMove proportion of popn that moves out of the cell.
 #' @param verbose print what it's doing T/F
