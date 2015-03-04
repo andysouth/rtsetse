@@ -8,7 +8,7 @@ test_that("reduced movement down preferedness gradients works", {
   mVegCats <- rtReadMapVeg( system.file("extdata","vegTanzaniaSerengetiTorr1km.txt", package="rtsetse"))
   mMovers <- array(1,dim=dim(mVegCats))
   
-  rtMoveReflectNoGoVegBoundary(mMovers, mVegCats=mvegCats, iBestVeg = 4)
+  rtMoveReflectNoGoVegBoundary(mMovers, mVegCats=mVegCats, iBestVeg = 4)
   
   
 })
