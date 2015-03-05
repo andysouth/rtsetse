@@ -156,9 +156,9 @@ We can demonstrate this with a first simple example where a vegetation matrix is
 a <- array(0, dim=c(nY, nX, nDays))
 
 #creating empty vegetation matrix
-mVeg <- array(1, dim=c(nY,nX))
+mVegMove <- array(1, dim=c(nY,nX))
 #set 2nd row to lower movement
-mVeg[2,] <- 0.8
+mVegMove[2,] <- 0.8
 
 #fill starting grid on day1
 a[,,1] <- 1
@@ -167,7 +167,7 @@ pMove <- 0.8
 
 for(day in 2:nDays)
 {
-  a[,,day] <- rtMoveReflectNoGoVeg(a[,,day-1], pMove=pMove, mVeg=mVeg)  
+  a[,,day] <- rtMoveReflectNoGoVeg(a[,,day-1], pMove=pMove, mVegMove=mVegMove)  
 }
 
 #display population spread over time
@@ -184,9 +184,9 @@ In a second example we can increase movement from the 2nd row and in the maps se
 a <- array(0, dim=c(nY, nX, nDays))
 
 #creating empty vegetation matrix
-mVeg <- array(1, dim=c(nY,nX))
+mVegMove <- array(1, dim=c(nY,nX))
 #set 2nd row to higher movement
-mVeg[2,] <- 1.2
+mVegMove[2,] <- 1.2
 
 #fill starting grid on day1
 a[,,1] <- 1
@@ -195,7 +195,7 @@ pMove <- 0.8
 
 for(day in 2:nDays)
 {
-  a[,,day] <- rtMoveReflectNoGoVeg(a[,,day-1], pMove=pMove, mVeg=mVeg)  
+  a[,,day] <- rtMoveReflectNoGoVeg(a[,,day-1], pMove=pMove, mVegMove=mVegMove)  
 }
 
 #display population spread over time
@@ -211,11 +211,11 @@ In a third example we can keep the higher movement in the 2nd row and add lower 
 a <- array(0, dim=c(nY, nX, nDays))
 
 #creating empty vegetation matrix
-mVeg <- array(1, dim=c(nY,nX))
+mVegMove <- array(1, dim=c(nY,nX))
 #set 2nd row to higher movement
-mVeg[2,] <- 1.2
+mVegMove[2,] <- 1.2
 #set 4th row to lower movement
-mVeg[4,] <- 0.8
+mVegMove[4,] <- 0.8
 
 #fill starting grid on day1
 a[,,1] <- 1
@@ -224,7 +224,7 @@ pMove <- 0.8
 
 for(day in 2:nDays)
 {
-  a[,,day] <- rtMoveReflectNoGoVeg(a[,,day-1], pMove=pMove, mVeg=mVeg)  
+  a[,,day] <- rtMoveReflectNoGoVeg(a[,,day-1], pMove=pMove, mVegMove=mVegMove)  
 }
 
 #display population spread over time
@@ -251,12 +251,12 @@ We can convert the vegetation categories to movement multipliers using the sugge
 
 #convert vegetation categories to movement multiplier values
 dfMoveByVeg <-  data.frame(code=c("D","T","O","S","B","G","N"),move=c(0.85, 0.9, 0.95, 1, 1.05, 1.1, 0))
-mVeg <- rtSetGridFromVeg( mVegetation=mVegCats, dfLookup=dfMoveByVeg )
+mVegMove <- rtSetGridFromVeg( mVegetation=mVegCats, dfLookup=dfMoveByVeg )
 
 nDays <- 12
 
 #create array to store grids over time, set dimensions from the veg grid
-a <- array(0, dim=c(dim(mVeg), nDays))
+a <- array(0, dim=c(dim(mVegMove), nDays))
 
 #fill starting grid on day1
 a[,,1] <- 1
@@ -265,7 +265,7 @@ pMove <- 0.8
 
 for(day in 2:nDays)
 {
-  a[,,day] <- rtMoveReflectNoGoVeg(a[,,day-1], pMove=pMove, mVeg=mVeg)  
+  a[,,day] <- rtMoveReflectNoGoVeg(a[,,day-1], pMove=pMove, mVegMove=mVegMove)  
 }
 
 #display population spread over time
@@ -316,7 +316,7 @@ pMove <- 0.8
 
 for(day in 2:nDays)
 {
-  #because mVeg is not specified here, only the vegetation boundary effect operates
+  #because mVegMove is not specified here, only the vegetation boundary effect operates
   a[,,day] <- rtMoveReflectNoGoVegBoundary(a[,,day-1], pMove=pMove, mVegCats=mVegCats)  
 }
 
@@ -355,7 +355,7 @@ pMove <- 0.8
 
 for(day in 2:nDays)
 {
-  #because mVeg is not specified here, only the vegetation boundary effect operates
+  #because mVegMove is not specified here, only the vegetation boundary effect operates
   a[,,day] <- rtMoveReflectNoGoVegBoundary(a[,,day-1], pMove=pMove, mVegCats=m2)  
 }
 
@@ -396,7 +396,7 @@ pMove <- 0.8
 
 for(day in 2:nDays)
 {
-  #because mVeg is not specified here, only the vegetation boundary effect operates
+  #because mVegMove is not specified here, only the vegetation boundary effect operates
   a[,,day] <- rtMoveReflectNoGoVegBoundary(a[,,day-1], pMove=pMove, mVegCats=m2)  
 }
 
@@ -429,8 +429,8 @@ pMove <- 0.8
 
 for(day in 2:nDays)
 {
-  #because mVeg is not specified here, only the vegetation boundary effect operates
-  a[,,day] <- rtMoveReflectNoGoVegBoundary(a[,,day-1], pMove=pMove, mVegCats=mVegCats, mVeg=mVeg)  
+  #because mVegMove is not specified here, only the vegetation boundary effect operates
+  a[,,day] <- rtMoveReflectNoGoVegBoundary(a[,,day-1], pMove=pMove, mVegCats=mVegCats, mVegMove=mVegMove)  
 }
 
 #display population spread over time

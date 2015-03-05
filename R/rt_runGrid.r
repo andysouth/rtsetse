@@ -4,7 +4,7 @@
 #' 
 #' This accepts a grid of vegetation and how mortality varies by vegetation.
 
-#' @param mVegetation a matrix or filepath for a map of vegetation codes
+#' @param mVegCats a matrix or filepath for a map of vegetation codes
 #' @param dfMortByVeg a dataframe or filepath to a lookup table specifying mortality multiplier (percent) for each vegetation type
 # @param mCarryCapF a matrix of female carrying capacities
 # @param nCol number grid columns
@@ -55,7 +55,7 @@
 #' }
 #' @export
 #' 
-rt_runGrid <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(2,3)),
+rt_runGrid <- function( mVegCats = array(c("D","T","O","S","N","N"),dim=c(2,3)),
                           dfMortByVeg = data.frame(code=c("D","T","O","S","B","G","N"),mortality=c(200,150,110,100,110,210,999),pupmortality=c(120,110,105,100,120,170,999),stringsAsFactors = FALSE),
                           pMove = 0.4,
                           iDays = 4,
@@ -97,9 +97,9 @@ rt_runGrid <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(2,3
   if (verbose) cat("starting rt_runGrid with arguments:",paste0(names(lNamedArgs),"=",lNamedArgs,","),"\n")
   
   #read in the vegetation map if it has been specified as a filepath
-  if ( class(mVegetation) =="character" )
+  if ( class(mVegCats) =="character" )
   {
-    mVegetation <- rtReadMapVeg(mVegetation)
+    mVegCats <- rtReadMapVeg(mVegCats)
   }
   #read in the attribute file if it has been specified as a filepath  
   if ( class(dfMortByVeg) =="character" )
@@ -125,26 +125,32 @@ rt_runGrid <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(2,3
                                   fMortOldProp = fMortOldProp ) 
   
   #create mortality multiplier grid from the vegetation grid
-  mMortMultGrid <- rtSetGridFromVeg( mVegetation = mVegetation,
+  mMortMultGrid <- rtSetGridFromVeg( mVegetation = mVegCats,
                                      dfLookup = dfMortByVeg[,c(1,2)] )  
   #if (verbose) cat("mortality multiplier grid set to:",mMortMultGrid,"\n")
   #create pupal mortality multiplier grid from the vegetation grid, using column 3 for pupmort
-  mMortMultGridPup <- rtSetGridFromVeg( mVegetation = mVegetation,
+  mMortMultGridPup <- rtSetGridFromVeg( mVegetation = mVegCats,
                                         dfLookup = dfMortByVeg[,c(1,3)] )   
     
   #setting a total carryCap from the female input
   iCarryCap <- iCarryCapF * (1+fMperF)
 
   #get nY,nX from the vegetation matrix
-  nY <- dim(mVegetation)[1]
-  nX <- dim(mVegetation)[2]
+  nY <- dim(mVegCats)[1]
+  nX <- dim(mVegCats)[2]
 
   #mNog a y,x matrix of cells of 0&1, 0 for nogo areas, used in movement 
-  mNog <- ifelse( mVegetation=="N",0,1)
+  mNog <- ifelse( mVegCats=="N",0,1)
 
   #may want to rename Y nY:1 or 1:nY
   dimnames(mNog) <- list( y=paste0('y',1:nY), x=paste0('x',1:nX) )
-    
+  
+  #create vegetation movement modifier matrix
+  #convert vegetation categories to movement multiplier values
+  dfMoveByVeg <-  data.frame(code=c("D","T","O","S","B","G","N"),move=c(0.85, 0.9, 0.95, 1, 1.05, 1.1, 0))
+  mVegMove <- rtSetGridFromVeg( mVegetation=mVegCats, dfLookup=dfMoveByVeg )
+  
+  
   #create arrays of 0s for pupae & adults to start
   #PUPAE
   iMaxPupAge <- max(iPupDurM, iPupDurF)
@@ -306,7 +312,12 @@ rt_runGrid <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(2,3
       #aGrid <- plyr::aaply(aGrid,.margins=c(3,4), .drop=FALSE,function(m) rtMoveReflect(m, pMove=pMove)) 
       
       #movement avoiding no-go areas
-      aGrid <- plyr::aaply(aGrid,.margins=c(3,4), .drop=FALSE,function(m) rtMoveReflectNoGo(m, mNog=mNog, pMove=pMove)) 
+      #aGrid <- plyr::aaply(aGrid,.margins=c(3,4), .drop=FALSE,function(m) rtMoveReflectNoGo(m, mNog=mNog, pMove=pMove)) 
+      
+      #movement influenced by vegetation avoiding no-go areas
+      aGrid <- plyr::aaply(aGrid,.margins=c(3,4), .drop=FALSE,function(m) rtMoveReflectNoGoVeg(m, mNog=mNog, mVegMove=mVegMove, pMove=pMove))       
+      
+      
       
       #put array dimensions back in correct order
       aGrid <- aperm(aGrid, c(3,4,1,2))
