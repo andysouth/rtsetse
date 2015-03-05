@@ -71,12 +71,13 @@ rtMoveReflectNoGo <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
   
   #calc arrivers in a cell from it's 4 neighbours
   #mArrivers <- pMove*(mN + mE + mS + mW)/4
-  #so that neighbouring nogo areas don't provide arrivers to this cell
-  #mArrivers <- pMove*(mN*mNogN + mE*mNogE + mS*mNogS + mW*mNogW)/4
   
+  #so that neighbouring nogo areas don't provide arrivers to this cell  
   mArrivers <- pMove*(mN*mNog + mE*mNog + mS*mNog + mW*mNog)/4  
   
+  
   #mStayers <- (1-pMove)*m  
+  
   #so that flies that would have moved into a neighbouring nogoarea stay
   #if all neighbours are nogo then all flies stay
   # m * (1-pMove*0) = m * 1
@@ -85,27 +86,11 @@ rtMoveReflectNoGo <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
 
   mStayers <- m * (1- pMove * (mNogN + mNogE + mNogS + mNogW)/4 )   
   
-
-  #the num nogo neighbours for every neighbour of this cell
-#   mNumNogNeighbs <- ifelse(mNogW==0,1,0)+
-#                      ifelse(mNogN==0,1,0)+
-#                      ifelse(mNogE==0,1,0)+
-#                      ifelse(mNogS==0,1,0)
-# cat("mNumNogoNeighbs\n") 
-# print(mNumNogoNeighbs)
-  #if I wanted to redistribute those that would have gone to a nogo neighbour
-  #I would need to count the numNogoNeighbs for the neighbouring cells
-  #mArrivers <- pMove*(mW/mNumGoNeighbsW + mN/mNumGoNeighbsN + mE/mNumGoNeighbsE + mS/mNumGoNeighbsS)
-  
-  #number of flies in all cells is a sum of those that 
-  #arrived and those that stayed
+  #number of flies in all cells is a sum of those arrived and stayed
   mNew <- mArrivers + mStayers
   
   #this avoids duplicate levels problems outside the function
   dimnames(mNew) <- dimnames(m)
-  
-# cat("\nmNog\n") 
-# print(mNog)
 
   if (verbose)
   {
