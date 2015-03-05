@@ -189,9 +189,4 @@ rtMoveReflectNoGoVeg <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)
   invisible( mNew )
 }
 
-#this works well and shows no movement to the bottom row
-#rtMoveReflectNoGo(m = matrix(c(0,1,0,0,1,0,0,1,0),nrow=3), mNog = matrix(c(0,1,0,0,1,0,0,1,0),nrow=3), verbose=TRUE)
-#this works too
-#rtMoveReflectNoGo(m = matrix(c(0,1,0,0,1,0,0,1,0),nrow=3), mNog = matrix(c(1,1,0,1,1,0,1,1,0),nrow=3), verbose=TRUE)
-
 

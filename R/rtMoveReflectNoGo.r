@@ -131,18 +131,3 @@ rtMoveReflectNoGo <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
   invisible( mNew )
 }
 
-#difficulties
-#how do movers get into the bottom corner in this e.g. (might be to do with reflecting boundaries)
-#rtMoveReflectNoGo(m = matrix(c(0,1,0,0,1,0,0,1,0),nrow=3), mNog = matrix(c(1,0,1,0,1,0,1,0,1),nrow=3), verbose=TRUE)
-
-#this works well and shows no movement to the bottom row
-#rtMoveReflectNoGo(m = matrix(c(0,1,0,0,1,0,0,1,0),nrow=3), mNog = matrix(c(0,1,0,0,1,0,0,1,0),nrow=3), verbose=TRUE)
-#this works too
-#rtMoveReflectNoGo(m = matrix(c(0,1,0,0,1,0,0,1,0),nrow=3), mNog = matrix(c(1,1,0,1,1,0,1,1,0),nrow=3), verbose=TRUE)
-
-
-#simple test
-#!create a unit-test based on this
-#m=matrix(c(0,1,0),nrow=3,ncol=3)
-#m=matrix(c(1:9),nrow=3,ncol=3)
-#rtMoveReflect(m)
