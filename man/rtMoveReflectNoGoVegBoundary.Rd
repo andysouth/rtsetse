@@ -5,14 +5,14 @@
 \title{movement affected by vegetation and NoGo areas, to cells NESW, reflecting boundaries}
 \usage{
 rtMoveReflectNoGoVegBoundary(m = array(c(0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0),
-  dim = c(3, 4)), mnog = NULL, mVeg = NULL, mVegCats = array(c("O", "O",
+  dim = c(3, 4)), mNog = NULL, mVeg = NULL, mVegCats = array(c("O", "O",
   "O", "O", "S", "O", "O", "O", "O", "O", "O", "O"), dim = c(3, 4)),
   iBestVeg = 4, pMove = 0.4, verbose = FALSE)
 }
 \arguments{
 \item{m}{a matrix of cells containing a single number representing one age}
 
-\item{mnog}{a matrix of cells of 0&1, 0 for nogo areas}
+\item{mNog}{a matrix of cells of 0&1, 0 for nogo areas}
 
 \item{mVeg}{a matrix of vegetation movement modifiers >1 increases movement out of the cell, <1 decreases movement out of the cell}
 
@@ -43,12 +43,12 @@ Doesn't try to cope with nrow or ncol==1.
 }
 \examples{
 #1 nogo neighbour
-rtMoveReflectNoGoVegBoundary(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)), mnog = array(c(1,0,1,1,1,1,1,1,1,1,1,1),dim=c(3,4)), verbose=TRUE)
+rtMoveReflectNoGoVegBoundary(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)), mNog = array(c(1,0,1,1,1,1,1,1,1,1,1,1),dim=c(3,4)), verbose=TRUE)
 #2 nogo neighbours
-rtMoveReflectNoGoVegBoundary(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)), mnog = array(c(1,0,1,0,1,1,1,1,1,1,1,1),dim=c(3,4)), verbose=TRUE)
+rtMoveReflectNoGoVegBoundary(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)), mNog = array(c(1,0,1,0,1,1,1,1,1,1,1,1),dim=c(3,4)), verbose=TRUE)
 #3 nogo neighbours
-rtMoveReflectNoGoVegBoundary(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)), mnog = array(c(1,0,1,0,1,0,1,1,1,1,1,1),dim=c(3,4)), verbose=TRUE)
+rtMoveReflectNoGoVegBoundary(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)), mNog = array(c(1,0,1,0,1,0,1,1,1,1,1,1),dim=c(3,4)), verbose=TRUE)
 #4 nogo neighbours, all flies stay
-rtMoveReflectNoGoVegBoundary(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)), mnog = array(c(1,0,1,0,1,0,1,0,1,1,1,1),dim=c(3,4)), verbose=TRUE)
+rtMoveReflectNoGoVegBoundary(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)), mNog = array(c(1,0,1,0,1,0,1,0,1,1,1,1),dim=c(3,4)), verbose=TRUE)
 }
 

@@ -21,34 +21,34 @@ test_that("vegetation dependent movement does what is expected", {
   
   #1 nogo neighbour and veg movement multiplier set to 1
   #expect rtMoveReflectNoGoVeg() to give same results as rtMoveReflectNoGo()
-  mnog <- array(c(1,0,1,1,1,1,1,1,1,1,1,1),dim=c(3,4))
+  mNog <- array(c(1,0,1,1,1,1,1,1,1,1,1,1),dim=c(3,4))
   mVeg <- mMovers
-  expect_equal( rtMoveReflectNoGoVeg(mMovers, mnog, mVeg=mVeg, pMove=0.4),
+  expect_equal( rtMoveReflectNoGoVeg(mMovers, mNog, mVeg=mVeg, pMove=0.4),
                 array(c(0, 0, 0, 0.1, 0.7, 0.1, 0, 0.1, 0, 0, 0, 0),dim=c(3,4)) )
   #as above but veg movement multiplier set to 2
   #expect 2* as many flies to move out
   mVeg <- mMovers*2
-  expect_equal( rtMoveReflectNoGoVeg(mMovers, mnog, mVeg=mVeg, pMove=0.4),
+  expect_equal( rtMoveReflectNoGoVeg(mMovers, mNog, mVeg=mVeg, pMove=0.4),
                 array(c(0, 0, 0, 0.2, 0.4, 0.2, 0, 0.2, 0, 0, 0, 0),dim=c(3,4)) )  
   #as above but veg movement multiplier set to 0.5
   #expect 0.5* as many flies to move out
   mVeg <- mMovers/2
-  expect_equal( rtMoveReflectNoGoVeg(mMovers, mnog, mVeg=mVeg, pMove=0.4),
+  expect_equal( rtMoveReflectNoGoVeg(mMovers, mNog, mVeg=mVeg, pMove=0.4),
                 array(c(0, 0, 0, 0.05, 0.85, 0.05, 0, 0.05, 0, 0, 0, 0),dim=c(3,4)) )  
   
   
   #now with 2 source cells and no nogo areas 
   mMovers <- array(c(0,0,0,0,1,0,0,1,0,0,0,0),dim=c(3,4))
-  mnog <- array(c(1,1,1,1,1,1,1,1,1,1,1,1),dim=c(3,4))
+  mNog <- array(c(1,1,1,1,1,1,1,1,1,1,1,1),dim=c(3,4))
   
   #expect that when veg is 0 for a cell no movement from that cell
   mVeg <- array(c(0,0,0,0,2,0,0,0,0,0,0,0),dim=c(3,4))
-  expect_equal( rtMoveReflectNoGoVeg(mMovers, mnog, mVeg=mVeg, pMove=0.4),
+  expect_equal( rtMoveReflectNoGoVeg(mMovers, mNog, mVeg=mVeg, pMove=0.4),
                 array(c(0, 0.2, 0, 0.2, 0.2, 0.2, 0, 1.2, 0, 0, 0, 0),dim=c(3,4)) ) 
   
   #expect that when veg is 0.5 & 2 for neighbouring cells ...
   mVeg <- array(c(0,0,0,0,0.5,0,0,2,0,0,0,0),dim=c(3,4))
-  expect_equal( rtMoveReflectNoGoVeg(mMovers, mnog, mVeg=mVeg, pMove=0.4),
+  expect_equal( rtMoveReflectNoGoVeg(mMovers, mNog, mVeg=mVeg, pMove=0.4),
                 array(c(0, 0.05, 0, 0.05, 1, 0.05, 0.2, 0.25, 0.2, 0, 0.2, 0),dim=c(3,4)) )   
 
   
@@ -59,31 +59,31 @@ test_that("movement avoiding no-go areas indeed avoids no-go areas", {
   mMovers <- array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4))
 
   #0 nogo neighbours
-  mnog <- array(c(1,1,1,1,1,1,1,1,1,1,1,1),dim=c(3,4))
-  expect_equal( rtMoveReflectNoGo(mMovers, mnog, pMove=0.4),
+  mNog <- array(c(1,1,1,1,1,1,1,1,1,1,1,1),dim=c(3,4))
+  expect_equal( rtMoveReflectNoGo(mMovers, mNog, pMove=0.4),
                 array(c(0, 0.1, 0, 0.1, 0.6, 0.1, 0, 0.1, 0, 0, 0, 0),dim=c(3,4)) )
   #1 nogo neighbour
-  mnog <- array(c(1,0,1,1,1,1,1,1,1,1,1,1),dim=c(3,4))
-  expect_equal( rtMoveReflectNoGo(mMovers, mnog, pMove=0.4),
+  mNog <- array(c(1,0,1,1,1,1,1,1,1,1,1,1),dim=c(3,4))
+  expect_equal( rtMoveReflectNoGo(mMovers, mNog, pMove=0.4),
                 array(c(0, 0, 0, 0.1, 0.7, 0.1, 0, 0.1, 0, 0, 0, 0),dim=c(3,4)) )
   #2 nogo neighbours
-  mnog <- array(c(1,0,1,0,1,1,1,1,1,1,1,1),dim=c(3,4))
-  expect_equal( rtMoveReflectNoGo(mMovers, mnog, pMove=0.4),
+  mNog <- array(c(1,0,1,0,1,1,1,1,1,1,1,1),dim=c(3,4))
+  expect_equal( rtMoveReflectNoGo(mMovers, mNog, pMove=0.4),
                 array(c(0, 0, 0, 0, 0.8, 0.1, 0, 0.1, 0, 0, 0, 0),dim=c(3,4)) )
   #3 nogo neighbours
-  mnog <- array(c(1,0,1,0,1,0,1,1,1,1,1,1),dim=c(3,4))
-  expect_equal( rtMoveReflectNoGo(mMovers, mnog, pMove=0.4),
+  mNog <- array(c(1,0,1,0,1,0,1,1,1,1,1,1),dim=c(3,4))
+  expect_equal( rtMoveReflectNoGo(mMovers, mNog, pMove=0.4),
                 array(c(0, 0, 0, 0, 0.9, 0, 0, 0.1, 0, 0, 0, 0),dim=c(3,4)) )
   #4 nogo neighbours, all flies stay
-  mnog <- array(c(1,0,1,0,1,0,1,0,1,1,1,1),dim=c(3,4))
-  expect_equal( rtMoveReflectNoGo(mMovers, mnog, pMove=0.4),
+  mNog <- array(c(1,0,1,0,1,0,1,0,1,1,1,1),dim=c(3,4))
+  expect_equal( rtMoveReflectNoGo(mMovers, mNog, pMove=0.4),
                 array(c(0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0),dim=c(3,4)) )
   
   #reflection & nogo areas combined
   #mover in top left corner
   mMovers <- array(c(1,0,0,0,0,0,0,0,0,0,0,0),dim=c(3,4))
-  mnog <- array(c(1,0,1,1,1,1,1,1,1,1,1,1),dim=c(3,4))
-  expect_equal( rtMoveReflectNoGo(mMovers, mnog, pMove=0.4),
+  mNog <- array(c(1,0,1,1,1,1,1,1,1,1,1,1),dim=c(3,4))
+  expect_equal( rtMoveReflectNoGo(mMovers, mNog, pMove=0.4),
                 array(c(0.9, 0, 0, 0.1, 0, 0, 0, 0, 0, 0, 0, 0),dim=c(3,4)) )  
   
 })
@@ -101,7 +101,7 @@ test_that("movement of multiple age classes using plyr::aaply works", {
   #for different age classes
   #A) check they give correct results within each agesex class
   #B) check the overall size of the popn doesn't change
-  mnog <- array(c(1,0,1,1,1,1,1,1,1,1,1,1),dim=c(3,4))
+  mNog <- array(c(1,0,1,1,1,1,1,1,1,1,1,1),dim=c(3,4))
   
   aGrid[,,'F',1] <- array(c(1,0,0,0,0,0,0,0,0,0,0,0),dim=c(3,4))
   #expected : array(c(0.9, 0, 0, 0.1, 0, 0, 0, 0, 0, 0, 0, 0),dim=c(3,4))
@@ -109,7 +109,7 @@ test_that("movement of multiple age classes using plyr::aaply works", {
   #expected : array(c(0, 0, 0, 0.1, 0.7, 0.1, 0, 0.1, 0, 0, 0, 0),dim=c(3,4))
   
   #movement avoiding no-go areas
-  aGrid2 <- plyr::aaply(aGrid,.margins=c(3,4), .drop=FALSE,function(m) rtMoveReflectNoGo(m, mnog=mnog, pMove=0.4)) 
+  aGrid2 <- plyr::aaply(aGrid,.margins=c(3,4), .drop=FALSE,function(m) rtMoveReflectNoGo(m, mNog=mNog, pMove=0.4)) 
   
   #put array dimensions back in correct order
   aGrid2 <- aperm(aGrid2, c(3,4,1,2))
@@ -121,9 +121,9 @@ test_that("movement of multiple age classes using plyr::aaply works", {
   
   #test use of move function in aaply above vs against using on it's own 
   expect_equal( aGrid2[,,'F',1],
-                rtMoveReflectNoGo(aGrid[,,'F',1], mnog=mnog, pMove=0.4) )  
+                rtMoveReflectNoGo(aGrid[,,'F',1], mNog=mNog, pMove=0.4) )  
   expect_equal( aGrid2[,,'M',2],
-                rtMoveReflectNoGo(aGrid[,,'M',2], mnog=mnog, pMove=0.4) )   
+                rtMoveReflectNoGo(aGrid[,,'M',2], mNog=mNog, pMove=0.4) )   
   
   #B) check the overall size of the popn doesn't change
   expect_equal( sum(aGrid), sum(aGrid2) )

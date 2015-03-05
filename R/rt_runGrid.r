@@ -139,11 +139,11 @@ rt_runGrid <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(2,3
   nY <- dim(mVegetation)[1]
   nX <- dim(mVegetation)[2]
 
-  #mnog a y,x matrix of cells of 0&1, 0 for nogo areas, used in movement 
-  mnog <- ifelse( mVegetation=="N",0,1)
+  #mNog a y,x matrix of cells of 0&1, 0 for nogo areas, used in movement 
+  mNog <- ifelse( mVegetation=="N",0,1)
 
   #may want to rename Y nY:1 or 1:nY
-  dimnames(mnog) <- list( y=paste0('y',1:nY), x=paste0('x',1:nX) )
+  dimnames(mNog) <- list( y=paste0('y',1:nY), x=paste0('x',1:nX) )
     
   #create arrays of 0s for pupae & adults to start
   #PUPAE
@@ -162,7 +162,7 @@ rt_runGrid <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(2,3
     for( x in 1:nX ) #x
     {             
       #don't put flies into no-go areas
-      if ( mnog[y,x] != 0 )        
+      if ( mNog[y,x] != 0 )        
       {      
         #TODO check whether pupae have to be calculated for each cell
         #vpMortF is passed, do I need to apply the veg mortality multiplier ?
@@ -306,7 +306,7 @@ rt_runGrid <- function( mVegetation = array(c("D","T","O","S","N","N"),dim=c(2,3
       #aGrid <- plyr::aaply(aGrid,.margins=c(3,4), .drop=FALSE,function(m) rtMoveReflect(m, pMove=pMove)) 
       
       #movement avoiding no-go areas
-      aGrid <- plyr::aaply(aGrid,.margins=c(3,4), .drop=FALSE,function(m) rtMoveReflectNoGo(m, mnog=mnog, pMove=pMove)) 
+      aGrid <- plyr::aaply(aGrid,.margins=c(3,4), .drop=FALSE,function(m) rtMoveReflectNoGo(m, mNog=mNog, pMove=pMove)) 
       
       #put array dimensions back in correct order
       aGrid <- aperm(aGrid, c(3,4,1,2))

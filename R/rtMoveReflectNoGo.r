@@ -13,24 +13,24 @@
 #' Doesn't try to cope with nrow or ncol==1.
 
 #' @param m a matrix of cells containing a single number representing one age
-#' @param mnog a matrix of cells of 0&1, 0 for nogo areas 
+#' @param mNog a matrix of cells of 0&1, 0 for nogo areas 
 #' @param pMove proportion of popn that moves out of the cell.
 #' @param verbose print what it's doing T/F
 #' 
 #' @return an updated matrix following movement
 #' @examples
 #' #1 nogo neighbour
-#' rtMoveReflectNoGo(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)), mnog = array(c(1,0,1,1,1,1,1,1,1,1,1,1),dim=c(3,4)), verbose=TRUE)
+#' rtMoveReflectNoGo(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)), mNog = array(c(1,0,1,1,1,1,1,1,1,1,1,1),dim=c(3,4)), verbose=TRUE)
 #' #2 nogo neighbours
-#' rtMoveReflectNoGo(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)), mnog = array(c(1,0,1,0,1,1,1,1,1,1,1,1),dim=c(3,4)), verbose=TRUE)
+#' rtMoveReflectNoGo(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)), mNog = array(c(1,0,1,0,1,1,1,1,1,1,1,1),dim=c(3,4)), verbose=TRUE)
 #' #3 nogo neighbours
-#' rtMoveReflectNoGo(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)), mnog = array(c(1,0,1,0,1,0,1,1,1,1,1,1),dim=c(3,4)), verbose=TRUE)
+#' rtMoveReflectNoGo(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)), mNog = array(c(1,0,1,0,1,0,1,1,1,1,1,1),dim=c(3,4)), verbose=TRUE)
 #' #4 nogo neighbours, all flies stay
-#' rtMoveReflectNoGo(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)), mnog = array(c(1,0,1,0,1,0,1,0,1,1,1,1),dim=c(3,4)), verbose=TRUE)
+#' rtMoveReflectNoGo(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)), mNog = array(c(1,0,1,0,1,0,1,0,1,1,1,1),dim=c(3,4)), verbose=TRUE)
 #' @export
 
 rtMoveReflectNoGo <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
-                          mnog = array(c(1,0,1,1,1,1,1,1,1,1,1,1),dim=c(3,4)),
+                          mNog = array(c(1,0,1,1,1,1,1,1,1,1,1,1),dim=c(3,4)),
                           pMove=0.4,
                           verbose=FALSE) {
   
@@ -64,17 +64,17 @@ rtMoveReflectNoGo <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
   #this doesn't need to be repeated every day
   #it could be done at the start of a simulation, and passed probably as a list or array
   #but time cost of doing this for a few 100 days is probably fairly low
-  mnogN = rbind( mnog[1,], mnog[-nrow(mnog),] )
-  mnogE = cbind( mnog[,-1], mnog[,ncol(mnog)] )
-  mnogS = rbind( mnog[-1,], mnog[nrow(mnog),] )   
-  mnogW = cbind( mnog[,1], mnog[,-ncol(mnog)] )
+  mNogN = rbind( mNog[1,], mNog[-nrow(mNog),] )
+  mNogE = cbind( mNog[,-1], mNog[,ncol(mNog)] )
+  mNogS = rbind( mNog[-1,], mNog[nrow(mNog),] )   
+  mNogW = cbind( mNog[,1], mNog[,-ncol(mNog)] )
   
   #calc arrivers in a cell from it's 4 neighbours
   #mArrivers <- pMove*(mN + mE + mS + mW)/4
   #so that neighbouring nogo areas don't provide arrivers to this cell
-  #mArrivers <- pMove*(mN*mnogN + mE*mnogE + mS*mnogS + mW*mnogW)/4
+  #mArrivers <- pMove*(mN*mNogN + mE*mNogE + mS*mNogS + mW*mNogW)/4
   
-  mArrivers <- pMove*(mN*mnog + mE*mnog + mS*mnog + mW*mnog)/4  
+  mArrivers <- pMove*(mN*mNog + mE*mNog + mS*mNog + mW*mNog)/4  
   
   #mStayers <- (1-pMove)*m  
   #so that flies that would have moved into a neighbouring nogoarea stay
@@ -83,14 +83,14 @@ rtMoveReflectNoGo <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
   #if no neighbours are no go it collapses to the original above
   # m * (1-pMove*1)
 
-  mStayers <- m * (1- pMove * (mnogN + mnogE + mnogS + mnogW)/4 )   
+  mStayers <- m * (1- pMove * (mNogN + mNogE + mNogS + mNogW)/4 )   
   
 
   #the num nogo neighbours for every neighbour of this cell
-#   mNumNogNeighbs <- ifelse(mnogW==0,1,0)+
-#                      ifelse(mnogN==0,1,0)+
-#                      ifelse(mnogE==0,1,0)+
-#                      ifelse(mnogS==0,1,0)
+#   mNumNogNeighbs <- ifelse(mNogW==0,1,0)+
+#                      ifelse(mNogN==0,1,0)+
+#                      ifelse(mNogE==0,1,0)+
+#                      ifelse(mNogS==0,1,0)
 # cat("mNumNogoNeighbs\n") 
 # print(mNumNogoNeighbs)
   #if I wanted to redistribute those that would have gone to a nogo neighbour
@@ -104,15 +104,15 @@ rtMoveReflectNoGo <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
   #this avoids duplicate levels problems outside the function
   dimnames(mNew) <- dimnames(m)
   
-# cat("\nmnog\n") 
-# print(mnog)
+# cat("\nmNog\n") 
+# print(mNog)
 
   if (verbose)
   {
     cat("popn before\n") 
     print(m)
     cat("\nno-go areas (0=nogo)\n") 
-    print(mnog)
+    print(mNog)
     cat("\nmStayers\n") 
     print(mStayers)
     cat("\nmArrivers\n") 
@@ -133,12 +133,12 @@ rtMoveReflectNoGo <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
 
 #difficulties
 #how do movers get into the bottom corner in this e.g. (might be to do with reflecting boundaries)
-#rtMoveReflectNoGo(m = matrix(c(0,1,0,0,1,0,0,1,0),nrow=3), mnog = matrix(c(1,0,1,0,1,0,1,0,1),nrow=3), verbose=TRUE)
+#rtMoveReflectNoGo(m = matrix(c(0,1,0,0,1,0,0,1,0),nrow=3), mNog = matrix(c(1,0,1,0,1,0,1,0,1),nrow=3), verbose=TRUE)
 
 #this works well and shows no movement to the bottom row
-#rtMoveReflectNoGo(m = matrix(c(0,1,0,0,1,0,0,1,0),nrow=3), mnog = matrix(c(0,1,0,0,1,0,0,1,0),nrow=3), verbose=TRUE)
+#rtMoveReflectNoGo(m = matrix(c(0,1,0,0,1,0,0,1,0),nrow=3), mNog = matrix(c(0,1,0,0,1,0,0,1,0),nrow=3), verbose=TRUE)
 #this works too
-#rtMoveReflectNoGo(m = matrix(c(0,1,0,0,1,0,0,1,0),nrow=3), mnog = matrix(c(1,1,0,1,1,0,1,1,0),nrow=3), verbose=TRUE)
+#rtMoveReflectNoGo(m = matrix(c(0,1,0,0,1,0,0,1,0),nrow=3), mNog = matrix(c(1,1,0,1,1,0,1,1,0),nrow=3), verbose=TRUE)
 
 
 #simple test
