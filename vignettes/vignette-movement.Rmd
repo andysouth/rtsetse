@@ -123,9 +123,9 @@ nDays <- 5
 a <- array(0, dim=c(nY, nX, nDays))
 
 #creating empty no-go matrix
-mnog <- array(1, dim=c(nY,nX))
+mNog <- array(1, dim=c(nY,nX))
 #set first row to nogo (0)
-mnog[1,] <- 0
+mNog[1,] <- 0
 
 #populate central cell of starting grid on day1
 a[3,3,1] <- 1
@@ -134,7 +134,7 @@ pMove <- 0.8
 
 for(day in 2:nDays)
 {
-  a[,,day] <- rtMoveReflectNoGoVeg(a[,,day-1], pMove=pMove, mnog=mnog)  
+  a[,,day] <- rtMoveReflectNoGoVeg(a[,,day-1], pMove=pMove, mNog=mNog)  
 }
 
 #display population spread over time
