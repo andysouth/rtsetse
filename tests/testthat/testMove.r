@@ -6,9 +6,35 @@ test_that("reduced movement down preferedness gradients works", {
   
   #first just test that it runs without a warning about number of movers changing
   mVegCats <- rtReadMapVeg( system.file("extdata","vegTanzaniaSerengetiTorr1km.txt", package="rtsetse"))
+  #set 1 mover in all cells of a matrix
   mMovers <- array(1,dim=dim(mVegCats))
-  
+  #note this doesn't include vegetation dependent movement (mVegMove)
   rtMoveReflectNoGoVegBoundary(mMovers, mVegCats=mVegCats, iBestVeg = 4)
+
+  
+  #now how can I test a simple example where I know what I expect
+  #in the e.g.s below iBestVeg set to 4 which is 'S' 
+  #case : one central cell of preferred veg surrounded by veg of 1 less preferedness
+  #expect: movement to neighbours to be 0.3*pMove/4
+  mMovers <- array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)) 
+  mVegCats <- array(c('B','B','B','B','S','B','B','B','B','B','B','B'),dim=c(3,4))  
+  expect_equal( rtMoveReflectNoGoVegBoundary(mMovers, mVegCats=mVegCats, iBestVeg=4, pMove=0.4),
+                array(c(0, 0.03, 0, 0.03, 0.88, 0.03, 0, 0.03, 0, 0, 0, 0),dim=c(3,4))  )
+
+  #case : one central cell of preferred veg surrounded by veg of 2 less preferednesses
+  #expect: movement to neighbours to be 0.1*pMove/4
+  mMovers <- array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)) 
+  mVegCats <- array(c('G','G','G','G','S','G','G','G','G','G','G','G'),dim=c(3,4))  
+  expect_equal( rtMoveReflectNoGoVegBoundary(mMovers, mVegCats=mVegCats, iBestVeg=4, pMove=0.4),
+                array(c(0, 0.01, 0, 0.01, 0.96, 0.01, 0, 0.01, 0, 0, 0, 0),dim=c(3,4))  ) 
+ 
+  #case : one central cell of 1more dense veg('O') surrounded by veg of 1less dense('B')
+  #expect: movement to neighbours to be 1*pMove/4
+  mMovers <- array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)) 
+  mVegCats <- array(c('B','B','B','B','O','B','B','B','B','B','B','B'),dim=c(3,4))  
+  expect_equal( rtMoveReflectNoGoVegBoundary(mMovers, mVegCats=mVegCats, iBestVeg=4, pMove=0.4),
+                array(c(0, 0.1, 0, 0.1, 0.6, 0.1, 0, 0.1, 0, 0, 0, 0),dim=c(3,4))  )
+ 
   
   
 })
