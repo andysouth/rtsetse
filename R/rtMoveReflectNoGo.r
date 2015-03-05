@@ -55,19 +55,32 @@ rtMoveReflectNoGo <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
   #mW = cbind( rep(0,nrow(m)), m[,-ncol(m)] )
   #reflecting boundaries
   #0's from island model above are replaced with a copy of boundary row or col
-  mN = rbind( m[1,], m[-nrow(m),] )
-  mE = cbind( m[,-1], m[,ncol(m)] )
-  mS = rbind( m[-1,], m[nrow(m),] ) 
-  mW = cbind( m[,1], m[,-ncol(m)] )  
+  #mN = rbind( m[1,], m[-nrow(m),] )
+  #mE = cbind( m[,-1], m[,ncol(m)] )
+  #mS = rbind( m[-1,], m[nrow(m),] ) 
+  #mW = cbind( m[,1], m[,-ncol(m)] )  
+  
+  #change to use of functions
+  mN <- shiftGridReflectN(m)
+  mE <- shiftGridReflectE(m)
+  mS <- shiftGridReflectS(m) 
+  mW <- shiftGridReflectW(m)  
   
   #creating matrices of neighbouring nogo areas
   #this doesn't need to be repeated every day
   #it could be done at the start of a simulation, and passed probably as a list or array
   #but time cost of doing this for a few 100 days is probably fairly low
-  mNogN = rbind( mNog[1,], mNog[-nrow(mNog),] )
-  mNogE = cbind( mNog[,-1], mNog[,ncol(mNog)] )
-  mNogS = rbind( mNog[-1,], mNog[nrow(mNog),] )   
-  mNogW = cbind( mNog[,1], mNog[,-ncol(mNog)] )
+  if (!is.null(mNog))
+  {
+    mNogN <- shiftGridReflectN(mNog)
+    mNogE <- shiftGridReflectE(mNog)
+    mNogS <- shiftGridReflectS(mNog)  
+    mNogW <- shiftGridReflectW(mNog)   
+  } else 
+  {
+    #set all these to 1 so they have no effect on movement calc later
+    mNog <- mNogN <- mNogE <- mNogS <- mNogW <- 1
+  }
   
   #calc arrivers in a cell from it's 4 neighbours
   #mArrivers <- pMove*(mN + mE + mS + mW)/4

@@ -72,6 +72,7 @@ rtMoveReflectNoGoVegBoundary <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),di
   #mS = rbind( m[-1,], m[nrow(m),] ) 
   #mW = cbind( m[,1], m[,-ncol(m)] )  
   
+  #change to use of functions
   mN <- shiftGridReflectN(m)
   mE <- shiftGridReflectE(m)
   mS <- shiftGridReflectS(m) 
