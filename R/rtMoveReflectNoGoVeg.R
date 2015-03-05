@@ -82,10 +82,9 @@ rtMoveReflectNoGoVeg <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)
     #set all these to 1 so they have no effect on movement calc later
     mNog <- mNogN <- mNogE <- mNogS <- mNogW <- 1
   }
-
+  
  
   #vegetation movement modifiers from source cells
-
   if (!is.null(mVeg))
   {
     mVegN = rbind( mVeg[1,], mVeg[-nrow(mVeg),] )
@@ -153,15 +152,11 @@ rtMoveReflectNoGoVeg <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)
   #I would need to count the numNogoNeighbs for the neighbouring cells
   #mArrivers <- pMove*(mW/mNumGoNeighbsW + mN/mNumGoNeighbsN + mE/mNumGoNeighbsE + mS/mNumGoNeighbsS)
   
-  #number of flies in all cells is a sum of those that 
-  #arrived and those that stayed
+  #num of flies in all cells is sum of those that arrived and stayed
   mNew <- mArrivers + mStayers
   
   #this avoids duplicate levels problems outside the function
   dimnames(mNew) <- dimnames(m)
-  
-# cat("\nmNog\n") 
-# print(mNog)
 
   if (verbose)
   {
