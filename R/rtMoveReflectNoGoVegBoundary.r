@@ -15,7 +15,7 @@
 
 #' @param m a matrix of cells containing a single number representing one age
 #' @param mnog a matrix of cells of 0&1, 0 for nogo areas 
-#' @param mveg a matrix of vegetation movement modifiers >1 increases movement out of the cell, <1 decreases movement out of the cell 
+#' @param mVeg a matrix of vegetation movement modifiers >1 increases movement out of the cell, <1 decreases movement out of the cell 
 #' @param mVegCats a matrix of vegetation categories
 #' @param iBestVeg which is the preferred vegetation number (1-5) for this species 
 #' @param pMove proportion of popn that moves out of the cell.
@@ -35,7 +35,7 @@
 
 rtMoveReflectNoGoVegBoundary <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
                                  mnog = NULL,
-                                 mveg = NULL,
+                                 mVeg = NULL,
                                  mVegCats = array(c("O","O","O","O","S","O","O","O","O","O","O","O"),dim=c(3,4)),
                                  iBestVeg = 4,
                                  pMove=0.4,
@@ -95,35 +95,35 @@ rtMoveReflectNoGoVegBoundary <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),di
   
   
   #vegetation movement modifiers from source cells
-  if (!is.null(mveg))
+  if (!is.null(mVeg))
   {
-    mvegN <- shiftGridReflectN(mveg)
-    mvegE <- shiftGridReflectE(mveg)
-    mvegS <- shiftGridReflectS(mveg)   
-    mvegW <- shiftGridReflectW(mveg)    
+    mVegN <- shiftGridReflectN(mVeg)
+    mVegE <- shiftGridReflectE(mVeg)
+    mVegS <- shiftGridReflectS(mVeg)   
+    mVegW <- shiftGridReflectW(mVeg)    
   } else 
   {
     #set all these to 1 so they have no effect on movement calc later
-    mveg <- mvegN <- mvegE <- mvegS <- mvegW <- 1
+    mVeg <- mVegN <- mVegE <- mVegS <- mVegW <- 1
   }
   
   
-  #check for if any cells in pMove*mveg are >1
+  #check for if any cells in pMove*mVeg are >1
   #if so set to 1 so that all indivs leave
-  indicesHighMove <- which((mveg*pMove > 1))
+  indicesHighMove <- which((mVeg*pMove > 1))
   if (length(indicesHighMove) >0)
   {
     warning("your combination of pMove and vegetation movement multipliers causes ",length(indicesHighMove),
             " cells to have proportion moving >1, these will be set to 1 and all will move out")
     #reduce multiplier in cells so that the result will be 1 (all move)
-    mveg[indicesHighMove] <- 1/pMove
+    mVeg[indicesHighMove] <- 1/pMove
   }
   
   
   ######################################
   #add a decrease in movement from 'better' to 'poorer' vegetation types as in Hat-trick
   
-  #calculate change associated with each move, e.g. mvegN-mveg for source-destination
+  #calculate change associated with each move, e.g. mVegN-mVeg for source-destination
   
   #can I calculate once based on the vegmap and save results as an array ?
   #aVegChange[y,x,(N,E,S,W)]
@@ -141,10 +141,10 @@ rtMoveReflectNoGoVegBoundary <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),di
   
   
   #convert veg characters to numeric
-  mvegNum <- rtSetGridFromVeg( mVegCats, dfLookup=data.frame(from=c("D","T","O","S","B","G","N"),to=c(1,2,3,4,5,6,999),stringsAsFactors = FALSE ))
+  mVegNum <- rtSetGridFromVeg( mVegCats, dfLookup=data.frame(from=c("D","T","O","S","B","G","N"),to=c(1,2,3,4,5,6,999),stringsAsFactors = FALSE ))
 
   #matrix of difference of veg in cell from best
-  mvegDifPref <- abs(iBestVeg-mvegNum)
+  mVegDifPref <- abs(iBestVeg-mVegNum)
   
   #remember
   #in the code below matrices with NESW on end are source cells
@@ -152,35 +152,35 @@ rtMoveReflectNoGoVegBoundary <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),di
   #~~~~~~~~~~~~~~~~~~~~~~~~~~
   #so I need to create NESW matrices that represent the change in veg preference associated with that move
   #first create copies
-  mvegDifPrefN <- shiftGridReflectN(mvegDifPref)
-  mvegDifPrefE <- shiftGridReflectE(mvegDifPref)
-  mvegDifPrefS <- shiftGridReflectS(mvegDifPref)   
-  mvegDifPrefW <- shiftGridReflectW(mvegDifPref)      
+  mVegDifPrefN <- shiftGridReflectN(mVegDifPref)
+  mVegDifPrefE <- shiftGridReflectE(mVegDifPref)
+  mVegDifPrefS <- shiftGridReflectS(mVegDifPref)   
+  mVegDifPrefW <- shiftGridReflectW(mVegDifPref)      
   #then do calculation, source-destination
-  mvegDifPrefN <- mvegDifPrefN - mvegDifPref
-  mvegDifPrefE <- mvegDifPrefE - mvegDifPref
-  mvegDifPrefS <- mvegDifPrefS - mvegDifPref
-  mvegDifPrefW <- mvegDifPrefW - mvegDifPref
+  mVegDifPrefN <- mVegDifPrefN - mVegDifPref
+  mVegDifPrefE <- mVegDifPrefE - mVegDifPref
+  mVegDifPrefS <- mVegDifPrefS - mVegDifPref
+  mVegDifPrefW <- mVegDifPrefW - mVegDifPref
   #seems to work
-  #unique(as.vector(mvegDifPrefN))
+  #unique(as.vector(mVegDifPrefN))
   #now convert the change associated with the move to a modifier of the movement rate
   #convert 0:5 to   1, 0.3, 0.1, 0.03, 0.01, 0.001 
-  #mvegbmult mveg boundary multiplier
+  #mVegbmult mVeg boundary multiplier
   #todo write dryer version of this & previous similar actions
-  mvegbmultN <- rtSetGridFromVeg( mvegDifPrefN, dfLookup=data.frame(from=c(-5:5),to=c(0.001, 0.01, 0.03, 0.1, 0.3, 1, 1, 1, 1, 1, 1)))
-  mvegbmultE <- rtSetGridFromVeg( mvegDifPrefE, dfLookup=data.frame(from=c(-5:5),to=c(0.001, 0.01, 0.03, 0.1, 0.3, 1, 1, 1, 1, 1, 1)))
-  mvegbmultS <- rtSetGridFromVeg( mvegDifPrefS, dfLookup=data.frame(from=c(-5:5),to=c(0.001, 0.01, 0.03, 0.1, 0.3, 1, 1, 1, 1, 1, 1)))
-  mvegbmultW <- rtSetGridFromVeg( mvegDifPrefW, dfLookup=data.frame(from=c(-5:5),to=c(0.001, 0.01, 0.03, 0.1, 0.3, 1, 1, 1, 1, 1, 1)))
+  mVegbmultN <- rtSetGridFromVeg( mVegDifPrefN, dfLookup=data.frame(from=c(-5:5),to=c(0.001, 0.01, 0.03, 0.1, 0.3, 1, 1, 1, 1, 1, 1)))
+  mVegbmultE <- rtSetGridFromVeg( mVegDifPrefE, dfLookup=data.frame(from=c(-5:5),to=c(0.001, 0.01, 0.03, 0.1, 0.3, 1, 1, 1, 1, 1, 1)))
+  mVegbmultS <- rtSetGridFromVeg( mVegDifPrefS, dfLookup=data.frame(from=c(-5:5),to=c(0.001, 0.01, 0.03, 0.1, 0.3, 1, 1, 1, 1, 1, 1)))
+  mVegbmultW <- rtSetGridFromVeg( mVegDifPrefW, dfLookup=data.frame(from=c(-5:5),to=c(0.001, 0.01, 0.03, 0.1, 0.3, 1, 1, 1, 1, 1, 1)))
   
   #these go the opposite way
   #and all boundary values are replaced with 1
   #because for reflecting boundaries there will be no change in vegetation 
   #associated with movements in and out of the grid    
 
-  mvegbmultSN <- shiftGridIslandN( mvegbmultS, fill=1 )
-  mvegbmultWE <- shiftGridIslandE( mvegbmultW, fill=1 )
-  mvegbmultNS <- shiftGridIslandS( mvegbmultN, fill=1 )   
-  mvegbmultEW <- shiftGridIslandW( mvegbmultE, fill=1 )   
+  mVegbmultSN <- shiftGridIslandN( mVegbmultS, fill=1 )
+  mVegbmultWE <- shiftGridIslandE( mVegbmultW, fill=1 )
+  mVegbmultNS <- shiftGridIslandS( mVegbmultN, fill=1 )   
+  mVegbmultEW <- shiftGridIslandW( mVegbmultE, fill=1 )   
   
                                    
   #calc arrivers in a cell from it's 4 neighbours
@@ -190,13 +190,13 @@ rtMoveReflectNoGoVegBoundary <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),di
   #below is version used in rtMoveRelfectNoGo
   #mArrivers <- pMove*(mN*mnog + mE*mnog + mS*mnog + mW*mnog)/4  
   
-  #mnog at the destination cell that matters, and mveg at the source cell
-  #uses mvegN & mN etc for source cells, mnog for the destination cells 
-  #mArrivers <- pMove*(mN*mvegN*mnog + mE*mvegE*mnog + mS*mvegS*mnog + mW*mvegW*mnog)/4 
+  #mnog at the destination cell that matters, and mVeg at the source cell
+  #uses mVegN & mN etc for source cells, mnog for the destination cells 
+  #mArrivers <- pMove*(mN*mVegN*mnog + mE*mVegE*mnog + mS*mVegS*mnog + mW*mVegW*mnog)/4 
   #this is equivalent to above and simpler
-  #mArrivers <- pMove*mnog*(mN*mvegN + mE*mvegE + mS*mvegS + mW*mvegW)/4    
+  #mArrivers <- pMove*mnog*(mN*mVegN + mE*mVegE + mS*mVegS + mW*mVegW)/4    
   #adding boundary effects
-  mArrivers <- pMove*mnog*(mN*mvegN*mvegbmultN + mE*mvegE*mvegbmultE + mS*mvegS*mvegbmultS + mW*mvegW*mvegbmultW)/4   
+  mArrivers <- pMove*mnog*(mN*mVegN*mVegbmultN + mE*mVegE*mVegbmultE + mS*mVegS*mVegbmultS + mW*mVegW*mVegbmultW)/4   
   
   #version without nogo areas and vegetation effects
   #mStayers <- (1-pMove)*m  
@@ -208,15 +208,15 @@ rtMoveReflectNoGoVegBoundary <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),di
   
   #below is version used in rtMoveRelfectNoGo
   #mStayers <- m * (1- pMove * (mnogN + mnogE + mnogS + mnogW)/4 ) 
-  #stayers are influenced by veg in source cell (mveg) & nogo areas in destination cells (mnogN etc)
+  #stayers are influenced by veg in source cell (mVeg) & nogo areas in destination cells (mnogN etc)
   #BEWARE! this is tricky
   #if no neighbouring cells are nogo, all movers move (* (1+1+1+1)/4)
   #if 1 neighbouring cell is nogo, 3/4 movers move (* (0+1+1+1)/4)  
   #if 2 neighbouring cells nogo, 1/2 movers move (* (0+0+1+1)/4)    
-  #mStayers <- m * (1- pMove * mveg * (mnogN + mnogE + mnogS + mnogW)/4 )   
+  #mStayers <- m * (1- pMove * mVeg * (mnogN + mnogE + mnogS + mnogW)/4 )   
 
   #adding boundary effects  
-  mStayers <- m * (1- (pMove * (mvegbmultNS + mvegbmultEW + mvegbmultSN + mvegbmultWE)/4) * mveg * (mnogN + mnogE + mnogS + mnogW)/4 )  
+  mStayers <- m * (1- (pMove * (mVegbmultNS + mVegbmultEW + mVegbmultSN + mVegbmultWE)/4) * mVeg * (mnogN + mnogE + mnogS + mnogW)/4 )  
   
   #below is not needed now, but might be
   #the num nogo neighbours for every neighbour of this cell
@@ -247,9 +247,9 @@ rtMoveReflectNoGoVegBoundary <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),di
     cat("\nno-go areas (0=nogo)\n") 
     print(mnog)
     cat("\nveg movement multiplier\n") 
-    print(mveg)
+    print(mVeg)
     cat("\nveg dif from preferred\n") 
-    print(mvegDifPref)
+    print(mVegDifPref)
     cat("\nmStayers\n") 
     print(mStayers)
     cat("\nmArrivers\n") 

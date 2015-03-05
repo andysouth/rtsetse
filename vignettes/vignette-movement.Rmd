@@ -156,9 +156,9 @@ We can demonstrate this with a first simple example where a vegetation matrix is
 a <- array(0, dim=c(nY, nX, nDays))
 
 #creating empty vegetation matrix
-mveg <- array(1, dim=c(nY,nX))
+mVeg <- array(1, dim=c(nY,nX))
 #set 2nd row to lower movement
-mveg[2,] <- 0.8
+mVeg[2,] <- 0.8
 
 #fill starting grid on day1
 a[,,1] <- 1
@@ -167,7 +167,7 @@ pMove <- 0.8
 
 for(day in 2:nDays)
 {
-  a[,,day] <- rtMoveReflectNoGoVeg(a[,,day-1], pMove=pMove, mveg=mveg)  
+  a[,,day] <- rtMoveReflectNoGoVeg(a[,,day-1], pMove=pMove, mVeg=mVeg)  
 }
 
 #display population spread over time
@@ -184,9 +184,9 @@ In a second example we can increase movement from the 2nd row and in the maps se
 a <- array(0, dim=c(nY, nX, nDays))
 
 #creating empty vegetation matrix
-mveg <- array(1, dim=c(nY,nX))
+mVeg <- array(1, dim=c(nY,nX))
 #set 2nd row to higher movement
-mveg[2,] <- 1.2
+mVeg[2,] <- 1.2
 
 #fill starting grid on day1
 a[,,1] <- 1
@@ -195,7 +195,7 @@ pMove <- 0.8
 
 for(day in 2:nDays)
 {
-  a[,,day] <- rtMoveReflectNoGoVeg(a[,,day-1], pMove=pMove, mveg=mveg)  
+  a[,,day] <- rtMoveReflectNoGoVeg(a[,,day-1], pMove=pMove, mVeg=mVeg)  
 }
 
 #display population spread over time
@@ -211,11 +211,11 @@ In a third example we can keep the higher movement in the 2nd row and add lower 
 a <- array(0, dim=c(nY, nX, nDays))
 
 #creating empty vegetation matrix
-mveg <- array(1, dim=c(nY,nX))
+mVeg <- array(1, dim=c(nY,nX))
 #set 2nd row to higher movement
-mveg[2,] <- 1.2
+mVeg[2,] <- 1.2
 #set 4th row to lower movement
-mveg[4,] <- 0.8
+mVeg[4,] <- 0.8
 
 #fill starting grid on day1
 a[,,1] <- 1
@@ -224,7 +224,7 @@ pMove <- 0.8
 
 for(day in 2:nDays)
 {
-  a[,,day] <- rtMoveReflectNoGoVeg(a[,,day-1], pMove=pMove, mveg=mveg)  
+  a[,,day] <- rtMoveReflectNoGoVeg(a[,,day-1], pMove=pMove, mVeg=mVeg)  
 }
 
 #display population spread over time
@@ -265,7 +265,7 @@ pMove <- 0.8
 
 for(day in 2:nDays)
 {
-  a[,,day] <- rtMoveReflectNoGoVeg(a[,,day-1], pMove=pMove, mveg=mVeg)  
+  a[,,day] <- rtMoveReflectNoGoVeg(a[,,day-1], pMove=pMove, mVeg=mVeg)  
 }
 
 #display population spread over time
@@ -430,7 +430,7 @@ pMove <- 0.8
 for(day in 2:nDays)
 {
   #because mVeg is not specified here, only the vegetation boundary effect operates
-  a[,,day] <- rtMoveReflectNoGoVegBoundary(a[,,day-1], pMove=pMove, mVegCats=mVegCats, mveg=mVeg)  
+  a[,,day] <- rtMoveReflectNoGoVegBoundary(a[,,day-1], pMove=pMove, mVegCats=mVegCats, mVeg=mVeg)  
 }
 
 #display population spread over time

@@ -5,7 +5,7 @@
 \title{movement affected by vegetation and NoGo areas, to cells NESW, reflecting boundaries}
 \usage{
 rtMoveReflectNoGoVegBoundary(m = array(c(0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0),
-  dim = c(3, 4)), mnog = NULL, mveg = NULL, mVegCats = array(c("O", "O",
+  dim = c(3, 4)), mnog = NULL, mVeg = NULL, mVegCats = array(c("O", "O",
   "O", "O", "S", "O", "O", "O", "O", "O", "O", "O"), dim = c(3, 4)),
   iBestVeg = 4, pMove = 0.4, verbose = FALSE)
 }
@@ -14,7 +14,7 @@ rtMoveReflectNoGoVegBoundary(m = array(c(0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0),
 
 \item{mnog}{a matrix of cells of 0&1, 0 for nogo areas}
 
-\item{mveg}{a matrix of vegetation movement modifiers >1 increases movement out of the cell, <1 decreases movement out of the cell}
+\item{mVeg}{a matrix of vegetation movement modifiers >1 increases movement out of the cell, <1 decreases movement out of the cell}
 
 \item{mVegCats}{a matrix of vegetation categories}
 

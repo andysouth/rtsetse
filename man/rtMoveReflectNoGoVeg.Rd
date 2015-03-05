@@ -5,14 +5,14 @@
 \title{movement affected by vegetation and NoGo areas, to cells NESW, reflecting boundaries}
 \usage{
 rtMoveReflectNoGoVeg(m = array(c(0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0), dim =
-  c(3, 4)), mnog = NULL, mveg = NULL, pMove = 0.4, verbose = FALSE)
+  c(3, 4)), mnog = NULL, mVeg = NULL, pMove = 0.4, verbose = FALSE)
 }
 \arguments{
 \item{m}{a matrix of cells containing a single number representing one age}
 
 \item{mnog}{a matrix of cells of 0&1, 0 for nogo areas}
 
-\item{mveg}{a matrix of vegetation movement modifiers >1 increases movement out of the cell, <1 decreases movement out of the cell}
+\item{mVeg}{a matrix of vegetation movement modifiers >1 increases movement out of the cell, <1 decreases movement out of the cell}
 
 \item{pMove}{proportion of popn that moves out of the cell.}
 

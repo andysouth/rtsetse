@@ -22,18 +22,18 @@ test_that("vegetation dependent movement does what is expected", {
   #1 nogo neighbour and veg movement multiplier set to 1
   #expect rtMoveReflectNoGoVeg() to give same results as rtMoveReflectNoGo()
   mnog <- array(c(1,0,1,1,1,1,1,1,1,1,1,1),dim=c(3,4))
-  mveg <- mMovers
-  expect_equal( rtMoveReflectNoGoVeg(mMovers, mnog, mveg=mveg, pMove=0.4),
+  mVeg <- mMovers
+  expect_equal( rtMoveReflectNoGoVeg(mMovers, mnog, mVeg=mVeg, pMove=0.4),
                 array(c(0, 0, 0, 0.1, 0.7, 0.1, 0, 0.1, 0, 0, 0, 0),dim=c(3,4)) )
   #as above but veg movement multiplier set to 2
   #expect 2* as many flies to move out
-  mveg <- mMovers*2
-  expect_equal( rtMoveReflectNoGoVeg(mMovers, mnog, mveg=mveg, pMove=0.4),
+  mVeg <- mMovers*2
+  expect_equal( rtMoveReflectNoGoVeg(mMovers, mnog, mVeg=mVeg, pMove=0.4),
                 array(c(0, 0, 0, 0.2, 0.4, 0.2, 0, 0.2, 0, 0, 0, 0),dim=c(3,4)) )  
   #as above but veg movement multiplier set to 0.5
   #expect 0.5* as many flies to move out
-  mveg <- mMovers/2
-  expect_equal( rtMoveReflectNoGoVeg(mMovers, mnog, mveg=mveg, pMove=0.4),
+  mVeg <- mMovers/2
+  expect_equal( rtMoveReflectNoGoVeg(mMovers, mnog, mVeg=mVeg, pMove=0.4),
                 array(c(0, 0, 0, 0.05, 0.85, 0.05, 0, 0.05, 0, 0, 0, 0),dim=c(3,4)) )  
   
   
@@ -42,13 +42,13 @@ test_that("vegetation dependent movement does what is expected", {
   mnog <- array(c(1,1,1,1,1,1,1,1,1,1,1,1),dim=c(3,4))
   
   #expect that when veg is 0 for a cell no movement from that cell
-  mveg <- array(c(0,0,0,0,2,0,0,0,0,0,0,0),dim=c(3,4))
-  expect_equal( rtMoveReflectNoGoVeg(mMovers, mnog, mveg=mveg, pMove=0.4),
+  mVeg <- array(c(0,0,0,0,2,0,0,0,0,0,0,0),dim=c(3,4))
+  expect_equal( rtMoveReflectNoGoVeg(mMovers, mnog, mVeg=mVeg, pMove=0.4),
                 array(c(0, 0.2, 0, 0.2, 0.2, 0.2, 0, 1.2, 0, 0, 0, 0),dim=c(3,4)) ) 
   
   #expect that when veg is 0.5 & 2 for neighbouring cells ...
-  mveg <- array(c(0,0,0,0,0.5,0,0,2,0,0,0,0),dim=c(3,4))
-  expect_equal( rtMoveReflectNoGoVeg(mMovers, mnog, mveg=mveg, pMove=0.4),
+  mVeg <- array(c(0,0,0,0,0.5,0,0,2,0,0,0,0),dim=c(3,4))
+  expect_equal( rtMoveReflectNoGoVeg(mMovers, mnog, mVeg=mVeg, pMove=0.4),
                 array(c(0, 0.05, 0, 0.05, 1, 0.05, 0.2, 0.25, 0.2, 0, 0.2, 0),dim=c(3,4)) )   
 
   

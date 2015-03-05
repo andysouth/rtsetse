@@ -15,7 +15,7 @@
 
 #' @param m a matrix of cells containing a single number representing one age
 #' @param mnog a matrix of cells of 0&1, 0 for nogo areas 
-#' @param mveg a matrix of vegetation movement modifiers >1 increases movement out of the cell, <1 decreases movement out of the cell 
+#' @param mVeg a matrix of vegetation movement modifiers >1 increases movement out of the cell, <1 decreases movement out of the cell 
 #' @param pMove proportion of popn that moves out of the cell.
 #' @param verbose print what it's doing T/F
 #' 
@@ -33,7 +33,7 @@
 
 rtMoveReflectNoGoVeg <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
                                  mnog = NULL,
-                                 mveg = NULL,
+                                 mVeg = NULL,
                                  pMove=0.4,
                                  verbose=FALSE) {
   
@@ -86,28 +86,28 @@ rtMoveReflectNoGoVeg <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)
  
   #vegetation movement modifiers from source cells
 
-  if (!is.null(mveg))
+  if (!is.null(mVeg))
   {
-    mvegN = rbind( mveg[1,], mveg[-nrow(mveg),] )
-    mvegE = cbind( mveg[,-1], mveg[,ncol(mveg)] )
-    mvegS = rbind( mveg[-1,], mveg[nrow(mveg),] )   
-    mvegW = cbind( mveg[,1], mveg[,-ncol(mveg)] )    
+    mVegN = rbind( mVeg[1,], mVeg[-nrow(mVeg),] )
+    mVegE = cbind( mVeg[,-1], mVeg[,ncol(mVeg)] )
+    mVegS = rbind( mVeg[-1,], mVeg[nrow(mVeg),] )   
+    mVegW = cbind( mVeg[,1], mVeg[,-ncol(mVeg)] )    
   } else 
   {
     #set all these to 1 so they have no effect on movement calc later
-    mveg <- mvegN <- mvegE <- mvegS <- mvegW <- 1
+    mVeg <- mVegN <- mVegE <- mVegS <- mVegW <- 1
   }
 
   
-  #check for if any cells in pMove*mveg are >1
+  #check for if any cells in pMove*mVeg are >1
   #if so set to 1 so that all indivs leave
-  indicesHighMove <- which((mveg*pMove > 1))
+  indicesHighMove <- which((mVeg*pMove > 1))
   if (length(indicesHighMove) >0)
   {
     warning("your combination of pMove and vegetation movement multipliers causes ",length(indicesHighMove),
             " cells to have proportion moving >1, these will be set to 1 and all will move out")
     #reduce multiplier in cells so that the result will be 1 (all move)
-    mveg[indicesHighMove] <- 1/pMove
+    mVeg[indicesHighMove] <- 1/pMove
   }
   
   #calc arrivers in a cell from it's 4 neighbours
@@ -117,11 +117,11 @@ rtMoveReflectNoGoVeg <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)
   #below is version used in rtMoveRelfectNoGo
   #mArrivers <- pMove*(mN*mnog + mE*mnog + mS*mnog + mW*mnog)/4  
 
-  #mnog at the destination cell that matters, and mveg at the source cell
-  #uses mvegN & mN etc for source cells, mnog for the destination cells 
-  #mArrivers <- pMove*(mN*mvegN*mnog + mE*mvegE*mnog + mS*mvegS*mnog + mW*mvegW*mnog)/4 
+  #mnog at the destination cell that matters, and mVeg at the source cell
+  #uses mVegN & mN etc for source cells, mnog for the destination cells 
+  #mArrivers <- pMove*(mN*mVegN*mnog + mE*mVegE*mnog + mS*mVegS*mnog + mW*mVegW*mnog)/4 
   #this is equivalent to above and simpler
-  mArrivers <- pMove*mnog*(mN*mvegN + mE*mvegE + mS*mvegS + mW*mvegW)/4    
+  mArrivers <- pMove*mnog*(mN*mVegN + mE*mVegE + mS*mVegS + mW*mVegW)/4    
   
   #version without nogo areas and vegetation effects
   #mStayers <- (1-pMove)*m  
@@ -133,12 +133,12 @@ rtMoveReflectNoGoVeg <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)
 
   #below is version used in rtMoveRelfectNoGo
   #mStayers <- m * (1- pMove * (mnogN + mnogE + mnogS + mnogW)/4 ) 
-  #stayers are influenced by veg in source cell (mveg) & nogo areas in destination cells (mnogN etc)
+  #stayers are influenced by veg in source cell (mVeg) & nogo areas in destination cells (mnogN etc)
   #BEWARE! this is tricky
   #if no neighbouring cells are nogo, all movers move (* (1+1+1+1)/4)
   #if 1 neighbouring cell is nogo, 3/4 movers move (* (0+1+1+1)/4)  
   #if 2 neighbouring cells nogo, 1/2 movers move (* (0+0+1+1)/4)    
-  mStayers <- m * (1- pMove * mveg * (mnogN + mnogE + mnogS + mnogW)/4 )   
+  mStayers <- m * (1- pMove * mVeg * (mnogN + mnogE + mnogS + mnogW)/4 )   
   
 
   #below is not needed now, but might be
@@ -170,7 +170,7 @@ rtMoveReflectNoGoVeg <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)
     cat("\nno-go areas (0=nogo)\n") 
     print(mnog)
     cat("\nveg movement multiplier\n") 
-    print(mveg)
+    print(mVeg)
     cat("\nmStayers\n") 
     print(mStayers)
     cat("\nmArrivers\n") 
