@@ -59,6 +59,7 @@ rtMoveReflectNoGoVegBoundary <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),di
   
   #speed efficient way of doing movement
   #create a copy of the matrix shifted 1 cell in each cardinal direction
+  #these have now been replaced by the shiftGrid* functions
   #island model uses 0's
   #mN = rbind( rep(0,ncol(m)), m[-nrow(m),] )
   #mE = cbind( m[,-1], rep(0,nrow(m)) )
@@ -94,7 +95,6 @@ rtMoveReflectNoGoVegBoundary <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),di
   
   
   #vegetation movement modifiers from source cells
-  
   if (!is.null(mveg))
   {
     mvegN <- shiftGridReflectN(mveg)
@@ -121,41 +121,28 @@ rtMoveReflectNoGoVegBoundary <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),di
   
   
   ######################################
-  #todo get veg boundary effects working
   #add a decrease in movement from 'better' to 'poorer' vegetation types as in Hat-trick
-  #I need to calculate the change associated with each move
-  #e.g. mvegN-mveg for source-destination
-  #?can I calculate once based on the vegmap and save results as an array ?
-  #avegchange[y,x,(N,E,S,W)]
   
-  #in Hat-trick there is a categorical decrease, from Hat-trick doc : 
-  #if destination is less like best veg than source, movement decreased by about 1/3 for every category away from the nearest one with a 100% entry
-  #1 category, 30%
-  #2 categories, 10%
-  #3 categories, 3%
-  #4 categories, 1%
-  #5 categories, 0.3%
-  #This relies on there being a sequence of vegetation density
-  #I can try to get it to work for savannah first
-  #I can convert veg category map to density sequence : 1,2,3,4,5 ..
-  #Have an input of the best veg type (e.g. 3)
-  #then algorithm is just :
+  #calculate change associated with each move, e.g. mvegN-mveg for source-destination
+  
+  #can I calculate once based on the vegmap and save results as an array ?
+  #aVegChange[y,x,(N,E,S,W)]
+  
+  #vegetation types are ordered by decreasing density 1 to 5
+  #movement that results in a change away from preferred density is reduced
+  #by the number of categories of the change
+  
+  #algorithm :
   #qualityChange = abs(from-best) - abs(to-best)
   #if (qualityChange) >= 0 move=100%
   #else if (qualityChange < 0) decrease movement
-  #I might even be able generalise it and allow movement to be increased
-  #or maybe not, the maximum is that all movers go and can't increase on that easily
-  #can pass a vector of boundaryMovementModifiers from 0 to maxChange
-  #default for Hat-trick is
+  #default decrease in movement from Hat-trick is
   #1, 0.3, 0.1, 0.03, 0.01, 0.001 
-  #I could write an option into readMapVeg to return numeric values
-  #todo get this to work on a simpler version
-  #mvegCats <- rtReadMapVeg( system.file("extdata","vegTanzaniaSerengetiTorr1km.txt", package="rtsetse"))
   
   
-  #for now can just convert to difPref
+  #convert veg characters to numeric
   mvegNum <- rtSetGridFromVeg( mVegCats, dfLookup=data.frame(from=c("D","T","O","S","B","G","N"),to=c(1,2,3,4,5,6,999),stringsAsFactors = FALSE ))
-  #iBestVeg <- 4 
+
   #matrix of difference of veg in cell from best
   mvegDifPref <- abs(iBestVeg-mvegNum)
   
@@ -185,16 +172,10 @@ rtMoveReflectNoGoVegBoundary <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),di
   mvegbmultS <- rtSetGridFromVeg( mvegDifPrefS, dfLookup=data.frame(from=c(-5:5),to=c(0.001, 0.01, 0.03, 0.1, 0.3, 1, 1, 1, 1, 1, 1)))
   mvegbmultW <- rtSetGridFromVeg( mvegDifPrefW, dfLookup=data.frame(from=c(-5:5),to=c(0.001, 0.01, 0.03, 0.1, 0.3, 1, 1, 1, 1, 1, 1)))
   
-  #******HERE
   #these go the opposite way
   #and all boundary values are replaced with 1
   #because for reflecting boundaries there will be no change in vegetation 
-  #associated with movements in and out of the grid  
-
-#   mvegbmultSN <- rbind( rep(1,ncol(m)), mvegbmultS[-nrow(mvegbmultN),] )
-#   mvegbmultWE <- cbind( mvegbmultW[,-1], rep(1,nrow(m)) )
-#   mvegbmultNS <- rbind( mvegbmultN[-1,], rep(1,ncol(m)) )   
-#   mvegbmultEW <- cbind( rep(1,nrow(m)), mvegbmultE[,-ncol(mvegbmultW)] )      
+  #associated with movements in and out of the grid    
 
   mvegbmultSN <- shiftGridIslandN( mvegbmultS, fill=1 )
   mvegbmultWE <- shiftGridIslandE( mvegbmultW, fill=1 )
