@@ -382,7 +382,7 @@ spplot( raster::raster(a[,,nDays], xmx=ncol(a), ymx=nrow(a)),
 ```
 The above plot shows accumulation of flies in the preferred habitat type as expected, and progressively fewer flies in the vegetation types that are more different from the preferred. Changing the order of the rows and the effect remains as expected.
 
-```{r, "movement-decreasing-check2", eval=TRUE, echo=TRUE, message=FALSE, fig.width=3, fig.show='hold'}
+```{r, "movement-decreasing-check3", eval=TRUE, echo=TRUE, message=FALSE, fig.width=3, fig.show='hold'}
 #create very simple test veg map
 nY <- 6
 nX <- 4
