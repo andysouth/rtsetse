@@ -300,7 +300,126 @@ The user chooses a preferred ('best') vegetation type for the flies being consid
 
 > If the fly is in a certain vegetation type and is headed to the same vegetation type, or to one that is better, ie, the best or a type that is closer to the best type, then the fly will keep going with no adjustment to the evacuation rate. Otherwise, the fly must be headed to a vegetation type that differs more markedly from the best than the one the fly is  in. The fly will then tend to turn back, with a probability that is greater the more the vegetation type to which it is  headed differs from the best. In deciding whether vegetataion is closer to the best, one that is X categories denser than the best is regarded as no worse than one that is X categories less dense than the best.
 
-Movement resulting in a decline in preference of 1, 2, 3, 4, 5 categories is set to 30%, 10%, 3%, 1%, & 0.3% respectively of what it would have been otherwise. The results of implementing this mechanism in rtsetse are shown below.    
+Movement resulting in a decline in preference of 1, 2, 3, 4, 5 categories is set to 30%, 10%, 3%, 1%, & 0.3% respectively of what it would have been otherwise.    
+
+Here is a first simple test with just 2 vegetation types.
+
+<!-- note reduced fig.width & fig.show='hold' above to fit 2 plots side by side --> 
+```{r, "movement-decreasing-check1", eval=TRUE, echo=TRUE, message=FALSE, fig.width=3, fig.show='hold'}
+#create very simple test veg map
+nY <- 5
+nX <- 4
+# G for Grass, S for Savannah
+#vertical split
+#m2 <- array("G", dim=c(nY,nX))
+#m2[1:(nY*nX/2)] <- "S"
+#horizontal split
+m2 <- array("G", dim=c(nY,nX))
+m2[1:round(nY/2),] <- "S"
+
+nDays <- 99
+
+#create array to store grids over time, set dimensions from the veg grid
+a <- array(0, dim=c(dim(m2), nDays))
+
+#fill starting grid on day1
+a[,,1] <- 1
+#set proportion moving
+pMove <- 0.8
+
+for(day in 2:nDays)
+{
+  #because mVegMove is not specified here, only the vegetation boundary effect operates
+  a[,,day] <- rtMoveReflectNoGoVegBoundary(a[,,day-1], pMove=pMove, mVegCats=m2)  
+}
+
+#plot vegetation map
+rtPlotMapVeg(m2)
+
+#plot final day
+spplot( raster::raster(a[,,nDays], xmx=ncol(a), ymx=nrow(a)), 
+        names.attr=c(paste0("day",nDays)), 
+        col.regions=c("white",colorRampPalette(brewer.pal(9,"Greens"))(99)) )
+
+```
+
+Now trying with more vegetation types.
+<!-- note reduced fig.width & fig.show='hold' above to fit 2 plots side by side --> 
+```{r, "movement-decreasing-check2", eval=TRUE, echo=TRUE, message=FALSE, fig.width=3, fig.show='hold'}
+#create very simple test veg map
+nY <- 6
+nX <- 4
+
+#create horiz stripes of habitat
+m2 <- array(c("D","T","O","S","B","G"), dim=c(nY,nX))
+
+#m2[1:round(nY/2),] <- "S"
+
+nDays <- 12
+
+#create array to store grids over time, set dimensions from the veg grid
+a <- array(0, dim=c(dim(m2), nDays))
+
+#fill starting grid on day1
+a[,,1] <- 1
+#set proportion moving
+pMove <- 0.6
+
+for(day in 2:nDays)
+{
+  #because mVegMove is not specified here, only the vegetation boundary effect operates
+  a[,,day] <- rtMoveReflectNoGoVegBoundary(a[,,day-1], pMove=pMove, mVegCats=m2)  
+}
+
+#plot vegetation map
+rtPlotMapVeg(m2)
+
+#plot final day
+spplot( raster::raster(a[,,nDays], xmx=ncol(a), ymx=nrow(a)), 
+        names.attr=c(paste0("day",nDays)), 
+        col.regions=c("white",colorRampPalette(brewer.pal(9,"Greens"))(99)) )
+
+```
+The above plot shows accumulation of flies in the preferred habitat type as expected, and progressively fewer flies in the vegetation types that are more different from the preferred. Changing the order of the rows and the effect remains as expected.
+
+```{r, "movement-decreasing-check2", eval=TRUE, echo=TRUE, message=FALSE, fig.width=3, fig.show='hold'}
+#create very simple test veg map
+nY <- 6
+nX <- 4
+
+#create horiz stripes of habitat
+#m2 <- array(c("D","T","O","S","B","G"), dim=c(nY,nX))
+#change order
+m2 <- array(c("O","T","D","S","G","B"), dim=c(nY,nX))
+
+nDays <- 12
+
+#create array to store grids over time, set dimensions from the veg grid
+a <- array(0, dim=c(dim(m2), nDays))
+
+#fill starting grid on day1
+a[,,1] <- 1
+#set proportion moving
+pMove <- 0.6
+
+for(day in 2:nDays)
+{
+  #because mVegMove is not specified here, only the vegetation boundary effect operates
+  a[,,day] <- rtMoveReflectNoGoVegBoundary(a[,,day-1], pMove=pMove, mVegCats=m2)  
+}
+
+#plot vegetation map
+rtPlotMapVeg(m2)
+
+#plot final day
+spplot( raster::raster(a[,,nDays], xmx=ncol(a), ymx=nrow(a)), 
+        names.attr=c(paste0("day",nDays)), 
+        col.regions=c("white",colorRampPalette(brewer.pal(9,"Greens"))(99)) )
+
+```
+
+
+Below the decreased movement to poorer vegetation types alone is applied to the Serengeti map.
 
 ```{r, "movement-serengeti2-boundaries", eval=TRUE, echo=TRUE, message=FALSE, fig.width=7}
 
@@ -368,48 +487,6 @@ spplot( raster::raster(a[,,nDays], xmx=ncol(a), ymx=nrow(a)),
         col.regions=c("white",colorRampPalette(brewer.pal(9,"Greens"))(99)) )
 
 ```
-
-Here is a further, even simpler, test.
-
-<!-- note reduced fig.width & fig.show='hold' above to fit 2 plots side by side --> 
-```{r, "movement-serengeti3-boundary-check2", eval=TRUE, echo=TRUE, message=FALSE, fig.width=3, fig.show='hold'}
-#create very simple test veg map
-nY <- 5
-nX <- 4
-# G for Grass, S for Savannah
-#vertical split
-#m2 <- array("G", dim=c(nY,nX))
-#m2[1:(nY*nX/2)] <- "S"
-#horizontal split
-m2 <- array("G", dim=c(nY,nX))
-m2[1:round(nY/2),] <- "S"
-
-nDays <- 99
-
-#create array to store grids over time, set dimensions from the veg grid
-a <- array(0, dim=c(dim(m2), nDays))
-
-#fill starting grid on day1
-a[,,1] <- 1
-#set proportion moving
-pMove <- 0.8
-
-for(day in 2:nDays)
-{
-  #because mVegMove is not specified here, only the vegetation boundary effect operates
-  a[,,day] <- rtMoveReflectNoGoVegBoundary(a[,,day-1], pMove=pMove, mVegCats=m2)  
-}
-
-#plot vegetation map
-rtPlotMapVeg(m2)
-
-#plot final day
-spplot( raster::raster(a[,,nDays], xmx=ncol(a), ymx=nrow(a)), 
-        names.attr=c(paste0("day",nDays)), 
-        col.regions=c("white",colorRampPalette(brewer.pal(9,"Greens"))(99)) )
-
-```
-
 
 
 ### 6. Adding all the movement mechanisms together
