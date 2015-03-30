@@ -25,7 +25,7 @@ rtCalcPupaPerSexAge <- function( pMortPupa = 0.25,
 #If you want to get a carrying capacity of 4000 females you need to multiply 100 larvae by 4000/1300.  
 
   
-#1 find number of age0 females produced from 100 larvae of both sexes   
+#1 find number of age0 females produced from 100 larvae of both sexes (50 females assuming 50:50 sex ratio)   
 fPopFAge0Ref <- 50*(1-pMortPupa)
 
 #2 find stable age structure of females from this and age specific mortalities
