@@ -14,7 +14,7 @@
 #rtSetVegDifMoveGrids : returns aVegDifMult[NSEW,NS,EW etc.]
 
 rtSetVegMoveGrids <- function(mVegCats = array(c("O","O","O","O","S","O","O","O","O","O","O","O"),dim=c(3,4)),
-                              dfMoveByVeg =  data.frame(code=c("D","T","O","S","B","G","N"),move=c(0.85, 0.9, 0.95, 1, 1.05, 1.1, 0)),
+                              dfMoveByVeg = data.frame(code=c("D","T","O","S","B","G","N"),move=c(0.85, 0.9, 0.95, 1, 1.05, 1.1, 0)),
                               verbose=FALSE) {
 
   
@@ -36,5 +36,5 @@ rtSetVegMoveGrids <- function(mVegCats = array(c("O","O","O","O","S","O","O","O"
   aVegMoveMult[,,"W"] <- shiftGridReflectW(mVegMove)
   
 
-  invisible(aVegDifMult)
+  invisible(aVegMoveMult)
 }
