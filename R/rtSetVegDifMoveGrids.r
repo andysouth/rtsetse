@@ -83,10 +83,10 @@ rtSetVegDifMoveGrids <- function(mVegCats = array(c("O","O","O","O","S","O","O",
   #they are calculated by going back the other way from the previous calculation
   #all boundary values are replaced with 1 because for reflecting boundaries there will be no change 
   #in vegetation associated with movements in and out of the grid    
-  aVegDifMult[,,"SN"] <- shiftGridIslandN( mVegbmultS, fill=1 )
-  aVegDifMult[,,"WE"] <- shiftGridIslandE( mVegbmultW, fill=1 )
-  aVegDifMult[,,"NS"] <- shiftGridIslandS( mVegbmultN, fill=1 )   
-  aVegDifMult[,,"EW"] <- shiftGridIslandW( mVegbmultE, fill=1 )   
+  aVegDifMult[,,"SN"] <- shiftGridIslandN( aVegDifMult[,,"S"], fill=1 )
+  aVegDifMult[,,"WE"] <- shiftGridIslandE( aVegDifMult[,,"W"], fill=1 )
+  aVegDifMult[,,"NS"] <- shiftGridIslandS( aVegDifMult[,,"N"], fill=1 )   
+  aVegDifMult[,,"EW"] <- shiftGridIslandW( aVegDifMult[,,"E"], fill=1 )   
 
   invisible(aVegDifMult)
 }
