@@ -1,13 +1,19 @@
+#' to return an array of grids used internally to represent movement across vegetation boundaries 
+#' 
+#' Used to represent effect of vegetation differences between cells.  
+#' Can be used to reduce movement into less preferred vegetation.  
+#' Returns an array of movement multiplier grids to N,S,E,W, SN,WE,NS,EW.
+#' This is tricky because of the way it is coded to make it run faster.
 
+#' @param mVegCats a matrix of vegetation categories
+#' @param iBestVeg the index of the prefferred vegetation
+#' @param verbose print what it's doing T/F
+#' 
+#' @return an array of movement multiplier grids to N,S,E & W
 
-#I could put the mVegMove stuff in here too
-#but then how would I name the storage in the returned array
-#does it become less clear ?
-
-#I could have 2 functions
+#2 functions
 #rtSetVegMoveGrids : returns aVegMoveMult[NSEW]
 #rtSetVegDifMoveGrids : returns aVegDifMult[NSEW,NS,EW etc.]
-
 
 rtSetVegDifMoveGrids <- function(mVegCats = array(c("O","O","O","O","S","O","O","O","O","O","O","O"),dim=c(3,4)),
                            iBestVeg = 4,
