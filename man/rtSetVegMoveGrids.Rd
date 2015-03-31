@@ -17,7 +17,7 @@ rtSetVegMoveGrids(mVegCats = array(c("O", "O", "O", "O", "S", "O", "O", "O",
 \item{verbose}{print what it's doing T/F}
 }
 \value{
-an array of movement multiplier grids to N,S,E & W
+an array of movement multiplier grids 'here' and to N,S,E & W
 }
 \description{
 Used to represent effect of vegetation in a cell on movement out of that cell.
