@@ -20,6 +20,9 @@ rtSetGridFromVeg <- function(     mVegetation = array(c("D","T","O","S","N","N")
                                   )
 {
   
+  #sometimes dfLookup gets passed as a list, convert it to a data.frame for easier indexing
+  dfLookup <- data.frame(dfLookup)
+  
   #gives a warning if the matrix gives a code not present in the df
   #currently it returns NA, may want to modify that
   badCodePosns <- which(!mVegetation %in% dfLookup[,1])
