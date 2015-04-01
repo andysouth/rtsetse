@@ -21,19 +21,16 @@
 
 rtMove <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
                    mNog = NULL,
-                   mVegMove = NULL,
-                   mVegCats = array(c("O","O","O","O","S","O","O","O","O","O","O","O"),dim=c(3,4)),
-                   iBestVeg = 4,
+                   aVegMoveMult = NULL,
+                   aVegDifMult = NULL,
                    pMove=0.4,
                    verbose=FALSE) {
   
   
-  #!beware that this doesn't cope with nrow=1 or ncol=1 
-  #see rtMoveIsland() which tries (and i think fails) to sort 
-  #tricky to work out, R treats vectors and matrices differently
-  
+  #this doesn't cope with nrow=1 or ncol=1 see rtMoveIsland() which tries (and i think fails) 
   if( nrow(m) < 2 | ncol(m) < 2 )
     stop("reflecting movement does not work if less than 2 grid rows or columns")
+  
   
   #to speed up can just return if there are no popns in matrix
   if ( sum(m)==0 ) return(m)
@@ -81,31 +78,29 @@ rtMove <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
   }
   
   
-  #vegetation movement modifiers from source cells
-  if (!is.null(mVegMove))
+  #vegetation movement modifiers
+  if (!is.null(aVegMoveMult))
   {
-    mVegMoveN <- shiftGridReflectN(mVegMove)
-    mVegMoveE <- shiftGridReflectE(mVegMove)
-    mVegMoveS <- shiftGridReflectS(mVegMove)   
-    mVegMoveW <- shiftGridReflectW(mVegMove)    
-  } else 
-  {
+    dimnames1 <- list(grid=c("here","N","E","S","W"))
+    #dim of array got from dimnames above
     #set all these to 1 so they have no effect on movement calc later
-    mVegMove <- mVegMoveN <- mVegMoveE <- mVegMoveS <- mVegMoveW <- 1
+    aVegMoveMult <- array(1, dim=sapply(dimnames1,length), dimnames=dimnames1)
+    #mVegMove <- mVegMoveN <- mVegMoveE <- mVegMoveS <- mVegMoveW <- 1
   }
   
   
   #todo: can I still get this check to work with the new system where difference in vegetation between cells is used too
+  #but: a high movement might be counteracted by the vegetation difference effect
   
   #check for if any cells in pMove*mVegMove are >1
   #if so set to 1 so that all indivs leave
-  indicesHighMove <- which((mVegMove*pMove > 1))
+  indicesHighMove <- which((aVegMoveMult['here']*pMove > 1))
   if (length(indicesHighMove) >0)
   {
     warning("your combination of pMove and vegetation movement multipliers causes ",length(indicesHighMove),
             " cells to have proportion moving >1, these will be set to 1 and all will move out")
     #reduce multiplier in cells so that the result will be 1 (all move)
-    mVegMove[indicesHighMove] <- 1/pMove
+    aVegMoveMult['here'][indicesHighMove] <- 1/pMove
   }
   
   
@@ -122,8 +117,8 @@ rtMove <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
   #mArrivers <- pMove*(mN + mE + mS + mW)/4
   
   mArrivers <- pMove*mNog*(mN * aVegMoveMult['N'] * aVegDifMult['N'] + 
-                           mE * aVegMoveMult['S'] * aVegDifMult['E'] + 
-                           mS * aVegMoveMult['E'] * aVegDifMult['S'] + 
+                           mE * aVegMoveMult['E'] * aVegDifMult['E'] + 
+                           mS * aVegMoveMult['S'] * aVegDifMult['S'] + 
                            mW * aVegMoveMult['W'] * aVegDifMult['W'])/4   
   
   #old version if no vegetation effects
@@ -153,7 +148,7 @@ rtMove <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
     cat("\nno-go areas (0=nogo)\n") 
     print(mNog)
     cat("\nveg movement multiplier\n") 
-    print(mVegMove)
+    print(aVegMoveMult['here'])
     cat("\nveg dif from preferred\n") 
     print(mVegDifPref)
     cat("\nmStayers\n") 
