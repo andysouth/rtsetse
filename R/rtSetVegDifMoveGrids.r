@@ -6,7 +6,7 @@
 #' This is tricky because of the way it is coded to make it run faster.
 
 #' @param mVegCats a matrix of vegetation categories
-#' @param iBestVeg the index of the prefferred vegetation
+#' @param iBestVeg the index of the preferred vegetation for this species
 #' @param verbose print what it's doing T/F
 #' 
 #' @return an array of movement multiplier grids to N,S,E & W, SN,WE,NS,EW

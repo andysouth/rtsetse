@@ -10,7 +10,7 @@ rtSetVegDifMoveGrids(mVegCats = array(c("O", "O", "O", "O", "S", "O", "O",
 \arguments{
 \item{mVegCats}{a matrix of vegetation categories}
 
-\item{iBestVeg}{the index of the prefferred vegetation}
+\item{iBestVeg}{the index of the preferred vegetation for this species}
 
 \item{verbose}{print what it's doing T/F}
 }
