@@ -325,10 +325,10 @@ rt_runGrid <- function( mVegCats = array(c("D","T","O","S","N","N"),dim=c(2,3)),
       #aGrid <- plyr::aaply(aGrid,.margins=c(3,4), .drop=FALSE,function(m) rtMoveReflectNoGo(m, mNog=mNog, pMove=pMove)) 
       
       #movement influenced by vegetation avoiding no-go areas
-      aGrid <- plyr::aaply(aGrid,.margins=c(3,4), .drop=FALSE,function(m) rtMoveReflectNoGoVeg(m, mNog=mNog, mVegMove=mVegMove, pMove=pMove))       
+      #aGrid <- plyr::aaply(aGrid,.margins=c(3,4), .drop=FALSE,function(m) rtMoveReflectNoGoVeg(m, mNog=mNog, mVegMove=mVegMove, pMove=pMove))       
       
       #todo: replace the above call with one that uses the precalculated movement arrays
-      #aGrid <- plyr::aaply(aGrid,.margins=c(3,4), .drop=FALSE,function(m) rtMove(m, mNog=mNog, pMove=pMove, aVegMoveMult=aVegMoveMult, aVegDifMult=aVegDifMult))       
+      aGrid <- plyr::aaply(aGrid,.margins=c(3,4), .drop=FALSE,function(m) rtMove(m, mNog=mNog, pMove=pMove, aVegMoveMult=aVegMoveMult, aVegDifMult=aVegDifMult))       
       
       
       #put array dimensions back in correct order
