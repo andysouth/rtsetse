@@ -9,7 +9,7 @@
 #' @param iBestVeg the index of the prefferred vegetation
 #' @param verbose print what it's doing T/F
 #' 
-#' @return an array of movement multiplier grids to N,S,E & W
+#' @return an array of movement multiplier grids to N,S,E & W, SN,WE,NS,EW
 
 #2 functions
 #rtSetVegMoveGrids : returns aVegMoveMult[NSEW]
@@ -19,10 +19,22 @@ rtSetVegDifMoveGrids <- function(mVegCats = array(c("O","O","O","O","S","O","O",
                            iBestVeg = 4,
                            verbose=FALSE) {
 
-  ################################################################
-  # to next line of # can be put outside the function
-  # then perhaps I pass the following array 
-  #aVegDifMult[y,x,(N,E,S,W,SN,WE,NS,EW)]
+  
+  #to add a decrease in movement from 'better' to 'poorer' vegetation types as in Hat-trick
+  
+  #calculate change associated with each move, once based on the vegmap and save results as an array
+  #aVegChange[y,x,(N,E,S,W)]
+  
+  #vegetation types are ordered by decreasing density 1 to 5
+  #movement that results in a change away from preferred density is reduced
+  #by the number of categories of the change
+  
+  #algorithm :
+  #qualityChange = abs(from-best) - abs(to-best)
+  #if (qualityChange) >= 0 move=100%
+  #else if (qualityChange < 0) decrease movement
+  #default decrease in movement from Hat-trick is
+  #1, 0.3, 0.1, 0.03, 0.01, 0.001 
   
   
   nY <- dim(mVegCats)[1]

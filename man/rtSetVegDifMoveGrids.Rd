@@ -15,7 +15,7 @@ rtSetVegDifMoveGrids(mVegCats = array(c("O", "O", "O", "O", "S", "O", "O",
 \item{verbose}{print what it's doing T/F}
 }
 \value{
-an array of movement multiplier grids to N,S,E & W
+an array of movement multiplier grids to N,S,E & W, SN,WE,NS,EW
 }
 \description{
 Used to represent effect of vegetation differences between cells.
