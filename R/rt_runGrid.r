@@ -128,11 +128,11 @@ rt_runGrid <- function( mVegCats = array(c("D","T","O","S","N","N"),dim=c(2,3)),
   
   #create mortality multiplier grid from the vegetation grid
   mMortMultGrid <- rtSetGridFromVeg( mVegetation = mVegCats,
-                                     dfLookup = dfMortByVeg[,c(1,2)] )  
+                                     dfLookup = dfMortByVeg[c("code","mortality")] )  
   #if (verbose) cat("mortality multiplier grid set to:",mMortMultGrid,"\n")
   #create pupal mortality multiplier grid from the vegetation grid, using column 3 for pupmort
   mMortMultGridPup <- rtSetGridFromVeg( mVegetation = mVegCats,
-                                        dfLookup = dfMortByVeg[,c(1,3)] )   
+                                        dfLookup = dfMortByVeg[c("code","pupmortality")] )   
     
   #setting a total carryCap from the female input
   iCarryCap <- iCarryCapF * (1+fMperF)
