@@ -7,12 +7,14 @@
 rtSetVegMoveGrids(mVegCats = array(c("O", "O", "O", "O", "S", "O", "O", "O",
   "O", "O", "O", "O"), dim = c(3, 4)), dfMoveByVeg = data.frame(code = c("D",
   "T", "O", "S", "B", "G", "N"), move = c(0.85, 0.9, 0.95, 1, 1.05, 1.1, 0)),
-  verbose = FALSE)
+  mVegMove = NULL, verbose = FALSE)
 }
 \arguments{
 \item{mVegCats}{a matrix of vegetation categories}
 
 \item{dfMoveByVeg}{dataframe specifying a movement multiplier for each vegetation category}
+
+\item{mVegMove}{optional matrix of vegetation movement modifiers >1 increases movement out of the cell, <1 decreases movement out of the cell}
 
 \item{verbose}{print what it's doing T/F}
 }
