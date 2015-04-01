@@ -5,22 +5,21 @@
 \title{movement}
 \usage{
 rtMove(m = array(c(0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0), dim = c(3, 4)),
-  mNog = NULL, mVegMove = NULL, mVegCats = array(c("O", "O", "O", "O",
-  "S", "O", "O", "O", "O", "O", "O", "O"), dim = c(3, 4)), iBestVeg = 4,
-  pMove = 0.4, verbose = FALSE)
+  mNog = NULL, aVegMoveMult = NULL, aVegDifMult = NULL, pMove = 0.4,
+  verbose = FALSE)
 }
 \arguments{
 \item{m}{a matrix of cells containing a single number representing one age}
 
 \item{mNog}{a matrix of cells of 0&1, 0 for nogo areas}
 
-\item{pMove}{proportion of popn that moves out of the cell.}
-
-\item{verbose}{print what it's doing T/F}
-
 \item{aVegMoveMult}{an array of grids used internally to represent movement dependent on vegetation}
 
 \item{aVegDifMult}{an array of grids used internally to represent movement across vegetation boundaries}
+
+\item{pMove}{proportion of popn that moves out of the cell.}
+
+\item{verbose}{print what it's doing T/F}
 }
 \value{
 an updated matrix following movement
