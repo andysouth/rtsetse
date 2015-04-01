@@ -6,6 +6,7 @@
 
 #' @param mVegCats a matrix or filepath for a map of vegetation codes
 #' @param dfMortByVeg a dataframe or filepath to a lookup table specifying mortality multiplier (percent) for each vegetation type
+#' @param iBestVeg the index of the preferred vegetation for this species
 # @param mCarryCapF a matrix of female carrying capacities
 # @param nCol number grid columns
 # @param nRow number grid rows
@@ -57,6 +58,7 @@
 #' 
 rt_runGrid <- function( mVegCats = array(c("D","T","O","S","N","N"),dim=c(2,3)),
                           dfMortByVeg = data.frame(code=c("D","T","O","S","B","G","N"),mortality=c(200,150,110,100,110,210,999),pupmortality=c(120,110,105,100,120,170,999),stringsAsFactors = FALSE),
+                          iBestVeg = 4,
                           pMove = 0.4,
                           iDays = 4,
                           iMaxAge = 120,
@@ -149,6 +151,14 @@ rt_runGrid <- function( mVegCats = array(c("D","T","O","S","N","N"),dim=c(2,3)),
   #convert vegetation categories to movement multiplier values
   dfMoveByVeg <-  data.frame(code=c("D","T","O","S","B","G","N"),move=c(0.85, 0.9, 0.95, 1, 1.05, 1.1, 0))
   mVegMove <- rtSetGridFromVeg( mVegetation=mVegCats, dfLookup=dfMoveByVeg )
+  
+  ##############################################
+  #todo will want to replace above with calls to 
+
+  #create an array to be used in modifying movement from a cell based on it's vegetation
+  aVegMoveMult <- rtSetVegMoveGrids( mVegCats = mVegCats, dfMoveByVeg = dfMoveByVeg )
+  #create a 2nd array used in reducing movement into less preferred cells
+  aVegDifMult <- rtSetVegDifMoveGrids( mVegCats = mVegCats, iBestVeg = iBestVeg )
   
   
   #create arrays of 0s for pupae & adults to start
@@ -317,6 +327,8 @@ rt_runGrid <- function( mVegCats = array(c("D","T","O","S","N","N"),dim=c(2,3)),
       #movement influenced by vegetation avoiding no-go areas
       aGrid <- plyr::aaply(aGrid,.margins=c(3,4), .drop=FALSE,function(m) rtMoveReflectNoGoVeg(m, mNog=mNog, mVegMove=mVegMove, pMove=pMove))       
       
+      #todo: replace the above call with one that uses the precalculated movement arrays
+      #aGrid <- plyr::aaply(aGrid,.margins=c(3,4), .drop=FALSE,function(m) rtMove(m, mNog=mNog, pMove=pMove, aVegMoveMult=aVegMoveMult, aVegDifMult=aVegDifMult))       
       
       
       #put array dimensions back in correct order
