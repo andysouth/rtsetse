@@ -12,6 +12,8 @@
 #' @param mNog optional matrix of cells of 0&1, 0 for nogo areas 
 #' @param mVegMove optional matrix of vegetation movement modifiers >1 increases movement out of the cell, <1 decreases movement out of the cell 
 #' @param aVegMoveMult optional array of grids used internally to represent movement dependent on vegetation
+#' @param mVegCats optional matrix of vegetation categories
+#' @param dfMoveByVeg dataframe specifying a movement multiplier for each vegetation category 
 #' @param iBestVeg optional preferred vegetation number (1-5) for this species 
 #' @param aVegDifMult optional array of grids used internally to represent movement across vegetation boundaries
 #' @param pMove proportion of popn that moves out of the cell.
@@ -26,6 +28,8 @@ rtMove <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
                    mNog = NULL,
                    mVegMove = NULL,
                    aVegMoveMult = NULL,
+                   mVegCats = NULL,
+                   dfMoveByVeg = NULL,
                    iBestVeg = NULL,
                    aVegDifMult = NULL,
                    pMove=0.4,
@@ -68,21 +72,31 @@ rtMove <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
     mNog <- mNogN <- mNogE <- mNogS <- mNogW <- 1
   }
   
+  #code to cope with different ways of passing vegetation
   
-  #vegetation movement modifiers
-  if (is.null(aVegMoveMult))
+  #effect of vegetation in a cell on movement 
+  
+  #if no vegetation movement modifiers
+  if (is.null(aVegMoveMult) & is.null(mVegMove) & is.null(dfMoveByVeg))
   {
     dimnames1 <- list(grid=c("here","N","E","S","W"))
     #dim of array got from dimnames above
     #set all these to 1 so they have no effect on movement calc later
     aVegMoveMult <- array(1, dim=sapply(dimnames1,length), dimnames=dimnames1)
-    #mVegMove <- mVegMoveN <- mVegMoveE <- mVegMoveS <- mVegMoveW <- 1
+    
+  } else if (is.null(aVegMoveMult) & is.null(mVegMove) & !is.null(dfMoveByVeg) & !is.null(mVegCats))
+    #if the array & probMatrix is not passed the array can be calculated from the mVegCats (categories)
+  {
+    aVegMoveMult <- rtSetVegMoveGrids( mVegCats = mVegCats, dfMoveByVeg = dfMoveByVeg )
+    
+  } else if (is.null(aVegMoveMult) & !is.null(mVegMove))
+  {
+    #or it can be calculated from a matrix of movement probabilities
+    aVegMoveMult <- rtSetVegMoveGrids( mVegMove = mVegMove )
   }
-  
-  
+
   #todo: can I still get this check to work with the new system where difference in vegetation between cells is used too
   #but: a high movement might be counteracted by the vegetation difference effect
-  
   #check for if any cells in pMove*mVegMove are >1
   #if so set to 1 so that all indivs leave
   indicesHighMove <- which((aVegMoveMult[,,'here']*pMove > 1))
@@ -92,7 +106,12 @@ rtMove <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
             " cells to have proportion moving >1, these will be set to 1 and all will move out")
     #reduce multiplier in cells so that the result will be 1 (all move)
     aVegMoveMult[,,'here'][indicesHighMove] <- 1/pMove
-  }
+  }  
+  
+  #effect of differences in vegetation between cells on movement   
+  #todo: do the same here for aVegDifMult as for aVegMoveMult above
+  
+
   
   
 

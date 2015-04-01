@@ -5,17 +5,26 @@
 \title{movement}
 \usage{
 rtMove(m = array(c(0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0), dim = c(3, 4)),
-  mNog = NULL, aVegMoveMult = NULL, aVegDifMult = NULL, pMove = 0.4,
+  mNog = NULL, mVegMove = NULL, aVegMoveMult = NULL, mVegCats = NULL,
+  dfMoveByVeg = NULL, iBestVeg = NULL, aVegDifMult = NULL, pMove = 0.4,
   verbose = FALSE)
 }
 \arguments{
 \item{m}{a matrix of cells containing a single number representing one age}
 
-\item{mNog}{a matrix of cells of 0&1, 0 for nogo areas}
+\item{mNog}{optional matrix of cells of 0&1, 0 for nogo areas}
 
-\item{aVegMoveMult}{an array of grids used internally to represent movement dependent on vegetation}
+\item{mVegMove}{optional matrix of vegetation movement modifiers >1 increases movement out of the cell, <1 decreases movement out of the cell}
 
-\item{aVegDifMult}{an array of grids used internally to represent movement across vegetation boundaries}
+\item{aVegMoveMult}{optional array of grids used internally to represent movement dependent on vegetation}
+
+\item{mVegCats}{optional matrix of vegetation categories}
+
+\item{dfMoveByVeg}{dataframe specifying a movement multiplier for each vegetation category}
+
+\item{iBestVeg}{optional preferred vegetation number (1-5) for this species}
+
+\item{aVegDifMult}{optional array of grids used internally to represent movement across vegetation boundaries}
 
 \item{pMove}{proportion of popn that moves out of the cell.}
 
@@ -27,7 +36,10 @@ an updated matrix following movement
 \description{
 \code{rtMove} moves proportion of popn in each cell to the 4 neighbouring cells dependent on vegetation.
 This function works on a single age class, it can be made to work on multiple age classes
-by passing an array[y,x,age] to aaply(.margins=3)
+by passing an array[y,x,age] to aaply(.margins=3).
+Optional arguments allow the function to be used in different ways.
+}
+\details{
 Doesn't try to cope with nrow or ncol==1.
 }
 \examples{
