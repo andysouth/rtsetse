@@ -291,58 +291,8 @@ rtMoveReflectNoGoVegBoundary <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),di
 }
 
 #non exported helper functions
+#now moved to rtMove.r
 
-#~~~reflecting movement helper functions~~~
-
-#' shift a matrix one cell N, copy boundary to represent reflection
-#' @param m matrix
-#' @return shifted matrix
-shiftGridReflectN <- function(m) { mnew <- rbind( m[1,], m[-nrow(m),] ) }
-
-#' shift a matrix one cell E, copy boundary to represent reflection
-#' @param m matrix
-#' @return shifted matrix
-shiftGridReflectE <- function(m) { mnew <- cbind( m[,-1], m[,ncol(m)] ) }
-
-#' shift a matrix one cell S, copy boundary to represent reflection
-#' @param m matrix
-#' @return shifted matrix
-shiftGridReflectS <- function(m) { mnew <- rbind( m[-1,], m[nrow(m),] ) }
-
-#' shift a matrix one cell W, copy boundary to represent reflection
-#' @param m matrix
-#' @return shifted matrix
-shiftGridReflectW <- function(m) { mnew <- cbind( m[,1], m[,-ncol(m)] ) }
-
-#~~~island movement helper functions~~~
-
-#' shift a matrix one cell N
-#' fill empty cells with 0 for island model (or passed value)
-#' @param m matrix
-#' @param fill value to put in empty cells, default=0 for island model
-#' @return shifted matrix
-shiftGridIslandN <- function(m, fill) { mnew <- rbind( rep(fill, ncol(m)), m[-nrow(m),] ) }
-
-#' shift a matrix one cell E
-#' fill empty cells with 0 for island model (or passed value)
-#' @param m matrix
-#' @param fill value to put in empty cells, default=0 for island model
-#' @return shifted matrix
-shiftGridIslandE <- function(m, fill) { mnew <- cbind( m[,-1], rep(fill, nrow(m)) ) }
-
-#' shift a matrix one cell S
-#' fill empty cells with 0 for island model (or passed value)
-#' @param m matrix
-#' @param fill value to put in empty cells, default=0 for island model
-#' @return shifted matrix
-shiftGridIslandS <- function(m, fill) { mnew <- rbind( m[-1,], rep(fill, ncol(m)) ) }
-
-#' shift a matrix one cell W
-#' fill empty cells with 0 for island model (or passed value)
-#' @param m matrix
-#' @param fill value to put in empty cells, default=0 for island model
-#' @return shifted matrix
-shiftGridIslandW <- function(m, fill) { mnew <- cbind( rep(fill, nrow(m)), m[,-ncol(m)] ) }
 
 
 
