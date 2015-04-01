@@ -3,14 +3,17 @@
 #' \code{rtMove} moves proportion of popn in each cell to the 4 neighbouring cells dependent on vegetation.
 
 #' This function works on a single age class, it can be made to work on multiple age classes
-#' by passing an array[y,x,age] to aaply(.margins=3)
+#' by passing an array[y,x,age] to aaply(.margins=3).  
+#' Optional arguments allow the function to be used in different ways.  
+#' 
 #' Doesn't try to cope with nrow or ncol==1.
 
 #' @param m a matrix of cells containing a single number representing one age
-#' @param mNog a matrix of cells of 0&1, 0 for nogo areas 
-# @param mVegMove a matrix of vegetation movement modifiers >1 increases movement out of the cell, <1 decreases movement out of the cell 
-#' @param aVegMoveMult an array of grids used internally to represent movement dependent on vegetation
-#' @param aVegDifMult an array of grids used internally to represent movement across vegetation boundaries
+#' @param mNog optional matrix of cells of 0&1, 0 for nogo areas 
+#' @param mVegMove optional matrix of vegetation movement modifiers >1 increases movement out of the cell, <1 decreases movement out of the cell 
+#' @param aVegMoveMult optional array of grids used internally to represent movement dependent on vegetation
+#' @param iBestVeg optional preferred vegetation number (1-5) for this species 
+#' @param aVegDifMult optional array of grids used internally to represent movement across vegetation boundaries
 #' @param pMove proportion of popn that moves out of the cell.
 #' @param verbose print what it's doing T/F
 #' 
@@ -21,7 +24,9 @@
 
 rtMove <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
                    mNog = NULL,
+                   mVegMove = NULL,
                    aVegMoveMult = NULL,
+                   iBestVeg = NULL,
                    aVegDifMult = NULL,
                    pMove=0.4,
                    verbose=FALSE) {
@@ -42,20 +47,6 @@ rtMove <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
   
   #speed efficient way of doing movement
   #create a copy of the matrix shifted 1 cell in each cardinal direction
-  #these have now been replaced by the shiftGrid* functions
-  #island model uses 0's
-  #mN = rbind( rep(0,ncol(m)), m[-nrow(m),] )
-  #mE = cbind( m[,-1], rep(0,nrow(m)) )
-  #mS = rbind( m[-1,], rep(0,ncol(m)) )
-  #mW = cbind( rep(0,nrow(m)), m[,-ncol(m)] )
-  #reflecting boundaries
-  #0's from island model above are replaced with a copy of boundary row or col
-  #mN = rbind( m[1,], m[-nrow(m),] )
-  #mE = cbind( m[,-1], m[,ncol(m)] )
-  #mS = rbind( m[-1,], m[nrow(m),] ) 
-  #mW = cbind( m[,1], m[,-ncol(m)] )  
-  
-  #change to use of functions
   mN <- shiftGridReflectN(m)
   mE <- shiftGridReflectE(m)
   mS <- shiftGridReflectS(m) 
@@ -79,7 +70,7 @@ rtMove <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
   
   
   #vegetation movement modifiers
-  if (!is.null(aVegMoveMult))
+  if (is.null(aVegMoveMult))
   {
     dimnames1 <- list(grid=c("here","N","E","S","W"))
     #dim of array got from dimnames above
@@ -94,13 +85,13 @@ rtMove <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
   
   #check for if any cells in pMove*mVegMove are >1
   #if so set to 1 so that all indivs leave
-  indicesHighMove <- which((aVegMoveMult['here']*pMove > 1))
+  indicesHighMove <- which((aVegMoveMult[,,'here']*pMove > 1))
   if (length(indicesHighMove) >0)
   {
     warning("your combination of pMove and vegetation movement multipliers causes ",length(indicesHighMove),
             " cells to have proportion moving >1, these will be set to 1 and all will move out")
     #reduce multiplier in cells so that the result will be 1 (all move)
-    aVegMoveMult['here'][indicesHighMove] <- 1/pMove
+    aVegMoveMult[,,'here'][indicesHighMove] <- 1/pMove
   }
   
   
@@ -116,19 +107,19 @@ rtMove <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
   #old version if no vegetation effects
   #mArrivers <- pMove*(mN + mE + mS + mW)/4
   
-  mArrivers <- pMove*mNog*(mN * aVegMoveMult['N'] * aVegDifMult['N'] + 
-                           mE * aVegMoveMult['E'] * aVegDifMult['E'] + 
-                           mS * aVegMoveMult['S'] * aVegDifMult['S'] + 
-                           mW * aVegMoveMult['W'] * aVegDifMult['W'])/4   
+  mArrivers <- pMove*mNog*(mN * aVegMoveMult[,,'N'] * aVegDifMult[,,'N'] + 
+                           mE * aVegMoveMult[,,'E'] * aVegDifMult[,,'E'] + 
+                           mS * aVegMoveMult[,,'S'] * aVegDifMult[,,'S'] + 
+                           mW * aVegMoveMult[,,'W'] * aVegDifMult[,,'W'])/4   
   
   #old version if no vegetation effects
   #mStayers <- (1-pMove)*m  
 
-  #aVegDifMult['NS'] etc.
+  #aVegDifMult[,,'NS'] etc.
   #for each cell they are the difference in preference with 4 neighbours that act as sinks  
   
-  mStayers <- m * (1- (pMove * (aVegDifMult['NS'] +aVegDifMult['EW'] + aVegDifMult['SN'] + aVegDifMult['WE'])/4) 
-                * aVegMoveMult['here'] * (mNogN + mNogE + mNogS + mNogW)/4 )  
+  mStayers <- m * (1- (pMove * (aVegDifMult[,,'NS'] +aVegDifMult[,,'EW'] + aVegDifMult[,,'SN'] + aVegDifMult[,,'WE'])/4) 
+                * aVegMoveMult[,,'here'] * (mNogN + mNogE + mNogS + mNogW)/4 )  
   
   
   #number of flies in all cells is a sum of those that 
@@ -148,7 +139,7 @@ rtMove <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
     cat("\nno-go areas (0=nogo)\n") 
     print(mNog)
     cat("\nveg movement multiplier\n") 
-    print(aVegMoveMult['here'])
+    print(aVegMoveMult[,,'here'])
     cat("\nveg dif from preferred\n") 
     print(mVegDifPref)
     cat("\nmStayers\n") 
