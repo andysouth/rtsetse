@@ -56,7 +56,8 @@ pMove <- 0.8
 
 for(day in 2:nDays)
 {
-  a[,,day] <- rtMoveReflectNoGoVeg(a[,,day-1], pMove=pMove)  
+  #a[,,day] <- rtMoveReflectNoGoVeg(a[,,day-1], pMove=pMove)  
+  a[,,day] <- rtMove(a[,,day-1], pMove=pMove)  
 }
 
 #quick way of displaying population spread over time
@@ -69,7 +70,8 @@ pMove <- 0.4
 
 for(day in 2:nDays)
 {
-  a[,,day] <- rtMoveReflectNoGoVeg(a[,,day-1], pMove=pMove)  
+  #a[,,day] <- rtMoveReflectNoGoVeg(a[,,day-1], pMove=pMove)  
+  a[,,day] <- rtMove(a[,,day-1], pMove=pMove)  
 }
 
 #quick way of displaying population spread over time
@@ -99,7 +101,8 @@ pMove <- 0.8
 
 for(day in 2:nDays)
 {
-  a[,,day] <- rtMoveReflectNoGoVeg(a[,,day-1], pMove=pMove)  
+  #a[,,day] <- rtMoveReflectNoGoVeg(a[,,day-1], pMove=pMove)  
+  a[,,day] <- rtMove(a[,,day-1], pMove=pMove)    
 }
 
 #quick way of displaying population spread over time
@@ -134,7 +137,8 @@ pMove <- 0.8
 
 for(day in 2:nDays)
 {
-  a[,,day] <- rtMoveReflectNoGoVeg(a[,,day-1], pMove=pMove, mNog=mNog)  
+  #a[,,day] <- rtMoveReflectNoGoVeg(a[,,day-1], pMove=pMove, mNog=mNog)  
+  a[,,day] <- rtMove(a[,,day-1], pMove=pMove, mNog=mNog)    
 }
 
 #display population spread over time
@@ -167,7 +171,8 @@ pMove <- 0.8
 
 for(day in 2:nDays)
 {
-  a[,,day] <- rtMoveReflectNoGoVeg(a[,,day-1], pMove=pMove, mVegMove=mVegMove)  
+  #a[,,day] <- rtMoveReflectNoGoVeg(a[,,day-1], pMove=pMove, mVegMove=mVegMove)  
+  a[,,day] <- rtMove(a[,,day-1], pMove=pMove, mVegMove=mVegMove)  
 }
 
 #display population spread over time
@@ -195,7 +200,8 @@ pMove <- 0.8
 
 for(day in 2:nDays)
 {
-  a[,,day] <- rtMoveReflectNoGoVeg(a[,,day-1], pMove=pMove, mVegMove=mVegMove)  
+  #a[,,day] <- rtMoveReflectNoGoVeg(a[,,day-1], pMove=pMove, mVegMove=mVegMove)  
+  a[,,day] <- rtMove(a[,,day-1], pMove=pMove, mVegMove=mVegMove)  
 }
 
 #display population spread over time
@@ -224,7 +230,8 @@ pMove <- 0.8
 
 for(day in 2:nDays)
 {
-  a[,,day] <- rtMoveReflectNoGoVeg(a[,,day-1], pMove=pMove, mVegMove=mVegMove)  
+  #a[,,day] <- rtMoveReflectNoGoVeg(a[,,day-1], pMove=pMove, mVegMove=mVegMove)  
+  a[,,day] <- rtMove(a[,,day-1], pMove=pMove, mVegMove=mVegMove)  
 }
 
 #display population spread over time
@@ -265,7 +272,8 @@ pMove <- 0.8
 
 for(day in 2:nDays)
 {
-  a[,,day] <- rtMoveReflectNoGoVeg(a[,,day-1], pMove=pMove, mVegMove=mVegMove)  
+  #a[,,day] <- rtMoveReflectNoGoVeg(a[,,day-1], pMove=pMove, mVegMove=mVegMove)  
+  a[,,day] <- rtMove(a[,,day-1], pMove=pMove, mVegMove=mVegMove) 
 }
 
 #display population spread over time
@@ -326,11 +334,14 @@ a <- array(0, dim=c(dim(m2), nDays))
 a[,,1] <- 1
 #set proportion moving
 pMove <- 0.8
+#set preferred vegetation type to Savannah(index=4)
+iBestVeg <- 4
 
 for(day in 2:nDays)
 {
-  #because mVegMove is not specified here, only the vegetation boundary effect operates
-  a[,,day] <- rtMoveReflectNoGoVegBoundary(a[,,day-1], pMove=pMove, mVegCats=m2)  
+  #because mVegMove is not specified here, only the vegetation difference effect operates
+  #a[,,day] <- rtMoveReflectNoGoVegBoundary(a[,,day-1], pMove=pMove, mVegCats=m2)  
+  a[,,day] <- rtMove(a[,,day-1], pMove=pMove, mVegCats=m2, iBestVeg=iBestVeg)  
 }
 
 #plot vegetation map
@@ -367,8 +378,9 @@ pMove <- 0.6
 
 for(day in 2:nDays)
 {
-  #because mVegMove is not specified here, only the vegetation boundary effect operates
-  a[,,day] <- rtMoveReflectNoGoVegBoundary(a[,,day-1], pMove=pMove, mVegCats=m2)  
+  #because mVegMove is not specified here, only the vegetation difference effect operates
+  #a[,,day] <- rtMoveReflectNoGoVegBoundary(a[,,day-1], pMove=pMove, mVegCats=m2)  
+  a[,,day] <- rtMove(a[,,day-1], pMove=pMove, mVegCats=m2, iBestVeg=iBestVeg)   
 }
 
 #plot vegetation map
@@ -404,8 +416,9 @@ pMove <- 0.6
 
 for(day in 2:nDays)
 {
-  #because mVegMove is not specified here, only the vegetation boundary effect operates
-  a[,,day] <- rtMoveReflectNoGoVegBoundary(a[,,day-1], pMove=pMove, mVegCats=m2)  
+  #because mVegMove is not specified here, only the vegetation difference effect operates
+  #a[,,day] <- rtMoveReflectNoGoVegBoundary(a[,,day-1], pMove=pMove, mVegCats=m2) 
+  a[,,day] <- rtMove(a[,,day-1], pMove=pMove, mVegCats=m2, iBestVeg=iBestVeg)  
 }
 
 #plot vegetation map
@@ -435,8 +448,9 @@ pMove <- 0.8
 
 for(day in 2:nDays)
 {
-  #because mVegMove is not specified here, only the vegetation boundary effect operates
-  a[,,day] <- rtMoveReflectNoGoVegBoundary(a[,,day-1], pMove=pMove, mVegCats=mVegCats)  
+  #because mVegMove is not specified here, only the vegetation difference effect operates
+  #a[,,day] <- rtMoveReflectNoGoVegBoundary(a[,,day-1], pMove=pMove, mVegCats=mVegCats)
+  a[,,day] <- rtMove(a[,,day-1], pMove=pMove, mVegCats=mVegCats, iBestVeg=iBestVeg )  
 }
 
 #display population spread over time
@@ -475,8 +489,9 @@ pMove <- 0.8
 for(day in 2:nDays)
 {
   #because mVegMove is not specified here, only the vegetation boundary effect operates
-  a[,,day] <- rtMoveReflectNoGoVegBoundary(a[,,day-1], pMove=pMove, mVegCats=m2)  
-}
+  #a[,,day] <- rtMoveReflectNoGoVegBoundary(a[,,day-1], pMove=pMove, mVegCats=m2)  
+  a[,,day] <- rtMove(a[,,day-1], pMove=pMove, mVegCats=m2, iBestVeg=iBestVeg )  
+  }
 
 #plot vegetation map
 rtPlotMapVeg(m2)
@@ -506,8 +521,8 @@ pMove <- 0.8
 
 for(day in 2:nDays)
 {
-  #because mVegMove is not specified here, only the vegetation boundary effect operates
-  a[,,day] <- rtMoveReflectNoGoVegBoundary(a[,,day-1], pMove=pMove, mVegCats=mVegCats, mVegMove=mVegMove)  
+  #a[,,day] <- rtMoveReflectNoGoVegBoundary(a[,,day-1], pMove=pMove, mVegCats=mVegCats, mVegMove=mVegMove)  
+  a[,,day] <- rtMove(a[,,day-1], pMove=pMove, mVegCats=mVegCats, mVegMove=mVegMove)  
 }
 
 #display population spread over time
