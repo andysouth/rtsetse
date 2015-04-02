@@ -76,17 +76,8 @@ rtMove <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
   #code to cope with different ways of passing vegetation
   
   #effect of vegetation in a cell on movement 
-  
-  #if no vegetation movement modifiers
-  if (is.null(aVegMoveMult) & is.null(mVegMove) & is.null(dfMoveByVeg))
-  {
-    dimnames1 <- list(grid=c("here","N","E","S","W"))
-    #dim of array got from dimnames above
-    #set all these to 1 so they have no effect on movement calc later
-    aVegMoveMult <- array(1, dim=sapply(dimnames1,length), dimnames=dimnames1)
-    
-  } else if (is.null(aVegMoveMult) & is.null(mVegMove) & !is.null(dfMoveByVeg) & !is.null(mVegCats))
-    #if the array & probMatrix is not passed the array can be calculated from the mVegCats (categories)
+  #if the array & probMatrix is not passed the array can be calculated from the mVegCats (categories)  
+  if (is.null(aVegMoveMult) & is.null(mVegMove) & !is.null(dfMoveByVeg) & !is.null(mVegCats))
   {
     aVegMoveMult <- rtSetVegMoveGrids( mVegCats = mVegCats, dfMoveByVeg = dfMoveByVeg )
     
@@ -100,60 +91,88 @@ rtMove <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
   #but: a high movement might be counteracted by the vegetation difference effect
   #check for if any cells in pMove*mVegMove are >1
   #if so set to 1 so that all indivs leave
-  indicesHighMove <- which((aVegMoveMult[,,'here']*pMove > 1))
-  if (length(indicesHighMove) >0)
+  if (!is.null(aVegMoveMult))
   {
-    warning("your combination of pMove and vegetation movement multipliers causes ",length(indicesHighMove),
-            " cells to have proportion moving >1, these will be set to 1 and all will move out")
-    #reduce multiplier in cells so that the result will be 1 (all move)
-    aVegMoveMult[,,'here'][indicesHighMove] <- 1/pMove
-  }  
+    indicesHighMove <- which((aVegMoveMult[,,'here']*pMove > 1))
+    if (length(indicesHighMove) >0)
+    {
+      warning("your combination of pMove and vegetation movement multipliers causes ",length(indicesHighMove),
+              " cells to have proportion moving >1, these will be set to 1 and all will move out")
+      #reduce multiplier in cells so that the result will be 1 (all move)
+      aVegMoveMult[,,'here'][indicesHighMove] <- 1/pMove
+    }     
+  }
+ 
   
   #effect of differences in vegetation between cells on movement   
-  
-  #if no vegetation difference movement modifiers
-  if (is.null(aVegDifMult) & is.null(iBestVeg))
-  {
-    dimnames1 <- list(grid=c("N","E","S","W","SN","WE","NS","EW"))
-    #dim of array got from dimnames above
-    #set all these to 1 so they have no effect on movement calc later
-    aVegDifMult <- array(1, dim=sapply(dimnames1,length), dimnames=dimnames1)
-    
-  } else if (is.null(aVegDifMult) & !is.null(iBestVeg) & !is.null(mVegCats))
-    #if the array is not passed it can be calculated from the mVegCats (categories)
+  #if the array is not passed it can be calculated from the mVegCats (categories)
+  if (is.null(aVegDifMult) & !is.null(iBestVeg) & !is.null(mVegCats))
   {
     aVegDifMult <- rtSetVegDifMoveGrids( mVegCats = mVegCats, iBestVeg = iBestVeg )
   }
 
-
   
   #BEWARE 5/3/15 THIS IS ONE OF THE TRICKIEST BITS IN THE WHOLE OF RTSETSE
 
-  #rtSetVegMoveGrids : returns aVegMoveMult[NSEW]
-  #rtSetVegDifMoveGrids : returns aVegDifMult[NSEW,NS,EW etc.]
+  #calc arrivers in a cell from it's 4 neighbours, and stayers that don't go
   
-  #calc arrivers in a cell from it's 4 neighbours
-  
-  #old version if no vegetation effects
+  #old versions if no vegetation effects
   #mArrivers <- pMove*(mN + mE + mS + mW)/4
-  
-  mArrivers <- pMove*mNog*(mN * aVegMoveMult[,,'N'] * aVegDifMult[,,'N'] + 
-                           mE * aVegMoveMult[,,'E'] * aVegDifMult[,,'E'] + 
-                           mS * aVegMoveMult[,,'S'] * aVegDifMult[,,'S'] + 
-                           mW * aVegMoveMult[,,'W'] * aVegDifMult[,,'W'])/4   
-  
-  #old version if no vegetation effects
   #mStayers <- (1-pMove)*m  
+  
+  #if both vegetation and vegetation difference effects
+  if ( !is.null(aVegDifMult) & !is.null(aVegMoveMult) )
+  {
+    mArrivers <- pMove*mNog*(mN * aVegMoveMult[,,'N'] * aVegDifMult[,,'N'] + 
+                             mE * aVegMoveMult[,,'E'] * aVegDifMult[,,'E'] + 
+                             mS * aVegMoveMult[,,'S'] * aVegDifMult[,,'S'] + 
+                             mW * aVegMoveMult[,,'W'] * aVegDifMult[,,'W'])/4   
+    
+    #aVegDifMult[,,'NS'] etc. for each cell the difference in preference with 4 neighbours that act as sinks  
+    
+    mStayers <- m * (1- (pMove * (aVegDifMult[,,'NS'] +
+                                  aVegDifMult[,,'EW'] + 
+                                  aVegDifMult[,,'SN'] + 
+                                  aVegDifMult[,,'WE'])/4) 
+                     * aVegMoveMult[,,'here'] * (mNogN + mNogE + mNogS + mNogW)/4 ) 
+        
+  } else if( !is.null(aVegMoveMult) )
+    #just vegetation effect
+  {
+    mArrivers <- pMove*mNog*(mN * aVegMoveMult[,,'N'] + 
+                             mE * aVegMoveMult[,,'E'] + 
+                             mS * aVegMoveMult[,,'S'] + 
+                             mW * aVegMoveMult[,,'W'] )/4   
+ 
+    mStayers <- m * (1- (pMove  * aVegMoveMult[,,'here'] * (mNogN + mNogE + mNogS + mNogW)/4))   
+                     
+  }else if( !is.null(aVegDifMult) )
+    #just vegetation difference effect
+  {
+    mArrivers <- pMove*mNog*(mN * aVegDifMult[,,'N'] + 
+                             mE * aVegDifMult[,,'E'] + 
+                             mS * aVegDifMult[,,'S'] + 
+                             mW * aVegDifMult[,,'W'])/4   
+    
+    #aVegDifMult[,,'NS'] etc. for each cell the difference in preference with 4 neighbours that act as sinks  
+    
+    mStayers <- m * (1- (pMove * (aVegDifMult[,,'NS'] +
+                                  aVegDifMult[,,'EW'] + 
+                                  aVegDifMult[,,'SN'] + 
+                                  aVegDifMult[,,'WE'])/4) 
+                      * (mNogN + mNogE + mNogS + mNogW)/4 )     
+  } else
+    #neither vegetation effect
+    #can include nogo area effects, but if these are set to 1 above they do nothing
+  {
+    mArrivers <- pMove*mNog*(mN + mE + mS + mW)/4   
+    
+    mStayers <- m * (1- (pMove * (mNogN + mNogE + mNogS + mNogW)/4 ))        
+  }
+ 
 
-  #aVegDifMult[,,'NS'] etc.
-  #for each cell they are the difference in preference with 4 neighbours that act as sinks  
   
-  mStayers <- m * (1- (pMove * (aVegDifMult[,,'NS'] +
-                                aVegDifMult[,,'EW'] + 
-                                aVegDifMult[,,'SN'] + 
-                                aVegDifMult[,,'WE'])/4) 
-                * aVegMoveMult[,,'here'] * (mNogN + mNogE + mNogS + mNogW)/4 )  
-  
+    
   
   #number of flies in all cells is a sum of those that 
   #arrived and those that stayed
@@ -171,10 +190,16 @@ rtMove <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
     print(m)
     cat("\nno-go areas (0=nogo)\n") 
     print(mNog)
-    cat("\nveg movement multiplier\n") 
-    print(aVegMoveMult[,,'here'])
-    cat("\nexample of veg dif from preferred (this is N)\n") 
-    print(aVegDifMult[,,'N'])
+    if (!is.null(aVegMoveMult))
+    {
+      cat("\nveg movement multiplier\n") 
+      print(aVegMoveMult[,,'here'])
+    }
+    if (!is.null(aVegDifMult))
+    {
+      cat("\nexample of veg dif from preferred between cells (this is N)\n") 
+      print(aVegDifMult[,,'N']) 
+    }
     cat("\nmStayers\n") 
     print(mStayers)
     cat("\nmArrivers\n") 
