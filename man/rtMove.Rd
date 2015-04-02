@@ -2,7 +2,7 @@
 % Please edit documentation in R/rtMove.r
 \name{rtMove}
 \alias{rtMove}
-\title{movement}
+\title{movement to neighbouring cells with reflecting area boundaries.}
 \usage{
 rtMove(m = array(c(0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0), dim = c(3, 4)),
   mNog = NULL, mVegMove = NULL, aVegMoveMult = NULL, mVegCats = NULL,
@@ -16,7 +16,7 @@ rtMove(m = array(c(0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0), dim = c(3, 4)),
 
 \item{mVegMove}{optional matrix of vegetation movement modifiers >1 increases movement out of the cell, <1 decreases movement out of the cell}
 
-\item{aVegMoveMult}{optional array of grids used internally to represent movement dependent on vegetation}
+\item{aVegMoveMult}{optional array of grids used internally to represent movement dependent on vegetation, can be created by \code{\link{rtSetVegMoveGrids}}}
 
 \item{mVegCats}{optional matrix of vegetation categories}
 
@@ -24,7 +24,7 @@ rtMove(m = array(c(0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0), dim = c(3, 4)),
 
 \item{iBestVeg}{optional preferred vegetation number (1-5) for this species}
 
-\item{aVegDifMult}{optional array of grids used internally to represent movement across vegetation boundaries}
+\item{aVegDifMult}{optional array of grids used internally to represent movement across vegetation boundaries, can be created by \code{\link{rtSetVegDifGrids}}}
 
 \item{pMove}{proportion of popn that moves out of the cell.}
 
@@ -34,15 +34,35 @@ rtMove(m = array(c(0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0), dim = c(3, 4)),
 an updated matrix following movement
 }
 \description{
-\code{rtMove} moves proportion of popn in each cell to the 4 neighbouring cells dependent on vegetation.
+\code{rtMove} moves proportion of popn in each cell to the 4 neighbouring cells can be dependent on vegetation dependent on arguments.
 This function works on a single age class, it can be made to work on multiple age classes
 by passing an array[y,x,age] to aaply(.margins=3).
 Optional arguments allow the function to be used in different ways.
 }
 \details{
+Argument options :
+
+1 \code{m}, \code{pMove} : Simple movement with reflecting boundaries.
+
+2 \code{m}, \code{pMove}, \code{mNog} : Avoidance of no-go areas.
+
+3 Vegetation dependent movement :\cr
+\code{m}, \code{pMove}, \code{aVegMoveMult} : Probabilities precalculated for speed by \code{\link{rtSetVegMoveGrids}}.\cr
+\code{m}, \code{pMove}, \code{mVegMove} : Probabilities from a matrix. Slower if called repeatedly.\cr
+\code{m}, \code{pMove}, \code{mVegCats}, \code{dfMoveByVeg} : Probabilities calculated from vegetation categories and a lookup.\cr
+
+4 Movement influenced by difference in vegetation between source and sink cells :\cr
+\code{m}, \code{pMove}, \code{aVegDifMult} : Probabilities precalculated for speed by \code{\link{rtSetVegDifGrids}}.\cr
+\code{m}, \code{pMove}, \code{mVegCats}, \code{iBestVeg} : Probabilities calculated from vegetation categories and the best vegetation index.\cr
+
+OPtions from 2,3 & 4 can be combined. See \code{vignette("vignette-movement", package="rtsetse")}
+
 Doesn't try to cope with nrow or ncol==1.
 }
 \examples{
 rtMove(verbose=TRUE)
+}
+\seealso{
+\code{vignette("vignette-movement", package="rtsetse")}
 }
 
