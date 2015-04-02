@@ -26,8 +26,8 @@ rtSetVegMoveGrids <- function(mVegCats = array(c("O","O","O","O","S","O","O","O"
      mVegMove <- rtSetGridFromVeg( mVegetation=mVegCats, dfLookup=dfMoveByVeg )
   
   
-  nY <- dim(mVegCats)[1]
-  nX <- dim(mVegCats)[2]
+  nY <- dim(mVegMove)[1]
+  nX <- dim(mVegMove)[2]
   dimnames1 <- list( y=paste0('y',1:nY), x=paste0('x',1:nX), grid=c("here","N","E","S","W"))
 
   #dim of array got from dimnames above
