@@ -158,7 +158,7 @@ rt_runGrid <- function( mVegCats = array(c("D","T","O","S","N","N"),dim=c(2,3)),
   #create an array to be used in modifying movement from a cell based on it's vegetation
   aVegMoveMult <- rtSetVegMoveGrids( mVegCats = mVegCats, dfMoveByVeg = dfMoveByVeg )
   #create a 2nd array used in reducing movement into less preferred cells
-  aVegDifMult <- rtSetVegDifMoveGrids( mVegCats = mVegCats, iBestVeg = iBestVeg )
+  aVegDifMult <- rtSetVegDifGrids( mVegCats = mVegCats, iBestVeg = iBestVeg )
   
   
   #create arrays of 0s for pupae & adults to start

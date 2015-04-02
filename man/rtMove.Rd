@@ -55,7 +55,7 @@ Argument options :
 \code{m}, \code{pMove}, \code{aVegDifMult} : Probabilities precalculated for speed by \code{\link{rtSetVegDifGrids}}.\cr
 \code{m}, \code{pMove}, \code{mVegCats}, \code{iBestVeg} : Probabilities calculated from vegetation categories and the best vegetation index.\cr
 
-OPtions from 2,3 & 4 can be combined. See \code{vignette("vignette-movement", package="rtsetse")}
+Options from 2,3 & 4 can be combined. See \code{vignette("vignette-movement", package="rtsetse")}
 
 Doesn't try to cope with nrow or ncol==1.
 }

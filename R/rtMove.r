@@ -126,7 +126,7 @@ rtMove <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
   #if the array is not passed it can be calculated from the mVegCats (categories)
   if (is.null(aVegDifMult) & !is.null(iBestVeg) & !is.null(mVegCats))
   {
-    aVegDifMult <- rtSetVegDifMoveGrids( mVegCats = mVegCats, iBestVeg = iBestVeg )
+    aVegDifMult <- rtSetVegDifGrids( mVegCats = mVegCats, iBestVeg = iBestVeg )
   }
 
   

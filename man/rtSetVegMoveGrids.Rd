@@ -25,4 +25,7 @@ an array of movement multiplier grids 'here' and to N,S,E & W
 Used to represent effect of vegetation in a cell on movement out of that cell.
 Returns an array of movement multiplier grids to N,S,E & W
 }
+\seealso{
+\code{\link{rtSetVegDifGrids}} which sets up similar grids for influencing movement according to vegetation differences between cells.
+}
 

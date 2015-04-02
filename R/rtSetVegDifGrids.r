@@ -10,12 +10,9 @@
 #' @param verbose print what it's doing T/F
 #' 
 #' @return an array of movement multiplier grids to N,S,E & W, SN,WE,NS,EW
+#' @seealso \code{\link{rtSetVegMoveGrids}} which sets up similar grids for influencing movement by the vegetation within a cell.
 
-#2 functions
-#rtSetVegMoveGrids : returns aVegMoveMult[NSEW]
-#rtSetVegDifMoveGrids : returns aVegDifMult[NSEW,NS,EW etc.]
-
-rtSetVegDifMoveGrids <- function(mVegCats = array(c("O","O","O","O","S","O","O","O","O","O","O","O"),dim=c(3,4)),
+rtSetVegDifGrids <- function(mVegCats = array(c("O","O","O","O","S","O","O","O","O","O","O","O"),dim=c(3,4)),
                            iBestVeg = 4,
                            verbose=FALSE) {
 

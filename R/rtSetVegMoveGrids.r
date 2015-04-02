@@ -9,10 +9,8 @@
 #' @param verbose print what it's doing T/F
 #' 
 #' @return an array of movement multiplier grids 'here' and to N,S,E & W
-
-#2 functions
-#rtSetVegMoveGrids : returns aVegMoveMult[NSEW]
-#rtSetVegDifMoveGrids : returns aVegDifMult[NSEW,NS,EW etc.]
+#' 
+#' @seealso \code{\link{rtSetVegDifGrids}} which sets up similar grids for influencing movement according to vegetation differences between cells.
 
 rtSetVegMoveGrids <- function(mVegCats = array(c("O","O","O","O","S","O","O","O","O","O","O","O"),dim=c(3,4)),
                               dfMoveByVeg = data.frame(code=c("D","T","O","S","B","G","N"),move=c(0.85, 0.9, 0.95, 1, 1.05, 1.1, 0)),
