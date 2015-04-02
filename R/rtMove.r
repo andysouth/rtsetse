@@ -60,6 +60,7 @@ rtMove <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
   #this doesn't need to be repeated every day
   #it could be done at the start of a simulation, and passed probably as a list or array
   #but time cost of doing this for a few 100 days is probably fairly low
+  #it may not be needed at all, the vegetation difference modifiers may cope with it
   if (!is.null(mNog))
   {
     mNogN <- shiftGridReflectN(mNog)
@@ -109,11 +110,21 @@ rtMove <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
   }  
   
   #effect of differences in vegetation between cells on movement   
-  #todo: do the same here for aVegDifMult as for aVegMoveMult above
   
+  #if no vegetation difference movement modifiers
+  if (is.null(aVegDifMult) & is.null(iBestVeg))
+  {
+    dimnames1 <- list(grid=c("N","E","S","W","SN","WE","NS","EW"))
+    #dim of array got from dimnames above
+    #set all these to 1 so they have no effect on movement calc later
+    aVegDifMult <- array(1, dim=sapply(dimnames1,length), dimnames=dimnames1)
+    
+  } else if (is.null(aVegDifMult) & !is.null(iBestVeg) & !is.null(mVegCats))
+    #if the array is not passed it can be calculated from the mVegCats (categories)
+  {
+    aVegDifMult <- rtSetVegDifMoveGrids( mVegCats = mVegCats, iBestVeg = iBestVeg )
+  }
 
-  
-  
 
   
   #BEWARE 5/3/15 THIS IS ONE OF THE TRICKIEST BITS IN THE WHOLE OF RTSETSE
@@ -137,7 +148,10 @@ rtMove <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
   #aVegDifMult[,,'NS'] etc.
   #for each cell they are the difference in preference with 4 neighbours that act as sinks  
   
-  mStayers <- m * (1- (pMove * (aVegDifMult[,,'NS'] +aVegDifMult[,,'EW'] + aVegDifMult[,,'SN'] + aVegDifMult[,,'WE'])/4) 
+  mStayers <- m * (1- (pMove * (aVegDifMult[,,'NS'] +
+                                aVegDifMult[,,'EW'] + 
+                                aVegDifMult[,,'SN'] + 
+                                aVegDifMult[,,'WE'])/4) 
                 * aVegMoveMult[,,'here'] * (mNogN + mNogE + mNogS + mNogW)/4 )  
   
   
@@ -159,8 +173,8 @@ rtMove <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
     print(mNog)
     cat("\nveg movement multiplier\n") 
     print(aVegMoveMult[,,'here'])
-    cat("\nveg dif from preferred\n") 
-    print(mVegDifPref)
+    cat("\nexample of veg dif from preferred (this is N)\n") 
+    print(aVegDifMult[,,'N'])
     cat("\nmStayers\n") 
     print(mStayers)
     cat("\nmArrivers\n") 
@@ -178,6 +192,7 @@ rtMove <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
   
   invisible( mNew )
 }
+
 
 #non exported helper functions
 
