@@ -6,7 +6,8 @@
 
 #' @param mVegCats a matrix or filepath for a map of vegetation codes
 #' @param dfMortByVeg a dataframe or filepath to a lookup table specifying mortality multiplier (percent) for each vegetation type
-#' @param iBestVeg the index of the preferred vegetation for this species
+#' @param dfMoveByVeg dataframe specifying a movement multiplier for each vegetation category 
+#' @param iBestVeg the index of the preferred vegetation for this species, used in influencing movement
 # @param mCarryCapF a matrix of female carrying capacities
 # @param nCol number grid columns
 # @param nRow number grid rows
@@ -58,6 +59,7 @@
 #' 
 rt_runGrid <- function( mVegCats = array(c("D","T","O","S","N","N"),dim=c(2,3)),
                           dfMortByVeg = data.frame(code=c("D","T","O","S","B","G","N"),mortality=c(200,150,110,100,110,210,999),pupmortality=c(120,110,105,100,120,170,999),stringsAsFactors = FALSE),
+                          dfMoveByVeg =  data.frame(code=c("D","T","O","S","B","G","N"),move=c(0.85, 0.9, 0.95, 1, 1.05, 1.1, 0)),
                           iBestVeg = 4,
                           pMove = 0.4,
                           iDays = 4,
@@ -147,16 +149,12 @@ rt_runGrid <- function( mVegCats = array(c("D","T","O","S","N","N"),dim=c(2,3)),
   #may want to rename Y nY:1 or 1:nY
   dimnames(mNog) <- list( y=paste0('y',1:nY), x=paste0('x',1:nX) )
   
-  #create vegetation movement modifier matrix
-  #convert vegetation categories to movement multiplier values
-  dfMoveByVeg <-  data.frame(code=c("D","T","O","S","B","G","N"),move=c(0.85, 0.9, 0.95, 1, 1.05, 1.1, 0))
-  mVegMove <- rtSetGridFromVeg( mVegetation=mVegCats, dfLookup=dfMoveByVeg )
   
-  ##############################################
-  #todo will want to replace above with calls to 
+  #create vegetation movement modifier arrays
 
   #create an array to be used in modifying movement from a cell based on it's vegetation
   aVegMoveMult <- rtSetVegMoveGrids( mVegCats = mVegCats, dfMoveByVeg = dfMoveByVeg )
+  
   #create a 2nd array used in reducing movement into less preferred cells
   aVegDifMult <- rtSetVegDifGrids( mVegCats = mVegCats, iBestVeg = iBestVeg )
   
