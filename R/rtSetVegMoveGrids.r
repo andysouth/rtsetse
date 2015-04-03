@@ -10,8 +10,11 @@
 #' 
 #' @return an array of movement multiplier grids 'here' and to N,S,E & W
 #' 
-#' @seealso \code{\link{rtSetVegDifGrids}} which sets up similar grids for influencing movement according to vegetation differences between cells.
-
+#' @seealso \code{\link{rtSetVegDifGrids}} which sets up similar grids for influencing movement according to vegetation differences between cells.\cr
+#' \code{\link{rtMove}} uses the grids created.\cr\cr
+#' The movement vignette contains more details about how movement can be represented, type this in the R console : 
+#' \code{vignette("vignette-movement", package="rtsetse")}
+#' 
 rtSetVegMoveGrids <- function(mVegCats = array(c("O","O","O","O","S","O","O","O","O","O","O","O"),dim=c(3,4)),
                               dfMoveByVeg = data.frame(code=c("D","T","O","S","B","G","N"),move=c(0.85, 0.9, 0.95, 1, 1.05, 1.1, 0)),
                               mVegMove = NULL,

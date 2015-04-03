@@ -1,16 +1,23 @@
 #' to return an array of grids used internally to represent movement across vegetation boundaries 
 #' 
 #' Used to represent effect of vegetation differences between cells.  
-#' Can be used to reduce movement into less preferred vegetation.  
-#' Returns an array of movement multiplier grids to N,S,E,W, SN,WE,NS,EW.
+#' Can be used to reduce movement into less preferred vegetation in \code{\link{rtMove}}.  
+#' 
+#' Returns an array of movement multiplier grids labelled N,S,E,W,SN,WE,NS,EW. Those labelled SN,WE,NS,EW are needed for calculating stayers
+#' for each cell they are the difference in preference with the 4 neighbours that act as sinks.
+#' They are calculated by going back the other way from the initial neighbour calculation.
 #' This is tricky because of the way it is coded to make it run faster.
 
 #' @param mVegCats a matrix of vegetation categories
 #' @param iBestVeg the index of the preferred vegetation for this species
 #' @param verbose print what it's doing T/F
 #' 
-#' @return an array of movement multiplier grids to N,S,E & W, SN,WE,NS,EW
-#' @seealso \code{\link{rtSetVegMoveGrids}} which sets up similar grids for influencing movement by the vegetation within a cell.
+#' @return an array of movement multiplier grids labelled N,S,E,W,SN,WE,NS,EW
+#' 
+#' @seealso \code{\link{rtSetVegMoveGrids}} which sets up similar grids for influencing movement by the vegetation within a cell.\cr
+#' \code{\link{rtMove}} uses the grids created.\cr\cr
+#' The movement vignette contains more details about how movement can be represented, type this in the R console : 
+#' \code{vignette("vignette-movement", package="rtsetse")}
 
 rtSetVegDifGrids <- function(mVegCats = array(c("O","O","O","O","S","O","O","O","O","O","O","O"),dim=c(3,4)),
                            iBestVeg = 4,
@@ -48,11 +55,6 @@ rtSetVegDifGrids <- function(mVegCats = array(c("O","O","O","O","S","O","O","O",
   #matrix of difference of veg in cell from best
   mVegDifPref <- abs(iBestVeg-mVegNum)
   
-  #BEWARE what to do with nogo areas
-  #try to keep it simple, it shouldn't matter because no flies in them.
-  #can I just convert them to NA ?
-  #NO this wouldn't work ... convert any difference >5 (caused by nogo areas of 99)to 6
-  
   #remember
   #in the code below matrices with NESW on end are source cells
   #matrices without are destination cells
@@ -88,8 +90,8 @@ rtSetVegDifGrids <- function(mVegCats = array(c("O","O","O","O","S","O","O","O",
   #but how the mechanism is coded to be time efficient is very tricky
   
   #the below are needed for calculating stayers
-  #for each cell they are the difference in preference with 4 neighbours that act as sinks
-  #they are calculated by going back the other way from the previous calculation
+  #for each cell they are the difference in preference with the 4 neighbours that act as sinks
+  #they are calculated by going back the other way from the initial neighbour calculation
   #all boundary values are replaced with 1 because for reflecting boundaries there will be no change 
   #in vegetation associated with movements in and out of the grid    
   aVegDifMult[,,"SN"] <- shiftGridIslandN( aVegDifMult[,,"S"], fill=1 )

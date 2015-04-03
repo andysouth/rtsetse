@@ -15,15 +15,22 @@ rtSetVegDifGrids(mVegCats = array(c("O", "O", "O", "O", "S", "O", "O", "O",
 \item{verbose}{print what it's doing T/F}
 }
 \value{
-an array of movement multiplier grids to N,S,E & W, SN,WE,NS,EW
+an array of movement multiplier grids labelled N,S,E,W,SN,WE,NS,EW
 }
 \description{
 Used to represent effect of vegetation differences between cells.
-Can be used to reduce movement into less preferred vegetation.
-Returns an array of movement multiplier grids to N,S,E,W, SN,WE,NS,EW.
+Can be used to reduce movement into less preferred vegetation in \code{\link{rtMove}}.
+}
+\details{
+Returns an array of movement multiplier grids labelled N,S,E,W,SN,WE,NS,EW. Those labelled SN,WE,NS,EW are needed for calculating stayers
+for each cell they are the difference in preference with the 4 neighbours that act as sinks.
+They are calculated by going back the other way from the initial neighbour calculation.
 This is tricky because of the way it is coded to make it run faster.
 }
 \seealso{
-\code{\link{rtSetVegMoveGrids}} which sets up similar grids for influencing movement by the vegetation within a cell.
+\code{\link{rtSetVegMoveGrids}} which sets up similar grids for influencing movement by the vegetation within a cell.\cr
+\code{\link{rtMove}} uses the grids created.\cr\cr
+The movement vignette contains more details about how movement can be represented, type this in the R console :
+\code{vignette("vignette-movement", package="rtsetse")}
 }
 
