@@ -29,7 +29,7 @@ Flies are moved from each cell to it's 4 cardinal neighbours (NESW) and the foll
 First load the rtsetse package after installing from github if necessary.
 ```{r, eval=TRUE, echo=TRUE, message=FALSE}
 #require(devtools)    
-#install_github('AndySouth/rtsetse')
+#install_github('AndySouth/rtsetse', build_vignettes=TRUE)
 require(rtsetse)
 #these packages are used for plots in this document
 require(raster)
