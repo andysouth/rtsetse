@@ -312,7 +312,7 @@ rt_runGrid <- function( mVegCats = array(c("D","T","O","S","N","N"),dim=c(2,3)),
       #but the x&y dimensions get combined and the dimnames get lost
 
       #Can move M&F in one line with aaply
-      #checked and it does seem to work, but it fails with nRow,nCol=1
+      #checked and it works, but fails with nRow,nCol=1
       #aGrid <- plyr::aaply(aGrid,.margins=c(3,4), .drop=FALSE,function(m) rtMoveIsland(m, pMove=pMove)) 
       #having margins .margins=c(1,2) didn't make movement work correctly
       
@@ -325,7 +325,7 @@ rt_runGrid <- function( mVegCats = array(c("D","T","O","S","N","N"),dim=c(2,3)),
       #movement influenced by vegetation avoiding no-go areas
       #aGrid <- plyr::aaply(aGrid,.margins=c(3,4), .drop=FALSE,function(m) rtMoveReflectNoGoVeg(m, mNog=mNog, mVegMove=mVegMove, pMove=pMove))       
       
-      #todo: replace the above call with one that uses the precalculated movement arrays
+      #replaces the above call with one that uses precalculated movement arrays
       aGrid <- plyr::aaply(aGrid,.margins=c(3,4), .drop=FALSE,function(m) rtMove(m, mNog=mNog, pMove=pMove, aVegMoveMult=aVegMoveMult, aVegDifMult=aVegDifMult))       
       
       
@@ -348,7 +348,6 @@ rt_runGrid <- function( mVegCats = array(c("D","T","O","S","N","N"),dim=c(2,3)),
     
     
     if (verbose) cat("adult popn =",rtGetFromRecord(aRecord,days=day,y='sum',x='sum',sex='sum',age='sum'),"\n")
-    #sum(aRecord[day,,,,]) #gives same
   
     
   } #end of iDays loop
@@ -361,9 +360,8 @@ rt_runGrid <- function( mVegCats = array(c("D","T","O","S","N","N"),dim=c(2,3)),
   #produce a report on the model run, with text & graphs
   if (length(report)>0) rtReportPhase2( aRecord=aRecord, lNamedArgs=lNamedArgs, filename=report )
 
-
   #returning the popn record
-  #! will need to modify later to return pupae too
+  #may need to modify later to return pupae too
   invisible(aRecord)
 }
 
