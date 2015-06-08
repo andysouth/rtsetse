@@ -84,7 +84,16 @@ rtMove <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
     mNogN <- shiftGridReflectN(mNog)
     mNogE <- shiftGridReflectE(mNog)
     mNogS <- shiftGridReflectS(mNog)  
-    mNogW <- shiftGridReflectW(mNog)   
+    mNogW <- shiftGridReflectW(mNog) 
+    
+    #check for any individuals in nogo areas if so just get rid of them
+    mNogCleared <- m * mNog
+    if ( sum(m) > sum(mNogCleared) )
+    {
+      warning( sum(m) - sum(mNogCleared), " individuals cleared from no-go areas\n")
+      m <- mNogCleared
+    }
+    
   } else 
   {
     #set all these to 1 so they have no effect on movement calc later
@@ -224,6 +233,8 @@ rtMove <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
     print(mArrivers)
     cat("\nmNew\n") 
     print(mNew)
+    cat("\nsum mArrivers,Stayers=",sum(mArrivers),",",sum(mStayers),"\n")  
+    cat("\nsum m,mNew=",sum(m),",",sum(mNew),"\n")     
   }
   
   #one way of testing this is that the total number of flies shouldn't have changed
