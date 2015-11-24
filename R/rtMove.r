@@ -164,7 +164,7 @@ rtMove <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
                                   aVegDifMult[,,'WE'])/4) 
                      * aVegMoveMult[,,'here'] ) 
                     #24/11/15 previous line used to have nogo effect in which caused problem with stayers
-                    #it was double counting & not needed
+                    #it was double counting & not needed aVegDifMult already reduces movement out of cells neighboured by nogo
                     #* aVegMoveMult[,,'here'] * (mNogN + mNogE + mNogS + mNogW)/4 ) 
             
   } else if( !is.null(aVegMoveMult) )
