@@ -11,7 +11,6 @@
 #' #tst <- rt_runGridTestSpread()
 #' #rtReportPhase2(tst, lNamedArgs, filename="myoutput.pdf")
 #' @export
-#' 
 rtReportPhase2 <- function( aRecord,
                             lNamedArgs,
                             filename = "reportPhase2.html" ) 

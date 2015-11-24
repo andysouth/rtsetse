@@ -43,7 +43,6 @@
 #' rtPlotMapPop(tst)
 #' }
 #' @export
-#' 
 rt_runGridTestSpread <- function( 
                           nCol = 9,
                           nRow = 7,

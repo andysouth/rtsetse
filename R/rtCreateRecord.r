@@ -16,8 +16,6 @@
 #' @examples
 #' aRecord <- rtCreateRecord( nDay=2, nY=3, nX=4,nAge=2, fill=0 )
 #' @export
-#' 
-
 rtCreateRecord <- function( nDay = 2,
                             nY = 3,
                             nX = 4,

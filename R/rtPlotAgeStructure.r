@@ -1,18 +1,16 @@
 #' plots age structure over multiple days
 #' 
 #' \code{rtPlotAgeStructure} visualises change in age structure over time using a raster type plot.
-#' \cr Requires the raster package.
-
+#' Requires the raster package.
 #' @param df a dataframe with days in columns and ages in rows
 #'     OR an array of [day,y,x,sex,age]
 #' @param title a title for the plot  
 #' 
 #' @return nothing
 #' @examples
-#' tst <- rt_runAspatial()
+#' tst <- rt_runAspatial(verbose=FALSE)
 #' rtPlotAgeStructure(tst$dfRecordF) 
 #' @export
-
 rtPlotAgeStructure <- function( df, title=NULL )
 {
 

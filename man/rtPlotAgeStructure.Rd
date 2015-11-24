@@ -17,10 +17,10 @@ nothing
 }
 \description{
 \code{rtPlotAgeStructure} visualises change in age structure over time using a raster type plot.
-\cr Requires the raster package.
+Requires the raster package.
 }
 \examples{
-tst <- rt_runAspatial()
+tst <- rt_runAspatial(verbose=FALSE)
 rtPlotAgeStructure(tst$dfRecordF) 
 }
 
