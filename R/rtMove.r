@@ -90,7 +90,7 @@ rtMove <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
     mNogCleared <- m * mNog
     if ( sum(m) > sum(mNogCleared) )
     {
-      warning( sum(m) - sum(mNogCleared), " individuals cleared from no-go areas\n")
+      message( sum(m) - sum(mNogCleared), " individuals cleared from no-go areas\n")
       m <- mNogCleared
     }
     
