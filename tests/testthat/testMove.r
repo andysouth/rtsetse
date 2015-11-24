@@ -234,4 +234,44 @@ test_that("reflective movement indeed reflects from boundaries", {
                 array(c(0, 0.1, 0.8, 0, 0, 0.1, 0, 0, 0, 0, 0, 0),dim=c(3,4)) )  
 })
 
+test_that("movement options don't generate warnings assoc with solved problem from 5/6/15", {
+  
+  mVegCats = array(c("D","T","O","S","N","N"),dim=c(2,3))
+  m = array(c(1,1,1,1,1,1),dim=c(2,3))
+  mNog = array(c(1,1,1,1,0,0),dim=c(2,3))
+  dfMoveByVeg =  data.frame(code=c("D","T","O","S","B","G","N"),move=c(0.85, 0.9, 0.95, 1, 1.05, 1.1, 0))
+  iBestVeg = 4
+  pMove = 0.4
+  
+  #create an array to be used in modifying movement from a cell based on it's vegetation
+  aVegMoveMult <- rtSetVegMoveGrids( mVegCats = mVegCats, dfMoveByVeg = dfMoveByVeg )
+  
+  #create a 2nd array used in reducing movement into less preferred cells
+  aVegDifMult <- rtSetVegDifGrids( mVegCats = mVegCats, iBestVeg = iBestVeg )
+  
+  #nogo effect alone
+  expect_warning( tst <- rtMove(m, verbose=TRUE, mNog=mNog),
+                  NA )
+  
+  #vegetation movement multiplier & nogo effect
+  expect_warning(  tst <- rtMove(m, aVegMoveMult=aVegMoveMult,verbose=TRUE, mNog=mNog),
+                   NA )
+  
+  #vegetation movement multiplier & veg difference effect
+  expect_warning( tst <- rtMove(m, aVegMoveMult=aVegMoveMult, aVegDifMult=aVegDifMult,verbose=TRUE),
+                  NA )
+  
+  #veg difference effect alone
+  expect_warning( tst1 <- rtMove(m, aVegDifMult=aVegDifMult,verbose=TRUE),
+                  NA )
+  
+  #veg difference effect alone specified by mVegCats & iBestVeg
+  expect_warning( tst2 <- rtMove(m, mVegCats=mVegCats, iBestVeg=iBestVeg, verbose=TRUE),
+                  NA )
+  
+  #previous two should produce same result
+  expect_equal(sum(tst1-tst2),0)
+  
+})
+
 
