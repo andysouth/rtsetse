@@ -78,7 +78,7 @@ rtMove <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
   #this doesn't need to be repeated every day
   #it could be done at the start of a simulation, and passed probably as a list or array
   #but time cost of doing this for a few 100 days is probably fairly low
-  #it may not be needed at all, the vegetation difference modifiers may cope with it
+  #it may not be needed at all, the vegetation difference modifiers (aVegDifMult) may cope with it
   if (!is.null(mNog))
   {
     mNogN <- shiftGridReflectN(mNog)
@@ -161,8 +161,11 @@ rtMove <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
                                   aVegDifMult[,,'EW'] + 
                                   aVegDifMult[,,'SN'] + 
                                   aVegDifMult[,,'WE'])/4) 
-                     * aVegMoveMult[,,'here'] * (mNogN + mNogE + mNogS + mNogW)/4 ) 
-        
+                     * aVegMoveMult[,,'here'] ) 
+                    #24/11/15 previous line used to have nogo effect in which caused problem with stayers
+                    #it was double counting & not needed
+                    #* aVegMoveMult[,,'here'] * (mNogN + mNogE + mNogS + mNogW)/4 ) 
+            
   } else if( !is.null(aVegMoveMult) )
     #just vegetation effect
   {
