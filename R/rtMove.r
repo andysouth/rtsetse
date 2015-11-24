@@ -67,13 +67,6 @@ rtMove <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
   #matrices without are destination cells
   #~~~~~~~~~~~~~~~~~~~~~~~~~~
   
-  #speed efficient way of doing movement
-  #create a copy of the matrix shifted 1 cell in each cardinal direction
-  mN <- shiftGridReflectN(m)
-  mE <- shiftGridReflectE(m)
-  mS <- shiftGridReflectS(m) 
-  mW <- shiftGridReflectW(m)  
-  
   #creating matrices of neighbouring nogo areas
   #this doesn't need to be repeated every day
   #it could be done at the start of a simulation, and passed probably as a list or array
@@ -100,7 +93,15 @@ rtMove <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
     mNog <- mNogN <- mNogE <- mNogS <- mNogW <- 1
   }
   
-  #code to cope with different ways of passing vegetation
+  ## speed efficient way of doing movement
+  #create a copy of the matrix shifted 1 cell in each cardinal direction
+  mN <- shiftGridReflectN(m)
+  mE <- shiftGridReflectE(m)
+  mS <- shiftGridReflectS(m) 
+  mW <- shiftGridReflectW(m)
+  
+  
+  ## code to cope with different ways of passing vegetation
   
   #effect of vegetation in a cell on movement 
   #if the array & probMatrix is not passed the array can be calculated from the mVegCats (categories)  
