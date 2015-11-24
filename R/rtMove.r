@@ -71,7 +71,19 @@ rtMove <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
   #this doesn't need to be repeated every day
   #it could be done at the start of a simulation, and passed probably as a list or array
   #but time cost of doing this for a few 100 days is probably fairly low
-  #it may not be needed at all, the vegetation difference modifiers (aVegDifMult) may cope with it
+  #if aVegDifMult is specified mNog is not needed or used
+  #but it is used here to clear out any flies that have been placed in nogo areas (e.g. at start)
+  if (!is.null(aVegDifMult))
+  {
+    mDif <- (aVegDifMult[,,'N'] + aVegDifMult[,,'S'] + aVegDifMult[,,'E'] + aVegDifMult[,,'W'])
+    mNog <- ifelse(mDif==0,0,1)
+  }
+  #to allow clearing out of any flies in 'N' cells 
+  if (!is.null(mVegCats))
+  {
+    mNog <- ifelse(mVegCats=='N',0,1)
+  }  
+  
   if (!is.null(mNog))
   {
     mNogN <- shiftGridReflectN(mNog)
@@ -191,7 +203,8 @@ rtMove <- function(m = array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4)),
                                   aVegDifMult[,,'EW'] + 
                                   aVegDifMult[,,'SN'] + 
                                   aVegDifMult[,,'WE'])/4) 
-                      * (mNogN + mNogE + mNogS + mNogW)/4 )     
+                     )
+                      #* (mNogN + mNogE + mNogS + mNogW)/4 )     
   } else
     #neither vegetation effect
     #can include nogo area effects, but if these are set to 1 above they do nothing
