@@ -4,20 +4,23 @@
 \alias{rt_runGridTestSpread}
 \title{a simple spatial tsetse population simulation, start popn in a single central cell}
 \usage{
-rt_runGridTestSpread(nCol = 9, nRow = 7, pMove = 0.4, iDays = 4,
-  iMaxAge = 120, iCarryCapF = 200, fMperF = 0.5, fStartPopPropCC = 1,
-  pMortF = 0.05, pMortM = 0.05, iMortMinAgeStart = 10,
-  iMortMinAgeStop = 50, fMortMinProp = 0.2, fMortOldProp = 0.3,
-  propMortAdultDD = 0.25, pMortPupa = 0.25, propMortPupaDD = 0.25,
-  iPupDurF = 26, iPupDurM = 28, iFirstLarva = 16, iInterLarva = 10,
-  pMortLarva = 0.05, propMortLarvaDD = 0.25, report = NULL)
+rt_runGridTestSpread(nCol = 9, nRow = 7, pMoveF = 0.4, pMoveM = 0.4,
+  iDays = 4, iMaxAge = 120, iCarryCapF = 200, fMperF = 0.5,
+  fStartPopPropCC = 1, pMortF = 0.05, pMortM = 0.05,
+  iMortMinAgeStart = 10, iMortMinAgeStop = 50, fMortMinProp = 0.2,
+  fMortOldProp = 0.3, propMortAdultDD = 0.25, pMortPupa = 0.25,
+  propMortPupaDD = 0.25, iPupDurF = 26, iPupDurM = 28, iFirstLarva = 16,
+  iInterLarva = 10, pMortLarva = 0.05, propMortLarvaDD = 0.25,
+  report = NULL)
 }
 \arguments{
 \item{nCol}{number grid columns}
 
 \item{nRow}{number grid rows}
 
-\item{pMove}{probability of moving between cells}
+\item{pMoveF}{probability of F moving between cells}
+
+\item{pMoveM}{probability of M moving between cells}
 
 \item{iDays}{days to run simulation}
 
@@ -75,6 +78,10 @@ it can be used to test popn spread under different popn growth rates.
 \dontrun{
 tst <- rt_runGridTestSpread()
 rtPlotMapPop(tst)
+#testing unequal MF movement
+tst <- rt_runGridTestSpread(iDays=5,pMoveF=0.6,pMoveM=0.3)
+rtPlotMapPop(tst, sex='M')
+rtPlotMapPop(tst, sex='F') 
 }
 }
 

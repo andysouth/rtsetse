@@ -7,7 +7,8 @@
 
 #' @param nCol number grid columns
 #' @param nRow number grid rows
-#' @param pMove probability of moving between cells
+#' @param pMoveF probability of F moving between cells
+#' @param pMoveM probability of M moving between cells
 # following are same as rt_runAspatial
 #' @param iDays days to run simulation
 #' @param iMaxAge max age of fly allowed in model (will warn if flies age past this)
@@ -41,12 +42,17 @@
 #' \dontrun{
 #' tst <- rt_runGridTestSpread()
 #' rtPlotMapPop(tst)
+#' #testing unequal MF movement
+#' tst <- rt_runGridTestSpread(iDays=5,pMoveF=0.6,pMoveM=0.3)
+#' rtPlotMapPop(tst, sex='M')
+#' rtPlotMapPop(tst, sex='F') 
 #' }
 #' @export
 rt_runGridTestSpread <- function( 
                           nCol = 9,
                           nRow = 7,
-                          pMove = 0.4,
+                          pMoveF = 0.4,
+                          pMoveM = 0.4,
                           iDays = 4,
                           iMaxAge = 120,
                           iCarryCapF = 200,
@@ -262,12 +268,22 @@ rt_runGridTestSpread <- function(
       #having margins .margins=c(1,2) didn't make movement work correctly
       
       #changing to reflecting boundaries
-      aGrid <- plyr::aaply(aGrid,.margins=c(3,4), .drop=FALSE,function(m) rtMoveReflect(m, pMove=pMove)) 
-      
-      
+      #aGrid <- plyr::aaply(aGrid,.margins=c(3,4), .drop=FALSE,function(m) rtMoveReflect(m, pMove=pMove)) 
+ 
       #put array dimensions back in correct order
-      aGrid <- aperm(aGrid, c(3,4,1,2))
+      #aGrid <- aperm(aGrid, c(3,4,1,2))
       
+            
+      ## allow diff movement for M&F
+      #F
+      aAgeyx <- plyr::aaply(aGrid[,,'F',], .margins=c(3),.drop=FALSE,function(m) rtMoveReflect(m, pMove=pMoveF))
+      #put dimensions back in correct order
+      aGrid[,,'F',] <- aperm(aAgeyx, c(2,3,1))
+      #M
+      aAgeyx <- plyr::aaply(aGrid[,,'M',], .margins=c(3),.drop=FALSE,function(m) rtMoveReflect(m, pMove=pMoveM))
+      #put dimensions back in correct order
+      aGrid[,,'M',] <- aperm(aAgeyx, c(2,3,1))
+            
     }
         
     cat("day",day,"\n")

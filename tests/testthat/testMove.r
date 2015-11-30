@@ -274,4 +274,39 @@ test_that("movement options don't generate warnings assoc with solved problem fr
   
 })
 
+test_that("moving M&F differently works", {
+  
+  #create a test grid array, y,x,sex,age
+  nX <- 4
+  nY <- 3
+  iMaxAge <- 2
+  #create an empty grid
+  aGrid <- rtCreateGrid(nY=nY, nX=nX, nAge=iMaxAge, fill=0)  
 
+  pMoveF <- 0.6
+  pMoveM <- 0.3  
+  
+  aGrid[,,'F',2] <- array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4))
+  aGrid[,,'M',2] <- array(c(0,0,0,0,1,0,0,0,0,0,0,0),dim=c(3,4))
+  #expected F0.6 : array(c(0, 0.1, 0, 0.1, 0.6, 0.1, 0, 0.1, 0, 0, 0, 0),dim=c(3,4))
+  #expected M0.3 : array(c(0, 0.1, 0, 0.1, 0.6, 0.1, 0, 0.1, 0, 0, 0, 0),dim=c(3,4))  
+  
+  aAgeyx <- plyr::aaply(aGrid[,,'F',], .margins=c(3),.drop=FALSE,function(m) rtMoveReflect(m, pMove=pMoveF))
+  #put dimensions back in correct order
+  aGrid[,,'F',] <- aperm(aAgeyx, c(2,3,1))
+ 
+  aAgeyx <- plyr::aaply(aGrid[,,'M',], .margins=c(3),.drop=FALSE,function(m) rtMoveReflect(m, pMove=pMoveM))
+  #put dimensions back in correct order
+  aGrid[,,'M',] <- aperm(aAgeyx, c(2,3,1)) 
+  
+  #expect_equivalent tests with all.equal and check.attributes = FALSE
+  #others fails because attriubutes get lost in movement
+  
+  expect_equivalent( aGrid[,,'F',2],
+                     array(c(0, 0.15, 0, 0.15, 0.4, 0.15, 0, 0.15, 0, 0, 0, 0),dim=c(3,4))  ) 
+  
+  expect_equivalent( aGrid[,,'M',2],
+                     array(c(0, 0.075, 0, 0.075, 0.7, 0.075, 0, 0.075, 0, 0, 0, 0),dim=c(3,4))  ) 
+    
+})
+  
