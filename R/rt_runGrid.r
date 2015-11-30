@@ -11,7 +11,8 @@
 # @param mCarryCapF a matrix of female carrying capacities
 # @param nCol number grid columns
 # @param nRow number grid rows
-#' @param pMove probability of moving between cells
+#' @param pMoveF probability of F moving between cells
+#' @param pMoveM probability of M moving between cells
 # following are same as rt_runAspatial
 #' @param iDays days to run simulation
 #' @param iMaxAge max age of fly allowed in model (will warn if flies age past this)
@@ -60,7 +61,8 @@ rt_runGrid <- function( mVegCats = array(c("D","T","O","S","N","N"),dim=c(2,3)),
                           dfMortByVeg = data.frame(code=c("D","T","O","S","B","G","N"),mortality=c(200,150,110,100,110,210,999),pupmortality=c(120,110,105,100,120,170,999),stringsAsFactors = FALSE),
                           dfMoveByVeg =  data.frame(code=c("D","T","O","S","B","G","N"),move=c(0.85, 0.9, 0.95, 1, 1.05, 1.1, 0)),
                           iBestVeg = 4,
-                          pMove = 0.4,
+                          pMoveF = 0.6,
+                          pMoveM = 0.3,
                           iDays = 4,
                           iMaxAge = 120,
                           iCarryCapF = 200,
@@ -325,11 +327,20 @@ rt_runGrid <- function( mVegCats = array(c("D","T","O","S","N","N"),dim=c(2,3)),
       #aGrid <- plyr::aaply(aGrid,.margins=c(3,4), .drop=FALSE,function(m) rtMoveReflectNoGoVeg(m, mNog=mNog, mVegMove=mVegMove, pMove=pMove))       
       
       #replaces the above call with one that uses precalculated movement arrays
-      aGrid <- plyr::aaply(aGrid,.margins=c(3,4), .drop=FALSE,function(m) rtMove(m, mNog=mNog, pMove=pMove, aVegMoveMult=aVegMoveMult, aVegDifMult=aVegDifMult))       
-      
-      
+      #aGrid <- plyr::aaply(aGrid,.margins=c(3,4), .drop=FALSE,function(m) rtMove(m, mNog=mNog, pMove=pMove, aVegMoveMult=aVegMoveMult, aVegDifMult=aVegDifMult))       
       #put array dimensions back in correct order
-      aGrid <- aperm(aGrid, c(3,4,1,2))
+      #aGrid <- aperm(aGrid, c(3,4,1,2))
+      
+      ## allow diff movement for M&F
+      #BEWARE pMove=pMoveF in 1st & pMoveM in 2nd
+      #F
+      aAgeyx <- plyr::aaply(aGrid[,,'F',], .margins=c(3),.drop=FALSE,function(m) rtMove(m, mNog=mNog, pMove=pMoveF, aVegMoveMult=aVegMoveMult, aVegDifMult=aVegDifMult))
+      #put dimensions back in correct order
+      aGrid[,,'F',] <- aperm(aAgeyx, c(2,3,1))
+      #M
+      aAgeyx <- plyr::aaply(aGrid[,,'M',], .margins=c(3),.drop=FALSE,function(m) rtMove(m, mNog=mNog, pMove=pMoveM, aVegMoveMult=aVegMoveMult, aVegDifMult=aVegDifMult))
+      #put dimensions back in correct order
+      aGrid[,,'M',] <- aperm(aAgeyx, c(2,3,1))
       
     }
     

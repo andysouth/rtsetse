@@ -9,9 +9,9 @@ rt_runGrid(mVegCats = array(c("D", "T", "O", "S", "N", "N"), dim = c(2, 3)),
   mortality = c(200, 150, 110, 100, 110, 210, 999), pupmortality = c(120, 110,
   105, 100, 120, 170, 999), stringsAsFactors = FALSE),
   dfMoveByVeg = data.frame(code = c("D", "T", "O", "S", "B", "G", "N"), move =
-  c(0.85, 0.9, 0.95, 1, 1.05, 1.1, 0)), iBestVeg = 4, pMove = 0.4,
-  iDays = 4, iMaxAge = 120, iCarryCapF = 200, fMperF = 0.5,
-  fStartPopPropCC = 1, pMortF = 0.05, pMortM = 0.05,
+  c(0.85, 0.9, 0.95, 1, 1.05, 1.1, 0)), iBestVeg = 4, pMoveF = 0.6,
+  pMoveM = 0.3, iDays = 4, iMaxAge = 120, iCarryCapF = 200,
+  fMperF = 0.5, fStartPopPropCC = 1, pMortF = 0.05, pMortM = 0.05,
   iMortMinAgeStart = 10, iMortMinAgeStop = 50, fMortMinProp = 0.2,
   fMortOldProp = 0.3, propMortAdultDD = 0.25, pMortPupa = 0.25,
   propMortPupaDD = 0.25, iPupDurF = 26, iPupDurM = 28, iFirstLarva = 16,
@@ -27,7 +27,9 @@ rt_runGrid(mVegCats = array(c("D", "T", "O", "S", "N", "N"), dim = c(2, 3)),
 
 \item{iBestVeg}{the index of the preferred vegetation for this species, used in influencing movement}
 
-\item{pMove}{probability of moving between cells}
+\item{pMoveF}{probability of F moving between cells}
+
+\item{pMoveM}{probability of M moving between cells}
 
 \item{iDays}{days to run simulation}
 
