@@ -1,23 +1,21 @@
 #' plots age structure over multiple days
-#' 
 #' \code{rtPlotAgeStructure} visualises change in age structure over time using a raster type plot.
 #' Requires the raster package.
 #' @param df a dataframe with days in columns and ages in rows
 #'     OR an array of [day,y,x,sex,age]
 #' @param title a title for the plot  
-#' 
 #' @return nothing
 #' @examples
 #' tst <- rt_runAspatial(verbose=FALSE)
 #' rtPlotAgeStructure(tst$dfRecordF) 
 #' @export
+#' 
 rtPlotAgeStructure <- function( df, title=NULL )
 {
 
-  #! 17/7/14 this is a temporary hack to accept
-  #an array of [day,y,x,sex,age]
-  #I should make it accept this properly and give options to do
-  #'M','F','MF' and even selected grid cells later
+  #allow this function to accept array of [day,y,x,sex,age]
+  #I could make it accept this properly and give options to do
+  #M,F,MF and even selected grid cells later
   if (class(df)=='array') {
     
     #!!NOTE this sums for both M&F
@@ -39,7 +37,6 @@ rtPlotAgeStructure <- function( df, title=NULL )
   }
   
 
-  
   #plot(rast)
   #plot(rast,xlab='days',ylab='ages',axes=FALSE)
   #trying to add sensible axis for days
@@ -65,6 +62,5 @@ rtPlotAgeStructure <- function( df, title=NULL )
   #axis(side=1, at=axTicks(side=1), labels=days*axTicks(side=1),line=-2 )
   #this created more tick marks but didn't allow me to alter labels
   #plot(rast,xlab='days',ylab='ages',xaxp=c(0,1,10))  
-
   
 } 

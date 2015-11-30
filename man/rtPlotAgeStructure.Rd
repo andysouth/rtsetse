@@ -2,7 +2,9 @@
 % Please edit documentation in R/rtPlotAgeStructure.r
 \name{rtPlotAgeStructure}
 \alias{rtPlotAgeStructure}
-\title{plots age structure over multiple days}
+\title{plots age structure over multiple days
+\code{rtPlotAgeStructure} visualises change in age structure over time using a raster type plot.
+Requires the raster package.}
 \usage{
 rtPlotAgeStructure(df, title = NULL)
 }
@@ -16,6 +18,7 @@ OR an array of [day,y,x,sex,age]}
 nothing
 }
 \description{
+plots age structure over multiple days
 \code{rtPlotAgeStructure} visualises change in age structure over time using a raster type plot.
 Requires the raster package.
 }

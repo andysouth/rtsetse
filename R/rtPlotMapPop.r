@@ -20,7 +20,6 @@
 #' tst <- rt_runGridTestSpread()
 #' rtPlotMapPop(tst) 
 #' @export
-
 rtPlotMapPop <- function( aRecord, 
                           days = 'all',
                           ifManyDays = 'spread',

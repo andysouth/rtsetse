@@ -24,4 +24,4 @@ Suggests:
     knitr,
     RColorBrewer
 VignetteBuilder: knitr
-RoxygenNote: 5.0.0
+RoxygenNote: 5.0.1
