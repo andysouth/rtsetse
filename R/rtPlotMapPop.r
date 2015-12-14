@@ -11,7 +11,7 @@
 #' @param ifManyDays days to plot if days='all' and num days > 16, Options: 
 #'    'first' first 16 days, 'last' 16 days, 'firstlast' first8 and last8, 
 #'    'spread' try to spread out days, e.g. if 32 it would plot 2,4,6, etc. can lead to uneven intervals.
-#' @param sex which sex to plot, 'both' or 'MF' for both, 'M' males, 'F' females
+#' @param sex which sex to plot, 'both' or 'MF' for both in same plot, 'M' males, 'F' females, 'M&F' for seaparate MF plots (only available for a single day)
 #' @param title a title for the plot  
 #' @param verbose print what it's doing 
 #' 
@@ -55,8 +55,18 @@ rtPlotMapPop <- function( aRecord,
   sexTitle <- sex
   if (sex=='both' | sex=='MF'){
     sex='sum' #TRUE worked when apply was used below
-    sexTitle='M&F'
-  } else if (sex != 'M' & sex != 'F') 
+    sexTitle='MF'
+  } else if (sex=='M&F')
+  {
+    if (length(days) > 1) {
+      warning("M&F plot option only available for a single day, plotting final day")
+      days <- numDays
+      }
+    #sex 'all' returns both sexes separately
+    sex <- 'all'
+    sexTitle <- c('M','F')
+  }
+  else if (sex != 'M' & sex != 'F') 
     stop("sex should be 'M','F','MF' or 'both', yours is ",sex)
   
   #to give an array of [days,y,x]
@@ -90,9 +100,14 @@ rtPlotMapPop <- function( aRecord,
   #rearranging dimensions for raster brick
   #needs to be y,x,z
   if (length(dim(aDays))==3)
-    aDays <- aperm(aDays, c(2, 3, 1))
-  #this adds a single z dimension if it has been lost
-  else if (length(dim(aDays))==2) {
+  {
+    #for new 'M&F' option dims already in correct order
+    if (names(dimnames(aDays)[1])!='y')
+       aDays <- aperm(aDays, c(2, 3, 1))   
+       
+  }   else if (length(dim(aDays))==2) {
+    
+    #this adds a single z dimension if it has been lost
     #need to sort dimnames too, gets annoyingly fiddly
     #BUGFIX 7/1/15 y before x
     tmpnames <- list(y=dimnames(aDays)$y, x=dimnames(aDays)$x, day=days)
