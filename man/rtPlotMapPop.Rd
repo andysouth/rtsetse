@@ -17,7 +17,7 @@ a number >0 and <days in the simulation, or a series e.g. c(1,2) or c(4:7)}
 'first' first 16 days, 'last' 16 days, 'firstlast' first8 and last8, 
 'spread' try to spread out days, e.g. if 32 it would plot 2,4,6, etc. can lead to uneven intervals.}
 
-\item{sex}{which sex to plot, 'both' or 'MF' for both in same plot, 'M' males, 'F' females, 'M&F' for seaparate MF plots (only available for a single day)}
+\item{sex}{which sex to plot, 'both' or 'MF' for both in same plot, 'M' males, 'F' females, 'M&F' for separate MF plots (only available for a single day)}
 
 \item{title}{a title for the plot}
 
