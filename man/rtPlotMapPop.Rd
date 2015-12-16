@@ -5,7 +5,7 @@
 \title{plots map(s) of populations}
 \usage{
 rtPlotMapPop(aRecord, days = "all", ifManyDays = "spread", sex = "MF",
-  title = NULL, verbose = FALSE)
+  title = NULL, fMaxCellVal = NULL, ext = NULL, verbose = FALSE)
 }
 \arguments{
 \item{aRecord}{array of day,y,x,sex,age}
@@ -20,6 +20,10 @@ a number >0 and <days in the simulation, or a series e.g. c(1,2) or c(4:7)}
 \item{sex}{which sex to plot, 'both' or 'MF' for both in same plot, 'M' males, 'F' females, 'M&F' for separate MF plots (only available for a single day)}
 
 \item{title}{a title for the plot}
+
+\item{fMaxCellVal}{allow setting max value across multiple plots to keep colours constant}
+
+\item{ext}{allow zooming in on a region by ext=c(w,e,s,n), e.g. ext=c(10,40,10,40) ext=c(20,30,20,30)}
 
 \item{verbose}{print what it's doing}
 }

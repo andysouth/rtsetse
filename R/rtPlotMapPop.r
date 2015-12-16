@@ -13,6 +13,8 @@
 #'    'spread' try to spread out days, e.g. if 32 it would plot 2,4,6, etc. can lead to uneven intervals.
 #' @param sex which sex to plot, 'both' or 'MF' for both in same plot, 'M' males, 'F' females, 'M&F' for separate MF plots (only available for a single day)
 #' @param title a title for the plot  
+#' @param fMaxCellVal allow setting max value across multiple plots to keep colours constant
+#' @param ext allow zooming in on a region by ext=c(w,e,s,n), e.g. ext=c(10,40,10,40) ext=c(20,30,20,30)
 #' @param verbose print what it's doing 
 #' 
 #' @return raster brick used for plotting
@@ -25,6 +27,8 @@ rtPlotMapPop <- function( aRecord,
                           ifManyDays = 'spread',
                           sex = 'MF',
                           title = NULL,
+                          fMaxCellVal = NULL,
+                          ext = NULL,
                           verbose = FALSE)
 {
   #to sum the age structures in each cell on each day
@@ -83,7 +87,9 @@ rtPlotMapPop <- function( aRecord,
   
   #set the color scale constant for all plots between 0 & max cell val
   #find the maximum cell value on any day
-  fMaxCellVal <- max( aDays )
+  if (is.null(fMaxCellVal)) 
+    fMaxCellVal <- max( aDays )
+  
   #breaks <- seq(0, fMaxCellVal, length.out=10)
   breaks <- pretty(c(0,fMaxCellVal), n=6) #n is how many intervals
   #can I add on a low cat of 0-1 flies
@@ -138,6 +144,9 @@ rtPlotMapPop <- function( aRecord,
   #this also ensures that cells maintain square aspect ratio 
   extent(brick1) <- extent(c(0, ncol(brick1), 0, nrow(brick1)))
 
+  #allow zooming in on a region by ext=c(w,e,s,n) ext=c(10,40,10,40) ext=c(20,30,20,30)
+  if (is.null(ext)) ext <- extent(brick1) 
+    
   plot(brick1, main=titles, breaks=breaks, col=colourP)  
 
   #todo I could replace this or offer an option to plot using spplot that auto creates just one legend
