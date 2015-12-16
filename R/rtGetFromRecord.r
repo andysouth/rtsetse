@@ -51,7 +51,7 @@ rtGetFromRecord <- function( aRecord,
 {
   
   #!BEWARE this function is tricky
-  cat("in rtGetFromRecord() days=",days," x=",x," y=",y," sex=",sex," age=",age," drop=",drop,"\n")
+  if(verbose) message("in rtGetFromRecord() days=",days," y=",y," x=",x," sex=",sex," age=",age," drop=",drop,"\n")
   
   #?? I may want the default to be sum rather than all
   
@@ -62,8 +62,6 @@ rtGetFromRecord <- function( aRecord,
   #check that the dimensions are named as expected
   if ( ! identical( names(dimnames(aRecord)),c("day","y","x","sex","age")) )
     stop("array dimensions should be named day,y,x,sex,age yours are: ", names(dimnames(aRecord)) )
-  
-  if(verbose) cat("in rtGetFromRecord() days=",days," y=",y," x=",x," sex=",sex," age=",age," drop=",drop,"\n")
   
   #aRecord[y,x,sex,age]
   allArgs <- c(days,y,x,sex,age)
