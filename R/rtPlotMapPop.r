@@ -64,7 +64,7 @@ rtPlotMapPop <- function( aRecord,
       }
     #sex 'all' returns both sexes separately
     sex <- 'all'
-    sexTitle <- c('M','F')
+    sexTitle <- paste('day', days, c('M','F'))
   }
   else if (sex != 'M' & sex != 'F') 
     stop("sex should be 'M','F','MF' or 'both', yours is ",sex)
