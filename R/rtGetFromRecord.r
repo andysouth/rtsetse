@@ -15,6 +15,7 @@
 #' @param sex 'all' returns both sexes separately,'M','F', 'sum' sums sexes
 #' @param age 'all' returns age distribution, 'sum' sums all ages, or an integer age
 #'     or an age range too, e.g. c(2:3)
+#' @param ageSum if='sum'(default) sums ages when age=a range, otherwise returns ages separately     
 #' @param drop whether to drop dimensions that just have a single value, TRUE as default 
 #' @param verbose print what it's doing T/F
 
@@ -25,9 +26,11 @@
 #' aGrid <- rtGetFromRecord(aRecord,days=2) #gives raw array for one day
 #' rtGetFromRecord(aRecord,days=2,x='sum',y='sum',sex='sum') #age structure for whole pop
 #' rtGetFromRecord(aRecord,days=2,x='sum',y='sum',age='sum') #sex ratio for whole pop
-#' #slight anomally this gives 4 grids
+#' #slight anomally this gives 2 grids for M&F
 #' rtGetFromRecord(aRecord,days=2,x='all',y='all',age=c(1,2),sex='all')
-#' #this gives just 1
+#' #this gives 4 grids for M&F age 1&2
+#' rtGetFromRecord(aRecord,days=2,x='all',y='all',age=c(1,2),sex='all',ageSum='other')
+#' #this gives just 1 grid summed across all, currently tricky to sum by sex but not by age
 #' rtGetFromRecord(aRecord,days=2,x='all',y='all',age=c(1,2),sex='sum')
 #' #new test case
 #' aRecord <- rt_runGridTestSpread(3,3,iDays=4)
@@ -45,6 +48,7 @@ rtGetFromRecord <- function( aRecord,
                            y='all',
                            sex='all',
                            age='all',
+                           ageSum='sum',
                            drop=TRUE,
                            verbose=FALSE
                            ) 
@@ -64,8 +68,8 @@ rtGetFromRecord <- function( aRecord,
     stop("array dimensions should be named day,y,x,sex,age yours are: ", names(dimnames(aRecord)) )
   
   #aRecord[y,x,sex,age]
-  allArgs <- c(days,y,x,sex,age)
-  
+  #17/12/15 added ageSum to allow summing of passed age ranges
+  allArgs <- c(days,y,x,sex,age,ageSum)
   
   #add tests that y,x,sex & age have appropriate values
   
