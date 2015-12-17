@@ -152,12 +152,12 @@ rtPlotMapPop <- function( aRecord,
   #allow zooming in on a region by ext=c(w,e,s,n) ext=c(10,40,10,40) ext=c(20,30,20,30)
   if (is.null(ext)) ext <- extent(brick1) 
     
-  plot(brick1, main=titles, breaks=breaks, col=colourP, ext=ext)  
+  #plot(brick1, main=titles, breaks=breaks, col=colourP, ext=ext)  
 
   #todo I could replace this or offer an option to plot using spplot that auto creates just one legend
   #and it uses space better not having gaps between plots
   #spplot( raster::brick(a), names.attr=c(paste0("day",1:nDays)), col.regions=c("white",colorRampPalette(brewer.pal(9,"Blues"))(99)) )
-  #spplot( brick1, names.attr=titles, col.regions=c("white",colorRampPalette(brewer.pal(9,"PuBu"))(99)) )
+  plot( spplot( brick1, names.attr=titles, col.regions=c("white",colorRampPalette(RColorBrewer::brewer.pal(9,"PuBu"))(99)), scales=list(draw=TRUE) ))
   #use cuts=10 to change number of classes from default of 100
 
   invisible(brick1)
