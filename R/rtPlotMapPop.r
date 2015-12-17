@@ -140,7 +140,10 @@ rtPlotMapPop <- function( aRecord,
   brick1 <- brick(aDays)
 
   #the day titles for each subplot (otherwise they get lost when subsetted)
-  titles <- paste(dimnames(aDays)$day, sexTitle) 
+  if ( length(age)==1 && age=="sum")
+    titles <- paste(dimnames(aDays)$day, sexTitle) 
+  else
+    titles <- paste0(dimnames(aDays)$day," ", sexTitle, " age",min(age),"-",max(age))
   
   #set extents for plotting (otherwise they go from 0-1)
   #this also ensures that cells maintain square aspect ratio 
