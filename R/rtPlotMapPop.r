@@ -12,7 +12,8 @@
 #'    'first' first 16 days, 'last' 16 days, 'firstlast' first8 and last8, 
 #'    'spread' try to spread out days, e.g. if 32 it would plot 2,4,6, etc. can lead to uneven intervals.
 #' @param sex which sex to plot, 'both' or 'MF' for both in same plot, 'M' males, 'F' females, 'M&F' for separate MF plots (only available for a single day)
-#' @param title a title for the plot  
+#' @param title a title for the plot 
+#' @param age allows selection of an age range, e.g. c(1:19), c(20:120) 
 #' @param fMaxCellVal allow setting max value across multiple plots to keep colours constant
 #' @param ext allow zooming in on a region by ext=c(w,e,s,n), e.g. ext=c(10,40,10,40) ext=c(20,30,20,30)
 #' @param verbose print what it's doing 
@@ -26,6 +27,7 @@ rtPlotMapPop <- function( aRecord,
                           days = 'all',
                           ifManyDays = 'spread',
                           sex = 'MF',
+                          age = 'sum',
                           title = NULL,
                           fMaxCellVal = NULL,
                           ext = NULL,
@@ -77,7 +79,7 @@ rtPlotMapPop <- function( aRecord,
   #this works when sex=TRUE from above
   #aDays <- apply(aRecord[days,,,sex, ,drop=FALSE],MARGIN=c(1,2,3),sum) 
   #this works when sex='sum' from above
-  aDays <- rtGetFromRecord(aRecord, days=days, sex=sex, age='sum', drop=FALSE, verbose=verbose)
+  aDays <- rtGetFromRecord(aRecord, days=days, sex=sex, age=age, drop=FALSE, verbose=verbose)
   #the drop=FALSE is to cope with nRow or nCol == 1
   
   
@@ -147,7 +149,7 @@ rtPlotMapPop <- function( aRecord,
   #allow zooming in on a region by ext=c(w,e,s,n) ext=c(10,40,10,40) ext=c(20,30,20,30)
   if (is.null(ext)) ext <- extent(brick1) 
     
-  plot(brick1, main=titles, breaks=breaks, col=colourP)  
+  plot(brick1, main=titles, breaks=breaks, col=colourP, ext=ext)  
 
   #todo I could replace this or offer an option to plot using spplot that auto creates just one legend
   #and it uses space better not having gaps between plots

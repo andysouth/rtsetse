@@ -5,7 +5,8 @@
 \title{plots map(s) of populations}
 \usage{
 rtPlotMapPop(aRecord, days = "all", ifManyDays = "spread", sex = "MF",
-  title = NULL, fMaxCellVal = NULL, ext = NULL, verbose = FALSE)
+  age = "sum", title = NULL, fMaxCellVal = NULL, ext = NULL,
+  verbose = FALSE)
 }
 \arguments{
 \item{aRecord}{array of day,y,x,sex,age}
@@ -18,6 +19,8 @@ a number >0 and <days in the simulation, or a series e.g. c(1,2) or c(4:7)}
 'spread' try to spread out days, e.g. if 32 it would plot 2,4,6, etc. can lead to uneven intervals.}
 
 \item{sex}{which sex to plot, 'both' or 'MF' for both in same plot, 'M' males, 'F' females, 'M&F' for separate MF plots (only available for a single day)}
+
+\item{age}{allows selection of an age range, e.g. c(1:19), c(20:120)}
 
 \item{title}{a title for the plot}
 
