@@ -11,9 +11,8 @@ vignette: >
   \usepackage[utf8]{inputenc}
 ---
   
-[rtsetse](https://github.com/AndySouth/rtsetse) is an R package that simulates tsetse fly populations on a spatial grid of different vegetation types to enable investigation of tsetse control. 
 
-This document shows results of a simulation on a simple 50 x 50 grid, half savannah and half grassland. This was et up to compare results with an equivalent run in Hat-trick.
+This document shows results of a [rtsetse](https://github.com/AndySouth/rtsetse) simulation on a simple 50 x 50 grid, half savannah and half grassland with parameters set for G. morsitans. This was set up to compare results with an equivalent run in Hat-trick done by Steve.
 
 
 ```{r, eval=TRUE, echo=FALSE, message=FALSE}
@@ -39,7 +38,7 @@ rtPlotMapVeg(mVegCats)
 #to run simulation
 #not evaluated because takes ~1hr
 #already done & saved in /data
-iDays <- 300
+iDays <- 150
 aRecord <- rt_runGrid (  pMoveF=0.6,  pMoveM=0.3,   iDays=iDays,  pMortF=0.082,  pMortM=0.139,  pMortPupa=0.2,  fStartPopPropCC=1,  iCarryCapF=200,  propMortAdultDD=0.25,  iFirstLarva=16,  iInterLarva=10,  pMortLarva=0.05,  propMortLarvaDD=0.25,  propMortPupaDD=0.25,  mVegCats =system.file("extdata","vegHalfSavannahHalfGrass50x50.txt", package="rtsetse"),  dfMortByVeg=list(code = c("D", "T", "O", "S", "B", "G", "N"), name = c("Dense Forest", "Thicket", "Open Forest", "Savannah", "Bush", "Grass", "No-go area"), mortality = c(200, 150, 110, 100, 110, 210, 999), pupmortality = c(120, 110, 105, 100, 120, 170, 999))  )
 ```
 
@@ -49,17 +48,18 @@ aRecord <- rt_runGrid (  pMoveF=0.6,  pMoveM=0.3,   iDays=iDays,  pMortF=0.082, 
 #may just lazyLoad so may not need this
 ```
 
-The following maps show the distribution of males and females over the progress of the simulation. 
+The following maps show the distribution of males and females over the progress of the simulation as it approaches equilibrium. Later ones show the same for flies older than 20.
 
-The simulation starts with female densities about half of those of males, constant across the grid.
+Over time differential mortality causes the densities to decline in the poorer habitat on the east half. Densities change in the boundary between the two habitats due to the interaction between mortalities and dispersal. 
 
-Differential mortality causes the densities to decline in the poorer habitat on the east half. Over time densities change in the boundary between the two habitats due to the interaction between mortalities and dispersal. 
+By the 150 days shown here the population hasn't quite reached equilibrium but the pattern changes little after this.
 
+Is this pattern sufficeiently similar to what happens in Hat-trick ?
 
 ```{r, eval=TRUE, echo=FALSE, message=FALSE, fig.width=5.7, fig.height=2.9, fig.align='left'}
 data(aRecord)
 
-days2plot <- c(1,2,3,10,20,40,60,80,100,110,120,150)
+days2plot <- c(1,10,20,40,60,80,100,120,150)
 
 #fMaxCellVal set to 300 so that all plots use same colour scheme
 #ext=c(10,40,10,40) to zoom in
@@ -67,11 +67,12 @@ tmp <- lapply(days2plot, function(x) rtPlotMapPop(aRecord, sex='M&F', days=x, fM
 
 ```
 
-The plots below are for the same time periods as above, but just show the older flies. There is more pattern. 
+The plots below are for the same time periods as above, but just show the older flies.
+
 
 ```{r, eval=TRUE, echo=FALSE, message=FALSE, fig.width=5.7, fig.height=2.9, fig.align='left'}
 
-days2plot <- c(1,2,3,10,20,40,60,80,100,110,120,150)
+days2plot <- c(1,10,20,40,60,80,100,120,150)
 
 #fMaxCellVal set to 300 so that all plots use same colour scheme
 #ext=c(10,40,10,40) to zoom in
@@ -91,4 +92,11 @@ rtPlotPopGrid(aRecord)
 ```{r, echo=FALSE}
 rtPlotPopGrid(rtGetFromRecord(aRecord, age=c(20:120)))
 ```
+
+### appendix : code used to run this simulation, showing param values used.
+
+iDays <- 150
+
+aRecord <- rt_runGrid (  pMoveF=0.6,  pMoveM=0.3,   iDays=iDays,  pMortF=0.082,  pMortM=0.139,  pMortPupa=0.2,  fStartPopPropCC=1,  iCarryCapF=200,  propMortAdultDD=0.25,  iFirstLarva=16,  iInterLarva=10,  pMortLarva=0.05,  propMortLarvaDD=0.25,  propMortPupaDD=0.25,  mVegCats =system.file("extdata","vegHalfSavannahHalfGrass50x50.txt", package="rtsetse"),  dfMortByVeg=list(code = c("D", "T", "O", "S", "B", "G", "N"), name = c("Dense Forest", "Thicket", "Open Forest", "Savannah", "Bush", "Grass", "No-go area"), mortality = c(200, 150, 110, 100, 110, 210, 999), pupmortality = c(120, 110, 105, 100, 120, 170, 999))  )
+
 
