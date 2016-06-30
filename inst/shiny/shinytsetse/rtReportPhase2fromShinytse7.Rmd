@@ -1,0 +1,88 @@
+---
+title: "Report on rtsetse grid model output"
+output: html_document
+date: "`r format(Sys.time(), '%d %B, %Y, %H:%M')`"
+---
+
+This is a report on the outputs produced from one run of a phase 2 test of the rtsetse model hosted here : https://andysouth.shinyapps.io/shinytse7/ .
+
+See end of the document for the rtsetse code to repeat this run of the model locally.
+
+
+```{r print args, echo=FALSE}
+#removed this because of trickiness in getting the vegetation matrix not to print out
+#Parameter values used in this run :
+
+#the arguments and their values passed to rtsetse function
+#17/9/14 trying to reimplement this, yes it works
+#23/12/14 problem with veg matrix which comes out as long matrix
+#print(unlist(lNamedArgsGrid))
+
+
+#old approach getting list of inputs from Shiny
+#but that was a problem once I had multiple navbar tabs
+# #getting the named input vars from shiny
+# lNamedArgs <- isolate(reactiveValuesToList(input))
+# #shinyapps adds extra input vars starting ss-net* or checkbox*
+# #I don't want these to appear in the report
+# lNamedArgsSub <- lNamedArgs[ substring(names(lNamedArgs),1,3)!='ss-' & substring(names(lNamedArgs),1,8)!='checkbox' ]
+# #to order the params alphabetically
+# lNamedArgsSub <- lNamedArgsSub[ order(names(lNamedArgsSub)) ]
+# #to stop it from using sci notation
+# print(unlist(format(lNamedArgsSub,scientific=FALSE)))
+```
+
+**Figure 1** Adult population over time summed for the whole grid.
+```{r PlotPopGrid, echo=FALSE}
+#rtPlotPopGrid(aRecord)
+
+rtPlotPopGrid(v$gridResults)
+```
+
+
+**Figure 2** Map of adults across the grid on final day of the simulation.
+```{r PlotMapPop final, echo=FALSE}
+#rtPlotMapPop(aRecord, days='final', sex='both')
+rtPlotMapPop(v$gridResults, days='final', sex='both')
+```
+
+
+**Figure 3** Maps of adults across the grid over the days of the simulation.
+```{r PlotMapPop all, echo=FALSE}
+#rtPlotMapPop(aRecord, days='all', ifManyDays='last', sex='both')
+rtPlotMapPop(v$gridResults, days='all', ifManyDays='spread', sex='both')
+```
+
+
+**Figure 4** Age structure over time, summed for M&F across the whole grid.
+```{r PlotAgeStructure, echo=FALSE}
+rtPlotAgeStructure(v$gridResults)
+```
+
+
+**Figure 5** Mean age of adults over time, summed for the whole grid.
+```{r PlotMeanAgeGrid, echo=FALSE}
+rtPlotMeanAgeGrid(v$gridResults)
+```
+
+Code to repeat this run of the model locally :
+```{r Code for local run, echo=FALSE}
+
+# string is created in server.r/printParamsGrid
+#BEWARE!
+#23/12/14 does work if the code tab is selected first, but not yet if not
+#i may be able to move the code that creates the string into a function
+#that is called from runGridModel()
+cat(stringCodeRepeat,"\n")
+
+#cat("the code should be above this ...")
+
+# old way of doing had problems with the veg matrix
+# sCommand <- "rt_runGridTestSpread"
+# #this creates a vector of 'name=value,'
+# vArgs <- paste0(names(lNamedArgsGrid),"=",lNamedArgsGrid,", ")
+# #to remove the final comma & space in args list
+# vArgs[length(vArgs)] <- substr(vArgs[length(vArgs)],0,nchar(vArgs[length(vArgs)])-2)
+# cat( sCommand,"( ",vArgs," )",sep="")
+
+```
