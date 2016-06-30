@@ -373,7 +373,7 @@ shinyUI(fluidPage(theme = shinytheme("united"), #nice orange/red header, grey bu
          
          #next 2 for report download
          downloadButton('downloadReport',label='download run report'),
-         #),
+         
          #radioButtons('format', 'Document format', c('PDF', 'HTML', 'Word'), inline = TRUE),
          
          #checkbox for whether to test spread on uniform grid

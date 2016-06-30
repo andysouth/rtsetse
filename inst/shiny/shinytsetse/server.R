@@ -849,15 +849,16 @@ output$plotMapDaysControl <- renderPlot({
   # the report format is set by a Rmd file in the shiny app folder
   # note this doesn't use the reporting function from rtsetse
   output$downloadReport <- downloadHandler(
+    
     #this was how to allow user to choose file
-    #   filename = function() {
-    #     paste('my-report', sep = '.', switch(
+    # filename = function() {
+    #     paste('rtsetseReport', sep = '.', switch(
     #       input$format, PDF = 'pdf', HTML = 'html', Word = 'docx'
     #     ))
     #   },
     
     # name of the report file to create
-    filename = "rtsetsePhase2Report.html",
+    filename = "rtsetseReport.pdf",
     
     content = function(file) {
       
@@ -870,18 +871,22 @@ output$plotMapDaysControl <- renderPlot({
       # permission to the current working directory
       owd <- setwd(tempdir())
       on.exit(setwd(owd))
-      file.copy(src, filenameRmd)
+      file.copy(src, filenameRmd, overwrite=TRUE)
       
       library(rmarkdown)
       
       #this allowed rendering in pdf,html or doc
-      #     out <- render(filenameRmd, switch(
-      #       input$format,
-      #       PDF = pdf_document(), HTML = html_document(), Word = word_document()
-      #     ))
+      # out <- render(filenameRmd, switch(
+      #   input$format,
+      #   PDF = pdf_document(), HTML = html_document(), Word = word_document()
+      # ))
       
       #rendering in html only
-      out <- render(filenameRmd, html_document())    
+      #out <- render(filenameRmd, html_document())    
+      
+      #rendering in pdf only
+      out <- render(filenameRmd, pdf_document())   
+      
       
       file.rename(out, file)
     }
