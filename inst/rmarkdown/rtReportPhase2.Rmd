@@ -14,18 +14,21 @@ if ( exists("lNamedArgs"))
 ```
 
 **Figure 1** Adult population over time summed for the whole grid.
+
 ```{r, echo=FALSE}
 rtPlotPopGrid(aRecord)
 ```
 
 
 **Figure 2** Total adults in each grid cell on final day of the simulation.
+
 ```{r, echo=FALSE}
 rtPlotMapPop(aRecord, days='final', sex='both')
 ```
 
 
 **Figure 3** Total adults in each grid cell for the last 16 days of the simulation.
+
 ```{r, echo=FALSE}
 rtPlotMapPop(aRecord, days='all', ifManyDays='last', sex='both')
 ```

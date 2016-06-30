@@ -1,12 +1,10 @@
 ---
 title: "Report on rtsetse grid model output"
-output: html_document
 date: "`r format(Sys.time(), '%d %B, %Y, %H:%M')`"
 ---
 
-This is a report on the outputs produced from one run of a phase 2 test of the rtsetse model hosted here : https://andysouth.shinyapps.io/shinytse7/ .
-
-See end of the document for the rtsetse code to repeat this run of the model locally.
+This is a report on the outputs produced from one run of the rtsetse model run from the UI locally.
+See end of the document for the rtsetse code to repeat this run of the model on the command line.
 
 
 ```{r print args, echo=FALSE}
@@ -33,35 +31,39 @@ See end of the document for the rtsetse code to repeat this run of the model loc
 ```
 
 **Figure 1** Adult population over time summed for the whole grid.
-```{r PlotPopGrid, echo=FALSE}
-#rtPlotPopGrid(aRecord)
+
+```{r PlotPopGrid, eval=TRUE, echo=FALSE, fig.height=4, fig.width=4}
 
 rtPlotPopGrid(v$gridResults)
 ```
 
 
 **Figure 2** Map of adults across the grid on final day of the simulation.
-```{r PlotMapPop final, echo=FALSE}
-#rtPlotMapPop(aRecord, days='final', sex='both')
+
+```{r PlotMapPop final, eval=TRUE, echo=FALSE, fig.height=4, fig.width=4}
+
 rtPlotMapPop(v$gridResults, days='final', sex='both')
 ```
 
 
 **Figure 3** Maps of adults across the grid over the days of the simulation.
-```{r PlotMapPop all, echo=FALSE}
-#rtPlotMapPop(aRecord, days='all', ifManyDays='last', sex='both')
+
+```{r PlotMapPop all, eval=TRUE, echo=FALSE, fig.height=4, fig.width=4}
+
 rtPlotMapPop(v$gridResults, days='all', ifManyDays='spread', sex='both')
 ```
 
 
 **Figure 4** Age structure over time, summed for M&F across the whole grid.
-```{r PlotAgeStructure, echo=FALSE}
+
+```{r PlotAgeStructure, eval=TRUE, echo=FALSE, fig.height=4, fig.width=4}
 rtPlotAgeStructure(v$gridResults)
 ```
 
 
 **Figure 5** Mean age of adults over time, summed for the whole grid.
-```{r PlotMeanAgeGrid, echo=FALSE}
+
+```{r PlotMeanAgeGrid, eval=TRUE, echo=FALSE, fig.height=4, fig.width=4}
 rtPlotMeanAgeGrid(v$gridResults)
 ```
 
@@ -73,7 +75,8 @@ Code to repeat this run of the model locally :
 #23/12/14 does work if the code tab is selected first, but not yet if not
 #i may be able to move the code that creates the string into a function
 #that is called from runGridModel()
-cat(stringCodeRepeat,"\n")
+#cat(stringCodeRepeat,"\n")
+print(stringCodeRepeat)
 
 #cat("the code should be above this ...")
 
