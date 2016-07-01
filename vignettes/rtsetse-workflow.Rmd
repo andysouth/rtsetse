@@ -1,0 +1,59 @@
+---
+title: "rtsetse workflow"
+author: "Andy South"
+date: "`r Sys.Date()`"
+#output: rmarkdown::html_vignette
+#to produce a pdf
+output: rmarkdown::pdf_document
+vignette: >
+  %\VignetteIndexEntry{rtsetse workflow}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+  
+[rtsetse](https://github.com/AndySouth/rtsetse) is an R package for simulating tsetse fly populations to investigate control options. It follows from [Hat-Trick](http://www.tsetse.org), an Excel Tsetse model.
+
+This document outlines how rtsetse can be used.
+
+### Installation
+
+    require(devtools)    
+    install_github('AndySouth/rtsetse', build_vignettes=TRUE)  
+
+    
+### Running    
+
+```{r, eval=TRUE, echo=TRUE, message=FALSE}
+    library(rtsetse)
+```
+    
+    # run from a user interface
+    rt_UI()
+
+    # run from the command line an example
+
+```{r, eval=FALSE, echo=TRUE, message=FALSE}
+#to run simulation
+#not evaluated because takes ~1hr
+#already done & saved in /data
+iDays <- 10
+aRecord <- rt_runGrid (  pMoveF=0.6,  pMoveM=0.3,   iDays=iDays,  pMortF=0.082,  pMortM=0.139,  pMortPupa=0.2,  fStartPopPropCC=1,  iCarryCapF=200,  propMortAdultDD=0.25,  iFirstLarva=16,  iInterLarva=10,  pMortLarva=0.05,  propMortLarvaDD=0.25,  propMortPupaDD=0.25,  mVegCats =system.file("extdata","vegHalfSavannahHalfGrass50x50.txt", package="rtsetse"),  dfMortByVeg=list(code = c("D", "T", "O", "S", "B", "G", "N"), name = c("Dense Forest", "Thicket", "Open Forest", "Savannah", "Bush", "Grass", "No-go area"), mortality = c(200, 150, 110, 100, 110, 210, 999), pupmortality = c(120, 110, 105, 100, 120, 170, 999))  )
+```
+
+
+### Adult population over time summed for the whole grid.
+
+```{r, echo=FALSE}
+data(aRecord)
+rtPlotPopGrid(aRecord)
+```
+
+### Adults over 20 days summed for the whole grid.
+
+```{r, echo=FALSE}
+rtPlotPopGrid(rtGetFromRecord(aRecord, age=c(20:120)))
+```
+
+
+
+
