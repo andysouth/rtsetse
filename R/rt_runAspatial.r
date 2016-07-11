@@ -233,9 +233,9 @@ rt_runAspatial <- function( iDays = 30,
   #visualising changing age structure over time
   if (plot)
   {
-    x11()
+    dev.new()
     rtPlotAgeStructure(dfRecordF,"Females")
-    x11()
+    dev.new()
     rtPlotAgeStructure(dfRecordM,"Males")    
   }
 
