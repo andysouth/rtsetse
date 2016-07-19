@@ -7,5 +7,8 @@
 
 rt_UI <- function() {
   
-  shiny::runApp(system.file('shiny/shinytsetse', package='rtsetse'))
+  #launch.browser=TRUE to make sure downloads of results work
+  #also makes exiting the UI cleaner, i.e. no errors
+  
+  shiny::runApp(system.file('shiny/shinytsetse', package='rtsetse'), launch.browser=TRUE)
 }
