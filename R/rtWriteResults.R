@@ -43,7 +43,7 @@
 
 
 rtWriteResults <- function( aRecord,
-                            file="outresults.txt",
+                            file="rtsetseResults.txt",
                              days='all',
                              x='all',
                              y='all',
