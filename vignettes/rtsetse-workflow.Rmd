@@ -13,46 +13,73 @@ vignette: >
   
 [rtsetse](https://github.com/AndySouth/rtsetse) is an R package for simulating tsetse fly populations to investigate control options. It follows from [Hat-Trick](http://www.tsetse.org), an Excel Tsetse model.
 
-This document outlines how rtsetse can be used.
+This document outlines how rtsetse can be used. All text in the grey boxes below can be copied and pasted into the R console.
 
-### Installation
-
-    require(devtools)    
-    install_github('AndySouth/rtsetse', build_vignettes=TRUE)  
-
-    
-### Running    
-
-```{r, eval=TRUE, echo=TRUE, message=FALSE}
-    library(rtsetse)
-```
-    
-    # run from a user interface
-    rt_UI()
-
-    # run from the command line an example
+### Installation from R
 
 ```{r, eval=FALSE, echo=TRUE, message=FALSE}
-#to run simulation
-#not evaluated because takes ~1hr
-#already done & saved in /data
+require(devtools)    
+install_github('AndySouth/rtsetse', build_vignettes=TRUE)  
+```
+    
+### How to run the model, first examples    
+
+```{r, eval=FALSE, echo=TRUE, message=FALSE}
+# Load the package in each new R session.
+library(rtsetse)
+```
+
+### Where to find documentation  
+
+```{r, eval=FALSE, echo=TRUE, message=FALSE}
+# This will bring up a brief description of the rtsetse package :
+?rtsetse
+
+# Click on 'index' at the bottom of the description page to go to a list of help pages 
+# for each function in the package.
+
+```
+    
+#### Run from a user interface
+```{r, eval=FALSE, echo=TRUE, message=FALSE}
+rt_UI()
+```
+
+#### Run from the command line, an example
+```{r, eval=FALSE, echo=TRUE, message=FALSE}
+# (Not evaluated here because takes a minute or so to run)
+
+# To find documentation about this function and the inputs.
+?rt_runGrid
+
+# Set number of days.
 iDays <- 10
-aRecord <- rt_runGrid (  pMoveF=0.6,  pMoveM=0.3,   iDays=iDays,  pMortF=0.082,  pMortM=0.139,  pMortPupa=0.2,  fStartPopPropCC=1,  iCarryCapF=200,  propMortAdultDD=0.25,  iFirstLarva=16,  iInterLarva=10,  pMortLarva=0.05,  propMortLarvaDD=0.25,  propMortPupaDD=0.25,  mVegCats =system.file("extdata","vegHalfSavannahHalfGrass50x50.txt", package="rtsetse"),  dfMortByVeg=list(code = c("D", "T", "O", "S", "B", "G", "N"), name = c("Dense Forest", "Thicket", "Open Forest", "Savannah", "Bush", "Grass", "No-go area"), mortality = c(200, 150, 110, 100, 110, 210, 999), pupmortality = c(120, 110, 105, 100, 120, 170, 999))  )
-```
+# Run the model (results are saved to aRecord or any othr object name you choose to use).
+aRecord <- 
+  rt_runGrid (  pMoveF=0.6,  pMoveM=0.3,   iDays=iDays,  pMortF=0.082,  pMortM=0.139,  
+                pMortPupa=0.2,  fStartPopPropCC=1,  iCarryCapF=200,  propMortAdultDD=0.25,  
+                iFirstLarva=16,  iInterLarva=10,  pMortLarva=0.05,  propMortLarvaDD=0.25,  
+                propMortPupaDD=0.25,  
+                mVegCats=system.file("extdata","vegHalfSavannahHalfGrass50x50.txt", 
+                                     package="rtsetse"),
+                dfMortByVeg=list(code = c("D", "T", "O", "S", "B", "G", "N"), 
+                                 name = c("Dense Forest", "Thicket", "Open Forest", 
+                                          "Savannah", "Bush", "Grass", "No-go area"), 
+                                 mortality = c(200, 150, 110, 100, 110, 210, 999), 
+                                 pupmortality = c(120, 110, 105, 100, 120, 170, 999))  )
 
-
-### Adult population over time summed for the whole grid.
-
-```{r, echo=FALSE}
-data(aRecord)
+# Plot some of model results (in this case adult popn across the whole grid).
 rtPlotPopGrid(aRecord)
+# or plot a map of the population distribution
+rtPlotMapPop(aRecord)
+# or select particular days, ages and genders
+rtPlotMapPop(aRecord, days='final', sex = 'M', age = (20:120))
+
+
+
 ```
 
-### Adults over 20 days summed for the whole grid.
 
-```{r, echo=FALSE}
-rtPlotPopGrid(rtGetFromRecord(aRecord, age=c(20:120)))
-```
 
 
 
