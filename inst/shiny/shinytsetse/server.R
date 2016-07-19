@@ -891,7 +891,35 @@ output$plotMapDaysControl <- renderPlot({
       file.rename(out, file)
     }
   ) #end downloadReport
+
   
+  # save grid results to a text file #########################################
+  # I had problems with this not working when run from RStudio viewer
+  # this thread points out that I may be better just allowing user to save locally (& assume they are running in an R process on their local machine)
+  # https://groups.google.com/forum/#!searchin/shiny-discuss/download/shiny-discuss/PB57zk7Cbto/dTsn-2r7xSUJ
+  # for now keep this & instruct to run app in browser
+  output$saveResultsGrid <- downloadHandler(
+    
+    filename = function() { 
+      paste("rtsetseResults.txt") 
+      #paste(input$dataset, '.csv', sep='') 
+    },
+    content = function(file) {
+      rtWriteResults(v$gridResults, file=file, age="sum", sex="all")
+      # write.csv(data.frame( country=c("Spain", "United Kingdom"),
+      #                       weather=c("hot", "cold") ), file)
+    } 
+    
+    # simple example from RStudio
+    # filename = function() { 
+    #   paste(input$dataset, '.csv', sep='') 
+    # },
+    # content = function(file) {
+    #   write.csv(datasetInput(), file)
+    # } 
+    
+  ) #end saveResultsGrid
+    
   
   # test plotting of inputs ###############################
   #not currently used
