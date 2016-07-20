@@ -103,7 +103,7 @@ shinyServer(function(input, output) {
     iMaxAge <- 100
     iMortMinAgeStopF <- 60 #left as default, unchangeable in Hat-trick
     
-    vpMorts <- rtSetMortRatesByAge( c(1:iMaxAge),
+    vpMorts <- rtSetMortRatesByAge( iMaxAge,
                                     pMortAge1 = v$bestMorts$F,
                                     iMortMinAgeStart = input$iMortMinAgeStartF,
                                     #leave next as default
@@ -124,7 +124,7 @@ output$plotMortalityM <- renderPlot({
   iMaxAge <- 100
   iMortMinAgeStopM <- 40 #left as default, unchangeable in Hat-trick
   
-  vpMorts <- rtSetMortRatesByAge( c(1:iMaxAge),
+  vpMorts <- rtSetMortRatesByAge( iMaxAge,
                                   pMortAge1 = v$bestMorts$M,
                                   iMortMinAgeStart = input$iMortMinAgeStartM,
                                   #leave next as default
