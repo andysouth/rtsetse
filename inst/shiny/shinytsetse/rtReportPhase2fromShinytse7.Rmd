@@ -67,16 +67,22 @@ rtPlotAgeStructure(v$gridResults)
 rtPlotMeanAgeGrid(v$gridResults)
 ```
 
-Code to repeat this run of the model locally :
-```{r Code for local run, echo=FALSE}
+\pagebreak
+Code to repeat this run of the model locally (copy & paste the whole lot into the R console) :
+```{r Code for local run, echo=FALSE, comment=""}
 
 # string is created in server.r/printParamsGrid
-#BEWARE!
-#23/12/14 does work if the code tab is selected first, but not yet if not
-#i may be able to move the code that creates the string into a function
-#that is called from runGridModel()
+
+#have to be careful the code doesn't go across a page in the pdf otherwise the copied & pasted bit won't run in R
+
+#replace ,space with ,newlines to wordwrap in pdf
+string2 <- gsub(", ",",\n",stringCodeRepeat)
+writeLines(string2, sep='')
+
+#this fails because text isn't wrapped
 #cat(stringCodeRepeat,"\n")
-print(stringCodeRepeat)
+#this fails because prints in weird format
+#print(stringCodeRepeat)
 
 #cat("the code should be above this ...")
 
