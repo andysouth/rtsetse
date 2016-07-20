@@ -1,26 +1,14 @@
-#shinytse7/server.r
+#shinytsetse/server.r
 #andy south 15/09/2014
 
-
 #to run type this in R console
-#library(shiny)
-#runApp('shinytse7')
-#for me to deploy online
-#devtools::install_github('AndySouth/rtsetse')
-#devtools::install_github("rstudio/shinyapps")
-#library(shinyapps)
-#deployApp('shinytse7')
+#rt_UI()
 
 library(rtsetse)
 library(shiny)
 library(raster)
 
-
-## can put functions here
-
-
 #run the model once just one day before start to set up output structure
-#output <- rtPhase1Test2(iDays=1, verbose=FALSE)
 bestMorts <- rtMortalityStableSeek(plot=FALSE)
 aspatialResults <- rt_runAspatial(iDays=1, verbose=FALSE)
 lNamedArgsAspatial <- NULL #to hold argList for aspatial model  
@@ -29,12 +17,7 @@ lNamedArgsGrid <- NULL #to hold argList for grid model
 stringCodeRepeat <- NULL # to hold the actual function call for the grid model, e.g. with filename for the veg matrix
 
 shinyServer(function(input, output) {
-#10/10/14 adding session arg for progress bar experiments
-#shinyServer(function(input, output, session) {
-  
-  #I only want to run model when a button is pressed
-  
-  #v <- reactiveValues( output=output ) 
+
   v <- reactiveValues( bestMorts=bestMorts,
                        aspatialResults=aspatialResults,
                        gridResults=gridResults,
@@ -60,7 +43,6 @@ shinyServer(function(input, output) {
  
     cat("in runMortSeek button=",input$aButtonMortality,"\n")
     
-    #changing from a submitButton to an actionButton
     #add dependency on the button
     if ( input$aButtonMortality == 0 ) return()
     #isolate reactivity of other objects
@@ -108,16 +90,13 @@ shinyServer(function(input, output) {
     #cat("in plotStableSeek input$fMperF=",input$fMperF,"\n")
     
     #needed to get plot to react when button is pressed
-    #i'm not quite sure why, i thought it might react to v changing
     runMortSeek()
        
   })  
  
   # plot mortality by age F  ##########################
   output$plotMortalityF <- renderPlot({
-    
-    #?needed to get plot to react when button is pressed
-    #runMortSeek()
+
     
     #!BEWARE that I have default max age set to 100 in a couple of places now. 
     #! ideally it should be set in just one place.
@@ -139,8 +118,6 @@ shinyServer(function(input, output) {
 # plot mortality by age F  ##########################
 output$plotMortalityM <- renderPlot({
   
-  #?needed to get plot to react when button is pressed
-  #runMortSeek()
   
   #!BEWARE that I have default max age set to 100 in a couple of places now. 
   #! ideally it should be set in just one place.
@@ -168,7 +145,6 @@ output$plotMortalityM <- renderPlot({
     
     cat("in runModel button=",input$aButtonAspatial,"\n")
     
-    #changing from a submitButton to an actionButton
     #add dependency on the button
     if ( input$aButtonAspatial == 0 ) return()
     #isolate reactivity of other objects
@@ -205,26 +181,6 @@ output$plotMortalityM <- renderPlot({
 
        #run the model with the list of args
        v$aspatialResults <- do.call(rt_runAspatial, lNamedArgsAspatial)
-
-      #old way of doing before args were put into a list  
-      #       v$aspatialResults <- rt_runAspatial(iDays = input$days,
-      #                                         pMortF = pMortF,
-      #                                         pMortM = pMortM, 
-      #                                         propMortAdultDD = input$propMortAdultDD,
-      #                                         iCarryCap = input$iCarryCap,
-      #                                         #iMaxAge = input$iMaxAge,      
-      #                                         propMortLarvaDD = input$propMortLarvaDD,
-      #                                         propMortPupaDD = input$propMortPupaDD,
-      #                                         #iStartAges = input$iStartAges,
-      #                                         iStartAdults = input$iStartAdults, 
-      #                                         
-      #                                         #the params below are taken from page1
-      #                                         iFirstLarva = input$iFirstLarva,
-      #                                         iInterLarva = input$iInterLarva,
-      #                                         pMortLarva = input$pMortLarva,  
-      #                                         pMortPupa = input$pMortPupa,
-      #                                         
-      #                                         verbose=FALSE)
       
     } 
     }) #end isolate 
@@ -309,8 +265,6 @@ output$plotMortalityM <- renderPlot({
 
 
 ## FUNCTIONS used by file loading tab   ###############################
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#these functions originally came from rtsetseMapEditor
 
 # read input file, grid .txt and optional attribute .csv -----
 readFileConductor <- reactive({ 
@@ -322,8 +276,7 @@ readFileConductor <- reactive({
     #if both grid(txt) & att(csv) files are loaded find the index
     #of which is the txt file
     indexOfGrid <- grep(".txt",input$fileMapLocal$name)
-    #old way assumed their order
-    #inFile <- input$fileMapLocal$datapath[ nrow(input$fileMapLocal) ]  
+    
     inFile <- input$fileMapLocal$datapath[ indexOfGrid ]  
     
     cat("local grid file name =", input$fileMapLocal$name[ indexOfGrid ], "\n")   
@@ -411,15 +364,12 @@ readFileConductor <- reactive({
 ### plot raster from a loaded text matrix of characters -----
 output$plotLoadedMap <- renderPlot({
   
-  #browser()
   #cat("in plotLoadedMap fileMap$datapath=",input$fileMap$datapath)
   
   if( is.null(input$fileMapInternal) & is.null(v$cachedTbl) ) return(NULL)
   else readFileConductor() #read from the inputFile if it hasn't been read yet
-  #}
   
-  
-  #changing from a submitButton to an actionButton
+
   #add dependency on the button
   if ( input$aButtonMap < 0 ) return()
   #isolate reactivity of other objects
@@ -430,31 +380,12 @@ output$plotLoadedMap <- renderPlot({
     rtPlotMapVeg(mapMatrix, cex=1.2, labels=v$dfRasterAtts$name)
   
   }) #end isolate 
-  
-  #old way
-  #all these steps do seem to be necessary to convert to a numeric matrix then raster
-  #mapMatrix <- as.matrix(v$cachedTbl)
-  #mapRaster <- raster(mapMatrix)    
-  #set extents for plotting (otherwise they go from 0-1)
-  #this also ensures that cells maintain square aspect ratio 
-  #extent(mapRaster) <- extent(c(0, ncol(mapRaster), 0, nrow(mapRaster))) 
-  #   plot(mapRaster)    
-  
-  #will spplot work with shiny ? YES
-  #spplot(mapRaster)
     
 }) #end of plotLoadedMap  
 
 
 # table of raster attributes (vegetation) -----
 output$tableRasterAtts <- renderTable({
-  
-  #create a test dataframe
-#   dF <- data.frame( code = c("D","T"),
-#                     name = c("Dense Forest","Thicket"),
-#                     mortality = c(100,200)
-#                     )
-#   dF
   
   cat("in tableRasterAtts\n")
   
@@ -466,19 +397,6 @@ output$tableRasterAtts <- renderTable({
 # editable raster attributes ######################
 output$editableRasterAtts <- renderHtable({
 
-  #browser()
-  
-  #if no changes have been made to the table
-  #we might get here if a new file has been loaded
-#   if ( is.null(input$editableRasterAtts) ) {  
-#     
-#     cat("in editableRasterAtts null\n")
-#     
-#   } else {
-#     #save edited table changes 
-#     cat("in editableRasterAtts saving changes\n",unlist(input$editableRasterAtts),"\n")
-#     v$dfRasterAtts <<- input$editableRasterAtts
-#   }
 
   #if the table has been changed from the UI, save those changes
   if ( !is.null(input$editableRasterAtts) ) {  
@@ -567,7 +485,6 @@ output$tableNonEdit <- renderTable({
           pMortLarva = input$pMortLarva,        
           propMortLarvaDD = input$propMortLarvaDD,
           propMortPupaDD = input$propMortPupaDD )                        
-        #verbose=FALSE)
         
         #if testSpread checkbox is selected a different simulation is run
         #but difficulty that the args for the functions are different
@@ -594,7 +511,6 @@ output$tableNonEdit <- renderTable({
           
           #if in control tab, add control arguments
           if ( input$selectedTab == "control")
-          #if ( input$selectedTab == "grid")
           {
             cat("in control tab\n")  
             lControlArgs <- list(pControl=input$pControl,
@@ -644,7 +560,7 @@ output$tableNonEdit <- renderTable({
       vArgs[length(vArgs)] <- substr(vArgs[length(vArgs)],0,nchar(vArgs[length(vArgs)])-2)
       
       #cat( sCommand,"( ",vArgs," )",sep="")
-      #23/12/14 put this into a global string so I can put it into the run report as well
+      #put this into a global string so I can put it into the run report as well
       stringCodeRepeat <<- c( sCommand,"( ",vArgs," )")
       
         
@@ -660,8 +576,6 @@ output$tableNonEdit <- renderTable({
     #cat("in runGridModel lNamedArgsGrid=",unlist(lNamedArgsGrid),"\n")
     #cat("in runGridModel() created arg list, arg1:",unlist(lNamedArgsGrid)[1],"\n")  
     
-    #cat("in runGridModel button=",input$aButtonGrid,"\n")    
-    #changed from submitButton to actionButton, add dependency on the button
     #if ( input$aButtonGrid == 0 ) return()
     #23/1/15 above stopped running control before grid & caused invalid argument to unary operator
     #it may be useful later for now make dependency simpler
@@ -909,14 +823,6 @@ output$plotMapDaysControl <- renderPlot({
       # write.csv(data.frame( country=c("Spain", "United Kingdom"),
       #                       weather=c("hot", "cold") ), file)
     } 
-    
-    # simple example from RStudio
-    # filename = function() { 
-    #   paste(input$dataset, '.csv', sep='') 
-    # },
-    # content = function(file) {
-    #   write.csv(datasetInput(), file)
-    # } 
     
   ) #end saveResultsGrid
     
