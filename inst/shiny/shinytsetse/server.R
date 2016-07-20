@@ -313,6 +313,9 @@ readFileConductor <- reactive({
     inFileAttributes <- sub(".txt",".csv",input$fileMapInternal)  
     #ugly but does work BEWARE repeated above for grid file
     inFileAttributes <- paste0( 'system.file("extdata","',inFileAttributes,'", package="rtsetse")')
+    #20/7/16 seems to be a problem with this not finding the file
+    #in debug mode it gives this :
+    #C:/rsprojects/rtsetse/inst/extdata/vegBurkinaFasoMouhounTirados0_5km.csv
     inFileAttributes <- eval(parse(text=inFileAttributes)) 
   }
   #if a local file it will be a dataframe and need to get datapath
