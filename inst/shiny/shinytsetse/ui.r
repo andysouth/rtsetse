@@ -441,9 +441,9 @@ shinyUI(fluidPage(theme = shinytheme("united"), #nice orange/red header, grey bu
         tabsetPanel(
                     
 #           # viewing outputs -----------------          
-            tabPanel("Maps daily", plotOutput("plotMapDaysControl"))         
+            tabPanel("Maps daily", plotOutput("plotMapDaysControl")),         
             #to include a code tab I'll probably need to copy & rename "printParamsGrid" in server
-            #tabPanel("Code", verbatimTextOutput("printParamsGrid")) 
+            tabPanel("Code", verbatimTextOutput("printParamsControl")) 
             #tabPanel("About", includeMarkdown("about.md"))
     
           ) # end tabsetPanel                 

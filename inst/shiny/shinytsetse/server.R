@@ -909,6 +909,47 @@ output$printParamsGrid <- renderPrint({
   
 })    
 
+# print reproducible code for control model ###############################
+# identical to printParamsGrid() except aButtonGrid replaced with aButtonControl  
+output$printParamsControl <- renderPrint({
+  
+  #only try to display results after the run button has been pressed for the first time
+  if ( input$aButtonControl == 0 ) return( msgRunPrompt(renderType="print") )
+  
+  #this may allow correct code to be displayed when model has crashed ..
+  prerunGridModel()
+  #runGridModel()
+  
+  cat("R code to repeat this run of the model locally using rtsetse version",
+      packageDescription('rtsetse')$Version,
+      "\n\n")    
+  
+  
+  #different function is run if the test spread checkbox is selected
+  #only need to output extra text for the non-spread option
+  if ( !input$testSpread )
+  {
+    
+    if (input$mapLocation == 'Local')
+    {  
+      
+      cat("As you are using a local vegetation file you will first need to use setwd() ",
+          "to set your working directory to the location of the files.",
+          "\n\n")  
+      
+    }
+    #else if (input$mapLocation == 'Internal')
+    
+  }
+  
+  #this outputs it to the code tab
+  #stringCodeRepeat is a global variable
+  cat( stringCodeRepeat )
+  
+  cat( "\n\n#to plot some results \nrtPlotMapPop(tst)" )
+  
+})  
+  
 # display values of input for testing ###############################
 output$testInputVals <- renderText({
 
