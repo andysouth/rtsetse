@@ -1,15 +1,8 @@
-#shinytse7/ui.r
+#shinytsetse/ui.r
 #andy south 15/09/2014
 
-#seeking stability
-
 #to run type this in R console
-#library(shiny)
-#runApp('shinytse7')
-#for me to deploy online
-#devtools::install_github('AndySouth/rtsetse')
-#library(shinyapps)
-#deployApp('shinytse7')
+#rt_UI()
 
 if (!require("devtools")) install.packages("devtools")
 library(devtools)
@@ -30,15 +23,10 @@ library(shinythemes) #for new themes
 #shinyUI(fluidPage(theme = shinytheme("spacelab"), #nice, greay header, buttons nr black
 shinyUI(fluidPage(theme = shinytheme("united"), #nice orange/red header, grey buttons, good for a temporary change !
 
-  #this didn't work to put text above the navbar
-  #helpText("Test..."),
   
   #navbarPage sets up navbar, title appears on left
   navbarPage("rtsetse demonstrator", id="selectedTab",
-  #trying a theme, must be compatible with Bootstrap 2.3.2 
-  #from http://bootswatch.com/2/ saved in www/ folder
-  #this theme is flatly - blue navbar & turquoise links !
-  #navbarPage("rtsetse demonstrator", theme = "bootstrap.min.css",
+             
              
     # tab "About" ---------------------------
     tabPanel("About", includeMarkdown("about.md")),
@@ -52,16 +40,9 @@ shinyUI(fluidPage(theme = shinytheme("united"), #nice orange/red header, grey bu
              
       sidebarLayout(
         
-        #title for this page
-        #headerPanel("shinytse7 - seeking stability"),
-        #if no headerPanel an error is generated
-        #headerPanel(""),
-        
         # Sidebar for inputs
         sidebarPanel(
       
-          #submitButton("Seek Stable Mortality"),
-          #replacing submitButton with actionButton
           actionButton('aButtonMortality',"Seek Stable Mortality"),
           
           sliderInput("fMperF", 
@@ -189,15 +170,9 @@ shinyUI(fluidPage(theme = shinytheme("united"), #nice orange/red header, grey bu
              
       sidebarLayout(
          
-         #title for this page
-         #headerPanel("shinytse7 - seeking stability"),
-         #if no headerPanel an error is generated
-         #headerPanel(""),
          
          sidebarPanel(
            
-           #replaced with actionButton
-           #submitButton("Run Model"),
            actionButton('aButtonAspatial',"Run Model"),          
            
            sliderInput("days", 
@@ -260,12 +235,8 @@ shinyUI(fluidPage(theme = shinytheme("united"), #nice orange/red header, grey bu
       ) # end pageWithSidebar             
     ), # end tabPanel("a-spatial model") 
     
-    # menu tab "spatial model" 
-    # adding a menu item, that will create dropdown
-    #navbarMenu("3 spatial model",
      
-     # tab load grid ---------------------------           
-     #tabPanel("3.1 load grid",
+     # tab load map ---------------------------           
      tabPanel("3 load map", value="map",
               
       helpText("Allows loading of a text file containing a grid of vegetation categories",
@@ -274,12 +245,7 @@ shinyUI(fluidPage(theme = shinytheme("united"), #nice orange/red header, grey bu
                a(href="helpfiles/helpLoadVegetation.html", "Click here for help",target="_blank")
                ),
       
-      #now added onto the helpText instead
-      #a(href="helpfile.html", "Click here for help"), 
-      
       sidebarLayout(        
-        #if no headerPanel an error is generated
-        #headerPanel(""),
         
         #setting width to make space for table
         #sidebarPanel( width=10,
@@ -320,15 +286,11 @@ shinyUI(fluidPage(theme = shinytheme("united"), #nice orange/red header, grey bu
           #file loaded, if later files have more columns the data are not shown
           htable("editableRasterAtts", colHeaders="provided"), 
           
-          
           actionButton('aButtonMap',"update map")  
           
           #just for testing now
           #static table of vegetation attributes         
           #tableOutput("tableRasterAtts")
-          
-
-          
 
         ), # end sidebarPanel
       
@@ -360,15 +322,8 @@ shinyUI(fluidPage(theme = shinytheme("united"), #nice orange/red header, grey bu
      
      sidebarLayout(
        
-       #if no headerPanel an error is generated
-       #headerPanel(""),
-     
        sidebarPanel(
          
-         #splitLayout did kind of work to create 2 columns of inputs, maybe come back to
-         #splitLayout(
-         
-         #submitButton("Run Model"), #replaced with actionButton
          actionButton('aButtonGrid',"Run Model"),   
          
          #next 2 for report download
@@ -429,9 +384,6 @@ shinyUI(fluidPage(theme = shinytheme("united"), #nice orange/red header, grey bu
        mainPanel(
          
          tabsetPanel(
- 
-           #can use this for temporary disabling grid model   
-           #tabPanel("temporary", helpText("temporarily disabled while we work out how best to do this")) 
         
            # viewing outputs -----------------          
            tabPanel("Maps daily", plotOutput("plotMapDays")),
@@ -443,7 +395,7 @@ shinyUI(fluidPage(theme = shinytheme("united"), #nice orange/red header, grey bu
            #tabPanel("Females by age", plotOutput("plotAgeStructF")),
            #tabPanel("Males by age", plotOutput("plotAgeStructM")),
            tabPanel("Mean age adults", plotOutput("plotMeanAgeGrid")),
-           tabPanel("test inputs", textOutput("testInputVals")),
+           #tabPanel("test inputs", textOutput("testInputVals")),
            tabPanel("Code", verbatimTextOutput("printParamsGrid")) 
            #tabPanel("test inputs", textOutput("testInputs")),
            #tabPanel("About", includeMarkdown("about.md"))
@@ -460,9 +412,7 @@ shinyUI(fluidPage(theme = shinytheme("united"), #nice orange/red header, grey bu
 #              helpText("Not yet implemented.",
 #                       " Will allow different control measures to be simulated ITC, AB and SAT."
 #                       )
-             helpText("Applies control by artificial baits to the gridded model specified by the previous tabs.",
-                      " (Under development)."
-             ),
+             helpText("Applies control by artificial baits to the gridded model specified by the previous tabs."),
 
       sidebarLayout(      
         sidebarPanel(
