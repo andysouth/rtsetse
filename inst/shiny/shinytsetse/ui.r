@@ -25,7 +25,7 @@ shinyUI(fluidPage(theme = shinytheme("united"), #nice orange/red header, grey bu
 
   
   #navbarPage sets up navbar, title appears on left
-  navbarPage("rtsetse demonstrator", id="selectedTab",
+  navbarPage("rtsetse UI", id="selectedTab",
              
              
     # tab "About" ---------------------------
