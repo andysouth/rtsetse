@@ -304,7 +304,7 @@ readFileConductor <- reactive({
   ## now check for and load a raster attribute table
   ## not sure if should be in or outside of this function
   ## needs to cope with local & internal files
-
+  inFileAttributes <- NULL
   
   if ( input$mapLocation=='Internal')
   {
@@ -329,11 +329,10 @@ readFileConductor <- reactive({
       indexOfAttributes <- ifelse(indexOfGrid==1,2,1)
       inFileAttributes <- input$fileMapLocal$datapath[indexOfAttributes]  
       
-      cat("local attr file name =", input$fileMapLocal$name[ indexOfAttributes ], "\n")   
-      
     }       
   }
- 
+
+  cat("attr file name =", inFileAttributes, "\n")  
   
   #check if the attributes file exists
   if( file.exists(inFileAttributes))
@@ -372,17 +371,20 @@ output$plotLoadedMap <- renderPlot({
   if( is.null(input$fileMapInternal) & is.null(v$cachedTbl) ) return(NULL)
   else readFileConductor() #read from the inputFile if it hasn't been read yet
   
-
-  #add dependency on the button
-  if ( input$aButtonMap < 0 ) return()
-  #isolate reactivity of other objects
-  isolate({
+  #21/7/16 removed the update map button so replacing below
+  mapMatrix <- as.matrix(v$cachedTbl)
+  rtPlotMapVeg(mapMatrix, cex=1.2, labels=v$dfRasterAtts$name)
   
-    mapMatrix <- as.matrix(v$cachedTbl)
-    
-    rtPlotMapVeg(mapMatrix, cex=1.2, labels=v$dfRasterAtts$name)
-  
-  }) #end isolate 
+  # #add dependency on the button
+  # if ( input$aButtonMap < 0 ) return()
+  # #isolate reactivity of other objects
+  # isolate({
+  # 
+  #   mapMatrix <- as.matrix(v$cachedTbl)
+  #   
+  #   rtPlotMapVeg(mapMatrix, cex=1.2, labels=v$dfRasterAtts$name)
+  # 
+  # }) #end isolate 
     
 }) #end of plotLoadedMap  
 

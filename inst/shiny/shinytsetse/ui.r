@@ -278,19 +278,21 @@ shinyUI(fluidPage(theme = shinytheme("united"), #nice orange/red header, grey bu
           
           
           helpText("Vegetation names are defaults or come from",
-                   "an optional csv file.",
-                   "Edit below and press update to change the map legend."),
+                   "an optional csv file in the same folder with the same name.",
+                   "To change vegetation names edit that csv file and reload the map."),
+                   #"Edit below and press update to change the map legend."),
           
           #EDItable of vegetation attributes         
           #!BEWARE that the num & name of columns gets set by the first 
           #file loaded, if later files have more columns the data are not shown
-          htable("editableRasterAtts", colHeaders="provided"), 
-          
-          actionButton('aButtonMap',"update map")  
-          
-          #just for testing now
+          #27/7/16 problem with this seemingly due to change in shiny
+          #Attempted to access deprecated shinysession$session object. Please just access the shinysession object directly.
+          #try replacing with the non-editable version
+          #htable("editableRasterAtts", colHeaders="provided"), 
+          #actionButton('aButtonMap',"update map")  
+
           #static table of vegetation attributes         
-          #tableOutput("tableRasterAtts")
+          tableOutput("tableRasterAtts")
 
         ), # end sidebarPanel
       
