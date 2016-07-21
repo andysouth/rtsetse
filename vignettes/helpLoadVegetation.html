@@ -1,0 +1,32 @@
+<html>
+
+<head>
+<title>Vegetation maps in rtsetse</title>
+</head>
+
+<body>
+
+<p>rtsetse was written to accept Hat-trick format vegetation files.</p>
+
+<p>A <b>vegetation map file</b> needs to be saved as a space delimited text file with the suffix <b>'.txt'</b> and a grid of single letters from the codes DTOSBGN. It could be created in Excel, Notepad or directly in R. At the very simplest: D D would define a map of 2 cells of vegetation code D. The default names for the codes are : "Dense Forest","Thicket","Open Forest","Savannah","Bush","Grass","No-go area". These names can be changed, either in an attribute file (see below) or in the user interface.</p>
+
+<p>A simple 3x3 vegetation map file :</p>
+<p>D D T</p>
+<p>D O T</p>
+<p>S O D</p>
+
+<p>An optional <b>attribute file</b> needs to be saved as a comma delimited text file with the suffix <b>'.csv'</b>. It needs to consist of 4 columns named as shown below. The first should contain the vegetation codes, the 2nd column should contain corresponding names for each code. Columns 3 & 4 determine adult and pupal mortality in each vegetation type.</p>
+
+<p>A simple attribute file :</p>
+<p>code,name,mortality,pupmortality</p>
+<p>D,Dense Forest,200,120</p>
+<p>T,Thicket,150,110</p>
+<p>O,Open Forest,110,105</p>
+<p>S,Savannah,100,100</p>
+
+<p>Default vegetation types :</p>
+<img src="vegetation.png" alt="vegetation types">
+
+
+</body>
+</html>
