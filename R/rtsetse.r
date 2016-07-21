@@ -18,7 +18,7 @@
 #' @author
 #' Andy South \email{southandy@@gmail.com} 
 
-#' @import raster sp ggplot2 shiny
+#' @import raster sp ggplot2
 #' @importFrom dplyr group_by summarise %>%
 #' @docType package
 #' @name rtsetse
