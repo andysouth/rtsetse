@@ -32,7 +32,8 @@ rtReadMapVeg <- function( inFile ) {
   }
   
   #read file, skipping the header if specified above
-  mat <- as.matrix( read.table(inFile, skip=skip, as.is=TRUE) )
+  #colClasses = "character" to stop conversion of T to TRUE
+  mat <- as.matrix( read.table(inFile, skip=skip, as.is=TRUE, colClasses = "character") )
   #sort dimnames that appear in file table
   #reverse y so that 1 is at lower left
   #I could use this to make the labels correspond to latlons in future
