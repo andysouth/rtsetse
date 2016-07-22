@@ -2,9 +2,9 @@
 title: "movement in rtsetse"
 author: "Andy South"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+#output: rmarkdown::html_vignette
 #to produce a pdf
-#output: rmarkdown::pdf_document
+output: rmarkdown::pdf_document
 vignette: >
   %\VignetteIndexEntry{movement in rtsetse}
   %\VignetteEngine{knitr::rmarkdown}

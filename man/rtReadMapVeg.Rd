@@ -11,7 +11,6 @@ rtReadMapVeg(inFile)
 }
 \value{
 a matrix (character) of the passed map
-TODO it might be better to return a raster, then I can use it to store info from the gridascii header
 }
 \description{
 \code{rtReadMapVeg} reads vegetation map 

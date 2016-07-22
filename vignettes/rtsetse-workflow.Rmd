@@ -135,6 +135,19 @@ rtPlotMapPop(aRecord, days='final', sex = 'M', age = (20:120))
 
 ```
 
+### Brief workflow (for Steve!) for creating a new map and running the grid model on it
+
+1. in Excel create a grid with each cell containing one of DTOSBGN
+1. save as a tab delimited .txt file
+1. optionally create or copy an attributes .csv file as explained [here](helpLoadVegetation.html)
+1. from R : rt_UI()
+1. UI screen 4 : load map.
+1. Select 'Local' from 'Where to get map from'
+1. Press 'choose files', select your .txt and optional .csv
+1. UI screen 4 : run grid model : press 'Run Model'
+
+\pagebreak
+
 ### User Interface screenshots
 
 ![Start page of rtsetse UI reached by `rt_UI()`](rtsetseUI_about.png) 

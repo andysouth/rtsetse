@@ -259,7 +259,7 @@ shinyUI(fluidPage(theme = shinytheme("united"), #nice orange/red header, grey bu
           conditionalPanel(
             condition = "input.mapLocation == 'Local'",
             #this allows searching for local files
-            fileInput('fileMapLocal', 'Choose a grid text file and optional attribute csv', multiple=TRUE) #FALSE)
+            fileInput('fileMapLocal', 'Select a grid txt file AND optional attribute csv', multiple=TRUE) #FALSE)
             ), #end conditionalPanel
           
           # Only show this for internal maps

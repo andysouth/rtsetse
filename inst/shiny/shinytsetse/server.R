@@ -719,7 +719,7 @@ output$plotMapDaysControl <- renderPlot({
     #with this in a display refresh is triggered when days are changed
     #cat("in plotMapFinalDay input$daysGridModel=",input$daysGridModel,"\n")
     
-    rtPlotMapPop(v$gridResults, days='final', sex='MF')
+    rtPlotMapPop(v$gridResults, days='final', sex='M&F')
     
     
   })  
