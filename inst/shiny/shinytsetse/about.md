@@ -2,7 +2,10 @@ rtsetse is an R package for simulating tsetse fly populations. It was developed 
 
 rtsetse can be used via this interface or the R command line (and Code tabs in sections 2,4,5 generate code that can be pasted into R to take analyses further). 
 
-**Select tabs to the right on the navigation bar to use**  
+**Select tabs to the right on the navigation bar above to use.**  
+
+
+<a href="helpfiles/rtsetse-workflow-copy.pdf" target="_blank">Workflow help document.</a>
 
 rtsetse follows from Hat-Trick, an Excel based Tsetse model developed by Glyn Vale see http://www.tsetse.org
 

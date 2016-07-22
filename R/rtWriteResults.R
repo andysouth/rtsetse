@@ -19,7 +19,7 @@
 
 #' @return an array, matrix or vector named with remaining dimensions of [y,x,sex,age]
 #' @examples
-#' a small example to start
+#' # a small example to start
 #' aDays <- rt_runGrid()
 #' 
 #' # sum age & sex

@@ -25,14 +25,13 @@ knitr::opts_chunk$set(fig.pos = 'H')
 
 This document outlines how rtsetse can be used. All text in the grey boxes below can be copied and pasted into the R console (including a simple command to start up a user interface for the model : `rt_UI()`). 
 
-### Installation from R
+### Installation and loading in R
 
 ```{r, eval=FALSE, echo=TRUE, message=FALSE}
-require(devtools)    
+if(!require(devtools)) install.packages("devtools", dependencies=TRUE)
+    
 install_github('AndySouth/rtsetse', build_vignettes=TRUE)  
 ```
-    
-### How to run the model, first examples    
 
 ```{r, eval=FALSE, echo=TRUE, message=FALSE}
 # Load the package in each new R session.
@@ -47,6 +46,14 @@ library(rtsetse)
 
 # Click on 'index' at the bottom of the description page to go to a list of help pages 
 # for each function in the package.
+
+# This document
+vignette('rtsetse-workflow')
+
+# documents about movement and a model test
+vignette('vignette-movement.pdf')
+
+vignette('vignette-eg1-sav-grass.pdf')
 
 ```
     
@@ -134,6 +141,7 @@ rtPlotMapPop(aRecord)
 rtPlotMapPop(aRecord, days='final', sex = 'M', age = (20:120))
 
 ```
+
 
 ### Brief workflow (for Steve!) for creating a new map and running the grid model on it
 

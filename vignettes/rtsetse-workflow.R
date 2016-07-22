@@ -7,7 +7,8 @@
 knitr::opts_chunk$set(fig.pos = 'H')
 
 ## ---- eval=FALSE, echo=TRUE, message=FALSE-------------------------------
-#  require(devtools)
+#  if(!require(devtools)) install.packages("devtools", dependencies=TRUE)
+#  
 #  install_github('AndySouth/rtsetse', build_vignettes=TRUE)
 
 ## ---- eval=FALSE, echo=TRUE, message=FALSE-------------------------------
@@ -20,6 +21,14 @@ knitr::opts_chunk$set(fig.pos = 'H')
 #  
 #  # Click on 'index' at the bottom of the description page to go to a list of help pages
 #  # for each function in the package.
+#  
+#  # This document
+#  vignette('rtsetse-workflow')
+#  
+#  # documents about movement and a model test
+#  vignette('vignette-movement.pdf')
+#  
+#  vignette('vignette-eg1-sav-grass.pdf')
 #  
 
 ## ---- eval=FALSE, echo=TRUE, message=FALSE-------------------------------
