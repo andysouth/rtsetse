@@ -392,7 +392,7 @@ output$plotLoadedMap <- renderPlot({
 # table of raster attributes (vegetation) -----
 output$tableRasterAtts <- renderTable({
   
-  cat("in tableRasterAtts\n")
+  #cat("in tableRasterAtts\n")
   
   v$dfRasterAtts
   
