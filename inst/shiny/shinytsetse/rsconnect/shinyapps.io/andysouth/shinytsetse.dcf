@@ -1,0 +1,10 @@
+name: shinytsetse
+account: andysouth
+server: shinyapps.io
+appId: 116166
+bundleId: 513977
+url: https://andysouth.shinyapps.io/shinytsetse/
+when: 1469361059.83172
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: exampleCCmap10x5.txt|exampleCCmap4x4.txt|exampleCCmap4x5.csv|exampleCCmap4x5.txt|mapCC50x50numeric.txt
