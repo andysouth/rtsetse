@@ -31,4 +31,4 @@ User interfaces can be accessed on the web at the links below and are available 
 
 Shiny app link  | What it does  | To run locally
 ------------- | -------------| -------------
-[shinytse7](http://andysouth.shinyapps.io/shinytse7/) | Offer options to run aspatial and gridded models and visualise outputs | require(devtools)<br>install_github('AndySouth/rtsetse', build_vignettes=TRUE)<br>shiny::runGitHub('AndySouth/shinytse', subdir='shinytse7') 
+[shinytsetse](https://andysouth.shinyapps.io/shinytsetse/) | Offer options to run aspatial and gridded models and visualise outputs | require(devtools)<br>install_github('AndySouth/rtsetse', build_vignettes=TRUE)<br>shiny::runGitHub('AndySouth/shinytse', subdir='shinytse7') 
